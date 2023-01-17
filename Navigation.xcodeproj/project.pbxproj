@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1401A70270D4E8F073AC4858 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 348F2BBF52654939CF047689 /* Pods_Navigation.framework */; };
 		61F0628E29589BC500017C0F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 61F0628D29589BC500017C0F /* FirebaseAuth */; };
 		61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61F062902958A7D800017C0F /* PostDataModel.xcdatamodeld */; };
 		61F062942958A93200017C0F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F062932958A93200017C0F /* CoreDataManager.swift */; };
@@ -30,6 +29,8 @@
 		BB38BC4D2794180600FF4B2E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38BC4C2794180600FF4B2E /* LoginViewController.swift */; };
 		BB38C9CD28CE000D00739803 /* BruteForceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB38C9CC28CE000D00739803 /* BruteForceManager.swift */; };
 		BB53FB24276A8F9D0094AF1D /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */; };
+		BB5AF66F297729E600796C65 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB5AF66E297729E600796C65 /* SnapKit */; };
+		BB5AF6712977305400796C65 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5AF6702977305400796C65 /* LocationService.swift */; };
 		BB5D0B5C28ECB26C00B14768 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */; };
 		BB5D0B5E28EE191300B14768 /* CheckerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */; };
 		BB8A46BA280B040100C8B27C /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE6843279E0E830031743C /* Storage.swift */; };
@@ -86,11 +87,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		348F2BBF52654939CF047689 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3F6159A22EA19A2E3C6E86B7 /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
 		61F062912958A7D800017C0F /* PostDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostDataModel.xcdatamodel; sourceTree = "<group>"; };
 		61F062932958A93200017C0F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		8CEB151DFA3B01B29365FC90 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		BB0165C328E6433100C16F9A /* Planets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
 		BB0165C528E64B3600C16F9A /* People.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
 		BB06900729584E6D009A2C24 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +108,7 @@
 		BB38BC4C2794180600FF4B2E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BB38C9CC28CE000D00739803 /* BruteForceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForceManager.swift; sourceTree = "<group>"; };
 		BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
+		BB5AF6702977305400796C65 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerServiceProtocol.swift; sourceTree = "<group>"; };
 		BB962F2C283457B10080A2D1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -147,9 +146,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBE33F7528310F36008D8E19 /* iOSIntPackage in Frameworks */,
-				1401A70270D4E8F073AC4858 /* Pods_Navigation.framework in Frameworks */,
 				BBFECF4B280A3A9E002018F3 /* StorageService.framework in Frameworks */,
 				61F0628E29589BC500017C0F /* FirebaseAuth in Frameworks */,
+				BB5AF66F297729E600796C65 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,15 +162,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		24ACA073273A2C30960A515B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3F6159A22EA19A2E3C6E86B7 /* Pods-Navigation.debug.xcconfig */,
-				8CEB151DFA3B01B29365FC90 /* Pods-Navigation.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		61F0628F2958A7AE00017C0F /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,8 +307,6 @@
 				BBDC802E2749E2FF000A302B /* Navigation */,
 				BBFECF46280A3A9E002018F3 /* StorageService */,
 				BBDC802D2749E2FF000A302B /* Products */,
-				24ACA073273A2C30960A515B /* Pods */,
-				EA5DB89FEBD556E7CC200D04 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -369,6 +357,7 @@
 				BB0C6A4728FC73AC00C665D5 /* credentialError.swift */,
 				BBFCF301290FC14100C4D597 /* FirebaseResponseError.swift */,
 				BBBD5CDA291C214700A63966 /* FileManagerService.swift */,
+				BB5AF6702977305400796C65 /* LocationService.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -380,14 +369,6 @@
 				BBD4136D275D894C00B6E978 /* Post.swift */,
 			);
 			path = StorageService;
-			sourceTree = "<group>";
-		};
-		EA5DB89FEBD556E7CC200D04 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				348F2BBF52654939CF047689 /* Pods_Navigation.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,11 +389,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BBDC80402749E301000A302B /* Build configuration list for PBXNativeTarget "Navigation" */;
 			buildPhases = (
-				4DA823A1883DD4FF4D862D33 /* [CP] Check Pods Manifest.lock */,
 				BBDC80282749E2FF000A302B /* Sources */,
 				BBDC80292749E2FF000A302B /* Frameworks */,
 				BBDC802A2749E2FF000A302B /* Resources */,
-				BAF6B598899F466FB11DF494 /* [CP] Embed Pods Frameworks */,
 				BBFECF4D280A3A9E002018F3 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -424,6 +403,7 @@
 			packageProductDependencies = (
 				BBE33F7428310F36008D8E19 /* iOSIntPackage */,
 				61F0628D29589BC500017C0F /* FirebaseAuth */,
+				BB5AF66E297729E600796C65 /* SnapKit */,
 			);
 			productName = Navigation;
 			productReference = BBDC802C2749E2FF000A302B /* Navigation.app */;
@@ -477,6 +457,7 @@
 			packageReferences = (
 				BB0C073E2810BF1D00C0D950 /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
 				61F0628C29589BC500017C0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				BB5AF66D297729E600796C65 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = BBDC802D2749E2FF000A302B /* Products */;
 			projectDirPath = "";
@@ -508,48 +489,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4DA823A1883DD4FF4D862D33 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Navigation-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BAF6B598899F466FB11DF494 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Navigation/Pods-Navigation-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Navigation/Pods-Navigation-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Navigation/Pods-Navigation-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		BBDC80282749E2FF000A302B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -580,6 +519,7 @@
 				BB21600A28E087B500715635 /* NetworkManager.swift in Sources */,
 				BB15250E282FBFDE0045275F /* SceneDelegate.swift in Sources */,
 				BB38BC4D2794180600FF4B2E /* LoginViewController.swift in Sources */,
+				BB5AF6712977305400796C65 /* LocationService.swift in Sources */,
 				BBA2D94B27AFE082002AC2A1 /* UIView+Ext.swift in Sources */,
 				BBD4136A275D721800B6E978 /* PostViewController.swift in Sources */,
 				BBBBC9152753E9A6003DDF50 /* FeedViewController.swift in Sources */,
@@ -748,7 +688,6 @@
 		};
 		BBDC80412749E301000A302B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F6159A22EA19A2E3C6E86B7 /* Pods-Navigation.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -758,6 +697,9 @@
 				DEVELOPMENT_TEAM = 5BPW3NPX5G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -779,7 +721,6 @@
 		};
 		BBDC80422749E301000A302B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8CEB151DFA3B01B29365FC90 /* Pods-Navigation.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -789,6 +730,9 @@
 				DEVELOPMENT_TEAM = 5BPW3NPX5G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -921,6 +865,14 @@
 				version = 3.2.3;
 			};
 		};
+		BB5AF66D297729E600796C65 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -928,6 +880,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 61F0628C29589BC500017C0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		BB5AF66E297729E600796C65 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BB5AF66D297729E600796C65 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 		BBE33F7428310F36008D8E19 /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
