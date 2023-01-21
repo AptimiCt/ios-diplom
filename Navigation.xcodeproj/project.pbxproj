@@ -31,6 +31,7 @@
 		BB53FB24276A8F9D0094AF1D /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */; };
 		BB5AF66F297729E600796C65 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB5AF66E297729E600796C65 /* SnapKit */; };
 		BB5AF6712977305400796C65 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5AF6702977305400796C65 /* LocationService.swift */; };
+		BB5AF67429774BD200796C65 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5AF67329774BD200796C65 /* MapViewController.swift */; };
 		BB5D0B5C28ECB26C00B14768 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */; };
 		BB5D0B5E28EE191300B14768 /* CheckerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */; };
 		BB8A46BA280B040100C8B27C /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAE6843279E0E830031743C /* Storage.swift */; };
@@ -109,6 +110,7 @@
 		BB38C9CC28CE000D00739803 /* BruteForceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForceManager.swift; sourceTree = "<group>"; };
 		BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		BB5AF6702977305400796C65 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		BB5AF67329774BD200796C65 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerServiceProtocol.swift; sourceTree = "<group>"; };
 		BB962F2C283457B10080A2D1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -248,6 +250,14 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		BB5AF67229774B8900796C65 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				BB5AF67329774BD200796C65 /* MapViewController.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
 		BB962F2B2834575F0080A2D1 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +332,7 @@
 		BBDC802E2749E2FF000A302B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				BB5AF67229774B8900796C65 /* MapView */,
 				61F0628F2958A7AE00017C0F /* Database */,
 				BBBD5CD3291AD57900A63966 /* FilesView */,
 				BB962F2B2834575F0080A2D1 /* View */,
@@ -505,6 +516,7 @@
 				61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */,
 				BBBD5CD9291C205800A63966 /* FileManagerServiceProtocol.swift in Sources */,
 				BB1578D0281B341400579E09 /* CurrentLoginFactory.swift in Sources */,
+				BB5AF67429774BD200796C65 /* MapViewController.swift in Sources */,
 				BBD735CA27AEDB05002397A0 /* Photos.swift in Sources */,
 				61F062942958A93200017C0F /* CoreDataManager.swift in Sources */,
 				BBA8973B285C10D900126052 /* CustomTextField.swift in Sources */,
@@ -699,7 +711,7 @@
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -732,7 +744,7 @@
 				INFOPLIST_FILE = Navigation/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

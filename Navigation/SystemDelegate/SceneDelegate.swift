@@ -29,6 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let feedViewController = FeedViewController(post: post)
         let loginViewController = LoginViewController()
         let profileVC = FavoritesViewController()
+        let mapVC = MapViewController()
         let currentLoginFactory = CurrentLoginFactory()
         loginViewController.delegate = currentLoginFactory.create()
         
@@ -37,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let favoritesNavigationController = UINavigationController(rootViewController: profileVC)
         
-        tabBarController.viewControllers = [feedNavigationController,profileNavigationController,favoritesNavigationController]
+        tabBarController.viewControllers = [feedNavigationController,profileNavigationController,favoritesNavigationController, mapVC]
         tabBarController.selectedIndex = 1
         
         if #available(iOS 15.0, *) {

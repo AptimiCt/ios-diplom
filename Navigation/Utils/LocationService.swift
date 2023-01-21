@@ -5,7 +5,7 @@
 //
 // Created by Александр Востриков
 //
-    
+
 
 import Foundation
 import CoreLocation
@@ -14,27 +14,38 @@ final class LocationService: NSObject {
     
     private var locationManager: CLLocationManager
     
-    var location: CLLocation?
+    private var completion: ((CLLocation) -> Void)?
     
     override init() {
         self.locationManager = CLLocationManager()
         super.init()
-        configure()
     }
     
-    private func configure() {
-        locationManager.delegate = self
-    }
     private func requestPermission() {
-        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
     }
     
-    func getLocation() {
+    func getLocation(completion: @escaping ((_ location: CLLocation?) -> Void)) {
+        self.completion = completion
+        requestPermission()
+        locationManager.delegate = self
         locationManager.requestLocation()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func getNameFor(location: CLLocation, completion: @escaping ((String?) -> Void)) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location, preferredLocale: .current) { placemarks, error in
+            guard error == nil, let place = placemarks?.first else {
+                completion(nil)
+                return
+            }
+            let name = place.name
+            completion(name)
+        }
     }
 }
 extension LocationService: CLLocationManagerDelegate {
-    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
             case .notDetermined:
@@ -52,7 +63,12 @@ extension LocationService: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            self.location = location
+            completion?(location)
+            manager.stopUpdatingLocation()
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 }
