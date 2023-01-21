@@ -45,8 +45,20 @@ final class MapViewController: UIViewController {
         button.setImage(image, for: .normal)
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
-        button.tintColor = .red
+        button.tintColor = .green
         button.addTarget(self, action: #selector(locationAction), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var removeAnnotationsButton: UIButton = {
+        let button = UIButton()
+        button.toAutoLayout()
+        let image =  UIImage(systemName: "trash.fill")
+        button.setImage(image, for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.tintColor = .red
+        button.addTarget(self, action: #selector(removeAction), for: .touchUpInside)
         return button
     }()
     
@@ -96,9 +108,11 @@ private extension MapViewController {
         }
         mapView.addAnnotation(annotation)
     }
+    func removeAllAnnotations(){
+        mapView.removeAnnotations(mapView.annotations)
+    }
     func setupView() {
-        view.addSubview(mapView)
-        view.addSubview(currentLocationButton)
+        view.addSubviews(mapView, removeAnnotationsButton, currentLocationButton)
         self.tabBarItem = tabBar
         NSLayoutConstraint.activate([
             mapView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -110,15 +124,23 @@ private extension MapViewController {
             currentLocationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
             currentLocationButton.widthAnchor.constraint(equalToConstant: Constants.screenWeight / 10),
             currentLocationButton.heightAnchor.constraint(equalTo: currentLocationButton.widthAnchor),
+            
+            removeAnnotationsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            removeAnnotationsButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
+            removeAnnotationsButton.widthAnchor.constraint(equalToConstant: Constants.screenWeight / 10),
+            removeAnnotationsButton.heightAnchor.constraint(equalTo: currentLocationButton.widthAnchor),
         ])
     }
 }
-//MARK: - @objc extension
-@objc extension MapViewController {
-    private func locationAction() {
+//MARK: - @objc private extension
+@objc private extension MapViewController {
+    func locationAction() {
         getLocation()
     }
-    private func longPressAction(gestureRecognizer: UILongPressGestureRecognizer) {
+    func removeAction() {
+        removeAllAnnotations()
+    }
+    func longPressAction(gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state != UIGestureRecognizer.State.ended {
             let touchLocation = gestureRecognizer.location(in: mapView)
             let mapCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
@@ -132,7 +154,7 @@ extension MapViewController: MKMapViewDelegate {
     //Настройка линии маршрута
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let render = MKPolylineRenderer(overlay: overlay)
-        render.strokeColor = .green
+        render.strokeColor = .blue
         render.lineWidth = 6
         return render
     }
@@ -175,4 +197,3 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
 }
-
