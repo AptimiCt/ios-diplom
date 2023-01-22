@@ -10,11 +10,10 @@ import StorageService
 
 class FavoritesViewController: UIViewController {
     
-    
     //MARK: - vars
-    private let tabBarItemProfileView = UITabBarItem(title: "Favorites",
+    private let tabBarItemFavoritesView = UITabBarItem(title: Constants.tabBarItemFavoritesViewTitle,
                                                      image: UIImage(systemName: "star.fill"),
-                                                     tag: 2)
+                                                     tag: 3)
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -32,8 +31,8 @@ class FavoritesViewController: UIViewController {
         #else
         view.backgroundColor = .red
         #endif
-        self.tabBarItem = tabBarItemProfileView
-        self.title = "Favorites"
+        self.tabBarItem = tabBarItemFavoritesView
+        self.title = Constants.tabBarItemFavoritesViewTitle
     }
     
     required init?(coder: NSCoder) {

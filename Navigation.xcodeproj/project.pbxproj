@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6180AC67297D333E00A3281A /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC66297D333E00A3281A /* K.swift */; };
+		6180AC69297D346500A3281A /* LocalizationShortCut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC68297D346500A3281A /* LocalizationShortCut.swift */; };
+		6180AC6D297D371600A3281A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6180AC6F297D371600A3281A /* Localizable.strings */; };
+		6180AC73297DBD3100A3281A /* FirebaseResponseErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC72297DBD3100A3281A /* FirebaseResponseErrorMessage.swift */; };
 		61F0628E29589BC500017C0F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 61F0628D29589BC500017C0F /* FirebaseAuth */; };
 		61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61F062902958A7D800017C0F /* PostDataModel.xcdatamodeld */; };
 		61F062942958A93200017C0F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F062932958A93200017C0F /* CoreDataManager.swift */; };
@@ -16,7 +20,7 @@
 		BB0B224A279343AD00C51B3D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B2249279343AD00C51B3D /* Constants.swift */; };
 		BB0C6A4428FA045500C665D5 /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C6A4328FA045500C665D5 /* LoginViewControllerDelegate.swift */; };
 		BB0C6A4628FA060E00C665D5 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C6A4528FA060E00C665D5 /* AuthModel.swift */; };
-		BB0C6A4828FC73AC00C665D5 /* credentialError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C6A4728FC73AC00C665D5 /* credentialError.swift */; };
+		BB0C6A4828FC73AC00C665D5 /* CredentialError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C6A4728FC73AC00C665D5 /* CredentialError.swift */; };
 		BB152507282FBFCE0045275F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB152504282FBFCE0045275F /* User.swift */; };
 		BB152508282FBFCE0045275F /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB152505282FBFCE0045275F /* CurrentUserService.swift */; };
 		BB152509282FBFCE0045275F /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB152506282FBFCE0045275F /* TestUserService.swift */; };
@@ -88,6 +92,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6180AC66297D333E00A3281A /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
+		6180AC68297D346500A3281A /* LocalizationShortCut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationShortCut.swift; sourceTree = "<group>"; };
+		6180AC6C297D36E400A3281A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		6180AC70297D371C00A3281A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6180AC72297DBD3100A3281A /* FirebaseResponseErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResponseErrorMessage.swift; sourceTree = "<group>"; };
 		61F062912958A7D800017C0F /* PostDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostDataModel.xcdatamodel; sourceTree = "<group>"; };
 		61F062932958A93200017C0F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BB0165C328E6433100C16F9A /* Planets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
@@ -96,7 +105,7 @@
 		BB0B2249279343AD00C51B3D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BB0C6A4328FA045500C665D5 /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
 		BB0C6A4528FA060E00C665D5 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
-		BB0C6A4728FC73AC00C665D5 /* credentialError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = credentialError.swift; sourceTree = "<group>"; };
+		BB0C6A4728FC73AC00C665D5 /* CredentialError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialError.swift; sourceTree = "<group>"; };
 		BB152504282FBFCE0045275F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BB152505282FBFCE0045275F /* CurrentUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		BB152506282FBFCE0045275F /* TestUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
@@ -236,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				BB0B2249279343AD00C51B3D /* Constants.swift */,
+				6180AC66297D333E00A3281A /* K.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -353,6 +363,7 @@
 				BBDC803A2749E301000A302B /* LaunchScreen.storyboard */,
 				BBDC803D2749E301000A302B /* Info.plist */,
 				BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */,
+				6180AC6F297D371600A3281A /* Localizable.strings */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -365,10 +376,12 @@
 				BBD68B7E281742B1007BD77E /* LoginInspector.swift */,
 				BB38C9CC28CE000D00739803 /* BruteForceManager.swift */,
 				BB21600928E087B500715635 /* NetworkManager.swift */,
-				BB0C6A4728FC73AC00C665D5 /* credentialError.swift */,
+				BB0C6A4728FC73AC00C665D5 /* CredentialError.swift */,
 				BBFCF301290FC14100C4D597 /* FirebaseResponseError.swift */,
 				BBBD5CDA291C214700A63966 /* FileManagerService.swift */,
 				BB5AF6702977305400796C65 /* LocationService.swift */,
+				6180AC68297D346500A3281A /* LocalizationShortCut.swift */,
+				6180AC72297DBD3100A3281A /* FirebaseResponseErrorMessage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -463,6 +476,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = BBDC80232749E2FF000A302B;
 			packageReferences = (
@@ -486,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBDC803C2749E301000A302B /* LaunchScreen.storyboard in Resources */,
+				6180AC6D297D371600A3281A /* Localizable.strings in Resources */,
 				BBDC80392749E301000A302B /* Assets.xcassets in Resources */,
 				BB5D0B5C28ECB26C00B14768 /* GoogleService-Info.plist in Resources */,
 			);
@@ -515,6 +530,7 @@
 				BBA2D94827AFD2D2002AC2A1 /* PhotosViewController.swift in Sources */,
 				61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */,
 				BBBD5CD9291C205800A63966 /* FileManagerServiceProtocol.swift in Sources */,
+				6180AC73297DBD3100A3281A /* FirebaseResponseErrorMessage.swift in Sources */,
 				BB1578D0281B341400579E09 /* CurrentLoginFactory.swift in Sources */,
 				BB5AF67429774BD200796C65 /* MapViewController.swift in Sources */,
 				BBD735CA27AEDB05002397A0 /* Photos.swift in Sources */,
@@ -531,6 +547,7 @@
 				BB21600A28E087B500715635 /* NetworkManager.swift in Sources */,
 				BB15250E282FBFDE0045275F /* SceneDelegate.swift in Sources */,
 				BB38BC4D2794180600FF4B2E /* LoginViewController.swift in Sources */,
+				6180AC69297D346500A3281A /* LocalizationShortCut.swift in Sources */,
 				BB5AF6712977305400796C65 /* LocationService.swift in Sources */,
 				BBA2D94B27AFE082002AC2A1 /* UIView+Ext.swift in Sources */,
 				BBD4136A275D721800B6E978 /* PostViewController.swift in Sources */,
@@ -541,7 +558,8 @@
 				BBBD5CDB291C214700A63966 /* FileManagerService.swift in Sources */,
 				BB0B224A279343AD00C51B3D /* Constants.swift in Sources */,
 				BB53FB24276A8F9D0094AF1D /* ProfileTableHederView.swift in Sources */,
-				BB0C6A4828FC73AC00C665D5 /* credentialError.swift in Sources */,
+				6180AC67297D333E00A3281A /* K.swift in Sources */,
+				BB0C6A4828FC73AC00C665D5 /* CredentialError.swift in Sources */,
 				BB0C6A4628FA060E00C665D5 /* AuthModel.swift in Sources */,
 				BBD4136C275D882000B6E978 /* InfoViewController.swift in Sources */,
 				BB962F2D283457B10080A2D1 /* CustomButton.swift in Sources */,
@@ -571,10 +589,19 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		6180AC6F297D371600A3281A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6180AC70297D371C00A3281A /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		BBDC803A2749E301000A302B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				BBDC803B2749E301000A302B /* Base */,
+				6180AC6C297D36E400A3281A /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -586,6 +613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -647,6 +675,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

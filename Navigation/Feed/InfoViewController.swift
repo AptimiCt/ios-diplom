@@ -64,7 +64,7 @@ final class InfoViewController: UIViewController {
         self.view.addSubviews(alertButton, firstLabel, planetLabel, tableView)
         
         alertButton.action = { [weak self] in
-            let title = "Уведомление!"
+            let title = Constants.alertButtonActionTitle//"Уведомление!"
             let message = "Нажата кнопка в InfoViewController"
             self?.tableView.reloadData()
             let alert = UIAlertController(title: title,

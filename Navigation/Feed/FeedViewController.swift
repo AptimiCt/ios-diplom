@@ -12,7 +12,7 @@ class FeedViewController: UIViewController {
     
     //MARK: - vars
     private var post: Post?
-    private let tabBarItemLocal = UITabBarItem(title: "Feed",
+    private let tabBarItemLocal = UITabBarItem(title: Constants.navigationItemFeedTitle,
                                        image: UIImage(systemName: "f.circle.fill"),
                                        tag: 0)
     
@@ -83,7 +83,7 @@ class FeedViewController: UIViewController {
     //MARK: - private func
     private func setupView() {
         view.backgroundColor = .systemGray3
-        self.navigationItem.title = "Feed"
+        self.navigationItem.title = Constants.navigationItemFeedTitle
     }
     
     private func setupButtons(){
@@ -153,7 +153,7 @@ class FeedViewController: UIViewController {
         checkWordButton.action = { [weak self] in
             guard let word = self?.wordTextField.text, !(word.isEmpty),let post = self?.post else { return }
             let check = post.checker(word: word)
-            check ? self?.labelShow(text: "Верно", color: .green) : self?.labelShow(text: "Не верно", color: .red)
+            check ? self?.labelShow(text: Constants.checkWordButtonTrue, color: .green) : self?.labelShow(text: Constants.checkWordButtonFalse, color: .red)
         }
     }
 }

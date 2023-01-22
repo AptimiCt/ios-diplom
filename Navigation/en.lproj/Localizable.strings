@@ -1,0 +1,84 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Александр Востриков on 22.01.2023.
+  
+*/
+
+//MARK: - FilesViewController
+"fvcTitle" = "Documents";
+
+//MARK: - CredentialError
+"incorrectCredentials" = "Incorrect credentials.";
+"emptyEmail" = "Empty email.";
+"emptyPassword" = "Empty password.";
+"emailIsNoCorrect" = "Invalid email.";
+
+//MARK: - FirebaseResponseErrorMessage
+"invalidEmail" = "The email is not correct.";
+"registerUser" = "There is no such user. Register a user.";
+"wrongPassword" = "The password is not correct.";
+"internetConnectionProblem" = "Problem with the Internet connection.";
+"theUserWithThisEmailAlreadyExists" = "The user with this email already exists.";
+"unknownError" = "Unknown error.";
+
+//MARK: - LocationService
+"restricted" = "Access to geolocation is denied through parental controls!";
+"denied" = "You have denied access to geolocation!";
+"unknown" = "Unknown verification phase";
+
+//MARK: - PhotosTableViewCell
+"photosLabel.text" = "Photos";
+
+//MARK: - PhotosViewController
+"photo.gallery" = "Photo Gallery";
+
+//MARK: - Storage
+"firstPost.author" = "Antilles (also Caribbean or Caribbean Islands)";
+"firstPost.description" = "The Antilles (also known as the Caribbean Islands or Carib Islands) are islands in the Caribbean Sea and the Gulf of Mexico that lie between North America and South America. Together they form an area of 228,662 square kilometers with a population of approximately 42 million (at the beginning of the 21st century). The name \"Antilles\" first occurs in 1493 by Peter Martyr d'Anguiere, a contemporary of Christopher Columbus, courtier to Ferdinand of Aragon and Isabella of Castile. Presumably, they were named after the semi-mythical island or archipelago of Antilia, depicted on medieval maps.";
+
+"secondPost.author" = "The urbis, or snow bar";
+"secondPost.description" = "The urbis, or snow leopard, or snow leopard (Latin: Panthera uncia, formerly Latin: Uncia uncia) is a large predatory mammal of the feline family that inhabits the mountains of Central Asia. The irbis is distinguished by its thin, long, flexible body, relatively short legs, small head and very long tail. Together with the tail, it reaches a length of 200-230 cm and weighs up to 55 kg. The fur coloration is light smoky-gray, with ring-shaped and solid dark spots. Nowadays the number of irbis is catastrophically low - the population of the species in 2003 according to different estimations was from 4 to 7 thousand individuals, in 2020 from 2,7 to 3,4 thousand. In the 20th century it was included in the IUCN Red List, in the Red Book of Russia, as well as in the protection documents of other countries. Hunting the snow leopard is prohibited in all countries where it inhabits, the snow leopard is also included in Appendix I of the CITES Convention (an international ban on trade in endangered species and their parts). Since 2013, 12 countries, where the snow leopard inhabits, have adopted a \"Global program for the conservation of the snow leopard and its ecosystems\", which provides for special measures for its conservation (anti-poaching, creation of special protected areas, subsidies for farmers in case of loss of livestock from the snow leopard, etc.).";
+
+"thirdPost.author" = "Baikal (bir. Baigal Dalai)";
+"thirdPost.description" = "Baikal (bir. Baigal Dalai) is a lake of tectonic origin in the southern part of Eastern Siberia, the deepest lake on the planet, the largest natural reservoir of fresh water and the largest freshwater lake on the continent in terms of area. The lake and coastal areas are characterized by a unique diversity of flora and fauna, most of the animal species are endemic.";
+
+"fourthPost.author" = "Holiday fireworks";
+"fourthPost.description" = "The fireworks display is a state event on especially solemn holidays and events; it consists of a massive fireworks display accompanied by several artillery volleys. Fireworks are carried out from one or more launching sites, cordoned off for the duration of the event, with the closure (if necessary) of adjacent streets.";
+
+//MARK: - InfoViewController
+"alertButton.title" = "Alert";
+"alertButton.action.title" = "Notification";
+"alertButton.action.message" = "Button pressed in InfoViewController";
+"alertButton.action.cancel" = "Cancel";
+"alertButton.action.ok" = "Ok";
+
+//MARK: - FeedViewController
+"navigationItemFeed.title" = "Feed";
+"firstButton.title" = "First button";
+"files.title" = "Files";
+"checkWordButton.title" = "Verify the word";
+"wordTextField.placeholder" = "Enter a word to check";
+"checkWordButton.true" = "Right.";
+"checkWordButton.false" = "Wrong.";
+
+//MARK: - ProfileViewController
+"tabBarItemProfileView.title" = "Profile";
+
+//MARK: - ProfileHeaderView
+"setStatusButton.title" = "Show status";
+"statusLabel.text" = "Waiting for something...";
+
+//MARK: - LoginViewController
+ "loginButton.title" = "Log In";
+ "signUpButton.title" = "signUp";
+ "choosePasswordButton.title" = "Pick up password";
+ "loginButton.title" = "";
+ "signUpButton.title" = "";
+ "tabBarItemLoginVC.title" = "Profile";
+ "alertForError.title" = "Input error.";
+ //"alertButton.action.ok" = "";
+
+//MARK: - FavoritesViewController
+"tabBarItemFavoritesView.title" = "Favorites"

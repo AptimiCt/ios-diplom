@@ -24,7 +24,9 @@ class PostTableViewCell: UITableViewCell {
             }
             descriptionLabel.text = post?.description
             guard let likes = post?.likes else { return }
+            #warning("Задание со * через стрингдикт")
             likesLabel.text = "Likes: \(likes)"
+            #warning("Задание со * через стрингдикт")
             guard let views = post?.views else { return }
             viewsLabel.text = "Views: \(views)"
         }

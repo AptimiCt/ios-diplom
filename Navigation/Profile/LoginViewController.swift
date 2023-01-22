@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.backgroundColor = .systemGray6
-        textField.placeholder = "Email or iPhone"
+        textField.placeholder = Constants.loginTextViewPlaceholder
         textField.textColor = .black
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.backgroundColor = .systemGray6
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.placeholder = "Password"
+        textField.placeholder = Constants.passwordTextViewPlaceholder
         textField.textColor = .black
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
@@ -85,7 +85,7 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-    private let tabBarItemLocal = UITabBarItem(title: "Profile",
+    private let tabBarItemLocal = UITabBarItem(title: Constants.tabBarItemLoginVCTitle,
                                        image: UIImage(systemName: "person.crop.circle.fill"),
                                        tag: 1)
     
@@ -222,6 +222,7 @@ class LoginViewController: UIViewController {
         count += 1
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            #warning("Задание со * через стрингдикт")
             self.choosePasswordButton.setTitle("\(String(describing: self.count)) сек.", for: .normal)
         }
     }
@@ -229,19 +230,19 @@ class LoginViewController: UIViewController {
     //MARK: - private funcs
     private func checkCredentionalsOnError(email: String, password: String) throws {
         if email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
-            throw credentialError.emptyEmail
+            throw CredentialError.emptyEmail
         } else if !validate(email) {
-            throw credentialError.emailIsNoCorrect
+            throw CredentialError.emailIsNoCorrect
         }
         if password.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
-            throw credentialError.emptyPassword
+            throw CredentialError.emptyPassword
         }
         if !passwordIsValid(password) {
-            throw credentialError.incorrectCredentials
+            throw CredentialError.incorrectCredentials
         }
     }
     
-    private func handle(error: credentialError) {
+    private func handle(error: CredentialError) {
         switch error {
             case .incorrectCredentials:
                 alertForError(message: error.rawValue)
@@ -291,30 +292,49 @@ class LoginViewController: UIViewController {
                             let profileViewController = ProfileViewController(loginName: fullName, userService: userService)
                             self.navigationController?.pushViewController(profileViewController, animated: true)
                         case .failure(let failure):
-                            switch failure.userInfo["FIRAuthErrorUserInfoNameKey"] as? String {
-                                case FirebaseResponseError.ERROR_INVALID_EMAIL.rawValue:
-                                    self.alertForError(message: "Не корректный email.")
-                                case FirebaseResponseError.ERROR_USER_NOT_FOUND.rawValue:
-                                    self.alertForError(message: "Отсутсвует такой пользователь. Зарегистрируйте пользователя.")
-                                case FirebaseResponseError.ERROR_WRONG_PASSWORD.rawValue:
-                                    self.alertForError(message: "Не корретный пароль.")
-                                case FirebaseResponseError.ERROR_NETWORK_REQUEST_FAILED.rawValue:
-                                    self.alertForError(message: "Проблема с подключением к интернет.")
-                                default:
-                                    self.alertForError(message: "Не известная ошибка.")
-                            }
+                            self.switchFailure(failure)
+//                            switch failure.userInfo["FIRAuthErrorUserInfoNameKey"] as? String {
+//                                case FirebaseResponseError.ERROR_INVALID_EMAIL.rawValue:
+//                                    self.alertForError(message: "Не корректный email.")
+//                                case FirebaseResponseError.ERROR_USER_NOT_FOUND.rawValue:
+//                                    self.alertForError(message: "Отсутсвует такой пользователь. Зарегистрируйте пользователя.")
+//                                case FirebaseResponseError.ERROR_WRONG_PASSWORD.rawValue:
+//                                    self.alertForError(message: "Не корретный пароль.")
+//                                case FirebaseResponseError.ERROR_NETWORK_REQUEST_FAILED.rawValue:
+//                                    self.alertForError(message: "Проблема с подключением к интернет.")
+//                                default:
+//                                    self.alertForError(message: "Не известная ошибка.")
+//                            }
                     }
                 })
             } catch {
-                self.handle(error: error as! credentialError)
+                self.handle(error: error as! CredentialError)
             }
             
         }
     }
+    private func switchFailure(_ failure: NSError) {
+        switch failure.userInfo["FIRAuthErrorUserInfoNameKey"] as? String {
+            case FirebaseResponseError.ERROR_INVALID_EMAIL.rawValue:
+                self.alertForError(message: "Не корректный email.")
+            case FirebaseResponseError.ERROR_USER_NOT_FOUND.rawValue:
+                self.alertForError(message: "Отсутсвует такой пользователь. Зарегистрируйте пользователя.")
+            case FirebaseResponseError.ERROR_WRONG_PASSWORD.rawValue:
+                self.alertForError(message: "Не корретный пароль.")
+            case FirebaseResponseError.ERROR_NETWORK_REQUEST_FAILED.rawValue:
+                self.alertForError(message: "Проблема с подключением к интернет.")
+            case FirebaseResponseError.ERROR_EMAIL_ALREADY_IN_USE.rawValue:
+                self.alertForError(message: "Пользователь с таким email уже существует.")
+            default:
+                self.alertForError(message: "Не известная ошибка.")
+        }
+    }
+    
     private func signUpButtonTapped() {
-        signUpButton.action = {
-            guard let passwordText = self.passwordTextView.text, let loginText = self.loginTextView.text else { return }
-            
+        signUpButton.action = { [weak self] in
+            guard let self,
+                  let passwordText = self.passwordTextView.text,
+                  let loginText = self.loginTextView.text else { return }
             do {
                 try self.checkCredentionalsOnError(email: loginText, password: passwordText)
                 self.delegate?.signUpInspector(email: loginText, password: passwordText, completion: { result in
@@ -329,24 +349,11 @@ class LoginViewController: UIViewController {
                             let profileViewController = ProfileViewController(loginName: fullName, userService: userService)
                             self.navigationController?.pushViewController(profileViewController, animated: true)
                         case .failure(let failure):
-                            switch failure.userInfo["FIRAuthErrorUserInfoNameKey"] as? String {
-                                case FirebaseResponseError.ERROR_INVALID_EMAIL.rawValue:
-                                    self.alertForError(message: "Не корректный email.")
-                                case FirebaseResponseError.ERROR_USER_NOT_FOUND.rawValue:
-                                    self.alertForError(message: "Отсутсвует такой пользователь. Зарегистрируйте пользователя.")
-                                case FirebaseResponseError.ERROR_WRONG_PASSWORD.rawValue:
-                                    self.alertForError(message: "Не корретный пароль.")
-                                case FirebaseResponseError.ERROR_NETWORK_REQUEST_FAILED.rawValue:
-                                    self.alertForError(message: "Проблема с подключением к интернет.")
-                                case FirebaseResponseError.ERROR_EMAIL_ALREADY_IN_USE.rawValue:
-                                    self.alertForError(message: "Пользователь с таким email уже существует.")
-                                default:
-                                    self.alertForError(message: "Не известная ошибка.")
-                            }
+                            self.switchFailure(failure)
                     }
                 })
             } catch {
-                self.handle(error: error as! credentialError)
+                self.handle(error: error as! CredentialError)
             }
         }
     }

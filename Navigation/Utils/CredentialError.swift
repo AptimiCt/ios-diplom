@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum credentialError: String, Error {
+enum CredentialError: String, Error {
     case incorrectCredentials = "Не корректные учетные данные"
     case emptyEmail = "Пустой email"
     case emptyPassword = "Пустой пароль"

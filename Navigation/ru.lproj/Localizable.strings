@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Александр Востриков on 22.01.2023.
+  
+*/
+
+//FilesViewController
+"fvcTitle" = "Documents";
+
+//CredentialError
+"incorrectCredentials" = "Incorrect credentials."
+"emptyEmail" = "Empty email."
+"emptyPassword" = "Empty password."
+"emailIsNoCorrect" = "Invalid email."
+

@@ -112,22 +112,44 @@ struct Constants {
     //MARK: - for Checker
     static let login = "Джейк Салли".hash
     static let password = "StrongPassword".hash
-    static let titleAlert = "Ошибка ввода"
+    
+    
     static let message = "Введены не корректные данные"
 
     //MARK: - Constant string
     static let fullName = "Джейк Салли"
     static let avatar = "avatar"
+    //MARK: - ProfileHeaderView
     static let status = "Waiting for something..."
     static let showStatus = "Show status"
+    //MARK: - LoginViewController
+    static let loginTextViewPlaceholder = "Email or iPhone"
+    static let passwordTextViewPlaceholder = "Password"
     static let logIn = "Log In"
     static let signUp = "signUp"
-    static let choosePassword = "Подобрать пароль"
+    static let choosePassword = ~K.LoginVC.Keys.choosePasswordButtonTitle.rawValue
+    static let tabBarItemLoginVCTitle = "Profile"
+    static let titleAlert = "Ошибка ввода"
+    
+    //MARK: - FeedViewController
+    static let navigationItemFeedTitle = "Feed"
     static let firstButton = "First button"
     static let files = "Files"
-    static let alert = "Alert"
     static let checkWord = "Проверить слово"
     static let wordTextField = "Введите слово для проверки"
+    static let checkWordButtonTrue = "Верно"
+    static let checkWordButtonFalse = "Не верно"
+    //MARK: - InfoViewController
+    static let alert = ~K.InfoVC.Keys.alertButtonTitle.rawValue
+    static let alertButtonActionTitle = ~K.InfoVC.Keys.alertButtonActionTitle.rawValue
+    static let alertButtonActionMessage = ~K.InfoVC.Keys.alertButtonActionMessage.rawValue
+    static let alertButtonActionCancel = ~K.InfoVC.Keys.alertButtonActionCancel.rawValue
+    static let alertButtonActionOk = ~K.InfoVC.Keys.alertButtonActionOk.rawValue
+    //MARK: - ProfileViewController
+    static let tabBarItemProfileViewTitle = "Profile"
+    //MARK: - FavoritesViewController
+    static let tabBarItemFavoritesViewTitle = ~K.FavoritesVC.Keys.tabBarItemFavoritesViewTitle.rawValue
+    
     static let people = "https://swapi.dev/api/people/8"
     static let starships = "https://swapi.dev/api/starships/3"
     static let planets = "https://swapi.dev/api/planets/5"
