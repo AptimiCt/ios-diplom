@@ -43,7 +43,7 @@ final class PhotosTableViewCell: UITableViewCell {
     
     private func configureView(){
         // MARK: photosLabel
-        photosLabel.text = "Photos"
+        photosLabel.text = Constants.photosLabelText
         photosLabel.textColor = .black
         photosLabel.font = .systemFont(ofSize: 24, weight: .bold)
         photosLabel.toAutoLayout()

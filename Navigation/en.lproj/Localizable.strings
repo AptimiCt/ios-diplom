@@ -5,7 +5,7 @@
   Created by Александр Востриков on 22.01.2023.
   
 */
-
+//MARK: - EN
 //MARK: - FilesViewController
 "fvcTitle" = "Documents";
 
@@ -53,12 +53,14 @@
 "alertButton.action.message" = "Button pressed in InfoViewController";
 "alertButton.action.cancel" = "Cancel";
 "alertButton.action.ok" = "Ok";
+"alertButton.action.cancel.pressed" = "\"Cancel\" button is pressed";
+"alertButton.action.ok.pressed" = "The \"OK\" button is pressed";
 
 //MARK: - FeedViewController
 "navigationItemFeed.title" = "Feed";
 "firstButton.title" = "First button";
 "files.title" = "Files";
-"checkWordButton.title" = "Verify the word";
+"checkWordButton.title" = "Check the word";
 "wordTextField.placeholder" = "Enter a word to check";
 "checkWordButton.true" = "Right.";
 "checkWordButton.false" = "Wrong.";
@@ -71,14 +73,18 @@
 "statusLabel.text" = "Waiting for something...";
 
 //MARK: - LoginViewController
- "loginButton.title" = "Log In";
- "signUpButton.title" = "signUp";
+"loginTextView.placeholder" = "Email or phone";
+"passwordTextView.placeholder" = "Password";
+ "loginButton.title" = "LogIn";
+ "signUpButton.title" = "SignUp";
  "choosePasswordButton.title" = "Pick up password";
- "loginButton.title" = "";
- "signUpButton.title" = "";
  "tabBarItemLoginVC.title" = "Profile";
  "alertForError.title" = "Input error.";
+
  //"alertButton.action.ok" = "";
 
 //MARK: - FavoritesViewController
-"tabBarItemFavoritesView.title" = "Favorites"
+"tabBarItemFavoritesView.title" = "Favorites";
+
+//MARK: - MapViewController
+"tabBarItemMap.title" = "Map";

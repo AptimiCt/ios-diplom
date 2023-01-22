@@ -76,7 +76,8 @@ struct K {
             case alertButtonActionMessage = "alertButton.action.message"
             case alertButtonActionCancel = "alertButton.action.cancel"
             case alertButtonActionOk = "alertButton.action.ok"
-            
+            case alertButtonActionCancelPressed = "alertButton.action.cancel.pressed"
+            case alertButtonActionOkPressed = "alertButton.action.ok.pressed"
         }
     }
     //MARK: - FeedViewController
@@ -121,6 +122,12 @@ struct K {
     struct FavoritesVC {
         enum Keys: String {
             case tabBarItemFavoritesViewTitle = "tabBarItemFavoritesView.title"
+        }
+    }
+    //MARK: - MapViewController
+    struct MapVC {
+        enum Keys: String {
+            case tabBarItemMapTitle = "tabBarItemMap.title"
         }
     }
 }

@@ -35,7 +35,7 @@ final class MapViewController: UIViewController {
     private let tabBar: UITabBarItem = {
         let tabBarItem = UITabBarItem()
         tabBarItem.image = UIImage(systemName: "map.fill")
-        tabBarItem.title = "Map"
+        tabBarItem.title = Constants.tabBarItemMapTitle
         return tabBarItem
     }()
     private lazy var currentLocationButton: UIButton = {
@@ -109,6 +109,7 @@ private extension MapViewController {
         mapView.addAnnotation(annotation)
     }
     func removeAllAnnotations(){
+        mapView.removeOverlays(mapView.overlays)
         mapView.removeAnnotations(mapView.annotations)
     }
     func setupView() {
@@ -163,7 +164,7 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation { return nil }
         var viewMarker: MKMarkerAnnotationView
-        let idView = "marker"
+        let idView = Constants.idView
         if let view = mapView.dequeueReusableAnnotationView(withIdentifier: idView) as? MKMarkerAnnotationView {
             view.annotation = annotation
             viewMarker = view

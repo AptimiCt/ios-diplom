@@ -245,19 +245,19 @@ class LoginViewController: UIViewController {
     private func handle(error: CredentialError) {
         switch error {
             case .incorrectCredentials:
-                alertForError(message: error.rawValue)
+                alertForError(message: ~error.rawValue)
             case .emptyEmail:
-                alertForError(message: error.rawValue)
+                alertForError(message: ~error.rawValue)
             case .emptyPassword:
-                alertForError(message: error.rawValue)
+                alertForError(message: ~error.rawValue)
             case .emailIsNoCorrect:
-                alertForError(message: error.rawValue)
+                alertForError(message: ~error.rawValue)
         }
     }
     
     private func alertForError(message: String) {
         let alert = UIAlertController(title: Constants.titleAlert, message: message, preferredStyle: .alert)
-        let actionOk = UIAlertAction(title: "Ok", style: .default)
+        let actionOk = UIAlertAction(title: ~K.LoginVC.Keys.alertButtonActionOk.rawValue, style: .default)
         alert.addAction(actionOk)
         self.present(alert, animated: true, completion: nil)
     }
@@ -316,17 +316,17 @@ class LoginViewController: UIViewController {
     private func switchFailure(_ failure: NSError) {
         switch failure.userInfo["FIRAuthErrorUserInfoNameKey"] as? String {
             case FirebaseResponseError.ERROR_INVALID_EMAIL.rawValue:
-                self.alertForError(message: "Не корректный email.")
+                self.alertForError(message: ~FirebaseResponseErrorMessage.invalidEmail.rawValue)
             case FirebaseResponseError.ERROR_USER_NOT_FOUND.rawValue:
-                self.alertForError(message: "Отсутсвует такой пользователь. Зарегистрируйте пользователя.")
+                self.alertForError(message: ~FirebaseResponseErrorMessage.registerUser.rawValue)
             case FirebaseResponseError.ERROR_WRONG_PASSWORD.rawValue:
-                self.alertForError(message: "Не корретный пароль.")
+                self.alertForError(message: ~FirebaseResponseErrorMessage.wrongPassword.rawValue)
             case FirebaseResponseError.ERROR_NETWORK_REQUEST_FAILED.rawValue:
-                self.alertForError(message: "Проблема с подключением к интернет.")
+                self.alertForError(message: ~FirebaseResponseErrorMessage.internetConnectionProblem.rawValue)
             case FirebaseResponseError.ERROR_EMAIL_ALREADY_IN_USE.rawValue:
-                self.alertForError(message: "Пользователь с таким email уже существует.")
+                self.alertForError(message: ~FirebaseResponseErrorMessage.theUserWithThisEmailAlreadyExists.rawValue)
             default:
-                self.alertForError(message: "Не известная ошибка.")
+                self.alertForError(message: ~FirebaseResponseErrorMessage.unknownError.rawValue)
         }
     }
     
