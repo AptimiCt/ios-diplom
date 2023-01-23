@@ -1,10 +1,10 @@
 /* 
-  Localizable.strings
-  Navigation
-
-  Created by Александр Востриков on 22.01.2023.
-  
-*/
+ Localizable.strings
+ Navigation
+ 
+ Created by Александр Востриков on 22.01.2023.
+ 
+ */
 //MARK: - EN
 //MARK: - FilesViewController
 "fvcTitle" = "Documents";
@@ -75,16 +75,23 @@
 //MARK: - LoginViewController
 "loginTextView.placeholder" = "Email or phone";
 "passwordTextView.placeholder" = "Password";
- "loginButton.title" = "LogIn";
- "signUpButton.title" = "SignUp";
- "choosePasswordButton.title" = "Pick up password";
- "tabBarItemLoginVC.title" = "Profile";
- "alertForError.title" = "Input error.";
+"loginButton.title" = "LogIn";
+"signUpButton.title" = "SignUp";
+"choosePasswordButton.title" = "Pick up password";
+"tabBarItemLoginVC.title" = "Profile";
+"alertForError.title" = "Input error.";
 
- //"alertButton.action.ok" = "";
+//MARK: - TestUserService
+"testUserService.fullName" = "Master Chief";
+
+//MARK: - CurrentUserService
+"currentUserService.fullName" = "Jake Sully";
 
 //MARK: - FavoritesViewController
 "tabBarItemFavoritesView.title" = "Favorites";
 
 //MARK: - MapViewController
 "tabBarItemMap.title" = "Map";
+
+//MARK: - SceneDelegate
+"sceneDelegate.post" = "Post";

@@ -293,18 +293,6 @@ class LoginViewController: UIViewController {
                             self.navigationController?.pushViewController(profileViewController, animated: true)
                         case .failure(let failure):
                             self.switchFailure(failure)
-//                            switch failure.userInfo["FIRAuthErrorUserInfoNameKey"] as? String {
-//                                case FirebaseResponseError.ERROR_INVALID_EMAIL.rawValue:
-//                                    self.alertForError(message: "Не корректный email.")
-//                                case FirebaseResponseError.ERROR_USER_NOT_FOUND.rawValue:
-//                                    self.alertForError(message: "Отсутсвует такой пользователь. Зарегистрируйте пользователя.")
-//                                case FirebaseResponseError.ERROR_WRONG_PASSWORD.rawValue:
-//                                    self.alertForError(message: "Не корретный пароль.")
-//                                case FirebaseResponseError.ERROR_NETWORK_REQUEST_FAILED.rawValue:
-//                                    self.alertForError(message: "Проблема с подключением к интернет.")
-//                                default:
-//                                    self.alertForError(message: "Не известная ошибка.")
-//                            }
                     }
                 })
             } catch {

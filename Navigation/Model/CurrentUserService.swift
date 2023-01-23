@@ -11,7 +11,7 @@ final class CurrentUserService: UserService {
     
     private let user: User
     init() {
-        self.user = User(fullName: Constants.fullName, avatar: Constants.avatar, status: Constants.status)
+        self.user = User(fullName: Constants.currentUserServiceFullName, avatar: Constants.currentUserServiceAvatar, status: Constants.status)
     }
     
     func userService(loginName: String) -> User? {

@@ -38,7 +38,7 @@ struct NetworkManager {
     }
 }
 
-enum AppConfiguration:CaseIterable {
+enum AppConfiguration: CaseIterable {
     static var allCases: [AppConfiguration] {
         return [.people(urlString: Constants.people), .starships(urlString: Constants.starships), .planets(urlString: Constants.planets)]
     }

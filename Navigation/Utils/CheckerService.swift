@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseAuth
 
-class CheckerService: CheckerServiceProtocol {
+final class CheckerService: CheckerServiceProtocol {
     
     static let shared = CheckerService()
     

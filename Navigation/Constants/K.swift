@@ -130,4 +130,22 @@ struct K {
             case tabBarItemMapTitle = "tabBarItemMap.title"
         }
     }
+    //MARK: - TestUserService
+    struct TestUserService {
+        enum Keys: String {
+            case testUserServiceFullName = "testUserService.fullName"
+        }
+    }
+    //MARK: - CurrentUserService
+    struct CurrentUserService {
+        enum Keys: String {
+            case currentUserServiceFullName = "currentUserService.fullName"
+        }
+    }
+    //MARK: - SceneDelegate
+    struct SceneDelegate {
+        enum Keys: String {
+            case post = "sceneDelegate.post"
+        }
+    }
 }

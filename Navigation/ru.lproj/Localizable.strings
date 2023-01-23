@@ -81,9 +81,18 @@
 "tabBarItemLoginVC.title" = "Профиль";
 "alertForError.title" = "Ошибка ввода.";
 
+//MARK: - TestUserService
+"testUserService.fullName" = "Мастер Чиф";
+
+//MARK: - CurrentUserService
+"currentUserService.fullName" = "Джейк Салли";
 
 //MARK: - FavoritesViewController
 "tabBarItemFavoritesView.title" = "Избранное";
 
 //MARK: - MapViewController
 "tabBarItemMap.title" = "Карта";
+
+//MARK: - SceneDelegate
+"sceneDelegate.post" = "Публикация";
+

@@ -112,13 +112,16 @@ struct Constants {
     //MARK: - for Checker
     static let login = "Джейк Салли".hash
     static let password = "StrongPassword".hash
-    
-    
-    //static let message = "Введены не корректные данные"
 
     //MARK: - Constant string
-    static let fullName = "Джейк Салли"
-    static let avatar = "avatar"
+    //MARK: - CurrentUserService
+    static let currentUserServiceFullName = ~K.CurrentUserService.Keys.currentUserServiceFullName.rawValue
+    static let currentUserServiceAvatar = "avatar"
+    
+    //MARK: - TestUserService
+    static let testUserServiceFullName = ~K.TestUserService.Keys.testUserServiceFullName.rawValue
+    static let testUserServiceAvatar = "master_chif"
+    
     //MARK: - ProfileHeaderView
     static let showStatus = ~K.ProfileHV.Keys.setStatusButtonTitle.rawValue
     static let status = ~K.ProfileHV.Keys.statusLabelText.rawValue
@@ -165,6 +168,9 @@ struct Constants {
     
     //MARK: - PhotosViewController
     static let photoGalleryText = ~K.PhotosVC.Keys.text.rawValue
+    
+    //MARK: - SceneDelegate
+    static let post = ~K.SceneDelegate.Keys.post.rawValue
     
     static let people = "https://swapi.dev/api/people/8"
     static let starships = "https://swapi.dev/api/starships/3"

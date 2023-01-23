@@ -9,6 +9,6 @@ import Foundation
 
 final class TestUserService: UserService {
     func userService(loginName: String) -> User? {
-        return User(fullName: "Мастер Чиф", avatar: "master_chif", status: Constants.status)
+        return User(fullName: Constants.testUserServiceFullName, avatar: Constants.testUserServiceAvatar, status: Constants.status)
     }
 }

@@ -11,6 +11,7 @@
 		6180AC69297D346500A3281A /* LocalizationShortCut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC68297D346500A3281A /* LocalizationShortCut.swift */; };
 		6180AC6D297D371600A3281A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6180AC6F297D371600A3281A /* Localizable.strings */; };
 		6180AC73297DBD3100A3281A /* FirebaseResponseErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC72297DBD3100A3281A /* FirebaseResponseErrorMessage.swift */; };
+		61C6121D297F22FB00206131 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61C6121F297F22FB00206131 /* InfoPlist.strings */; };
 		61F0628E29589BC500017C0F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 61F0628D29589BC500017C0F /* FirebaseAuth */; };
 		61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61F062902958A7D800017C0F /* PostDataModel.xcdatamodeld */; };
 		61F062942958A93200017C0F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F062932958A93200017C0F /* CoreDataManager.swift */; };
@@ -98,6 +99,8 @@
 		6180AC70297D371C00A3281A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6180AC72297DBD3100A3281A /* FirebaseResponseErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResponseErrorMessage.swift; sourceTree = "<group>"; };
 		6180AC74297DDB0900A3281A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		61C6121E297F22FB00206131 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		61C61220297F23A500206131 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		61F062912958A7D800017C0F /* PostDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostDataModel.xcdatamodel; sourceTree = "<group>"; };
 		61F062932958A93200017C0F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		BB0165C328E6433100C16F9A /* Planets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planets.swift; sourceTree = "<group>"; };
@@ -365,6 +368,7 @@
 				BBDC803D2749E301000A302B /* Info.plist */,
 				BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */,
 				6180AC6F297D371600A3281A /* Localizable.strings */,
+				61C6121F297F22FB00206131 /* InfoPlist.strings */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -504,6 +508,7 @@
 				6180AC6D297D371600A3281A /* Localizable.strings in Resources */,
 				BBDC80392749E301000A302B /* Assets.xcassets in Resources */,
 				BB5D0B5C28ECB26C00B14768 /* GoogleService-Info.plist in Resources */,
+				61C6121D297F22FB00206131 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +602,15 @@
 				6180AC74297DDB0900A3281A /* ru */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		61C6121F297F22FB00206131 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				61C6121E297F22FB00206131 /* en */,
+				61C61220297F23A500206131 /* ru */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		BBDC803A2749E301000A302B /* LaunchScreen.storyboard */ = {
@@ -740,9 +754,9 @@
 				DEVELOPMENT_TEAM = 5BPW3NPX5G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -773,9 +787,9 @@
 				DEVELOPMENT_TEAM = 5BPW3NPX5G;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Получение геопозиции для построения маршрута до точек на карте";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
