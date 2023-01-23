@@ -222,8 +222,7 @@ class LoginViewController: UIViewController {
         count += 1
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            #warning("Задание со * через стрингдикт")
-            self.choosePasswordButton.setTitle("\(String(describing: self.count)) сек.", for: .normal)
+            self.choosePasswordButton.setTitle(String(format: ~K.LoginVC.Keys.choosePasswordButtonSec.rawValue, self.count), for: .normal)
         }
     }
     
@@ -354,7 +353,7 @@ class LoginViewController: UIViewController {
             self.choosePasswordButton.setTitle("\(Constants.choosePassword)", for: .normal)
             self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCrack), userInfo: nil, repeats: true)
             let bruteForceManager = BruteForceManager()
-            let passwordText = bruteForceManager.passwordGenerator(lengthPass: 3)
+            let passwordText = bruteForceManager.passwordGenerator(lengthPass: 4)
             self.activityIndicator.startAnimating()
             self.passwordTextView.isUserInteractionEnabled = false
             self.choosePasswordButton.isUserInteractionEnabled = false

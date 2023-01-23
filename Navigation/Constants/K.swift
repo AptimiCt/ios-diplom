@@ -113,6 +113,7 @@ struct K {
             case loginButtonTitle = "loginButton.title"
             case signUpButtonTitle = "signUpButton.title"
             case choosePasswordButtonTitle = "choosePasswordButton.title"
+            case choosePasswordButtonSec =  "choose.password.button.sec"
             case tabBarItemLoginVCTitle = "tabBarItemLoginVC.title"
             case alertForErrorTitle = "alertForError.title"
             case alertButtonActionOk = "alertButton.action.ok"
@@ -146,6 +147,18 @@ struct K {
     struct SceneDelegate {
         enum Keys: String {
             case post = "sceneDelegate.post"
+        }
+    }
+    //MARK: - Likes
+    struct Likes {
+        enum Keys: String {
+            case likes = "likes.post"
+        }
+    }
+    //MARK: - Views
+    struct Views {
+        enum Keys: String {
+            case views = "views.post"
         }
     }
 }

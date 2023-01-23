@@ -10,10 +10,10 @@ import StorageService
 
 struct Storage {
     static let posts: [Post] = [
-        Post(author: ~K.Storage.Keys.firstPostAuthor.rawValue, description: ~K.Storage.Keys.firstPostDescription.rawValue, image: "karib", likes: 135, views: 10000000),
-        Post(author: ~K.Storage.Keys.secondPostAuthor.rawValue, description: ~K.Storage.Keys.secondPostDescription.rawValue, image: "bars", likes: 1, views: 5),
-        Post(author: ~K.Storage.Keys.thirdPostAuthor.rawValue, description: ~K.Storage.Keys.thirdPostDescription.rawValue, image: "baikal", likes: 3, views: 3),
-        Post(author: ~K.Storage.Keys.fourthPostAuthor.rawValue, description: ~K.Storage.Keys.fourthPostDescription.rawValue, image: "salut", likes: 2, views: 7)
+        Post(author: ~K.Storage.Keys.firstPostAuthor.rawValue, description: ~K.Storage.Keys.firstPostDescription.rawValue, image: "karib", likes: 1000, views: 10000000),
+        Post(author: ~K.Storage.Keys.secondPostAuthor.rawValue, description: ~K.Storage.Keys.secondPostDescription.rawValue, image: "bars", likes: 1, views: 21),
+        Post(author: ~K.Storage.Keys.thirdPostAuthor.rawValue, description: ~K.Storage.Keys.thirdPostDescription.rawValue, image: "baikal", likes: 0, views: 0),
+        Post(author: ~K.Storage.Keys.fourthPostAuthor.rawValue, description: ~K.Storage.Keys.fourthPostDescription.rawValue, image: "salut", likes: 2, views: 52)
     ]
     
 }
