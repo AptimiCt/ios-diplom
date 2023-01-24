@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         NetworkManager.request(for: appConfiguration)
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let post = Post(author: "Post", description: "Post", image: "bars", likes: 1, views: 1)
+        let post = Post(author: Constants.post, description: Constants.post, image: "bars", likes: 1, views: 1)
         let tabBarController = UITabBarController()
         let feedViewController = FeedViewController(post: post)
         let loginViewController = LoginViewController()

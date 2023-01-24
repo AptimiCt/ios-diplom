@@ -14,9 +14,7 @@ protocol ProfileHeaderViewDelegate: AnyObject {
 
 class ProfileHeaderView: UIView {
     
-    
     //MARK: - vars
-    
     var closeButtonTopAnchor: Constraint? = nil
     
     weak var delegate: ProfileHeaderViewDelegate?

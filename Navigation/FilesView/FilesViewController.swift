@@ -56,7 +56,7 @@ final class FilesViewController: UIViewController {
         let leftButtonItem = UIBarButtonItem(barButtonSystemItem: .camera,
                                              target: self,
                                              action: #selector(openImagePicker))
-        navigationItem.title = "Documents"
+        navigationItem.title = ~K.FilesVC.Keys.title.rawValue
         navigationItem.setRightBarButton(leftButtonItem, animated: true)
     }
     

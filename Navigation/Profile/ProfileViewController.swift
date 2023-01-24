@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
     
     
     //MARK: - vars
-    private let tabBarItemProfileView = UITabBarItem(title: "Profile",
+    private let tabBarItemProfileView = UITabBarItem(title: Constants.tabBarItemProfileViewTitle,
                                                      image: UIImage(systemName: "person.crop.circle.fill"),
                                                      tag: 1)
     

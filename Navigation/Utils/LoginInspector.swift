@@ -7,14 +7,14 @@
 
 import Foundation
 
-class LoginInspector: LoginViewControllerDelegate {
+final class LoginInspector: LoginViewControllerDelegate {
 
     func checkCredentionalsInspector(email: String, password: String, completion: @escaping (Result<AuthModel, NSError>) -> Void) {
         CheckerService.shared.checkCredentialsService(email: email, password: password) { model, error in
             if error != nil {
                 completion(.failure(error!))
             } else {
-                let name = Constants.fullName
+                let name = Constants.currentUserServiceFullName
                 guard let uid = model?.user.uid else { return }
                 let authModel = AuthModel(name: name, uid: uid)
                 completion(.success(authModel))
@@ -27,7 +27,7 @@ class LoginInspector: LoginViewControllerDelegate {
             if error != nil {
                 completion(.failure(error!))
             } else {
-                let name = Constants.fullName
+                let name = Constants.currentUserServiceFullName
                 guard let uid = result?.user.uid else { return }
                 let authModel = AuthModel(name: name, uid: uid)
                 completion(.success(authModel))

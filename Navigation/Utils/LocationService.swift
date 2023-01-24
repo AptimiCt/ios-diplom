@@ -51,13 +51,13 @@ extension LocationService: CLLocationManagerDelegate {
             case .notDetermined:
                 requestPermission()
             case .restricted:
-                print("Запрещено через родительский контроль")
+                print(~K.LocationService.Keys.restricted.rawValue)
             case .denied:
-                print("Вы запретили доступ к геолокации")
+                print(~K.LocationService.Keys.denied.rawValue)
             case .authorizedAlways,.authorizedWhenInUse:
                 manager.requestLocation()
             @unknown default:
-                print("Не известный этап проверки")
+                print(~K.LocationService.Keys.unknown.rawValue)
         }
     }
     

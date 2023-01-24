@@ -11,7 +11,6 @@ import iOSIntPackage
 class PhotosViewController: UIViewController {
     
     //MARK: - vars
-    private let text = "Photo Gallery"
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var imagePublisherFacade: ImagePublisherFacade?
     private var photos: [UIImage] = []
@@ -30,7 +29,7 @@ class PhotosViewController: UIViewController {
     //MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = text
+        title = Constants.photoGalleryText
         imagePublisherFacade = ImagePublisherFacade()
         let userImages = Photos.fetchPhotos()
         

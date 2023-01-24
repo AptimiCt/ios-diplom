@@ -8,12 +8,9 @@
 import Foundation
 import FirebaseAuth
 
-class CheckerService: CheckerServiceProtocol {
+final class CheckerService: CheckerServiceProtocol {
     
     static let shared = CheckerService()
-    
-//    private let login = Constants.login
-//    private let password = Constants.password
     
     private init () {}
     

@@ -24,9 +24,9 @@ class PostTableViewCell: UITableViewCell {
             }
             descriptionLabel.text = post?.description
             guard let likes = post?.likes else { return }
-            likesLabel.text = "Likes: \(likes)"
+            likesLabel.text = String(format: ~K.Likes.Keys.likes.rawValue, likes)
             guard let views = post?.views else { return }
-            viewsLabel.text = "Views: \(views)"
+            viewsLabel.text = String(format: ~K.Views.Keys.views.rawValue, views)
         }
     }
     
@@ -60,6 +60,7 @@ class PostTableViewCell: UITableViewCell {
         let likes = UILabel()
         likes.toAutoLayout()
         likes.font = .systemFont(ofSize: 16)
+        likes.numberOfLines = 0
         likes.textColor = .black
         return likes
     }()
@@ -68,6 +69,7 @@ class PostTableViewCell: UITableViewCell {
         let views = UILabel()
         views.toAutoLayout()
         views.font = .systemFont(ofSize: 16)
+        views.numberOfLines = 0
         views.textColor = .black
         return views
     }()
