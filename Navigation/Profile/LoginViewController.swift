@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
         textField.attributedPlaceholder = NSAttributedString(string: Constants.loginTextViewPlaceholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .black, darkMode: .white)])
+                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
         textField.textColor = .createColor(lightMode: .black, darkMode: .white)
         textField.tintColor = UIColor(named: "AccentColor")
         textField.font = .systemFont(ofSize: 16)
@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
         textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.attributedPlaceholder = NSAttributedString(string: Constants.passwordTextViewPlaceholder,
-                                                              attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .black, darkMode: .white)])
+                                                              attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
         textField.textColor = .createColor(lightMode: .black, darkMode: .white)
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
@@ -118,7 +118,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .createColor(lightMode: .white, darkMode: .black)
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         setupView()
         setupConstrains()
         loginButtonTapped()

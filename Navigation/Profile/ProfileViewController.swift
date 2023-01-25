@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController {
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.backgroundColor = . createColor(lightMode: .white, darkMode: .systemGray6)
         tableView.toAutoLayout()
         return tableView
     }()
@@ -37,7 +38,7 @@ class ProfileViewController: UIViewController {
         self.userService = userService
         super.init(nibName: nil, bundle: nil)
         #if DEBUG
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         #else
         view.backgroundColor = .red
         #endif

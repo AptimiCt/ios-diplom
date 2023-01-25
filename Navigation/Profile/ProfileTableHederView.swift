@@ -30,8 +30,12 @@ class ProfileHeaderView: UIView {
     }()
     
     private let setStatusButton: CustomButton = {
-        let button = CustomButton(title: Constants.showStatus, titleColor: .white)
-        button.backgroundColor = .systemBlue
+        let button = CustomButton(
+            title: Constants.showStatus,
+            titleColor: .createColor(lightMode: .white,
+                                    darkMode: .black)
+        )
+        button.backgroundColor = .createColor(lightMode: .systemBlue, darkMode: .white)
         button.setTitleColor(.red, for: .highlighted)
         button.layer.cornerRadius = 4
         button.layer.shadowColor = UIColor.black.cgColor
@@ -45,7 +49,7 @@ class ProfileHeaderView: UIView {
     let fullNameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        nameLabel.textColor = .black
+        nameLabel.textColor = .createColor(lightMode: .black, darkMode: .white)
         return nameLabel
     }()
     
@@ -53,7 +57,7 @@ class ProfileHeaderView: UIView {
         let statusLabel = UILabel()
         statusLabel.text = Constants.status
         statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        statusLabel.textColor = .gray
+        statusLabel.textColor = .createColor(lightMode: .gray, darkMode: .white)
         return statusLabel
     }()
     
@@ -77,6 +81,7 @@ class ProfileHeaderView: UIView {
     //MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         addSubviews(fullNameLabel, statusLabel, setStatusButton, backgroundView, closeButton, avatarImageView)
         snpConstraints()
         tapSetStatusButton()

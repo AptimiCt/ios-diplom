@@ -30,6 +30,8 @@ class FeedViewController: UIViewController {
     
     private let wordTextField: CustomTextField = {
         let textField = CustomTextField(font: .systemFont(ofSize: 18, weight: .bold), placeholder: Constants.wordTextField)
+        textField.attributedPlaceholder = NSAttributedString(string: Constants.wordTextField,
+                                                              attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
         textField.textAlignment = .center
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no

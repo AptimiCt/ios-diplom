@@ -66,6 +66,8 @@ final class MapViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = tabBar
+        view.backgroundColor = .systemGray3
+        
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
