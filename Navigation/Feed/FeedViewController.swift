@@ -24,6 +24,10 @@ class FeedViewController: UIViewController {
         checkButton.setTitleColor(UIColor.systemPurple, for: .highlighted)
         checkButton.backgroundColor = .systemBlue
         checkButton.layer.cornerRadius = 10
+        checkButton.layer.shadowOpacity = 0.7
+        checkButton.layer.shadowRadius = 4
+        checkButton.layer.shadowOffset.width = 4
+        checkButton.layer.shadowOffset.height = 4
         checkButton.toAutoLayout()
         return checkButton
     }()
@@ -75,14 +79,33 @@ class FeedViewController: UIViewController {
     //MARK: - override
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupLayerColorFor(traitCollection.userInterfaceStyle)
         setupView()
         setupButtons()
         setupStack()
         setupConstraints()
         buttonsAction()
     }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard let previousTraitCollection else { return }
+        if traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+            if traitCollection.userInterfaceStyle == .light {
+                setupLayerColorFor(.light)
+            } else {
+                setupLayerColorFor(.dark)
+            }
+        }
+    }
     
     //MARK: - private func
+    private func setupLayerColorFor(_ style: UIUserInterfaceStyle, isStart: Bool = false) {
+        if  style == .dark  {
+            checkWordButton.layer.shadowColor = UIColor.systemGray.cgColor
+        } else {
+            checkWordButton.layer.shadowColor = UIColor.black.cgColor
+        }
+    }
     private func setupView() {
         view.backgroundColor = .systemGray3
         self.navigationItem.title = Constants.navigationItemFeedTitle
