@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     private let contentView = UIView()
     private let activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
-        
+        activity.color = .createColor(lightMode: .black, darkMode: .white)
         return activity
     }()
     
@@ -31,9 +31,11 @@ class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.backgroundColor = .systemGray6
-        textField.placeholder = Constants.loginTextViewPlaceholder
-        textField.textColor = .black
+        textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
+        textField.attributedPlaceholder = NSAttributedString(string: Constants.loginTextViewPlaceholder,
+                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
+        textField.textColor = .createColor(lightMode: .black, darkMode: .white)
+        textField.tintColor = UIColor(named: "AccentColor")
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
         return textField
@@ -41,10 +43,11 @@ class LoginViewController: UIViewController {
     
     private let passwordTextView: UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.placeholder = Constants.passwordTextViewPlaceholder
-        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(string: Constants.passwordTextViewPlaceholder,
+                                                              attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
+        textField.textColor = .createColor(lightMode: .black, darkMode: .white)
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
@@ -62,7 +65,11 @@ class LoginViewController: UIViewController {
     }()
     
     private let loginButton: CustomButton = {
-        let button = CustomButton(title: Constants.logIn, titleColor: .white)
+        let button = CustomButton(
+            title: Constants.logIn,
+            titleColor: .createColor(lightMode: .white,
+                                     darkMode: .black)
+        )
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
@@ -70,7 +77,11 @@ class LoginViewController: UIViewController {
     }()
     
     private let signUpButton: CustomButton = {
-        let button = CustomButton(title: Constants.signUp, titleColor: .white)
+        let button = CustomButton(
+            title: Constants.signUp,
+            titleColor: .createColor(lightMode: .white,
+                                     darkMode: .black)
+        )
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
@@ -78,7 +89,11 @@ class LoginViewController: UIViewController {
     }()
     
     private let choosePasswordButton: CustomButton = {
-        let button = CustomButton(title: Constants.choosePassword, titleColor: .white)
+        let button = CustomButton(
+            title: Constants.choosePassword,
+            titleColor: .createColor(lightMode: .white,
+                                     darkMode: .black)
+        )
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
@@ -103,7 +118,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .white
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         setupView()
         setupConstrains()
         loginButtonTapped()
@@ -353,7 +368,7 @@ class LoginViewController: UIViewController {
             self.choosePasswordButton.setTitle("\(Constants.choosePassword)", for: .normal)
             self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCrack), userInfo: nil, repeats: true)
             let bruteForceManager = BruteForceManager()
-            let passwordText = bruteForceManager.passwordGenerator(lengthPass: 4)
+            let passwordText = bruteForceManager.passwordGenerator(lengthPass: 3)
             self.activityIndicator.startAnimating()
             self.passwordTextView.isUserInteractionEnabled = false
             self.choosePasswordButton.isUserInteractionEnabled = false
@@ -380,4 +395,8 @@ extension LoginViewController: UITextFieldDelegate {
             passwordTextView.isSecureTextEntry.toggle()
         }
     }
+}
+
+extension LoginViewController {
+    
 }

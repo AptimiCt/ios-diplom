@@ -28,6 +28,7 @@ final class PhotosTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         setupView()
         configureView()
         configureConstraints()
@@ -44,13 +45,13 @@ final class PhotosTableViewCell: UITableViewCell {
     private func configureView(){
         // MARK: photosLabel
         photosLabel.text = Constants.photosLabelText
-        photosLabel.textColor = .black
+        photosLabel.textColor = .createColor(lightMode: .black, darkMode: .white)
         photosLabel.font = .systemFont(ofSize: 24, weight: .bold)
         photosLabel.toAutoLayout()
         
         // MARK: arrowButton
         arrowButton.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
-        arrowButton.tintColor = .black
+        arrowButton.tintColor = .createColor(lightMode: .black, darkMode: .white)
         arrowButton.toAutoLayout()
         
         // MARK: imagePhoto

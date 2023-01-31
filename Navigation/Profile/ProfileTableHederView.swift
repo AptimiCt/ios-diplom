@@ -23,18 +23,20 @@ class ProfileHeaderView: UIView {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 3
-        imageView.layer.borderColor = UIColor.white.cgColor
         imageView.clipsToBounds = true
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
     private let setStatusButton: CustomButton = {
-        let button = CustomButton(title: Constants.showStatus, titleColor: .white)
-        button.backgroundColor = .systemBlue
+        let button = CustomButton(
+            title: Constants.showStatus,
+            titleColor: .createColor(lightMode: .white,
+                                    darkMode: .black)
+        )
+        button.backgroundColor = .createColor(lightMode: .systemBlue, darkMode: .white)
         button.setTitleColor(.red, for: .highlighted)
         button.layer.cornerRadius = 4
-        button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
         button.layer.shadowRadius = 4
         button.layer.shadowOffset.width = 4
@@ -45,7 +47,7 @@ class ProfileHeaderView: UIView {
     let fullNameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        nameLabel.textColor = .black
+        nameLabel.textColor = .createColor(lightMode: .black, darkMode: .white)
         return nameLabel
     }()
     
@@ -53,7 +55,7 @@ class ProfileHeaderView: UIView {
         let statusLabel = UILabel()
         statusLabel.text = Constants.status
         statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        statusLabel.textColor = .gray
+        statusLabel.textColor = .createColor(lightMode: .gray, darkMode: .white)
         return statusLabel
     }()
     
@@ -77,6 +79,8 @@ class ProfileHeaderView: UIView {
     //MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
+        self.setupLayerColorFor(traitCollection.userInterfaceStyle)
         addSubviews(fullNameLabel, statusLabel, setStatusButton, backgroundView, closeButton, avatarImageView)
         snpConstraints()
         tapSetStatusButton()
@@ -84,6 +88,26 @@ class ProfileHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    private func setupLayerColorFor(_ style: UIUserInterfaceStyle) {
+        if  style == .dark  {
+            setStatusButton.layer.shadowColor = UIColor.white.cgColor
+            avatarImageView.layer.borderColor = UIColor.white.cgColor
+        } else {
+            setStatusButton.layer.shadowColor = UIColor.black.cgColor
+            avatarImageView.layer.borderColor = UIColor.black.cgColor
+        }
+    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard let previousTraitCollection else { return }
+        if traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
+            if traitCollection.userInterfaceStyle == .light {
+                setupLayerColorFor(.light)
+            } else {
+                setupLayerColorFor(.dark)
+            }
+        }
     }
     
     //MARK: - private func
@@ -133,5 +157,3 @@ extension ProfileHeaderView{
         }
     }
 }
-
-

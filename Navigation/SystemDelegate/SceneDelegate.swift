@@ -26,6 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let post = Post(author: Constants.post, description: Constants.post, image: "bars", likes: 1, views: 1)
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .systemGray6
+        
+        
         let feedViewController = FeedViewController(post: post)
         let loginViewController = LoginViewController()
         let profileVC = FavoritesViewController()
@@ -40,21 +43,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         tabBarController.viewControllers = [feedNavigationController,profileNavigationController,favoritesNavigationController, mapVC]
         tabBarController.selectedIndex = 1
-        
-        if #available(iOS 15.0, *) {
-            let appearanceTabBar = UITabBarAppearance()
-            let appearanceNavigationBar = UINavigationBarAppearance()
-            appearanceTabBar.configureWithOpaqueBackground()
-            appearanceNavigationBar.configureWithOpaqueBackground()
-            appearanceTabBar.backgroundColor = .white
-            appearanceNavigationBar.backgroundColor = .white
-            tabBarController.tabBar.standardAppearance = appearanceTabBar
-            feedNavigationController.navigationBar.standardAppearance = appearanceNavigationBar
-            profileNavigationController.navigationBar.standardAppearance = appearanceNavigationBar
-            tabBarController.tabBar.scrollEdgeAppearance = tabBarController.tabBar.standardAppearance
-            feedNavigationController.navigationBar.scrollEdgeAppearance = feedNavigationController.navigationBar.standardAppearance
-            profileNavigationController.navigationBar.scrollEdgeAppearance = profileNavigationController.navigationBar.standardAppearance
-        }
         
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()

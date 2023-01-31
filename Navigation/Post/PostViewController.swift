@@ -30,9 +30,10 @@ class PostViewController: UIViewController, SetupViewProtocol {
         let leftButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                              target: self,
                                              action: #selector(openInfoVC))
-        view.backgroundColor = .blue
+        view.backgroundColor = .systemBlue
         navigationItem.title = post?.author
         navigationItem.setRightBarButton(leftButtonItem, animated: true)
+        navigationController?.navigationBar.tintColor = .createColor(lightMode: .black, darkMode: .white)
     }
     
     @objc func openInfoVC(){

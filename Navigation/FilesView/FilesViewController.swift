@@ -31,6 +31,7 @@ final class FilesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .black)
         setupTableView()
         addButtonImagePicker()
         do {
@@ -39,7 +40,6 @@ final class FilesViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
-    
     private func setupTableView(){
         tableView.dataSource = self
         tableView.delegate = self

@@ -20,7 +20,7 @@ class PhotosViewController: UIViewController {
     //MARK: - init
     init() {
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .white
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .gray)
     }
     
     required init?(coder: NSCoder) {

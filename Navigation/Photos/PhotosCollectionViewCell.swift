@@ -14,6 +14,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(photoImageView)
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
         photoImageView.pin(to: self)
     }
     
