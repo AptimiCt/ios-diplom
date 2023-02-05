@@ -8,6 +8,12 @@
 import UIKit
 
 struct Constants {
+    
+    static let firstUrl = "https://jsonplaceholder.typicode.com/todos/21"
+    static let planetUrl = "https://swapi.dev/api/planets/1"
+    static let peoplesID = "peoplesID"
+    
+    static let filesRID = "FilesTableViewCell"
     //MARK: - Constants for ProfileTableHederView
     static let screenWeight = UIScreen.main.bounds.width
     
@@ -106,11 +112,68 @@ struct Constants {
     //MARK: - for Checker
     static let login = "Джейк Салли".hash
     static let password = "StrongPassword".hash
-    static let titleAlert = "Ошибка ввода"
-    static let message = "Введены не корректные данные"
 
     //MARK: - Constant string
-    static let fullName = "Джейк Салли"
-    static let avatar = "avatar"
-    static let status = "Waiting for something..."
+    //MARK: - CurrentUserService
+    static let currentUserServiceFullName = ~K.CurrentUserService.Keys.currentUserServiceFullName.rawValue
+    static let currentUserServiceAvatar = "avatar"
+    
+    //MARK: - TestUserService
+    static let testUserServiceFullName = ~K.TestUserService.Keys.testUserServiceFullName.rawValue
+    static let testUserServiceAvatar = "master_chif"
+    
+    //MARK: - ProfileHeaderView
+    static let showStatus = ~K.ProfileHV.Keys.setStatusButtonTitle.rawValue
+    static let status = ~K.ProfileHV.Keys.statusLabelText.rawValue
+    
+    //MARK: - LoginViewController
+    static let logIn = ~K.LoginVC.Keys.loginButtonTitle.rawValue
+    static let signUp = ~K.LoginVC.Keys.signUpButtonTitle.rawValue
+    static let loginTextViewPlaceholder = ~K.LoginVC.Keys.loginTextViewPlaceholder.rawValue
+    static let passwordTextViewPlaceholder = ~K.LoginVC.Keys.passwordTextViewPlaceholder.rawValue
+    static let choosePassword = ~K.LoginVC.Keys.choosePasswordButtonTitle.rawValue
+    static let tabBarItemLoginVCTitle = ~K.LoginVC.Keys.tabBarItemLoginVCTitle.rawValue
+    static let titleAlert = ~K.LoginVC.Keys.alertForErrorTitle.rawValue
+    
+    //MARK: - FeedViewController
+    static let navigationItemFeedTitle = ~K.FeedVC.Keys.navigationItemFeedTitle.rawValue
+    static let firstButton = ~K.FeedVC.Keys.firstButtonTitle.rawValue
+    static let files = ~K.FeedVC.Keys.filesTitle.rawValue
+    static let checkWord = ~K.FeedVC.Keys.checkWordButtonTitle.rawValue
+    static let wordTextField = ~K.FeedVC.Keys.wordTextFieldPlaceholder.rawValue
+    static let checkWordButtonTrue = ~K.FeedVC.Keys.checkWordButtonTrue.rawValue
+    static let checkWordButtonFalse = ~K.FeedVC.Keys.checkWordButtonFalse.rawValue
+    
+    //MARK: - InfoViewController
+    static let alert = ~K.InfoVC.Keys.alertButtonTitle.rawValue
+    static let alertButtonActionTitle = ~K.InfoVC.Keys.alertButtonActionTitle.rawValue
+    static let alertButtonActionMessage = ~K.InfoVC.Keys.alertButtonActionMessage.rawValue
+    static let alertButtonActionCancel = ~K.InfoVC.Keys.alertButtonActionCancel.rawValue
+    static let alertButtonActionOk = ~K.InfoVC.Keys.alertButtonActionOk.rawValue
+    static let alertButtonActionCancelPressed = ~K.InfoVC.Keys.alertButtonActionCancelPressed.rawValue
+    static let alertButtonActionOkPressed = ~K.InfoVC.Keys.alertButtonActionOkPressed.rawValue
+    
+    //MARK: - ProfileViewController
+    static let tabBarItemProfileViewTitle = ~K.ProfileVC.Keys.tabBarItemProfileViewTitle.rawValue
+    
+    //MARK: - FavoritesViewController
+    static let tabBarItemFavoritesViewTitle = ~K.FavoritesVC.Keys.tabBarItemFavoritesViewTitle.rawValue
+    
+    //MARK: - MapViewController
+    static let idView = "marker"
+    static let tabBarItemMapTitle = ~K.MapVC.Keys.tabBarItemMapTitle.rawValue
+    
+    //MARK: - PhotosTableViewCell
+    static let photosLabelText = ~K.PhotosTVCell.Keys.text.rawValue
+    
+    //MARK: - PhotosViewController
+    static let photoGalleryText = ~K.PhotosVC.Keys.text.rawValue
+    
+    //MARK: - SceneDelegate
+    static let post = ~K.SceneDelegate.Keys.post.rawValue
+    
+    static let people = "https://swapi.dev/api/people/8"
+    static let starships = "https://swapi.dev/api/starships/3"
+    static let planets = "https://swapi.dev/api/planets/5"
+    static let dataModel = "PostDataModel"
 }

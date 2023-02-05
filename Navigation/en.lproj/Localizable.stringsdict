@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>likes.post</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@likes_count@</string>
+		<key>likes_count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string>No likes</string>
+			<key>one</key>
+			<string>One like</string>
+			<key>other</key>
+			<string>%u likes</string>
+		</dict>
+	</dict>
+	<key>views.post</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@views_count@</string>
+		<key>views_count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string>No views</string>
+			<key>one</key>
+			<string>One view</string>
+			<key>other</key>
+			<string>%u views</string>
+		</dict>
+	</dict>
+	<key>choose.password.button.sec</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@second@</string>
+		<key>second</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>one</key>
+			<string>%u second</string>
+			<key>other</key>
+			<string>%u seconds</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

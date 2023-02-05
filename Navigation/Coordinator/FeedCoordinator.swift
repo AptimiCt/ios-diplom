@@ -20,28 +20,30 @@ class FeedCoordinator: Coordinator {
     }
     
     func showPostVC(post: Post) {
-        let postViewController = PostViewController(post: post)
-        postViewController.coordinator = self
+        let postViewController = PostViewController(post: post, coordinator: self)
         navController.pushViewController(postViewController, animated: true)
+    }
+    func showFileVC() {
+        let filesViewController = FilesViewController()
+        navController.pushViewController(filesViewController, animated: true)
     }
     
     func showInfo(){
-        let infoVC = InfoViewController()
-        infoVC.coordinator = self
+        let infoVC = InfoViewController(coordinator: self)
         navController.present(infoVC, animated: true, completion: nil)
     }
     
     func showAlert(in controller: UIViewController){
-        let title = "Уведомление!"
-        let message = "Нажата кнопка в InfoViewController"
+        let title = Constants.alertButtonActionTitle
+        let message = Constants.alertButtonActionMessage
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
-        let actionCancel = UIAlertAction(title: "Cancel", style: .destructive) { _ in
-            print("Нажата кнопка Cancel")
+        let actionCancel = UIAlertAction(title: Constants.alertButtonActionCancel, style: .destructive) { _ in
+            print(Constants.alertButtonActionCancelPressed)
         }
-        let actionOk = UIAlertAction(title: "Ok", style: .default) { _ in
-            print("Нажата кнопка Ок")
+        let actionOk = UIAlertAction(title: Constants.alertButtonActionOk, style: .default) { _ in
+            print(Constants.alertButtonActionOkPressed)
         }
         alert.addAction(actionCancel)
         alert.addAction(actionOk)

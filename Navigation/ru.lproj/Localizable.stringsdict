@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>likes.post</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@likes_count@</string>
+		<key>likes_count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string>Нет оценок</string>
+			<key>one</key>
+			<string>Один раз нравится</string>
+			<key>other</key>
+			<string>%u раз нравится</string>
+		</dict>
+	</dict>
+	<key>views.post</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@views_count@</string>
+		<key>views_count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string>Нет просмотров</string>
+			<key>one</key>
+			<string>%u просмотр</string>
+			<key>few</key>
+			<string>%u просмотра</string>
+			<key>many</key>
+			<string>%u просмотров</string>
+		</dict>
+	</dict>
+	<key>choose.password.button.sec</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@second@</string>
+		<key>second</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>one</key>
+			<string>%u секунда</string>
+			<key>few</key>
+			<string>%u секунды</string>
+			<key>many</key>
+			<string>%u секунд</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -12,10 +12,11 @@ final class PostViewController: UIViewController {
     
     private var post: Post?
     
-    weak var coordinator: FeedCoordinator!
+    weak var coordinator: FeedCoordinator?
     
-    init(post: Post) {
+    init(post: Post, coordinator: FeedCoordinator) {
         self.post = post
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,12 +33,13 @@ final class PostViewController: UIViewController {
         let leftButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                              target: self,
                                              action: #selector(openInfoVC))
-        view.backgroundColor = .systemTeal
+        view.backgroundColor = .systemBlue
         navigationItem.title = post?.author
         navigationItem.setRightBarButton(leftButtonItem, animated: true)
+        navigationController?.navigationBar.tintColor = .createColor(lightMode: .black, darkMode: .white)
     }
     
     @objc private func openInfoVC(){
-        coordinator.showInfo()
+        coordinator?.showInfo()
     }
 }

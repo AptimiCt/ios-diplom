@@ -11,10 +11,14 @@ class TabBarController: UITabBarController {
     
     private var feedViewController: UIViewController
     private var loginViewController: UIViewController
+    private var favoriteViewController: UIViewController
+    private var mapViewController: UIViewController
     
     init() {
         self.feedViewController = ControllersFactory(navigationController: UINavigationController(), tab: .feed).controller
         self.loginViewController = ControllersFactory(navigationController: UINavigationController(), tab: .login).controller
+        self.favoriteViewController = ControllersFactory(navigationController: UINavigationController(), tab: .favorites).controller
+        self.mapViewController = ControllersFactory(navigationController: UINavigationController(), tab: .map).controller
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,18 +32,17 @@ class TabBarController: UITabBarController {
         configTabBar()
     }
     
-    
-    
     private func setControllers() {
         viewControllers = [
             feedViewController,
-            loginViewController
+            loginViewController,
+            favoriteViewController,
+            mapViewController
         ]
         selectedIndex = 1
     }
     
     private func configTabBar(){
-        tabBar.backgroundColor = .white
+        tabBar.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
     }
-    
 }

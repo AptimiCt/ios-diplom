@@ -6,20 +6,21 @@
 //
 
 import UIKit
-//MARK: - protocol
-protocol LoginViewControllerDelegate: AnyObject {
-    func checkerLoginInspector(for password: String, login: String) -> Bool
-}
 
 class LoginViewController: UIViewController {
     
     //MARK: - vars
-    var delegate: LoginViewControllerDelegate
-    var coordinator: LoginCoordinator
-    
+    private var coordinator: LoginCoordinator
+    private var delegate: LoginViewControllerDelegate?
+    private var timer: Timer?
+    private var count = 0
     private let scrollView = UIScrollView()
     private let contentView = UIView()
-    
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.color = .createColor(lightMode: .black, darkMode: .white)
+        return activity
+    }()
     
     private let logoImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
@@ -30,9 +31,11 @@ class LoginViewController: UIViewController {
         let textField = TextFieldWithPadding()
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.backgroundColor = .systemGray6
-        textField.placeholder = "Email or iPhone"
-        textField.textColor = .black
+        textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
+        textField.attributedPlaceholder = NSAttributedString(string: Constants.loginTextViewPlaceholder,
+                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
+        textField.textColor = .createColor(lightMode: .black, darkMode: .white)
+        textField.tintColor = UIColor(named: "AccentColor")
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
         return textField
@@ -40,10 +43,11 @@ class LoginViewController: UIViewController {
     
     private let passwordTextView: TextFieldWithPadding = {
         let textField = TextFieldWithPadding()
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.placeholder = "Password"
-        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(string: Constants.passwordTextViewPlaceholder,
+                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
+        textField.textColor = .createColor(lightMode: .black, darkMode: .white)
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
@@ -60,19 +64,45 @@ class LoginViewController: UIViewController {
         return stackView
     }()
     
-    private let loginButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Log In", for: .normal)
-        button.titleLabel?.textColor = .white
+    private let loginButton: CustomButton = {
+        let button = CustomButton(
+            title: Constants.logIn,
+            titleColor: .createColor(lightMode: .white,
+                                     darkMode: .black)
+        )
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
         return button
     }()
     
-    private let tabBarItemLocal = UITabBarItem(title: "Profile",
-                                       image: UIImage(systemName: "person.crop.circle.fill"),
-                                       tag: 1)
+    private let signUpButton: CustomButton = {
+        let button = CustomButton(
+            title: Constants.signUp,
+            titleColor: .createColor(lightMode: .white,
+                                     darkMode: .black)
+        )
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    private let choosePasswordButton: CustomButton = {
+        let button = CustomButton(
+            title: Constants.choosePassword,
+            titleColor: .createColor(lightMode: .white,
+                                     darkMode: .black)
+        )
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    private let tabBarItemLocal = UITabBarItem(title: Constants.tabBarItemLoginVCTitle,
+                                               image: UIImage(systemName: "person.crop.circle.fill"),
+                                               tag: 1)
     
     //MARK: - init
     init(coordinator: LoginCoordinator, delegate: LoginViewControllerDelegate){
@@ -90,9 +120,12 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .white
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         setupView()
         setupConstrains()
+        loginButtonTapped()
+        signUpButtonTapped()
+        choosePasswordButtonTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,7 +133,6 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -114,17 +146,18 @@ class LoginViewController: UIViewController {
         logoImageView.toAutoLayout()
         stackView.toAutoLayout()
         loginButton.toAutoLayout()
+        signUpButton.toAutoLayout()
+        choosePasswordButton.toAutoLayout()
         passwordTextView.toAutoLayout()
+        activityIndicator.toAutoLayout()
         
-        view.addSubviews(scrollView)
+        view.addSubviews(scrollView, activityIndicator)
         scrollView.addSubviews(contentView)
         scrollView.keyboardDismissMode = .interactive
         
         stackView.addArrangedSubview(loginTextView)
         stackView.addArrangedSubview(passwordTextView)
-        contentView.addSubviews(logoImageView, stackView, loginButton)
-        
-        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        contentView.addSubviews(logoImageView, stackView, loginButton, signUpButton, choosePasswordButton)
     }
     
     private func setupConstrains(){
@@ -163,35 +196,27 @@ class LoginViewController: UIViewController {
                                              constant: Constants.topMarginForLoginButton),
             loginButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
-            loginButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
             
+            signUpButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
+            signUpButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            signUpButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
+            signUpButton.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
+            
+            choosePasswordButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            choosePasswordButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
+            choosePasswordButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            choosePasswordButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
+            choosePasswordButton.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: passwordTextView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: passwordTextView.centerYAnchor),
+            activityIndicator.heightAnchor.constraint(equalTo: passwordTextView.heightAnchor)
         ]
-        
         NSLayoutConstraint.activate(constrains)
     }
     
-    //MARK: - @objc funcs
-    @objc
-    private func loginButtonTapped(){
-        
-        guard let passwordText = passwordTextView.text, let loginText = loginTextView.text else { return }
-        #if DEBUG
-            let check = true
-            let userService = TestUserService()
-        #else
-            let check = delegate.checkerLoginInspector(for: passwordText, login: loginText)
-            let userService = CurrentUserService()
-        #endif
-        if check {
-            coordinator.showProfileVC(loginName: loginText, userService: userService)
-        } else {
-            let alert = UIAlertController(title: Constants.titleAlert, message: Constants.message, preferredStyle: .alert)
-            let actionOk = UIAlertAction(title: "Ok", style: .default)
-            alert.addAction(actionOk)
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
+    //MARK: - @objc private funcs
     @objc
     private func keyboardWillShow(notification: NSNotification){
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
@@ -204,5 +229,170 @@ class LoginViewController: UIViewController {
     private func keyboardWillHide(notification: NSNotification){
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
+    }
+    
+    @objc
+    private func timerCrack(){
+        count += 1
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.choosePasswordButton.setTitle(String(format: ~K.LoginVC.Keys.choosePasswordButtonSec.rawValue, self.count), for: .normal)
+        }
+    }
+    
+    //MARK: - private funcs
+    private func checkCredentionalsOnError(email: String, password: String) throws {
+        if email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
+            throw CredentialError.emptyEmail
+        } else if !validate(email) {
+            throw CredentialError.emailIsNoCorrect
+        }
+        if password.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
+            throw CredentialError.emptyPassword
+        }
+        if !passwordIsValid(password) {
+            throw CredentialError.incorrectCredentials
+        }
+    }
+    
+    private func handle(error: CredentialError) {
+        switch error {
+            case .incorrectCredentials:
+                alertForError(message: ~error.rawValue)
+            case .emptyEmail:
+                alertForError(message: ~error.rawValue)
+            case .emptyPassword:
+                alertForError(message: ~error.rawValue)
+            case .emailIsNoCorrect:
+                alertForError(message: ~error.rawValue)
+        }
+    }
+    
+    private func alertForError(message: String) {
+        let alert = UIAlertController(title: Constants.titleAlert, message: message, preferredStyle: .alert)
+        let actionOk = UIAlertAction(title: ~K.LoginVC.Keys.alertButtonActionOk.rawValue, style: .default)
+        alert.addAction(actionOk)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func passwordIsValid(_ password: String) -> Bool {
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
+        return passwordTest.evaluate(with: password)
+    }
+    
+    private func validate(_ email: String) -> Bool {
+        let emailRegEx = "([a-z0-9.]){1,64}@([a-z0-9]){1,64}\\.([a-z0-9]){2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
+        return emailTest.evaluate(with: email)
+    }
+    
+    private func loginButtonTapped() {
+        loginButton.action = { [weak self] in
+            guard let self = self else { return }
+            guard let passwordText = self.passwordTextView.text, let loginText = self.loginTextView.text else { return }
+            do {
+                try self.checkCredentionalsOnError(email: loginText, password: passwordText)
+                self.delegate?.checkCredentionalsInspector(email: loginText, password: passwordText, completion: { result in
+                    #if DEBUG
+                    let userService = TestUserService()
+                    #else
+                    let userService = CurrentUserService()
+                    #endif
+                    switch result {
+                        case .success(let authModel):
+                            self.showProfile(authModel, userService)
+                        case .failure(let failure):
+                            self.switchFailure(failure)
+                    }
+                })
+            } catch {
+                self.handle(error: error as! CredentialError)
+            }
+            
+        }
+    }
+    private func switchFailure(_ failure: NSError) {
+        switch failure.userInfo["FIRAuthErrorUserInfoNameKey"] as? String {
+            case FirebaseResponseError.ERROR_INVALID_EMAIL.rawValue:
+                self.alertForError(message: ~FirebaseResponseErrorMessage.invalidEmail.rawValue)
+            case FirebaseResponseError.ERROR_USER_NOT_FOUND.rawValue:
+                self.alertForError(message: ~FirebaseResponseErrorMessage.registerUser.rawValue)
+            case FirebaseResponseError.ERROR_WRONG_PASSWORD.rawValue:
+                self.alertForError(message: ~FirebaseResponseErrorMessage.wrongPassword.rawValue)
+            case FirebaseResponseError.ERROR_NETWORK_REQUEST_FAILED.rawValue:
+                self.alertForError(message: ~FirebaseResponseErrorMessage.internetConnectionProblem.rawValue)
+            case FirebaseResponseError.ERROR_EMAIL_ALREADY_IN_USE.rawValue:
+                self.alertForError(message: ~FirebaseResponseErrorMessage.theUserWithThisEmailAlreadyExists.rawValue)
+            default:
+                self.alertForError(message: ~FirebaseResponseErrorMessage.unknownError.rawValue)
+        }
+    }
+    
+    fileprivate func showProfile(_ authModel: AuthModel, _ userService: TestUserService) {
+        let fullName = authModel.name
+        self.coordinator.showProfileVC(loginName: fullName, userService: userService)
+    }
+    
+    private func signUpButtonTapped() {
+        signUpButton.action = { [weak self] in
+            guard let self,
+                  let passwordText = self.passwordTextView.text,
+                  let loginText = self.loginTextView.text else { return }
+            do {
+                try self.checkCredentionalsOnError(email: loginText, password: passwordText)
+                self.delegate?.signUpInspector(email: loginText, password: passwordText, completion: { result in
+                    #if DEBUG
+                    let userService = TestUserService()
+                    #else
+                    let userService = CurrentUserService()
+                    #endif
+                    switch result {
+                        case .success(let authModel):
+                            self.showProfile(authModel, userService)
+                        case .failure(let failure):
+                            self.switchFailure(failure)
+                    }
+                })
+            } catch {
+                self.handle(error: error as! CredentialError)
+            }
+        }
+    }
+    
+    //Реализация bruteForce
+    private func choosePasswordButtonTapped(){
+        choosePasswordButton.action = { [weak self] in
+            guard let self = self else { return }
+            self.passwordTextView.delegate = self
+            self.choosePasswordButton.setTitle("\(Constants.choosePassword)", for: .normal)
+            self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCrack), userInfo: nil, repeats: true)
+            let bruteForceManager = BruteForceManager()
+            let passwordText = bruteForceManager.passwordGenerator(lengthPass: 3)
+            self.activityIndicator.startAnimating()
+            self.passwordTextView.isUserInteractionEnabled = false
+            self.choosePasswordButton.isUserInteractionEnabled = false
+            DispatchQueue.global().async {
+                bruteForceManager.bruteForce(passwordToUnlock: passwordText)
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.passwordTextView.isUserInteractionEnabled = true
+                    self.choosePasswordButton.isUserInteractionEnabled = true
+                    self.passwordTextView.isSecureTextEntry = false
+                    self.passwordTextView.text = passwordText
+                    self.timer?.invalidate()
+                    self.count = 0
+                    self.choosePasswordButton.setTitle("\(Constants.choosePassword)", for: .normal)
+                }
+            }
+        }
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if !passwordTextView.isSecureTextEntry {
+            passwordTextView.isSecureTextEntry.toggle()
+        }
     }
 }

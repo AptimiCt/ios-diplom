@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>838316154611-72ng7q2eaispbo5som6a2aivd33vudfv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.838316154611-72ng7q2eaispbo5som6a2aivd33vudfv</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAfq3TQ-WvbE7ePZvvk5lWJRbtx9yqvspg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>838316154611</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ru.aptimict.Navigation</string>
+	<key>PROJECT_ID</key>
+	<string>navigation-c7531</string>
+	<key>STORAGE_BUCKET</key>
+	<string>navigation-c7531.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:838316154611:ios:b8270b7e7ba83c8de4e186</string>
+</dict>
+</plist>

@@ -9,6 +9,13 @@ import Foundation
 
 public struct Post {
     
+    public let word = "пароль"
+    public let author: String
+    public let description: String
+    public let image: String
+    public let likes: Int
+    public let views: Int
+    
     public init(author: String, description: String,
          image: String, likes: Int, views: Int){
         self.author = author
@@ -18,9 +25,7 @@ public struct Post {
         self.views = views
     }
     
-    public let author: String
-    public let description: String
-    public let image: String
-    public let likes: Int
-    public let views: Int
+    public func checker(word: String) -> Bool {
+        word == self.word ? true : false
+    }
 }

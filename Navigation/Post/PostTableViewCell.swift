@@ -24,9 +24,9 @@ class PostTableViewCell: UITableViewCell {
             }
             descriptionLabel.text = post?.description
             guard let likes = post?.likes else { return }
-            likesLabel.text = "Likes: \(likes)"
+            likesLabel.text = String(format: ~K.Likes.Keys.likes.rawValue, likes)
             guard let views = post?.views else { return }
-            viewsLabel.text = "Views: \(views)"
+            viewsLabel.text = String(format: ~K.Views.Keys.views.rawValue, views)
         }
     }
     
@@ -34,7 +34,7 @@ class PostTableViewCell: UITableViewCell {
         let label = UILabel()
         label.toAutoLayout()
         label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.textColor = .createColor(lightMode: .black, darkMode: .white)
         label.numberOfLines = 2
         return label
     }()
@@ -51,7 +51,7 @@ class PostTableViewCell: UITableViewCell {
         let description = UILabel()
         description.toAutoLayout()
         description.font = .systemFont(ofSize: 14)
-        description.textColor = .systemGray
+        description.textColor = .createColor(lightMode: .systemGray, darkMode: .white)
         description.numberOfLines = 0
         return description
     }()
@@ -60,7 +60,8 @@ class PostTableViewCell: UITableViewCell {
         let likes = UILabel()
         likes.toAutoLayout()
         likes.font = .systemFont(ofSize: 16)
-        likes.textColor = .black
+        likes.numberOfLines = 0
+        likes.textColor = .createColor(lightMode: .black, darkMode: .white)
         return likes
     }()
     
@@ -68,7 +69,8 @@ class PostTableViewCell: UITableViewCell {
         let views = UILabel()
         views.toAutoLayout()
         views.font = .systemFont(ofSize: 16)
-        views.textColor = .black
+        views.numberOfLines = 0
+        views.textColor = .createColor(lightMode: .black, darkMode: .white)
         return views
     }()
     
@@ -76,15 +78,23 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         configureConstraints()
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
+                doubleTap.numberOfTapsRequired = 2
+                self.addGestureRecognizer(doubleTap)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    @objc func addPostToFavorite(){
+        guard let post else { return }
+        CoreDataManager.dataManager.addPost(post: post)
+    }
 }
 
 extension PostTableViewCell {
     private func setupViews(){
+        self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         contentView.addSubviews(authorLabel, postImageView, descriptionLabel, likesLabel, viewsLabel)
     }
     

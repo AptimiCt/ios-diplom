@@ -38,4 +38,12 @@ extension Photos {
          Photos.circleFromOnHigh, Photos.church, Photos.hill, Photos.mountains, Photos.dog,
          Photos.skiDownhill,Photos.valley,Photos.bridge, Photos.samovar, Photos.lilyOfTheValley]
     }
+    static func fetchPhotos(countPhoto: Int, startIndex: Int = 0)->[UIImage] {
+        
+        if (startIndex < Photos.fetchPhotos().count && startIndex >= 0)  &&  startIndex + countPhoto < Photos.fetchPhotos().count {
+            return Array(Photos.fetchPhotos()[startIndex...countPhoto + startIndex])
+        }
+        print("startIndex + countPhoto = \(startIndex + countPhoto) >= Photos.fetchPhotos().count = \(Photos.fetchPhotos().count)")
+        return Photos.fetchPhotos()
+    }
 }

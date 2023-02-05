@@ -13,9 +13,8 @@ class ProfileViewController: UIViewController {
     private var coordinator: LoginCoordinator
     private var viewModel: ProfileViewModelProtocol!
     
-    
     //MARK: - vars
-    private let tabBarItemProfileView = UITabBarItem(title: "Profile",
+    private let tabBarItemProfileView = UITabBarItem(title: Constants.tabBarItemProfileViewTitle,
                                                      image: UIImage(systemName: "person.crop.circle.fill"),
                                                      tag: 1)
     
@@ -32,6 +31,7 @@ class ProfileViewController: UIViewController {
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.backgroundColor = . createColor(lightMode: .white, darkMode: .systemGray6)
         tableView.toAutoLayout()
         return tableView
     }()
@@ -51,9 +51,9 @@ class ProfileViewController: UIViewController {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
         #if DEBUG
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         #else
-        view.backgroundColor = .red
+        view.backgroundColor = .systemRed
         #endif
         self.tabBarItem = tabBarItemProfileView
         guard let user = self.userService.userService(loginName: loginName) else { return }
@@ -71,6 +71,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         photos = Photos.fetchPhotos()
         setupView()
+        closeButtonTaped()
         setupViewModel()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -78,18 +79,17 @@ class ProfileViewController: UIViewController {
         viewModel.changeState { [weak self] in
             self?.tableView.reloadData()
         }
+
     }
     //MARK: - funcs
-    func setupView() {
-        
+    private func setupView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         configureConstraints()
     }
     
-    func configureConstraints(){
-        
+    private func configureConstraints(){
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPost)
@@ -113,8 +113,6 @@ class ProfileViewController: UIViewController {
         
         self.avatar = sender.view as? UIImageView
         guard let avatar = avatar else { return }
-        
-        profileTableHeaderView.closeButton.addTarget(self, action: #selector(closeButtonTaped), for: .touchUpInside)
         
         tableViewInteraction(to: false)
         avatar.isUserInteractionEnabled = false
@@ -150,28 +148,29 @@ class ProfileViewController: UIViewController {
         
     }
     
-    @objc private func closeButtonTaped(){
-        
-        guard let avatar = avatar else { return }
-        
-        UIView.animateKeyframes(withDuration: 0.8, delay: 0, options: []) {
+    private func closeButtonTaped(){
+        profileTableHeaderView.closeButton.action = {
+            guard let avatar = self.avatar else { return }
             
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.37) {
-                self.profileTableHeaderView.closeButton.alpha = 0
+            UIView.animateKeyframes(withDuration: 0.8, delay: 0, options: []) {
+                
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.37) {
+                    self.profileTableHeaderView.closeButton.alpha = 0
+                }
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.37, relativeDuration: 0.62) {
+                    self.profileTableHeaderView.backgroundView.alpha = 0
+                }
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.37, relativeDuration: 0.62) {
+                    self.avatar?.layer.cornerRadius = 50
+                    avatar.transform = .identity
+                    self.view.layoutIfNeeded()
+                }
             }
-            
-            UIView.addKeyframe(withRelativeStartTime: 0.37, relativeDuration: 0.62) {
-                self.profileTableHeaderView.backgroundView.alpha = 0
-            }
-            
-            UIView.addKeyframe(withRelativeStartTime: 0.37, relativeDuration: 0.62) {
-                self.avatar?.layer.cornerRadius = 50
-                avatar.transform = .identity
-                self.view.layoutIfNeeded()
-            }
+            self.tableViewInteraction(to: true)
+            avatar.isUserInteractionEnabled = true
         }
-        tableViewInteraction(to: true)
-        avatar.isUserInteractionEnabled = true
     }
     
     private func tableViewInteraction(to toggle: Bool){
@@ -217,8 +216,7 @@ extension ProfileViewController: UITableViewDataSource {
         }
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPost) as? PostTableViewCell else { return UITableViewCell() }
-        cell.post = viewModel.getPostFor(indexPath)
-        
+            cell.post = viewModel.getPostFor(indexPath)
         return cell
     }
     
@@ -230,8 +228,6 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            
-            profileTableHeaderView.delegate = self
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnAvatar))
             profileTableHeaderView.avatarImageView.addGestureRecognizer(tapGesture)
             return profileTableHeaderView
@@ -248,12 +244,5 @@ extension ProfileViewController: UITableViewDelegate {
         if indexPath.section == 0 {
             coordinator.showPhotosVC()
         }
-    }
-}
-
-extension ProfileViewController: ProfileHeaderViewDelegate {
-    func didTapedButton() {
-        guard let status = self.profileTableHeaderView.statusLabel.text else { return }
-        print("\(status)")
     }
 }

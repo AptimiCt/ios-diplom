@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
@@ -23,7 +25,10 @@ final class AppCoordinator: Coordinator {
         self.rootViewController = ControllersFactory.createTabBarController()
     }
     
-    func start(){
+    func start() {
+        FirebaseApp.configure()
+        let appConfiguration = AppConfiguration.allCases.randomElement()
+        NetworkManager.request(for: appConfiguration)
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
     }

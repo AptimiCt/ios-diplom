@@ -1,0 +1,11 @@
+/* 
+  infoPlist.strings
+  Navigation
+
+  Created by Александр Востриков on 23.01.2023.
+  
+*/
+
+"NSLocationWhenInUseUsageDescription" = "Получение геопозиции нужно для построения маршрута до точек на карте.";
+"NSLocationAlwaysUsageDescription" = "Получение геопозиции нужно для построения маршрута до точек на карте.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Получение геопозиции нужно для построения маршрута до точек на карте.";

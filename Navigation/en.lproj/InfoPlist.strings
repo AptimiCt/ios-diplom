@@ -1,0 +1,11 @@
+/* 
+  infoPlist.strings
+  Navigation
+
+  Created by Александр Востриков on 23.01.2023.
+  
+*/
+
+"NSLocationWhenInUseUsageDescription" = "Getting geo-positioning is necessary to build a route to points on the map.";
+"NSLocationAlwaysUsageDescription" = "Getting geo-positioning is necessary to build a route to points on the map.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Getting geo-positioning is necessary to build a route to points on the map.";
