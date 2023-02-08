@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61007C282994322500AD7922 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61007C272994322500AD7922 /* LocalAuthorizationService.swift */; };
 		6150EECF296871C70023BA7D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EECE296871C70023BA7D /* ProfileViewModel.swift */; };
 		6150EF142969EDDA0023BA7D /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */; };
 		6180AC67297D333E00A3281A /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC66297D333E00A3281A /* K.swift */; };
@@ -102,6 +103,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		61007C272994322500AD7922 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		6150EECE296871C70023BA7D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		6180AC66297D333E00A3281A /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				BB5AF6702977305400796C65 /* LocationService.swift */,
 				6180AC68297D346500A3281A /* LocalizationShortCut.swift */,
 				6180AC72297DBD3100A3281A /* FirebaseResponseErrorMessage.swift */,
+				61007C272994322500AD7922 /* LocalAuthorizationService.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				BB152508282FBFCE0045275F /* CurrentUserService.swift in Sources */,
 				BB0C6A4428FA045500C665D5 /* LoginViewControllerDelegate.swift in Sources */,
 				BB152507282FBFCE0045275F /* User.swift in Sources */,
+				61007C282994322500AD7922 /* LocalAuthorizationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
