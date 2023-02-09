@@ -45,7 +45,7 @@ final class LocalAuthorizationService {
         let alert = UIAlertController(title: Constants.titleAlert, message: message, preferredStyle: .alert)
         let actionOk = UIAlertAction(title: ~K.LoginVC.Keys.alertButtonActionOk.rawValue, style: .default)
         alert.addAction(actionOk)
-        self.present(alert, animated: true, completion: nil)
+        //present(alert, animated: true, completion: nil)
     }
     
 }

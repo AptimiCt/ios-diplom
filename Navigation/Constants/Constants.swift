@@ -129,6 +129,7 @@ struct Constants {
     //MARK: - LoginViewController
     static let logIn = ~K.LoginVC.Keys.loginButtonTitle.rawValue
     static let signUp = ~K.LoginVC.Keys.signUpButtonTitle.rawValue
+    static let logInWithBiometrics = ~K.LoginVC.Keys.biometricsButtonTitle.rawValue
     static let loginTextViewPlaceholder = ~K.LoginVC.Keys.loginTextViewPlaceholder.rawValue
     static let passwordTextViewPlaceholder = ~K.LoginVC.Keys.passwordTextViewPlaceholder.rawValue
     static let choosePassword = ~K.LoginVC.Keys.choosePasswordButtonTitle.rawValue

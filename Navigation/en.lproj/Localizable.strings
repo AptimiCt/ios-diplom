@@ -77,6 +77,7 @@
 "passwordTextView.placeholder" = "Password";
 "loginButton.title" = "LogIn";
 "signUpButton.title" = "SignUp";
+"biometryButton.title" = "Login with biometrics";
 "choosePasswordButton.title" = "Pick up password";
 "tabBarItemLoginVC.title" = "Profile";
 "alertForError.title" = "Input error.";

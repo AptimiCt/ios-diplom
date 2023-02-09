@@ -100,6 +100,18 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    private let loginWithBiometrics: CustomButton = {
+        let button = CustomButton(
+            title: Constants.logInWithBiometrics,
+            titleColor: .createColor(lightMode: .white,
+                                     darkMode: .black)
+        )
+        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        return button
+    }()
+    
     private let tabBarItemLocal = UITabBarItem(title: Constants.tabBarItemLoginVCTitle,
                                                image: UIImage(systemName: "person.crop.circle.fill"),
                                                tag: 1)
@@ -125,6 +137,7 @@ class LoginViewController: UIViewController {
         setupConstrains()
         loginButtonTapped()
         signUpButtonTapped()
+        loginWithBiometricsButtonTapped()
         choosePasswordButtonTapped()
     }
     
@@ -147,6 +160,7 @@ class LoginViewController: UIViewController {
         stackView.toAutoLayout()
         loginButton.toAutoLayout()
         signUpButton.toAutoLayout()
+        loginWithBiometrics.toAutoLayout()
         choosePasswordButton.toAutoLayout()
         passwordTextView.toAutoLayout()
         activityIndicator.toAutoLayout()
@@ -157,7 +171,7 @@ class LoginViewController: UIViewController {
         
         stackView.addArrangedSubview(loginTextView)
         stackView.addArrangedSubview(passwordTextView)
-        contentView.addSubviews(logoImageView, stackView, loginButton, signUpButton, choosePasswordButton)
+        contentView.addSubviews(logoImageView, stackView, loginButton, signUpButton, loginWithBiometrics, choosePasswordButton)
     }
     
     private func setupConstrains(){
@@ -200,11 +214,15 @@ class LoginViewController: UIViewController {
             signUpButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
             signUpButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            signUpButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
             signUpButton.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
             
+            loginWithBiometrics.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            loginWithBiometrics.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
+            loginWithBiometrics.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+            loginWithBiometrics.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
+            
             choosePasswordButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            choosePasswordButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
+            choosePasswordButton.topAnchor.constraint(equalTo: loginWithBiometrics.bottomAnchor, constant: 16),
             choosePasswordButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             choosePasswordButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
             choosePasswordButton.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
@@ -385,6 +403,12 @@ class LoginViewController: UIViewController {
                     self.choosePasswordButton.setTitle("\(Constants.choosePassword)", for: .normal)
                 }
             }
+        }
+    }
+    private func loginWithBiometricsButtonTapped(){
+        loginWithBiometrics.action = { [weak self] in
+            guard let self = self else { return }
+            print("loginWithBiometrics")
         }
     }
 }

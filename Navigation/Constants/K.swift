@@ -112,6 +112,7 @@ struct K {
             case passwordTextViewPlaceholder = "passwordTextView.placeholder"
             case loginButtonTitle = "loginButton.title"
             case signUpButtonTitle = "signUpButton.title"
+            case biometricsButtonTitle = "biometryButton.title"
             case choosePasswordButtonTitle = "choosePasswordButton.title"
             case choosePasswordButtonSec =  "choose.password.button.sec"
             case tabBarItemLoginVCTitle = "tabBarItemLoginVC.title"
