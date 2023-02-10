@@ -9,3 +9,4 @@
 "NSLocationWhenInUseUsageDescription" = "Получение геопозиции нужно для построения маршрута до точек на карте.";
 "NSLocationAlwaysUsageDescription" = "Получение геопозиции нужно для построения маршрута до точек на карте.";
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Получение геопозиции нужно для построения маршрута до точек на карте.";
+"NSFaceIDUsageDescription" = "Для входа в приложение с использованием биометрии";

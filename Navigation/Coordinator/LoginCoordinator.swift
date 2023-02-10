@@ -28,4 +28,8 @@ class LoginCoordinator: Coordinator {
         let nvc = PhotosViewController()
         navController.pushViewController(nvc, animated: true)
     }
+    func showAlertController(in controller: UIViewController, message: String) {
+        AlertController.defaultController.showAlert(in: controller,
+                                                    message: message)
+    }
 }
