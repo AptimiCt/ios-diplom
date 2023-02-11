@@ -9,3 +9,4 @@
 "NSLocationWhenInUseUsageDescription" = "Getting geo-positioning is necessary to build a route to points on the map.";
 "NSLocationAlwaysUsageDescription" = "Getting geo-positioning is necessary to build a route to points on the map.";
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Getting geo-positioning is necessary to build a route to points on the map.";
+"NSFaceIDUsageDescription" = "To log in to the application using biometrics";

@@ -77,6 +77,7 @@
 "passwordTextView.placeholder" = "Пароль";
 "loginButton.title" = "Вход";
 "signUpButton.title" = "Регистрация";
+"biometryButton.title" = "Вход по биометрии";
 "choosePasswordButton.title" = "Подобрать пароль";
 "tabBarItemLoginVC.title" = "Профиль";
 "alertForError.title" = "Ошибка ввода.";
@@ -95,3 +96,13 @@
 
 //MARK: - SceneDelegate
 "sceneDelegate.post" = "Публикация";
+
+//MARK: - LocalAuthorizationService
+"LocalAuthorizationService.localizedReason" = "Доступ в приложение Navigation";
+"LocalAuthorizationService.authenticationFailed" = "Возникла проблема с проверкой вашей личности.";
+"LocalAuthorizationService.userCancel" = "Вы нажали отмену.";
+"LocalAuthorizationService.userFallback" = "Вы нажали пароль.";
+"LocalAuthorizationService.biometryNotAvailable" = "Функция Face ID/Touch ID недоступна.";
+"LocalAuthorizationService.biometryNotEnrolled" = "Face ID/Touch ID не настроен.";
+"LocalAuthorizationService.biometryLockout" = "Face ID/Touch ID заблокирован.";
+"LocalAuthorizationService.unknown" = "Face ID/Touch ID могут быть не настроены";
