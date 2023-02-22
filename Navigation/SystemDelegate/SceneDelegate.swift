@@ -28,5 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             print ("Error signing out: %@", signOutError)
         }
     }
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 }
 
