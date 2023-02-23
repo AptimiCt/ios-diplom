@@ -106,3 +106,10 @@
 "LocalAuthorizationService.biometryNotEnrolled" = "Face ID/Touch ID is not set up.";
 "LocalAuthorizationService.biometryLockout" = "Face ID/Touch ID is locked.";
 "LocalAuthorizationService.unknown" = "Face ID/Touch ID may not be configured";
+
+//MARK: - LocalNotificationsService
+"LocalNotificationsService.actionCheck.title" = "Check";
+"LocalNotificationsService.actionCancel.title" = "Cancel";
+"LocalNotificationsService.content.title" = "Update";
+"LocalNotificationsService.content.body" = "Look for the latest updates";
+"LocalNotificationsService.delegate.didReceive" = "Unknown button pressed";
