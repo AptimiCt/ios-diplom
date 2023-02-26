@@ -12,8 +12,8 @@ class FavoritesViewController: UIViewController {
     
     //MARK: - vars
     private let tabBarItemFavoritesView = UITabBarItem(title: Constants.tabBarItemFavoritesViewTitle,
-                                                     image: UIImage(systemName: "star.fill"),
-                                                     tag: 3)
+                                                       image: UIImage(systemName: "star.fill"),
+                                                       tag: 3)
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -44,6 +44,7 @@ class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         localStorage = CoreDataManager.dataManager.posts.map { mappingPost(postDataModel: $0) }
         setupView()
+        setupNavigationBarButton()
     }
     override func viewWillAppear(_ animated: Bool) {
         localStorage = CoreDataManager.dataManager.posts.map { mappingPost(postDataModel: $0) }
@@ -53,10 +54,15 @@ class FavoritesViewController: UIViewController {
     //MARK: - funcs
     private func setupView() {
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         configureConstraints()
     }
-    
+    private func setupNavigationBarButton() {
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "checklist.checked"), style: .plain, target: self, action: #selector(clearFilter)),
+            UIBarButtonItem(image: UIImage(systemName: "checklist"), style: .plain, target: self, action: #selector(applyFilter))]
+    }
     private func configureConstraints(){
         view.addSubview(tableView)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPost)
@@ -75,16 +81,40 @@ class FavoritesViewController: UIViewController {
 }
 
 //MARK: - extensions
+@objc private extension FavoritesViewController {
+    func clearFilter() {
+        print(#function)
+    }
+    
+    func applyFilter() {
+        print(#function)
+    }
+}
 extension FavoritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         localStorage.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPost) as? PostTableViewCell else { return UITableViewCell() }
         cell.post = localStorage[indexPath.row]
         cell.selectionStyle = .none
         return cell
+    }
+}
+
+extension FavoritesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let actionDelete = UIContextualAction(style: .destructive, title: nil) { _, _, completion in
+            
+            completion(true)
+        }
+        actionDelete.image = UIImage(systemName: "trash")
+        return UISwipeActionsConfiguration(actions: [actionDelete])
     }
 }

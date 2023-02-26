@@ -199,6 +199,10 @@ class ProfileViewController: UIViewController {
             animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
+    
+    deinit {
+        print(#function)
+    }
 }
 
 //MARK: - extensions
