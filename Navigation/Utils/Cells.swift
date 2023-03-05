@@ -8,7 +8,8 @@
 import UIKit
 
 struct Cells {
-    static let cellForPost = String(describing: PostTableViewCell.self)
+    static let cellForPostProfile = String(describing: ProfileViewController.self)
+    static let cellForPostFavorites = String(describing: FavoritesViewController.self)
     static let cellForSection = String(describing: PhotosTableViewCell.self)
     static let cellForCollection = String(describing: PhotosCollectionViewCell.self)
 }

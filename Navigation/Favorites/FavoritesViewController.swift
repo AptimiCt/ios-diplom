@@ -42,14 +42,16 @@ class FavoritesViewController: UIViewController {
     //MARK: - override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
-        localStorage = CoreDataManager.dataManager.posts.map { mappingPost(postDataModel: $0) }
         setupView()
         setupNavigationBarButton()
     }
     override func viewWillAppear(_ animated: Bool) {
-        localStorage = CoreDataManager.dataManager.posts.map { mappingPost(postDataModel: $0) }
-        CoreDataManager.dataManager.loadData()
-        tableView.reloadData()
+        super.viewWillAppear(animated)
+        CoreDataManager.dataManager.fetch(predicate: nil) {[weak self] result in
+            guard let self else { return }
+            self.localStorage = CoreDataManager.dataManager.posts.map { self.mappingPost(postDataModel: $0) }
+            self.tableView.reloadData()
+        }
     }
     //MARK: - funcs
     private func setupView() {
@@ -65,7 +67,7 @@ class FavoritesViewController: UIViewController {
     }
     private func configureConstraints(){
         view.addSubview(tableView)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPost)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPostFavorites)
         let constraints: [NSLayoutConstraint] = [
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -76,7 +78,7 @@ class FavoritesViewController: UIViewController {
     }
     
     private func mappingPost(postDataModel: PostCoreData) -> Post {
-        return Post(author: postDataModel.author ?? "", description: postDataModel.descriptionPost ?? "", image: postDataModel.image ?? "", likes: Int(postDataModel.likes), views: Int(postDataModel.views))
+        return Post(id: Int(postDataModel.identifier) ,author: postDataModel.author ?? "", description: postDataModel.descriptionPost ?? "", image: postDataModel.image ?? "", likes: Int(postDataModel.likes), views: Int(postDataModel.views))
     }
 }
 
@@ -97,7 +99,7 @@ extension FavoritesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPost) as? PostTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFavorites) as? PostTableViewCell else { return UITableViewCell() }
         cell.post = localStorage[indexPath.row]
         cell.selectionStyle = .none
         return cell
@@ -105,13 +107,16 @@ extension FavoritesViewController: UITableViewDataSource {
 }
 
 extension FavoritesViewController: UITableViewDelegate {
+   
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let actionDelete = UIContextualAction(style: .destructive, title: nil) { _, _, completion in
-            
+            //let cell = tableView.cellForRow(at: indexPath)
+            let post = self.localStorage[indexPath.row]
+            print(post)
             completion(true)
         }
         actionDelete.image = UIImage(systemName: "trash")
