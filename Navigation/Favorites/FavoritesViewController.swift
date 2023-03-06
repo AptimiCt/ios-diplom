@@ -113,10 +113,26 @@ extension FavoritesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let actionDelete = UIContextualAction(style: .destructive, title: nil) { _, _, completion in
-            //let cell = tableView.cellForRow(at: indexPath)
-            let post = self.localStorage[indexPath.row]
-            print(post)
+        let actionDelete = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completion in
+            guard let self else { return }
+            let newLocalStorage = self.localStorage
+            let deletedPost = self.localStorage[indexPath.row]
+            self.localStorage.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            let predicate = NSPredicate(format: "identifier == \(Int64(deletedPost.id))")
+            CoreDataManager.dataManager.delete(predicate: predicate) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                    case .success:
+                        completion(true)
+                    case .failure(let error):
+                        self.localStorage = newLocalStorage
+                        self.tableView.insertRows(at: [indexPath], with: .automatic)
+                        print(error.localizedDescription)
+                        completion(false)
+                }
+                
+            }
             completion(true)
         }
         actionDelete.image = UIImage(systemName: "trash")

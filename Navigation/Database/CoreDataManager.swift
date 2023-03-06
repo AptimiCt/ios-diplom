@@ -181,11 +181,25 @@ extension CoreDataManager {
         }
     }
     
-    func delete() {
-        
-    }
-    
-    func update() {
-        
+    func delete(predicate: NSPredicate, completion: @escaping (Result<[PostCoreData], DatabaseError>) -> Void) {
+        fetch(predicate: predicate) { [weak self] result in
+            guard let self else { return }
+            switch result {
+                case .success(let fetchedObjects):
+                    guard !fetchedObjects.isEmpty else {
+                        completion(.failure(.wrongModel))
+                        return
+                    }
+                    self.saveContext.perform {
+                        fetchedObjects.forEach { fetchOject in
+                            self.saveContext.delete(fetchOject)
+                        }
+                        self.save(with: self.saveContext, completionHandler: { completion(.success(fetchedObjects)) }, failureCompletion: { error in completion(.failure(error))
+                        })
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+            }
+        }
     }
 }
