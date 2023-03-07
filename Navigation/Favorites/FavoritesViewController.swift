@@ -15,13 +15,17 @@ class FavoritesViewController: UIViewController {
                                                        image: UIImage(systemName: "star.fill"),
                                                        tag: 3)
     
-    let tableView: UITableView = {
+    private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.toAutoLayout()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
         return tableView
     }()
+    private lazy var clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "checklist.checked"), style: .plain, target: self, action: #selector(clearFilter))
+    private lazy var applyFilterButton = UIBarButtonItem(image: UIImage(systemName: "checklist"), style: .plain, target: self, action: #selector(applyFilter))
     
-    var localStorage: [Post] = []
+    private var localStorage: [Post] = []
     
     //MARK: - init
     init() {
@@ -47,6 +51,7 @@ class FavoritesViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        applyFilterButton.tintColor = .systemBlue
         CoreDataManager.dataManager.fetch(predicate: nil) {[weak self] result in
             guard let self else { return }
             self.localStorage = CoreDataManager.dataManager.posts.map { self.mappingPost(postDataModel: $0) }
@@ -62,8 +67,7 @@ class FavoritesViewController: UIViewController {
     }
     private func setupNavigationBarButton() {
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "checklist.checked"), style: .plain, target: self, action: #selector(clearFilter)),
-            UIBarButtonItem(image: UIImage(systemName: "checklist"), style: .plain, target: self, action: #selector(applyFilter))]
+            clearFilterButton, applyFilterButton]
     }
     private func configureConstraints(){
         view.addSubview(tableView)
@@ -80,16 +84,42 @@ class FavoritesViewController: UIViewController {
     private func mappingPost(postDataModel: PostCoreData) -> Post {
         return Post(id: Int(postDataModel.identifier) ,author: postDataModel.author ?? "", description: postDataModel.descriptionPost ?? "", image: postDataModel.image ?? "", likes: Int(postDataModel.likes), views: Int(postDataModel.views))
     }
+    
+    private func filterFavorites(author: String = "", isFiltred: Bool = false) {
+        let predicate = isFiltred ? NSPredicate(format: "author == %@", author) : nil
+        CoreDataManager.dataManager.fetch(predicate: predicate) { [weak self] result in
+            guard let self else { return }
+            switch result {
+                case .success(let posts):
+                    self.localStorage = posts.map({ self.mappingPost(postDataModel: $0)
+                    })
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 //MARK: - extensions
 @objc private extension FavoritesViewController {
     func clearFilter() {
-        print(#function)
+        filterFavorites()
+        applyFilterButton.tintColor = .systemBlue
     }
     
     func applyFilter() {
-        print(#function)
+        let alertController = UIAlertController(title: "applyFilter.alertController.title".localized, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "applyFilter.alertController.okAction".localized, style: .default, handler: { [weak self] action in
+            guard let textFields = alertController.textFields?[0], let text = textFields.text else { return }
+            self?.filterFavorites(author: text, isFiltred: true)
+            self?.applyFilterButton.tintColor = .systemRed
+        })
+        let cancelAction = UIAlertAction(title: "applyFilter.alertController.cancelAction".localized, style: .default)
+        alertController.addTextField()
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true)
     }
 }
 extension FavoritesViewController: UITableViewDataSource {
@@ -118,7 +148,9 @@ extension FavoritesViewController: UITableViewDelegate {
             let newLocalStorage = self.localStorage
             let deletedPost = self.localStorage[indexPath.row]
             self.localStorage.remove(at: indexPath.row)
+            self.tableView.beginUpdates()
             self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.tableView.endUpdates()
             let predicate = NSPredicate(format: "identifier == \(Int64(deletedPost.id))")
             CoreDataManager.dataManager.delete(predicate: predicate) { [weak self] result in
                 guard let self else { return }

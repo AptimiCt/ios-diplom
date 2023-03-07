@@ -21,8 +21,8 @@ struct Constants {
     //MARK: - for authorLabel
     static let leadingMarginForAuthorLabel: CGFloat = 16
     static let topMarginForAuthorLabel: CGFloat = 16
-    static let trailingMarginForAuthorLabel: CGFloat = -16
-    static let bottomForAuthorLabel: CGFloat = -16
+    static let trailingMarginForAuthorLabel: CGFloat = 16
+    static let bottomForAuthorLabel: CGFloat = 16
     
     //MARK: - for descriptionLabel
     static let leadingMarginForDescriptionLabel: CGFloat = 16

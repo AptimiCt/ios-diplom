@@ -35,7 +35,7 @@ class PostTableViewCell: UITableViewCell {
         label.toAutoLayout()
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .createColor(lightMode: .black, darkMode: .white)
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         return label
     }()
     
@@ -120,18 +120,18 @@ extension PostTableViewCell {
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor,
                                              constant: Constants.topMarginForAuthorLabel),
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                  constant: Constants.trailingMarginForAuthorLabel),
-            authorLabel.bottomAnchor.constraint(equalTo: postImageView.topAnchor, constant: Constants.bottomForAuthorLabel),
+                                                  constant: -Constants.trailingMarginForAuthorLabel),
+            authorLabel.bottomAnchor.constraint(equalTo: postImageView.topAnchor, constant: -Constants.bottomForAuthorLabel),
             
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             postImageView.widthAnchor.constraint(equalToConstant: Constants.screenWeight),
             postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor),
+            postImageView.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -Constants.bottomForAuthorLabel),
+            
             
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                       constant: Constants.leadingMarginForDescriptionLabel),
-            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor,
-                                                  constant: Constants.topMarginForDescriptionLabel),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMarginForDescriptionLabel),
             descriptionLabel.bottomAnchor.constraint(equalTo: likesLabel.topAnchor, constant: Constants.bottomForDescriptionLabel),
             

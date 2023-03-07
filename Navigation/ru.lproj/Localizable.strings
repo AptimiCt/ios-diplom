@@ -90,6 +90,9 @@
 
 //MARK: - FavoritesViewController
 "tabBarItemFavoritesView.title" = "Избранное";
+"applyFilter.alertController.title" = "Введите автора";
+"applyFilter.alertController.okAction" = "Применить";
+"applyFilter.alertController.cancelAction" = "Отменить";
 
 //MARK: - MapViewController
 "tabBarItemMap.title" = "Карта";
