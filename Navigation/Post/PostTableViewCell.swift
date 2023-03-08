@@ -30,16 +30,16 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    let authorLabel: UILabel = {
+    private let authorLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .createColor(lightMode: .black, darkMode: .white)
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         return label
     }()
     
-    let postImageView: UIImageView = {
+    private let postImageView: UIImageView = {
         let image = UIImageView()
         image.toAutoLayout()
         image.contentMode = .scaleAspectFit
@@ -47,7 +47,7 @@ class PostTableViewCell: UITableViewCell {
         return image
     }()
     
-    let descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let description = UILabel()
         description.toAutoLayout()
         description.font = .systemFont(ofSize: 14)
@@ -56,7 +56,7 @@ class PostTableViewCell: UITableViewCell {
         return description
     }()
     
-    let likesLabel: UILabel = {
+    private let likesLabel: UILabel = {
         let likes = UILabel()
         likes.toAutoLayout()
         likes.font = .systemFont(ofSize: 16)
@@ -65,7 +65,7 @@ class PostTableViewCell: UITableViewCell {
         return likes
     }()
     
-    let viewsLabel: UILabel = {
+    private let viewsLabel: UILabel = {
         let views = UILabel()
         views.toAutoLayout()
         views.font = .systemFont(ofSize: 16)
@@ -78,6 +78,7 @@ class PostTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         configureConstraints()
+        guard reuseIdentifier == Cells.cellForPostProfile else { return }
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
                 doubleTap.numberOfTapsRequired = 2
                 self.addGestureRecognizer(doubleTap)
@@ -86,9 +87,23 @@ class PostTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    @objc func addPostToFavorite(){
+    private func vizualizeAdd(color: UIColor) {
+        contentView.backgroundColor = color
+        UIView.animate(withDuration: 1, delay: 0) {
+            self.contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
+        }
+    }
+    @objc private func addPostToFavorite(){
         guard let post else { return }
-        CoreDataManager.dataManager.addPost(post: post)
+        CoreDataManager.dataManager.create(post: post) { [weak self] result in
+            switch result {
+                case .success(_):
+                    self?.vizualizeAdd(color: .systemGreen)
+                case .failure(let error):
+                    self?.vizualizeAdd(color: .systemRed)
+                    print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -97,7 +112,6 @@ extension PostTableViewCell {
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         contentView.addSubviews(authorLabel, postImageView, descriptionLabel, likesLabel, viewsLabel)
     }
-    
     private func configureConstraints(){
         
         let constraints: [NSLayoutConstraint] = [
@@ -106,18 +120,18 @@ extension PostTableViewCell {
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor,
                                              constant: Constants.topMarginForAuthorLabel),
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                  constant: Constants.trailingMarginForAuthorLabel),
-            authorLabel.bottomAnchor.constraint(equalTo: postImageView.topAnchor, constant: Constants.bottomForAuthorLabel),
+                                                  constant: -Constants.trailingMarginForAuthorLabel),
+            authorLabel.bottomAnchor.constraint(equalTo: postImageView.topAnchor, constant: -Constants.bottomForAuthorLabel),
             
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             postImageView.widthAnchor.constraint(equalToConstant: Constants.screenWeight),
             postImageView.heightAnchor.constraint(equalTo: postImageView.widthAnchor),
+            postImageView.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -Constants.bottomForAuthorLabel),
+            
             
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                       constant: Constants.leadingMarginForDescriptionLabel),
-            descriptionLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor,
-                                                  constant: Constants.topMarginForDescriptionLabel),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.trailingMarginForDescriptionLabel),
             descriptionLabel.bottomAnchor.constraint(equalTo: likesLabel.topAnchor, constant: Constants.bottomForDescriptionLabel),
             

@@ -92,7 +92,7 @@ class ProfileViewController: UIViewController {
     private func configureConstraints(){
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPost)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPostProfile)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
         let constraints: [NSLayoutConstraint] = [
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -199,6 +199,10 @@ class ProfileViewController: UIViewController {
             animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
+    
+    deinit {
+        print(#function)
+    }
 }
 
 //MARK: - extensions
@@ -215,7 +219,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPost) as? PostTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostProfile) as? PostTableViewCell else { return UITableViewCell() }
             cell.post = viewModel.getPostFor(indexPath)
         return cell
     }
