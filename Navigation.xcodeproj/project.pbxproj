@@ -10,6 +10,7 @@
 		61007C282994322500AD7922 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61007C272994322500AD7922 /* LocalAuthorizationService.swift */; };
 		61007C2B2996B50D00AD7922 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61007C2A2996B50D00AD7922 /* AlertController.swift */; };
 		61007C2D2996CEC500AD7922 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61007C2C2996CEC500AD7922 /* String+Ext.swift */; };
+		611CA4FD29BDF65C00B42FAD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611CA4FC29BDF65C00B42FAD /* LoginView.swift */; };
 		61484AFF299EA8400093FBF1 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */; };
 		6150EECF296871C70023BA7D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EECE296871C70023BA7D /* ProfileViewModel.swift */; };
 		6150EF142969EDDA0023BA7D /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */; };
@@ -109,6 +110,7 @@
 		61007C272994322500AD7922 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
 		61007C2A2996B50D00AD7922 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		61007C2C2996CEC500AD7922 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		611CA4FC29BDF65C00B42FAD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
 		6150EECE296871C70023BA7D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
@@ -210,6 +212,23 @@
 				61007C2A2996B50D00AD7922 /* AlertController.swift */,
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		611CA4FA29BDF5E700B42FAD /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				611CA4FB29BDF60F00B42FAD /* ViewModel */,
+				BB38BC4C2794180600FF4B2E /* LoginViewController.swift */,
+				611CA4FC29BDF65C00B42FAD /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		611CA4FB29BDF60F00B42FAD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		6150EECD2968718B0023BA7D /* ViewModel */ = {
@@ -315,7 +334,6 @@
 				6150EECD2968718B0023BA7D /* ViewModel */,
 				BBBBC9162753E9DB003DDF50 /* ProfileViewController.swift */,
 				BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */,
-				BB38BC4C2794180600FF4B2E /* LoginViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -405,6 +423,7 @@
 		BBDC802E2749E2FF000A302B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				611CA4FA29BDF5E700B42FAD /* Login */,
 				61007C292996B4EF00AD7922 /* Alert */,
 				BB47EFF62889EA2500FFB5EC /* View */,
 				BB9D5EC7285FB3080039DFE7 /* Coordinator */,
@@ -609,6 +628,7 @@
 				BB5AF67429774BD200796C65 /* MapViewController.swift in Sources */,
 				BBD735CA27AEDB05002397A0 /* Photos.swift in Sources */,
 				61F062942958A93200017C0F /* CoreDataManager.swift in Sources */,
+				611CA4FD29BDF65C00B42FAD /* LoginView.swift in Sources */,
 				BBA8973B285C10D900126052 /* CustomTextField.swift in Sources */,
 				BB0165C428E6433100C16F9A /* Planets.swift in Sources */,
 				BBBBC9172753E9DB003DDF50 /* ProfileViewController.swift in Sources */,
