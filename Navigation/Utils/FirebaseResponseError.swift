@@ -13,4 +13,5 @@ enum FirebaseResponseError: String {
     case ERROR_WRONG_PASSWORD
     case ERROR_INVALID_EMAIL
     case ERROR_EMAIL_ALREADY_IN_USE
+    case ERROR_TOO_MANY_REQUESTS
 }

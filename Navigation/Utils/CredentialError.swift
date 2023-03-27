@@ -12,4 +12,5 @@ enum CredentialError: String, Error {
     case emptyEmail
     case emptyPassword
     case emailIsNoCorrect
+    case unknown
 }

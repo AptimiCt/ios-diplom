@@ -14,6 +14,7 @@
 "emptyEmail" = "Пустой email.";
 "emptyPassword" = "Пустой пароль.";
 "emailIsNoCorrect" = "Не корректный email.";
+"unknown" = "Неизвестаня ошибка.";
 
 //MARK: - FirebaseResponseErrorMessage
 "invalidEmail" = "Не корректный email.";
@@ -21,7 +22,8 @@
 "wrongPassword" = "Не корретный пароль.";
 "internetConnectionProblem" = "Проблема с подключением к сети интернет.";
 "theUserWithThisEmailAlreadyExists" = "Пользователь с таким email уже существует.";
-"unknownError" = "Не известная ошибка.";
+"tooManyRequests" = "Слишком много запросов.";
+"unknownError" = "Неизвестная ошибка.";
 
 //MARK: - LocationService
 "restricted" = "Доступ к геолокации запрещен через родительский контроль!";

@@ -14,5 +14,6 @@ enum FirebaseResponseErrorMessage: String {
     case wrongPassword
     case internetConnectionProblem
     case theUserWithThisEmailAlreadyExists
+    case tooManyRequests
     case unknownError
 }

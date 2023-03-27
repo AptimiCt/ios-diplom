@@ -13,6 +13,7 @@ import LocalAuthentication
 class LoginView: UIView {
     
     private var biometricType: LABiometryType
+    private weak var delegate: LoginViewDelegate?
     
     private lazy var scrollView = UIScrollView()
     private let contentView = UIView()
@@ -21,12 +22,10 @@ class LoginView: UIView {
         activity.color = .createColor(lightMode: .black, darkMode: .white)
         return activity
     }()
-    
     private let logoImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "logo"))
         return imageView
     }()
-    
     private let loginTextView: TextFieldWithPadding = {
         let textField = TextFieldWithPadding()
         textField.layer.borderWidth = 0.5
@@ -40,7 +39,6 @@ class LoginView: UIView {
         textField.autocapitalizationType = .none
         return textField
     }()
-    
     private let passwordTextView: TextFieldWithPadding = {
         let textField = TextFieldWithPadding()
         textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
@@ -53,7 +51,6 @@ class LoginView: UIView {
         textField.isSecureTextEntry = true
         return textField
     }()
-    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -63,7 +60,6 @@ class LoginView: UIView {
         stackView.clipsToBounds = true
         return stackView
     }()
-    
     private let loginButton: CustomButton = {
         let button = CustomButton(
             title: Constants.logIn,
@@ -73,22 +69,12 @@ class LoginView: UIView {
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        
         return button
     }()
     private let signUpButton: CustomButton = {
         let button = CustomButton(
             title: Constants.signUp,
-            titleColor: .createColor(lightMode: .white,
-                                     darkMode: .black)
-        )
-        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
-        return button
-    }()
-    private let choosePasswordButton: CustomButton = {
-        let button = CustomButton(
-            title: Constants.choosePassword,
             titleColor: .createColor(lightMode: .white,
                                      darkMode: .black)
         )
@@ -115,29 +101,112 @@ class LoginView: UIView {
         return button
     }()
     
-    init(biometricType: LABiometryType) {
+    //MARK: - init
+    init(biometricType: LABiometryType, delegate: LoginViewDelegate) {
         self.biometricType = biometricType
+        self.delegate = delegate
         super.init(frame: .zero)
         setupView()
-        self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
+        buttonsAction(with: loginButton)
+        buttonsAction(with: signUpButton)
+        loginWithBiometricsButtonTapped()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    //MARK: - override func
     override func layoutSubviews() {
         setupConstrains()
     }
 }
-extension LoginView: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if !passwordTextView.isSecureTextEntry {
-            passwordTextView.isSecureTextEntry.toggle()
-        }
+//MARK: - extension LoginView
+extension LoginView {
+    //Обрабока появление клавиатуры
+    func keyboardWillShow(notification: NSNotification){
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        scrollView.contentInset.bottom = keyboardSize.height
+        scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+    }
+    //Обрабока скрытия клавиатуры
+    func keyboardWillHide(notification: NSNotification){
+        scrollView.contentInset.bottom = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
+    }
+    func activityIndicatorOff() {
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.isHidden = true
     }
 }
-
-extension LoginView {
-    private func switchImage(for biometricType: LABiometryType) -> UIImage? {
+//MARK: - private extension LoginView
+private extension LoginView {
+    //Метод реакции на нажатие на кнопки вход и регистрация
+    func buttonsAction(with button: CustomButton) {
+        button.action = { [weak self] in
+            guard let self,
+                  let passwordText = self.passwordTextView.text,
+                  let loginText = self.loginTextView.text
+            else { return }
+            button.isUserInteractionEnabled = false
+            do {
+                try self.checkCredentionalsOnError(email: loginText, password: passwordText)
+                self.switchDelegateMethod(button: button, email: loginText, password: passwordText)
+            } catch {
+                self.delegate?.buttonTapped(with: error)
+                self.activityIndicatorOff()
+                button.isUserInteractionEnabled = true
+            }
+        }
+    }
+    func loginWithBiometricsButtonTapped(){
+        loginWithBiometrics.action = { [weak self] in
+            self?.delegate?.loginWithBiometrics()
+        }
+    }
+    //Выбор метода делегата для вызова в зависимости от нажатой кнопки
+    func switchDelegateMethod(button: CustomButton, email: String, password: String) {
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
+        switch button {
+            case loginButton:
+                self.delegate?.login(email: email, password: password, completion: {
+                    button.isUserInteractionEnabled = true
+                })
+            case signUpButton:
+                self.delegate?.signUp(email: email, password: password, completion: {
+                    button.isUserInteractionEnabled = true
+                })
+            default:
+                button.isUserInteractionEnabled = true
+        }
+    }
+    //Медод проверки учетных данных на корректность который может выкидывать ошибки
+    func checkCredentionalsOnError(email: String, password: String) throws {
+        if email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
+            throw CredentialError.emptyEmail
+        } else if !validate(email) {
+            throw CredentialError.emailIsNoCorrect
+        }
+        if password.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
+            throw CredentialError.emptyPassword
+        }
+        if !passwordIsValid(password) {
+            throw CredentialError.incorrectCredentials
+        }
+    }
+    //Метод для локальной проверки пароля на соответсие требованиям(от 8 символов, большие и маленькие буквы и символы)
+    func passwordIsValid(_ password: String) -> Bool {
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
+        return passwordTest.evaluate(with: password)
+    }
+    //Метод для локальной проверки Email на корректность
+    func validate(_ email: String) -> Bool {
+        let emailRegEx = "([a-z0-9.]){1,64}@([a-z0-9]){1,64}\\.([a-z0-9]){2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
+        return emailTest.evaluate(with: email)
+    }
+    //Установка иконки доступной на устройстве типа биометрии
+    func switchImage(for biometricType: LABiometryType) -> UIImage? {
         switch biometricType {
             case .none:
                 return nil
@@ -149,8 +218,8 @@ extension LoginView {
                 return UIImage(systemName: "questionmark")
         }
     }
-    
-    private func setupView(){
+    //Добавление и настройка view
+    func setupView(){
         scrollView.toAutoLayout()
         contentView.toAutoLayout()
         logoImageView.toAutoLayout()
@@ -158,7 +227,6 @@ extension LoginView {
         loginButton.toAutoLayout()
         signUpButton.toAutoLayout()
         loginWithBiometrics.toAutoLayout()
-        choosePasswordButton.toAutoLayout()
         passwordTextView.toAutoLayout()
         activityIndicator.toAutoLayout()
         
@@ -168,9 +236,12 @@ extension LoginView {
         
         stackView.addArrangedSubview(loginTextView)
         stackView.addArrangedSubview(passwordTextView)
-        contentView.addSubviews(logoImageView, stackView, loginButton, signUpButton, loginWithBiometrics, choosePasswordButton)
+        contentView.addSubviews(logoImageView, stackView, loginButton, signUpButton, loginWithBiometrics)
+        
+        self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
     }
-    private func setupConstrains(){
+    //Установка констраинтов
+    func setupConstrains(){
         let constrains = [
             
             scrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
@@ -216,16 +287,10 @@ extension LoginView {
             loginWithBiometrics.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
             loginWithBiometrics.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             loginWithBiometrics.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
+            loginWithBiometrics.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
             
-            choosePasswordButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            choosePasswordButton.topAnchor.constraint(equalTo: loginWithBiometrics.bottomAnchor, constant: 16),
-            choosePasswordButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            choosePasswordButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
-            choosePasswordButton.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
-            
-            activityIndicator.centerXAnchor.constraint(equalTo: passwordTextView.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: passwordTextView.centerYAnchor),
-            activityIndicator.heightAnchor.constraint(equalTo: passwordTextView.heightAnchor)
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ]
         NSLayoutConstraint.activate(constrains)
     }

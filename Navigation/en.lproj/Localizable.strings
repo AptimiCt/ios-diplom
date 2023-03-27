@@ -14,6 +14,7 @@
 "emptyEmail" = "Empty email.";
 "emptyPassword" = "Empty password.";
 "emailIsNoCorrect" = "Invalid email.";
+"unknown" = "Unknown error.";
 
 //MARK: - FirebaseResponseErrorMessage
 "invalidEmail" = "The email is not correct.";
@@ -21,6 +22,7 @@
 "wrongPassword" = "The password is not correct.";
 "internetConnectionProblem" = "Problem with the Internet connection.";
 "theUserWithThisEmailAlreadyExists" = "The user with this email already exists.";
+"tooManyRequests" = "There are too many requests.";
 "unknownError" = "Unknown error.";
 
 //MARK: - LocationService
