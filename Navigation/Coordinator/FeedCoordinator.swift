@@ -29,8 +29,7 @@ class FeedCoordinator: Coordinator {
     }
     
     func showInfo(){
-        let infoVC = InfoViewController(coordinator: self)
-        navController.present(infoVC, animated: true, completion: nil)
+        
     }
     
     func showAlert(in controller: UIViewController){

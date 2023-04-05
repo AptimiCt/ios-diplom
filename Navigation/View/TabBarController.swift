@@ -10,15 +10,13 @@ import UIKit
 class TabBarController: UITabBarController {
     
     private var feedViewController: UIViewController
-    private var loginViewController: UIViewController
+    private var profileViewController: UIViewController
     private var favoriteViewController: UIViewController
-    private var mapViewController: UIViewController
     
     init() {
         self.feedViewController = ControllersFactory(navigationController: UINavigationController(), tab: .feed).controller
-        self.loginViewController = ControllersFactory(navigationController: UINavigationController(), tab: .login).controller
+        self.profileViewController = ControllersFactory(navigationController: UINavigationController(), tab: .profile).controller
         self.favoriteViewController = ControllersFactory(navigationController: UINavigationController(), tab: .favorites).controller
-        self.mapViewController = ControllersFactory(navigationController: UINavigationController(), tab: .map).controller
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,11 +33,9 @@ class TabBarController: UITabBarController {
     private func setControllers() {
         viewControllers = [
             feedViewController,
-            loginViewController,
-            favoriteViewController,
-            mapViewController
+            profileViewController,
+            favoriteViewController
         ]
-        selectedIndex = 1
     }
     
     private func configTabBar(){

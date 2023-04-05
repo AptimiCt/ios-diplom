@@ -10,9 +10,8 @@ import StorageService
 
 enum Tab {
     case feed
-    case login
+    case profile
     case favorites
-    case map
 }
 
 final class ControllersFactory {
@@ -30,11 +29,11 @@ final class ControllersFactory {
     private func createTabBarViewController(){
         switch tab {
             case .feed:
-                let post = Post(id: 1, author: Constants.post, description: Constants.post, image: "bars", likes: 1, views: 1)
-                let feedCoordinator = FeedCoordinator(navController: controller)
-                let feedViewController = FeedViewController(post: post, coordinator: feedCoordinator)
-                controller.setViewControllers([feedViewController], animated: true)
-            case .login:
+                
+                let profileCoordinator = LoginCoordinator(navController: controller)
+                let profileViewController = Self.createProfileViewController(loginName: Constants.testUserServiceFullName, userService: TestUserService(), coordinator: profileCoordinator)
+                controller.setViewControllers([profileViewController], animated: true)
+            case .profile:
                 let loginCoordinator = LoginCoordinator(navController: controller)
                 let currentLoginFactory = CurrentLoginFactory()
                 let loginViewController = LoginViewController(coordinator: loginCoordinator, delegate: currentLoginFactory.create())
@@ -42,9 +41,6 @@ final class ControllersFactory {
             case .favorites:
                 let favoritesNavigationController = FavoritesViewController()
                 controller.setViewControllers([favoritesNavigationController], animated: true)
-            case .map:
-                let mapVC = MapViewController()
-                controller.setViewControllers([mapVC], animated: true)
         }
     }
     

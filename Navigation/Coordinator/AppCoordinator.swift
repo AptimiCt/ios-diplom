@@ -28,9 +28,9 @@ final class AppCoordinator: Coordinator {
     
     func start() {
         FirebaseApp.configure()
-        let appConfiguration = AppConfiguration.allCases.randomElement()
+        //let appConfiguration = AppConfiguration.allCases.randomElement()
         localNotificationService.registeForLatestUpdatesIfPossible()
-        NetworkManager.request(for: appConfiguration)
+        //NetworkManager.request(for: appConfiguration)
         window.rootViewController = rootViewController
         window.makeKeyAndVisible()
     }
