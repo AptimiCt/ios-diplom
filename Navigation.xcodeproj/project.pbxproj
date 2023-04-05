@@ -208,6 +208,20 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		61DAFB5D29DD91DF0026F3F3 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				BBDC80382749E301000A302B /* Assets.xcassets */,
+				BBDC803A2749E301000A302B /* LaunchScreen.storyboard */,
+				BBDC803D2749E301000A302B /* Info.plist */,
+				BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */,
+				6180AC6F297D371600A3281A /* Localizable.strings */,
+				61C6121F297F22FB00206131 /* InfoPlist.strings */,
+				61C61225297F3F6E00206131 /* Localizable.stringsdict */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		61F0628F2958A7AE00017C0F /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,29 +404,23 @@
 				BB15250A282FBFDE0045275F /* SystemDelegate */,
 				BB152503282FBFCE0045275F /* Model */,
 				BB1578CE281B33C300579E09 /* Factory */,
-				BBF7295127B45F6500D737EF /* Utils */,
-				BBA2D94927AFE061002AC2A1 /* Extension */,
 				BBD735CB27AEE206002397A0 /* Photos */,
 				BBD735C627A72C95002397A0 /* Post */,
-				BBAE6842279E0E6F0031743C /* Storage */,
-				BB38BC4E27944DE000FF4B2E /* Constants */,
 				BB06900929584EFB009A2C24 /* Feed */,
 				BB53FB22276A8F100094AF1D /* Profile */,
 				BB06900629584DE5009A2C24 /* Favorites */,
-				BBDC80382749E301000A302B /* Assets.xcassets */,
-				BBDC803A2749E301000A302B /* LaunchScreen.storyboard */,
-				BBDC803D2749E301000A302B /* Info.plist */,
-				BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */,
-				6180AC6F297D371600A3281A /* Localizable.strings */,
-				61C6121F297F22FB00206131 /* InfoPlist.strings */,
-				61C61225297F3F6E00206131 /* Localizable.stringsdict */,
+				BBF7295127B45F6500D737EF /* Helpers */,
+				61DAFB5D29DD91DF0026F3F3 /* SupportingFiles */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
 		};
-		BBF7295127B45F6500D737EF /* Utils */ = {
+		BBF7295127B45F6500D737EF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				BBAE6842279E0E6F0031743C /* Storage */,
+				BB38BC4E27944DE000FF4B2E /* Constants */,
+				BBA2D94927AFE061002AC2A1 /* Extension */,
 				BBF7295227B45F8100D737EF /* Cells.swift */,
 				BBD68B7C281726C0007BD77E /* CheckerService.swift */,
 				BBD68B7E281742B1007BD77E /* LoginInspector.swift */,
@@ -426,7 +434,7 @@
 				61007C272994322500AD7922 /* LocalAuthorizationService.swift */,
 				61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */,
 			);
-			path = Utils;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		BBFECF46280A3A9E002018F3 /* StorageService */ = {
@@ -807,7 +815,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5BPW3NPX5G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Navigation/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
@@ -841,7 +849,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5BPW3NPX5G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Navigation/Info.plist;
+				INFOPLIST_FILE = Navigation/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
