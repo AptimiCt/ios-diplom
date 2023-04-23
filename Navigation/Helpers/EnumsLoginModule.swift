@@ -12,6 +12,7 @@ import Foundation
 enum ButtonsTapped {
     case login
     case registration
+    case loginWithBiometrics
     case undefined
 }
 enum StateView {

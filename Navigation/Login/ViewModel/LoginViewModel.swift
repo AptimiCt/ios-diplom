@@ -16,6 +16,7 @@ protocol LoginViewModelProtocol {
     var stateChanged: ((LoginViewModelProtocol) -> Void)? { get set }
     func checkCredentionalsToLogin(email: String, password: String)
     func checkCredentionalsForRegistration(email: String, password: String)
+    func loginWithBiometrics()
 }
 
 
@@ -47,6 +48,18 @@ final class LoginViewModel: LoginViewModelProtocol {
             }
         } catch {
             stateModel = .failure(error: error as! AuthenticationError)
+        }
+    }
+    func loginWithBiometrics() {
+        LocalAuthorizationService().authorizeIfPossible { [weak self] sucsses, error  in
+            guard let self else { return }
+            let authModel = AuthModel(name: Constants.currentUserServiceFullName, uid: UUID().uuidString)
+            if sucsses {
+                self.stateModel = .success(authModel)
+            } else {
+                //guard let error else { return }
+                self.stateModel = .failure(error: .unknown)
+            }
         }
     }
 }

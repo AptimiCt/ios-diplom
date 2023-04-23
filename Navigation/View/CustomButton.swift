@@ -15,6 +15,7 @@ final class CustomButton: UIButton {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)
+        self.toAutoLayout()
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     

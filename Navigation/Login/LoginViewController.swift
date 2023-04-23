@@ -12,7 +12,6 @@ class LoginViewController: UIViewController {
     //MARK: - property
     private var viewModel: LoginViewModelProtocol
     private var coordinator: LoginCoordinator!
-    //private var delegate: LoginViewControllerDelegate?
     private var loginView: LoginView!
     
     //MARK: - init
@@ -20,12 +19,10 @@ class LoginViewController: UIViewController {
         loginView: LoginView,
         viewModel: LoginViewModel,
         coordinator: LoginCoordinator
-        //delegate: LoginViewControllerDelegate
     ) {
         self.loginView = loginView
         self.viewModel = viewModel
         self.coordinator = coordinator
-        //self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -95,8 +92,6 @@ private extension LoginViewController {
                 coordinator.showAlertController(in: self, message: error.localizedDescription)
             case .tooManyRequests:
                 coordinator.showAlertController(in: self, message: error.localizedDescription)
-//            case .configError:
-//                coordinator.showAlertController(in: self, message: error.localizedDescription)
             case .unknown:
                 coordinator.showAlertController(in: self, message: error.localizedDescription)
         }
@@ -129,17 +124,7 @@ extension LoginViewController: LoginViewDelegate {
         viewModel.checkCredentionalsForRegistration(email: email, password: password)
     }
     //Обработка нажатия на кнопку входа по биометрии в делегате
-//    func loginWithBiometrics() {
-//        self.biometricService.authorizeIfPossible { [weak self] sucsses, error  in
-//            guard let self else { return }
-//            let userService = self.userServiceScheme()
-//            let authModel = AuthModel(name: Constants.currentUserServiceFullName, uid: UUID().uuidString)
-//            if sucsses {
-//                self.showProfile(authModel, userService)
-//            } else {
-//                guard let error else { return }
-//                self.coordinator.showAlertController(in: self, message: error.localizedDescription)
-//            }
-//        }
-//    }
+    func loginWithBiometrics() {
+        viewModel.loginWithBiometrics()
+    }
 }
