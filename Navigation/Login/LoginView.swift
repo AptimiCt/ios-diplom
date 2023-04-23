@@ -12,8 +12,15 @@ import LocalAuthentication
 
 class LoginView: UIView {
     
+    weak var delegate: LoginViewDelegate?
     private var biometricType: LABiometryType
-    private weak var delegate: LoginViewDelegate?
+    private var buttonTapped: ButtonsTapped = .undefined
+    
+    var stateView: StateView = .initial {
+        didSet {
+            setNeedsLayout()
+        }
+    }
     
     private lazy var scrollView = UIScrollView()
     private let contentView = UIView()
@@ -29,25 +36,12 @@ class LoginView: UIView {
     private let loginTextView: TextFieldWithPadding = {
         let textField = TextFieldWithPadding()
         textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
-        textField.attributedPlaceholder = NSAttributedString(string: Constants.loginTextViewPlaceholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
-        textField.textColor = .createColor(lightMode: .black, darkMode: .white)
-        textField.tintColor = UIColor(named: "AccentColor")
-        textField.font = .systemFont(ofSize: 16)
-        textField.autocapitalizationType = .none
+        textField.configureTextField(with: Constants.loginTextViewPlaceholder)
         return textField
     }()
     private let passwordTextView: TextFieldWithPadding = {
         let textField = TextFieldWithPadding()
-        textField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.attributedPlaceholder = NSAttributedString(string: Constants.passwordTextViewPlaceholder,
-                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
-        textField.textColor = .createColor(lightMode: .black, darkMode: .white)
-        textField.font = .systemFont(ofSize: 16)
-        textField.autocapitalizationType = .none
+        textField.configureTextField(with: Constants.passwordTextViewPlaceholder)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -66,10 +60,7 @@ class LoginView: UIView {
             titleColor: .createColor(lightMode: .white,
                                      darkMode: .black)
         )
-        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
-        
+        button.configureButtons()
         return button
     }()
     private let signUpButton: CustomButton = {
@@ -78,9 +69,7 @@ class LoginView: UIView {
             titleColor: .createColor(lightMode: .white,
                                      darkMode: .black)
         )
-        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
+        button.configureButtons()
         return button
     }()
     private lazy var loginWithBiometrics: CustomButton = {
@@ -92,9 +81,7 @@ class LoginView: UIView {
         button.setImage(switchImage(for: biometricType), for: .normal)
         button.tintColor = .createColor(lightMode: .white,
                                         darkMode: .black)
-        button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
+        button.configureButtons()
         if biometricType == .none {
             button.isEnabled = false
         }
@@ -102,9 +89,8 @@ class LoginView: UIView {
     }()
     
     //MARK: - init
-    init(biometricType: LABiometryType, delegate: LoginViewDelegate) {
+    init(biometricType: LABiometryType) {
         self.biometricType = biometricType
-        self.delegate = delegate
         super.init(frame: .zero)
         setupView()
         buttonsAction(with: loginButton)
@@ -116,6 +102,17 @@ class LoginView: UIView {
     }
     //MARK: - override func
     override func layoutSubviews() {
+        super.layoutSubviews()
+        switch stateView {
+            case .initial:
+                print("Пройдите регистрацию")
+            case .loading:
+                activityIndicatorOn()
+            case .success:
+                activityIndicatorOff(with: buttonTapped)
+            case .failure:
+                activityIndicatorOff(with: buttonTapped)
+        }
         setupConstrains()
     }
 }
@@ -132,9 +129,22 @@ extension LoginView {
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
     }
-    func activityIndicatorOff() {
+    func activityIndicatorOff(with button: ButtonsTapped) {
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
+        switch button {
+            case .login:
+                loginButton.isEnabled = true
+            case .registration:
+                signUpButton.isEnabled = true
+            case .undefined:
+                print("Кнопка не нажата")
+                break
+        }
+    }
+    func activityIndicatorOn() {
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
     }
 }
 //MARK: - private extension LoginView
@@ -146,64 +156,29 @@ private extension LoginView {
                   let passwordText = self.passwordTextView.text,
                   let loginText = self.loginTextView.text
             else { return }
-            button.isUserInteractionEnabled = false
-            do {
-                try self.checkCredentionalsOnError(email: loginText, password: passwordText)
-                self.switchDelegateMethod(button: button, email: loginText, password: passwordText)
-            } catch {
-                self.delegate?.buttonTapped(with: error)
-                self.activityIndicatorOff()
-                button.isUserInteractionEnabled = true
-            }
+            button.isEnabled = false
+            self.switchDelegateMethod(button: button, email: loginText, password: passwordText)
         }
     }
     func loginWithBiometricsButtonTapped(){
         loginWithBiometrics.action = { [weak self] in
-            self?.delegate?.loginWithBiometrics()
+            #warning("loginWithBiometrics")
+            //self?.delegate?.loginWithBiometrics()
         }
     }
     //Выбор метода делегата для вызова в зависимости от нажатой кнопки
     func switchDelegateMethod(button: CustomButton, email: String, password: String) {
-        self.activityIndicator.startAnimating()
-        self.activityIndicator.isHidden = false
+        activityIndicatorOn()
         switch button {
             case loginButton:
-                self.delegate?.login(email: email, password: password, completion: {
-                    button.isUserInteractionEnabled = true
-                })
+                buttonTapped = .login
+                self.delegate?.login(email: email, password: password)
             case signUpButton:
-                self.delegate?.signUp(email: email, password: password, completion: {
-                    button.isUserInteractionEnabled = true
-                })
+                buttonTapped = .registration
+                self.delegate?.signUp(email: email, password: password)
             default:
-                button.isUserInteractionEnabled = true
+                button.isEnabled = true
         }
-    }
-    //Медод проверки учетных данных на корректность который может выкидывать ошибки
-    func checkCredentionalsOnError(email: String, password: String) throws {
-        if email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
-            throw CredentialError.emptyEmail
-        } else if !validate(email) {
-            throw CredentialError.emailIsNoCorrect
-        }
-        if password.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
-            throw CredentialError.emptyPassword
-        }
-        if !passwordIsValid(password) {
-            throw CredentialError.incorrectCredentials
-        }
-    }
-    //Метод для локальной проверки пароля на соответсие требованиям(от 8 символов, большие и маленькие буквы и символы)
-    func passwordIsValid(_ password: String) -> Bool {
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
-        return passwordTest.evaluate(with: password)
-    }
-    //Метод для локальной проверки Email на корректность
-    func validate(_ email: String) -> Bool {
-        let emailRegEx = "([a-z0-9.]){1,64}@([a-z0-9]){1,64}\\.([a-z0-9]){2,64}"
-        
-        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
-        return emailTest.evaluate(with: email)
     }
     //Установка иконки доступной на устройстве типа биометрии
     func switchImage(for biometricType: LABiometryType) -> UIImage? {
@@ -293,5 +268,27 @@ private extension LoginView {
             activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ]
         NSLayoutConstraint.activate(constrains)
+    }
+}
+//MARK: - fileprivate extension UITextField
+fileprivate extension UITextField {
+    //Настройка textField
+    func configureTextField(with placeholder: String) {
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
+        self.attributedPlaceholder = NSAttributedString(string: placeholder,
+                                                             attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
+        self.textColor = .createColor(lightMode: .black, darkMode: .white)
+        self.tintColor = UIColor(named: "AccentColor")
+        self.font = .systemFont(ofSize: 16)
+        self.autocapitalizationType = .none
+    }
+}
+//MARK: - fileprivate extension UIButton
+fileprivate extension UIButton {
+    func configureButtons() {
+        self.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
     }
 }

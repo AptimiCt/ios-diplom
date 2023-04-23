@@ -9,26 +9,24 @@
 //MARK: - FilesViewController
 "fvcTitle" = "Документы";
 
-//MARK: - CredentialError
-"incorrectCredentials" = "Не корректные учетные данные.";
-"emptyEmail" = "Пустой email.";
-"emptyPassword" = "Пустой пароль.";
-"emailIsNoCorrect" = "Не корректный email.";
-"unknown" = "Неизвестаня ошибка.";
-
-//MARK: - FirebaseResponseErrorMessage
-"invalidEmail" = "Не корректный email.";
-"registerUser" = "Отсутсвует такой пользователь. Зарегистрируйте пользователя";
-"wrongPassword" = "Не корретный пароль.";
-"internetConnectionProblem" = "Проблема с подключением к сети интернет.";
-"theUserWithThisEmailAlreadyExists" = "Пользователь с таким email уже существует.";
-"tooManyRequests" = "Слишком много запросов.";
-"unknownError" = "Неизвестная ошибка.";
+//MARK: - AuthenticationError
+"incorrectCredentials" = "Пароль или email не совпадают. Введите корректные данные.";
+"emptyEmail" = "Логин не может быть пустым.";
+"emptyPassword" = "Пароль не может быть пустым.";
+"invalidEmail" = "Пожалуйста, используйте действительный email-адрес в качестве логина.";
+"userNotFound" = "Отсутсвует такой пользователь. Зарегистрируйте пользователя.";
+"userDisabled" = "Пользователь отключен.";
+"loginInUse" = "Пользователь с таким адресом уже зарегистрирован, пожалуйста, выберете другой адрес.";
+"weakPassword" = "Вы ввели слишком ненадёжный пароль.";
+"weakPasswordExtend" = " Пароль не соответствует требованиям. Введите от 8 символов, большие и маленькие буквы и символы.";
+"networkError" = "Проблема с подключением к Интернету.. Попробуйте ещё раз.";
+"tooManyRequests" = "С вашего устройства поступило слишком много запросов аутентификации. Пожалуйста, повторите попытку через 10 минут.";
+"AuthenticationError.unknown" = "Произошла неизвестная ошибка.";
 
 //MARK: - LocationService
-"restricted" = "Доступ к геолокации запрещен через родительский контроль!";
-"denied" = "Вы запретили доступ к геолокации!";
-"unknown" = "Не известный этап проверки.";
+//"restricted" = "Доступ к геолокации запрещен через родительский контроль!";
+//"denied" = "Вы запретили доступ к геолокации!";
+//"unknown" = "Не известный этап проверки.";
 
 //MARK: - PhotosTableViewCell
 "photosLabel.text" = "Фотографии";
@@ -75,7 +73,7 @@
 "statusLabel.text" = "Ожидание чего-то...";
 
 //MARK: - LoginViewController
-"loginTextView.placeholder" = "Электронная почта или номер телефона";
+"loginTextView.placeholder" = "Электронная почта";
 "passwordTextView.placeholder" = "Пароль";
 "loginButton.title" = "Вход";
 "signUpButton.title" = "Регистрация";

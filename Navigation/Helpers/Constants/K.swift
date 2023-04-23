@@ -15,26 +15,6 @@ struct K {
             case title = "fvcTitle"
         }
     }
-    //MARK: - CredentialError
-    struct CredentialError {
-        enum Keys: String {
-            case incorrectCredentials
-            case emptyEmail
-            case emptyPassword
-            case emailIsNoCorrect
-        }
-    }
-    //MARK: - FirebaseResponseErrorMessage
-    struct FirebaseResponseErrorMessage {
-        enum Keys: String {
-            case invalidEmail
-            case registerUser
-            case wrongPassword
-            case internetConnectionProblem
-            case theUserWithThisEmailAlreadyExists
-            case unknownError
-        }
-    }
     //MARK: - LocationService
     struct LocationService {
         enum Keys: String {

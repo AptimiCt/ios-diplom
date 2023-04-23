@@ -9,26 +9,24 @@
 //MARK: - FilesViewController
 "fvcTitle" = "Documents";
 
-//MARK: - CredentialError
-"incorrectCredentials" = "Incorrect credentials.";
-"emptyEmail" = "Empty email.";
-"emptyPassword" = "Empty password.";
-"emailIsNoCorrect" = "Invalid email.";
-"unknown" = "Unknown error.";
-
-//MARK: - FirebaseResponseErrorMessage
-"invalidEmail" = "The email is not correct.";
-"registerUser" = "There is no such user. Register a user.";
-"wrongPassword" = "The password is not correct.";
-"internetConnectionProblem" = "Problem with the Internet connection.";
-"theUserWithThisEmailAlreadyExists" = "The user with this email already exists.";
-"tooManyRequests" = "There are too many requests.";
-"unknownError" = "Unknown error.";
+//MARK: - AuthenticationError
+"incorrectCredentials" = "The password or email does not match. Enter the correct data.";
+"emptyEmail" = "The login cannot be empty.";
+"emptyPassword" = "The password cannot be empty.";
+"invalidEmail" = "Please use a valid email address as your login.";
+"userNotFound" = "There is no such user. Register a user.";
+"userDisabled" = "User is disabled.";
+"loginInUse" = "The user with this email already exists.";
+"weakPassword" = "You entered a password that is too weak.";
+"weakPasswordExtend" = " The password does not meet the requirements. Enter 8 characters or more, capital and small letters and symbols.";
+"networkError" = "Problem with the Internet connection. Try again.";
+"tooManyRequests" = "Too many authentication requests have been received from your device. Please try again in 10 minutes.";
+"AuthenticationError.unknown" = "An unknown error has occurred.";
 
 //MARK: - LocationService
-"restricted" = "Access to geolocation is denied through parental controls!";
-"denied" = "You have denied access to geolocation!";
-"unknown" = "Unknown verification phase";
+//"restricted" = "Access to geolocation is denied through parental controls!";
+//"denied" = "You have denied access to geolocation!";
+//"unknown" = "Unknown verification phase";
 
 //MARK: - PhotosTableViewCell
 "photosLabel.text" = "Photos";
@@ -75,7 +73,7 @@
 "statusLabel.text" = "Waiting for something...";
 
 //MARK: - LoginViewController
-"loginTextView.placeholder" = "Email or phone";
+"loginTextView.placeholder" = "Email";
 "passwordTextView.placeholder" = "Password";
 "loginButton.title" = "LogIn";
 "signUpButton.title" = "SignUp";

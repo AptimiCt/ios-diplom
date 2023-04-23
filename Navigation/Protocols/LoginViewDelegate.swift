@@ -10,8 +10,7 @@
 import Foundation
 
 protocol LoginViewDelegate: AnyObject {
-    func login(email: String, password: String, completion: @escaping ()->Void)
-    func signUp(email: String, password: String, completion: @escaping ()->Void)
-    func loginWithBiometrics()
-    func buttonTapped(with error: Error)
+    func login(email: String, password: String)
+    func signUp(email: String, password: String)
+    //func loginWithBiometrics()
 }

@@ -9,6 +9,8 @@ import Foundation
 import FirebaseAuth
 
 protocol CheckerServiceProtocol {
-    func checkCredentialsService(email: String, password: String, completion: @escaping (AuthDataResult?, NSError?) -> Void)
-    func signUpService(email: String, password: String, completion: @escaping (AuthDataResult?, NSError?) -> Void)
+    typealias AuthenticationCompletionBlock = (AuthDataResult?, AuthenticationError?)-> Void
+    
+    func checkCredentialsService(email: String, password: String, completion: @escaping AuthenticationCompletionBlock)
+    func signUpService(email: String, password: String, completion: @escaping AuthenticationCompletionBlock)
 }
