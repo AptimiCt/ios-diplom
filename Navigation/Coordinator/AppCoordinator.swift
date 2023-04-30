@@ -10,15 +10,10 @@ import UIKit
 import FirebaseCore
 import FirebaseAuth
 
-protocol Coordinator: AnyObject {
-    var childCoordinators: [Coordinator] { get set }
-}
-
-final class AppCoordinator: Coordinator {
+final class AppCoordinator: BaseCoordinator {
     
     let window: UIWindow
     let rootViewController: UIViewController
-    var childCoordinators: [Coordinator] = []
     let localNotificationService = LocalNotificationsService()
     
     init(window: UIWindow) {
@@ -26,7 +21,7 @@ final class AppCoordinator: Coordinator {
         self.rootViewController = ControllersFactory.createTabBarController()
     }
     
-    func start() {
+    override func start() {
         FirebaseApp.configure()
         //let appConfiguration = AppConfiguration.allCases.randomElement()
         localNotificationService.registeForLatestUpdatesIfPossible()

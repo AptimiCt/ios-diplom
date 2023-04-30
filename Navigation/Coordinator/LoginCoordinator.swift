@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 import StorageService
 
-class LoginCoordinator: Coordinator {
-    
-    var childCoordinators: [Coordinator] = []
+class LoginCoordinator: BaseCoordinator {
     
     private var navController: UINavigationController
     

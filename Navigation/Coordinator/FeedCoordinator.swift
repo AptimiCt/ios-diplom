@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 import StorageService
 
-class FeedCoordinator: Coordinator {
-    
-    var childCoordinators: [Coordinator] = []
+class FeedCoordinator: BaseCoordinator {
     
     private var navController: UINavigationController
     
