@@ -31,6 +31,8 @@
 		61F79189298F1A09005E21D4 /* CheckerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD68B7C281726C0007BD77E /* CheckerService.swift */; };
 		61FF1EE929FF2686002D0331 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FF1EE829FF2686002D0331 /* BaseCoordinator.swift */; };
 		61FF1EEB29FF26F7002D0331 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FF1EEA29FF26F7002D0331 /* Coordinator.swift */; };
+		61FF1EED29FFC6BD002D0331 /* OutputCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FF1EEC29FFC6BD002D0331 /* OutputCoordinator.swift */; };
+		61FF1EF02A0011E8002D0331 /* LaunchInstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FF1EEF2A0011E8002D0331 /* LaunchInstructor.swift */; };
 		BB06900829584E6D009A2C24 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB06900729584E6D009A2C24 /* FavoritesViewController.swift */; };
 		BB0B224A279343AD00C51B3D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0B2249279343AD00C51B3D /* Constants.swift */; };
 		BB0C6A4428FA045500C665D5 /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C6A4328FA045500C665D5 /* LoginViewControllerDelegate.swift */; };
@@ -133,6 +135,8 @@
 		61F062932958A93200017C0F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		61FF1EE829FF2686002D0331 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		61FF1EEA29FF26F7002D0331 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		61FF1EEC29FFC6BD002D0331 /* OutputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputCoordinator.swift; sourceTree = "<group>"; };
+		61FF1EEF2A0011E8002D0331 /* LaunchInstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchInstructor.swift; sourceTree = "<group>"; };
 		BB06900729584E6D009A2C24 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		BB0B2249279343AD00C51B3D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BB0C6A4328FA045500C665D5 /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -264,6 +268,15 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		61FF1EEE2A0011C5002D0331 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				61BD14FE29F4364A00BA4438 /* EnumsLoginModule.swift */,
+				61FF1EEF2A0011E8002D0331 /* LaunchInstructor.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		BB06900629584DE5009A2C24 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +322,7 @@
 				BBBD5CD8291C205800A63966 /* FileManagerServiceProtocol.swift */,
 				61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */,
 				61FF1EEA29FF26F7002D0331 /* Coordinator.swift */,
+				61FF1EEC29FFC6BD002D0331 /* OutputCoordinator.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -469,7 +483,7 @@
 				6180AC68297D346500A3281A /* LocalizationShortCut.swift */,
 				61007C272994322500AD7922 /* LocalAuthorizationService.swift */,
 				61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */,
-				61BD14FE29F4364A00BA4438 /* EnumsLoginModule.swift */,
+				61FF1EEE2A0011C5002D0331 /* Enums */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -639,11 +653,13 @@
 				BB06900829584E6D009A2C24 /* FavoritesViewController.swift in Sources */,
 				61007C2B2996B50D00AD7922 /* AlertController.swift in Sources */,
 				BBD735C827A72CAE002397A0 /* PostTableViewCell.swift in Sources */,
+				61FF1EED29FFC6BD002D0331 /* OutputCoordinator.swift in Sources */,
 				BB21600A28E087B500715635 /* NetworkManager.swift in Sources */,
 				BB15250E282FBFDE0045275F /* SceneDelegate.swift in Sources */,
 				614D33D129E75319003E1A83 /* Profile.swift in Sources */,
 				61FF1EEB29FF26F7002D0331 /* Coordinator.swift in Sources */,
 				61007C2D2996CEC500AD7922 /* String+Ext.swift in Sources */,
+				61FF1EF02A0011E8002D0331 /* LaunchInstructor.swift in Sources */,
 				6150EF142969EDDA0023BA7D /* TextFieldWithPadding.swift in Sources */,
 				61B69DBB29C11C2B00D6225E /* LoginViewDelegate.swift in Sources */,
 				BB38BC4D2794180600FF4B2E /* LoginViewController.swift in Sources */,
