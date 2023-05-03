@@ -9,30 +9,54 @@ import Foundation
 import UIKit
 import StorageService
 
-class LoginCoordinator: BaseCoordinator {
+class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     
-    private var navController: UINavigationController
+    var finishFlow: ((User?) -> Void)?
     
-    init(navController: UINavigationController) {
-        self.navController = navController
+    override func start() {
+        loginViewConfigure()
     }
-    
     func showProfileVC(loginName: String) {
         let userService = userServiceScheme()
         let profileViewController = ControllersFactory.createProfileViewController(loginName: loginName, userService: userService, coordinator: self)
-        navController.pushViewController(profileViewController, animated: true)
+        navigationController.pushViewController(profileViewController, animated: true)
     }
     
     func showPhotosVC(){
         let nvc = PhotosViewController()
-        navController.pushViewController(nvc, animated: true)
+        navigationController.pushViewController(nvc, animated: true)
     }
-    func showAlertController(in controller: UIViewController, message: String) {
-        AlertController.defaultController.showAlert(in: controller,
-                                                    message: message)
+    func showAlertController(message: String) {
+        var presentingController: UIViewController
+        if let presentedController = self.navigationController.visibleViewController {
+            presentingController = presentedController
+        } else {
+            presentingController = self.navigationController
+        }
+        AlertController.defaultController.showAlert(in: presentingController, message: message)
     }
-//    Выбора UserService в зависимости от схемы
-    private func userServiceScheme() -> UserService {
+    
+    deinit{
+        print("LoginCoordinator удален deinit")
+    }
+}
+
+private extension LoginCoordinator {
+    func loginViewConfigure() {
+        let biometricService = LocalAuthorizationService()
+        let loginView = LoginView(biometricType: biometricService.biometricType)
+        let loginViewModel = LoginViewModel()
+        let loginViewController = LoginViewController(loginView: loginView, viewModel: loginViewModel)
+        loginView.delegate = loginViewController
+        loginViewModel.coordinator = self
+        navigationController.navigationBar.isHidden = true
+        navigationController.tabBarItem = UITabBarItem(title: Constants.tabBarItemLoginVCTitle,
+                                                   image: UIImage(systemName: "person.crop.circle.fill"),
+                                                   tag: 1)
+        navigationController.setViewControllers([loginViewController], animated: true)
+    }
+    //    Выбора UserService в зависимости от схемы
+    func userServiceScheme() -> UserService {
         #if DEBUG
         let userService = TestUserService()
         #else

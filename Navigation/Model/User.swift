@@ -21,6 +21,7 @@ enum State {
 final class User {
     
     let fullName: String
+    var uid: String?
     var avatar: String
     var status: String
     
@@ -28,5 +29,9 @@ final class User {
         self.fullName = fullName
         self.avatar = avatar
         self.status = status
+    }
+    convenience init(authModel: AuthModel) {
+        self.init(fullName: authModel.name, avatar: "", status: "")
+        self.uid = authModel.uid
     }
 }

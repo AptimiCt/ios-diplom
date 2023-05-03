@@ -14,51 +14,35 @@ final class AppCoordinator: BaseCoordinator {
     private var instructor: LaunchInstructor {
         return LaunchInstructor.configure(isAutorized: isAutorized)
     }
+    private var user: User?
     
-    var rootController: UINavigationController?
     let localNotificationService = LocalNotificationsService()
-    
-    init(rootController: UINavigationController?) {
-        self.rootController = rootController
-    }
     
     override func start() {
         switch instructor {
-            case .auth:
-                runAuthFlow()
-            case .main:
-                runMainFlow()
+            case .auth: runAuthFlow()
+            case .main: runMainFlow()
         }
     }
 }
 
 private extension AppCoordinator {
     func runAuthFlow() {
-        loginViewConfigure()
+        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
+        loginCoordinator.finishFlow = { [weak self, weak loginCoordinator] user in
+            if user != nil {
+                self?.isAutorized = true
+                self?.user = user
+            }
+            self?.start()
+            self?.removeCoordinator(loginCoordinator)
+        }
+        addCoordinator(loginCoordinator)
+        loginCoordinator.start()
     }
     func runMainFlow() {
         let tabBarVC = ControllersFactory.createTabBarController()
-        rootController?.setViewControllers([tabBarVC], animated: true)
-    }
-    
-    func loginViewConfigure() {
-        guard let rootController else { return }
-        let loginCoordinator = LoginCoordinator(navController: rootController)
-        let biometricService = LocalAuthorizationService()
-        let loginView = LoginView(
-            biometricType: biometricService.biometricType)
-        let loginViewModel = LoginViewModel()
-        let loginViewController = LoginViewController(
-                                                      loginView: loginView,
-                                                      viewModel: loginViewModel,
-                                                      coordinator: loginCoordinator
-        )
-        loginView.delegate = loginViewController
-        rootController.navigationBar.isHidden = true
-        rootController.tabBarItem = UITabBarItem(title: Constants.tabBarItemLoginVCTitle,
-                                                   image: UIImage(systemName: "person.crop.circle.fill"),
-                                                   tag: 1)
-        rootController.setViewControllers([loginViewController], animated: true)
+        navigationController.setViewControllers([tabBarVC], animated: true)
     }
     func appConfiguration() {
         let appConfiguration = AppConfiguration.allCases.randomElement()

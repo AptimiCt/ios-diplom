@@ -8,7 +8,7 @@
 
 
 import Foundation
-import Firebase
+import FirebaseAuth
 
 protocol LoginViewModelProtocol {
     
@@ -23,6 +23,7 @@ protocol LoginViewModelProtocol {
 final class LoginViewModel: LoginViewModelProtocol {
     
     private var profile = Profile()
+    weak var coordinator: LoginCoordinator!
     var stateModel: StateModel = .initial {
         didSet {
             self.stateChanged?(self)
@@ -37,7 +38,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 self?.handler(authDataResult: authDataResult, and: error)
             }
         } catch {
-            stateModel = .failure(error: error as! AuthenticationError)
+            self.handle(with: error as! AuthenticationError)
         }
     }
     func checkCredentionalsForRegistration(email: String, password: String) {
@@ -47,7 +48,8 @@ final class LoginViewModel: LoginViewModelProtocol {
                 self?.handler(authDataResult: authDataResult, and: error)
             }
         } catch {
-            stateModel = .failure(error: error as! AuthenticationError)
+            self.handle(with: error as! AuthenticationError)
+            
         }
     }
     func loginWithBiometrics() {
@@ -55,10 +57,10 @@ final class LoginViewModel: LoginViewModelProtocol {
             guard let self else { return }
             let authModel = AuthModel(name: Constants.currentUserServiceFullName, uid: UUID().uuidString)
             if sucsses {
-                self.stateModel = .success(authModel)
+                self.finishFlow(authModel)
             } else {
                 //guard let error else { return }
-                self.stateModel = .failure(error: .unknown)
+                self.handle(with: .unknown)
             }
         }
     }
@@ -67,18 +69,18 @@ final class LoginViewModel: LoginViewModelProtocol {
 private extension LoginViewModel {
     func handler(authDataResult: AuthDataResult?, and error: AuthenticationError?) {
         if let error = error {
-            self.stateModel = .failure(error: error)
+            self.handle(with: error)
             return
         }
         guard let authDataResult else {
-            self.stateModel = .failure(error: .unknown)
+            self.handle(with: .unknown)
             return
         }
         let name = Constants.currentUserServiceFullName
         let uid = authDataResult.user.uid
         let authModel = AuthModel(name: name, uid: uid)
         self.profile.update(with: authModel)
-        self.stateModel = .success(authModel)
+        self.finishFlow(authModel)
     }
     //Медод проверки учетных данных на корректность который может выбрасывать ошибки
     func checkCredentionalsOnError(email: String, password: String) throws {
@@ -105,5 +107,39 @@ private extension LoginViewModel {
         
         let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
         return emailTest.evaluate(with: email)
+    }
+    //Метод отвечатет за повявление alert при появлении ошибки
+    func handle(with error: AuthenticationError) {
+        self.stateModel = .failure(error)
+        switch error {
+            case .incorrectCredentials:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .emptyEmail:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .emptyPassword:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .invalidEmail:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .userNotFound:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .userDisabled:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .loginInUse:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .weakPassword(_):
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .networkError:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .tooManyRequests:
+                coordinator.showAlertController(message: error.localizedDescription)
+            case .unknown:
+                coordinator.showAlertController(message: error.localizedDescription)
+        }
+    }
+    //Переход в основной поток
+    func finishFlow(_ authModel: AuthModel) {
+        let user = User(authModel: authModel)
+        self.stateModel = .success(authModel)
+        self.coordinator.finishFlow?(user)
     }
 }

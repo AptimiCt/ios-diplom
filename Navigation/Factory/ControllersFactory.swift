@@ -28,21 +28,15 @@ final class ControllersFactory {
     private func createTabBarViewController(){
         switch tab {
             case .feed:
-                
-                let profileCoordinator = LoginCoordinator(navController: controller)
+                let profileCoordinator = LoginCoordinator(navigationController: controller)
                 let profileViewController = Self.createProfileViewController(loginName: Constants.testUserServiceFullName, userService: TestUserService(), coordinator: profileCoordinator)
                 controller.setViewControllers([profileViewController], animated: true)
             case .profile:
-                let loginCoordinator = LoginCoordinator(navController: controller)
                 let biometricService = LocalAuthorizationService()
                 let loginView = LoginView(
                     biometricType: biometricService.biometricType)
                 let loginViewModel = LoginViewModel()
-                let loginViewController = LoginViewController(
-                                                              loginView: loginView,
-                                                              viewModel: loginViewModel,
-                                                              coordinator: loginCoordinator
-                )
+                let loginViewController = LoginViewController(loginView: loginView, viewModel: loginViewModel)
                 loginView.delegate = loginViewController
                 controller.navigationBar.isHidden = true
                 controller.tabBarItem = UITabBarItem(title: Constants.tabBarItemLoginVCTitle,

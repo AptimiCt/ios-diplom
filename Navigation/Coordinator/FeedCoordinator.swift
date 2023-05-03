@@ -11,19 +11,13 @@ import StorageService
 
 class FeedCoordinator: BaseCoordinator {
     
-    private var navController: UINavigationController
-    
-    init(navController: UINavigationController) {
-        self.navController = navController
-    }
-    
     func showPostVC(post: Post) {
         let postViewController = PostViewController(post: post, coordinator: self)
-        navController.pushViewController(postViewController, animated: true)
+        navigationController.pushViewController(postViewController, animated: true)
     }
     func showFileVC() {
         let filesViewController = FilesViewController()
-        navController.pushViewController(filesViewController, animated: true)
+        navigationController.pushViewController(filesViewController, animated: true)
     }
     
     func showInfo(){

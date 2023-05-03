@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         FirebaseApp.configure()
         window = UIWindow(windowScene: windowScene)
         navigationController = UINavigationController()
-        appCoordinator = AppCoordinator(rootController: navigationController)
+        guard let navigationController else { return }
+        appCoordinator = AppCoordinator(navigationController: navigationController)
         appCoordinator?.start()
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

@@ -6,23 +6,17 @@
 //
 
 import UIKit
-import FirebaseAuth
+
 class LoginViewController: UIViewController {
     
     //MARK: - property
     private var viewModel: LoginViewModelProtocol
-    private var coordinator: LoginCoordinator!
     private var loginView: LoginView!
     
     //MARK: - init
-    init(
-        loginView: LoginView,
-        viewModel: LoginViewModel,
-        coordinator: LoginCoordinator
-    ) {
+    init(loginView: LoginView, viewModel: LoginViewModel) {
         self.loginView = loginView
         self.viewModel = viewModel
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) {
@@ -31,7 +25,6 @@ class LoginViewController: UIViewController {
     
     //MARK: - override funcs
     override func loadView() {
-        super.loadView()
         view = loginView
     }
     override func viewDidLoad() {
@@ -60,46 +53,12 @@ private extension LoginViewController {
                     self.loginView.stateView = .initial
                 case .loading:
                     self.loginView.stateView = .loading
-                case .success(let authModel):
+                case .success:
                     self.loginView.stateView = .success
-                    self.showProfile(authModel)
-                case .failure(error: let error):
+                case .failure:
                     self.loginView.stateView = .failure
-                    self.handle(with: error)
             }
         }
-    }
-    //Метод отвечатет за повявление alert при появлении ошибки
-    func handle(with error: AuthenticationError) {
-        switch error {
-            case .incorrectCredentials:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .emptyEmail:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .emptyPassword:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .invalidEmail:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .userNotFound:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .userDisabled:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .loginInUse:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .weakPassword(_):
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .networkError:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .tooManyRequests:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-            case .unknown:
-                coordinator.showAlertController(in: self, message: error.localizedDescription)
-        }
-    }
-    //Открытие Profile View Controller
-    func showProfile(_ authModel: AuthModel) {
-        let fullName = authModel.name
-        self.coordinator.showProfileVC(loginName: fullName)
     }
 }
 //MARK: - @objc private funcs in extension

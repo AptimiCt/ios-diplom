@@ -28,7 +28,7 @@ final class LoginInspector: LoginViewControllerDelegate {
                 completion(.failure(error!))
             } else {
                 let name = Constants.currentUserServiceFullName
-                guard let uid = result?.user.uid, let email = result?.user.email else { return }
+                guard let uid = result?.user.uid else { return }
                 let authModel = AuthModel(name: name, uid: uid)
                 completion(.success(authModel))
             }

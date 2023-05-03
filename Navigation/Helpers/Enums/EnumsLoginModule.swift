@@ -25,5 +25,5 @@ enum StateModel {
     case initial
     case loading
     case success(AuthModel)
-    case failure(error: AuthenticationError)
+    case failure(AuthenticationError)
 }
