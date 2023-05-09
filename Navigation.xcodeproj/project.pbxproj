@@ -20,6 +20,10 @@
 		613FF32F2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF32E2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift */; };
 		613FF3322A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3312A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift */; };
 		613FF3362A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3352A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift */; };
+		613FF3422A0AF5B700D0BB71 /* UpdateInfoProfileProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3412A0AF5B700D0BB71 /* UpdateInfoProfileProtocol.swift */; };
+		613FF3442A0AF7FD00D0BB71 /* UpdateInfoProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3432A0AF7FD00D0BB71 /* UpdateInfoProfile.swift */; };
+		613FF3462A0AF8AA00D0BB71 /* UpdateInfoProfileViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3452A0AF8AA00D0BB71 /* UpdateInfoProfileViewModelProtocol.swift */; };
+		613FF3482A0AF9B500D0BB71 /* UpdateInfoProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3472A0AF9B500D0BB71 /* UpdateInfoProfileViewModel.swift */; };
 		61484AFF299EA8400093FBF1 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */; };
 		614D33D129E75319003E1A83 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614D33D029E75319003E1A83 /* Profile.swift */; };
 		6150EECF296871C70023BA7D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EECE296871C70023BA7D /* ProfileViewModel.swift */; };
@@ -131,6 +135,10 @@
 		613FF32E2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerProtocol.swift; sourceTree = "<group>"; };
 		613FF3312A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewControllerProtocol.swift; sourceTree = "<group>"; };
 		613FF3352A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewControllerProtocol.swift; sourceTree = "<group>"; };
+		613FF3412A0AF5B700D0BB71 /* UpdateInfoProfileProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInfoProfileProtocol.swift; sourceTree = "<group>"; };
+		613FF3432A0AF7FD00D0BB71 /* UpdateInfoProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInfoProfile.swift; sourceTree = "<group>"; };
+		613FF3452A0AF8AA00D0BB71 /* UpdateInfoProfileViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInfoProfileViewModelProtocol.swift; sourceTree = "<group>"; };
+		613FF3472A0AF9B500D0BB71 /* UpdateInfoProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInfoProfileViewModel.swift; sourceTree = "<group>"; };
 		61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
 		614D33D029E75319003E1A83 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		6150EECE296871C70023BA7D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -245,6 +253,7 @@
 				BB38BC4C2794180600FF4B2E /* LoginViewController.swift */,
 				611CA4FC29BDF65C00B42FAD /* LoginView.swift */,
 				61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */,
+				613FF3432A0AF7FD00D0BB71 /* UpdateInfoProfile.swift */,
 			);
 			path = LoginScreen;
 			sourceTree = "<group>";
@@ -253,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				61DAFB5E29DE19180026F3F3 /* LoginViewModel.swift */,
+				613FF3472A0AF9B500D0BB71 /* UpdateInfoProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -263,6 +273,8 @@
 				BB0C6A4328FA045500C665D5 /* LoginViewControllerDelegate.swift */,
 				61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */,
 				613FF3252A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift */,
+				613FF3412A0AF5B700D0BB71 /* UpdateInfoProfileProtocol.swift */,
+				613FF3452A0AF8AA00D0BB71 /* UpdateInfoProfileViewModelProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -327,10 +339,7 @@
 			children = (
 				613FF33B2A0AEDB600D0BB71 /* Coordinator */,
 				BB47EFF72889EA4B00FFB5EC /* TabBarController.swift */,
-				BB06900929584EFB009A2C24 /* Feed */,
-				BB53FB22276A8F100094AF1D /* Profile */,
-				BB06900629584DE5009A2C24 /* Favorites */,
-				BBD735C627A72C95002397A0 /* Post */,
+				613FF3402A0AF47700D0BB71 /* Tabs */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -377,6 +386,17 @@
 				BB47EFF62889EA2500FFB5EC /* View */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		613FF3402A0AF47700D0BB71 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				BB06900929584EFB009A2C24 /* Feed */,
+				BB53FB22276A8F100094AF1D /* Profile */,
+				BB06900629584DE5009A2C24 /* Favorites */,
+				BBD735C627A72C95002397A0 /* Post */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 		6150EECD2968718B0023BA7D /* ViewModel */ = {
@@ -775,6 +795,7 @@
 				BBA2D94827AFD2D2002AC2A1 /* PhotosViewController.swift in Sources */,
 				61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */,
 				613FF3362A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift in Sources */,
+				613FF3422A0AF5B700D0BB71 /* UpdateInfoProfileProtocol.swift in Sources */,
 				61484AFF299EA8400093FBF1 /* LocalNotificationsService.swift in Sources */,
 				BBBD5CD9291C205800A63966 /* FileManagerServiceProtocol.swift in Sources */,
 				BB1578D0281B341400579E09 /* CurrentLoginFactory.swift in Sources */,
@@ -797,6 +818,7 @@
 				61007C2B2996B50D00AD7922 /* AlertController.swift in Sources */,
 				613FF32F2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift in Sources */,
 				BBD735C827A72CAE002397A0 /* PostTableViewCell.swift in Sources */,
+				613FF3462A0AF8AA00D0BB71 /* UpdateInfoProfileViewModelProtocol.swift in Sources */,
 				61FF1EED29FFC6BD002D0331 /* OutputCoordinator.swift in Sources */,
 				BB21600A28E087B500715635 /* NetworkManager.swift in Sources */,
 				BB15250E282FBFDE0045275F /* SceneDelegate.swift in Sources */,
@@ -814,6 +836,7 @@
 				BBBBC9152753E9A6003DDF50 /* FeedViewController.swift in Sources */,
 				BBF7295027B4238100D737EF /* PhotosCollectionViewCell.swift in Sources */,
 				613FF3262A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift in Sources */,
+				613FF3482A0AF9B500D0BB71 /* UpdateInfoProfileViewModel.swift in Sources */,
 				BBFCF302290FC14100C4D597 /* FirebaseResponseError.swift in Sources */,
 				BB1578CD28195B7500579E09 /* LoginFactory.swift in Sources */,
 				BBBD5CDB291C214700A63966 /* FileManagerService.swift in Sources */,
@@ -821,6 +844,7 @@
 				BB53FB24276A8F9D0094AF1D /* ProfileTableHederView.swift in Sources */,
 				6180AC67297D333E00A3281A /* K.swift in Sources */,
 				BB0C6A4828FC73AC00C665D5 /* AuthenticationError.swift in Sources */,
+				613FF3442A0AF7FD00D0BB71 /* UpdateInfoProfile.swift in Sources */,
 				BB0C6A4628FA060E00C665D5 /* AuthModel.swift in Sources */,
 				613FF3292A0AA62200D0BB71 /* ControllersFactoryProtocol.swift in Sources */,
 				61BD14FD29F42D9B00BA4438 /* LoginView+Ext.swift in Sources */,

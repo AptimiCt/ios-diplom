@@ -96,7 +96,7 @@ extension LoginView {
 }
 
 //MARK: - fileprivate extension UITextField
-private extension UITextField {
+extension UITextField {
     //Настройка textField
     func configureTextField(with placeholder: String) {
         self.layer.borderColor = UIColor.lightGray.cgColor

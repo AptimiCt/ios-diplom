@@ -24,6 +24,7 @@ final class User {
     var uid: String?
     var avatar: String
     var status: String
+    var gender: String?
     
     init(fullName: String, avatar: String, status: String){
         self.fullName = fullName
