@@ -236,7 +236,7 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
-		611CA4FA29BDF5E700B42FAD /* Login */ = {
+		611CA4FA29BDF5E700B42FAD /* LoginScreen */ = {
 			isa = PBXGroup;
 			children = (
 				613FF3242A0AA4A800D0BB71 /* Protocol */,
@@ -246,7 +246,7 @@
 				611CA4FC29BDF65C00B42FAD /* LoginView.swift */,
 				61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */,
 			);
-			path = Login;
+			path = LoginScreen;
 			sourceTree = "<group>";
 		};
 		611CA4FB29BDF60F00B42FAD /* ViewModel */ = {
@@ -260,6 +260,8 @@
 		613FF3242A0AA4A800D0BB71 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				BB0C6A4328FA045500C665D5 /* LoginViewControllerDelegate.swift */,
+				61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */,
 				613FF3252A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift */,
 			);
 			path = Protocol;
@@ -320,6 +322,63 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		613FF33A2A0AED5100D0BB71 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				613FF33B2A0AEDB600D0BB71 /* Coordinator */,
+				BB47EFF72889EA4B00FFB5EC /* TabBarController.swift */,
+				BB06900929584EFB009A2C24 /* Feed */,
+				BB53FB22276A8F100094AF1D /* Profile */,
+				BB06900629584DE5009A2C24 /* Favorites */,
+				BBD735C627A72C95002397A0 /* Post */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		613FF33B2A0AEDB600D0BB71 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				613F15472A02B863006FBA8E /* MainCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		613FF33C2A0AEDF200D0BB71 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				BB47EFF9288A002000FFB5EC /* FeedCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		613FF33D2A0AEE2100D0BB71 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				BB9D5EC8285FB3310039DFE7 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		613FF33E2A0AEE7300D0BB71 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				61FF1EEC29FFC6BD002D0331 /* OutputCoordinator.swift */,
+				61FF1EEA29FF26F7002D0331 /* Coordinator.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		613FF33F2A0AEFA700D0BB71 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				611CA4FA29BDF5E700B42FAD /* LoginScreen */,
+				613FF33A2A0AED5100D0BB71 /* MainScreen */,
+				61007C292996B4EF00AD7922 /* Alert */,
+				BB47EFF62889EA2500FFB5EC /* View */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		6150EECD2968718B0023BA7D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,6 +432,7 @@
 		BB06900929584EFB009A2C24 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				613FF33C2A0AEDF200D0BB71 /* Coordinator */,
 				BBBBC9142753E9A6003DDF50 /* FeedViewController.swift */,
 			);
 			path = Feed;
@@ -390,24 +450,21 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		BB15250A282FBFDE0045275F /* SystemDelegate */ = {
+		BB15250A282FBFDE0045275F /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				613FF33D2A0AEE2100D0BB71 /* Coordinator */,
 				BB15250B282FBFDE0045275F /* AppDelegate.swift */,
 				BB15250C282FBFDE0045275F /* SceneDelegate.swift */,
 			);
-			path = SystemDelegate;
+			path = Application;
 			sourceTree = "<group>";
 		};
 		BB15250F282FBFF90045275F /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
 				BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */,
-				BB0C6A4328FA045500C665D5 /* LoginViewControllerDelegate.swift */,
 				BBBD5CD8291C205800A63966 /* FileManagerServiceProtocol.swift */,
-				61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */,
-				61FF1EEA29FF26F7002D0331 /* Coordinator.swift */,
-				61FF1EEC29FFC6BD002D0331 /* OutputCoordinator.swift */,
 				612756212A081CBE008842D4 /* Presentable.swift */,
 			);
 			path = Protocols;
@@ -436,7 +493,6 @@
 		BB47EFF62889EA2500FFB5EC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BB47EFF72889EA4B00FFB5EC /* TabBarController.swift */,
 				6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */,
 				BB962F2C283457B10080A2D1 /* CustomButton.swift */,
 				BBA8973A285C10D800126052 /* CustomTextField.swift */,
@@ -458,15 +514,13 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		BB9D5EC7285FB3080039DFE7 /* Coordinator */ = {
+		BB9D5EC7285FB3080039DFE7 /* BaseCoordinator */ = {
 			isa = PBXGroup;
 			children = (
-				BB9D5EC8285FB3310039DFE7 /* AppCoordinator.swift */,
-				BB47EFF9288A002000FFB5EC /* FeedCoordinator.swift */,
+				613FF33E2A0AEE7300D0BB71 /* Protocol */,
 				61FF1EE829FF2686002D0331 /* BaseCoordinator.swift */,
-				613F15472A02B863006FBA8E /* MainCoordinator.swift */,
 			);
-			path = Coordinator;
+			path = BaseCoordinator;
 			sourceTree = "<group>";
 		};
 		BBA2D94927AFE061002AC2A1 /* Extension */ = {
@@ -537,20 +591,14 @@
 		BBDC802E2749E2FF000A302B /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				611CA4FA29BDF5E700B42FAD /* Login */,
-				BB53FB22276A8F100094AF1D /* Profile */,
-				BB06900629584DE5009A2C24 /* Favorites */,
-				61007C292996B4EF00AD7922 /* Alert */,
-				BB47EFF62889EA2500FFB5EC /* View */,
-				BB9D5EC7285FB3080039DFE7 /* Coordinator */,
+				613FF33F2A0AEFA700D0BB71 /* Screens */,
+				BB9D5EC7285FB3080039DFE7 /* BaseCoordinator */,
 				61F0628F2958A7AE00017C0F /* Database */,
 				BBBD5CD3291AD57900A63966 /* FilesView */,
 				BB15250F282FBFF90045275F /* Protocols */,
-				BB15250A282FBFDE0045275F /* SystemDelegate */,
+				BB15250A282FBFDE0045275F /* Application */,
 				BB152503282FBFCE0045275F /* Model */,
 				BB1578CE281B33C300579E09 /* Factory */,
-				BBD735C627A72C95002397A0 /* Post */,
-				BB06900929584EFB009A2C24 /* Feed */,
 				BBF7295127B45F6500D737EF /* Helpers */,
 				61DAFB5D29DD91DF0026F3F3 /* SupportingFiles */,
 			);
