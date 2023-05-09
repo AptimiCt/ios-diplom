@@ -16,7 +16,7 @@ final class AppCoordinator: BaseCoordinator {
     }
     private var user: User?
     
-    let localNotificationService = LocalNotificationsService()
+    private let localNotificationService = LocalNotificationsService()
     
     override func start() {
         switch instructor {
@@ -41,8 +41,22 @@ private extension AppCoordinator {
         loginCoordinator.start()
     }
     func runMainFlow() {
-        let tabBarVC = ControllersFactory.createTabBarController()
-        navigationController.setViewControllers([tabBarVC], animated: true)
+        guard let user else { return }
+        lazy var mainTabBarVC = TabBarController()
+        let mainCoordinator = MainCoordinator(navigationController: navigationController, tabBarVC: mainTabBarVC, with: user)
+        mainCoordinator.finishFlow = { [weak self, weak mainCoordinator] user in
+            if user == nil {
+                self?.isAutorized = false
+                self?.user = user
+            }
+            self?.start()
+            self?.removeCoordinator(mainCoordinator)
+        }
+        addCoordinator(mainCoordinator)
+        mainCoordinator.start()
+        guard let controller = mainTabBarVC.toPresent() else { return }
+        navigationController.setViewControllers([controller], animated: true)
+        
     }
     func appConfiguration() {
         let appConfiguration = AppConfiguration.allCases.randomElement()

@@ -185,11 +185,11 @@ class FeedViewController: UIViewController {
     private func buttonsAction(){
         buttonToPostFirst.action = { [weak self] in
             guard let self, let post = self.post else { return }
-            self.coordinator.showPostVC(post: post)
+            //self.coordinator.showPostVC(post: post)
         }
         buttonToPostSecond.action = { [weak self] in
             guard let self else { return }
-            self.coordinator.showFileVC()
+            //self.coordinator.showFileVC()
         }
         checkWordButton.action = { [weak self] in
             guard let self, let word = self.wordTextField.text, !(word.isEmpty),let post = self.post else { return }

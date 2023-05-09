@@ -10,7 +10,7 @@ import StorageService
 
 class ProfileViewController: UIViewController {
     
-    private var coordinator: LoginCoordinator
+    private weak var coordinator: ProfileCoordinator!
     private var viewModel: ProfileViewModelProtocol!
     
     //MARK: - vars
@@ -43,7 +43,7 @@ class ProfileViewController: UIViewController {
     init(
         loginName: String,
         userService: UserService,
-        coordinator: LoginCoordinator,
+        coordinator: ProfileCoordinator,
         viewModel: ProfileViewModel
     ) {
         self.viewModel = viewModel
@@ -73,6 +73,7 @@ class ProfileViewController: UIViewController {
         setupView()
         closeButtonTaped()
         setupViewModel()
+        finishFlow()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -200,8 +201,11 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    deinit {
-        print(#function)
+    //Переход поток авторизации
+    func finishFlow() {
+        profileTableHeaderView.closeButton.action = { [weak self] in
+            self?.coordinator.finishFlow?(nil)
+        }
     }
 }
 
@@ -247,6 +251,7 @@ extension ProfileViewController: UITableViewDelegate {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         if indexPath.section == 0 {
             coordinator.showPhotosVC()
+            
         }
     }
 }

@@ -40,6 +40,6 @@ final class PostViewController: UIViewController {
     }
     
     @objc private func openInfoVC(){
-        coordinator?.showInfo()
+        //coordinator?.showInfo()
     }
 }

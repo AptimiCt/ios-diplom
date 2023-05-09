@@ -8,37 +8,61 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-    
-    private var feedViewController: UIViewController
-    private var profileViewController: UIViewController
-    private var favoriteViewController: UIViewController
-    
-    init() {
-        self.feedViewController = ControllersFactory(navigationController: UINavigationController(), tab: .feed).controller
-        self.profileViewController = ControllersFactory(navigationController: UINavigationController(), tab: .profile).controller
-        self.favoriteViewController = ControllersFactory(navigationController: UINavigationController(), tab: .favorites).controller
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
+    var onFeedSelect: ((UINavigationController) -> ())?
+    var onProfileSelect: ((UINavigationController) -> ())?
+    var onFavoriteSelect: ((UINavigationController) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setControllers()
         configTabBar()
+        delegate = self
     }
-    
-    private func setControllers() {
+}
+extension TabBarController {
+    func firstLoad() {
+        if let viewControllers {
+            for (index, controller) in viewControllers.enumerated() {
+                guard let controller = controller as? UINavigationController else { return }
+                switch index {
+                    case 0:
+                        onFeedSelect?(controller)
+                    case 1:
+                        onProfileSelect?(controller)
+                    case 2:
+                        onFavoriteSelect?(controller)
+                    default:
+                        break
+                }
+            }
+        }
+    }
+}
+private extension TabBarController {
+    func setControllers() {
         viewControllers = [
-            feedViewController,
-            profileViewController,
-            favoriteViewController
+            UINavigationController(),
+            UINavigationController(),
+            UINavigationController()
         ]
     }
-    
-    private func configTabBar(){
+    func configTabBar(){
         tabBar.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
+    }
+}
+extension TabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+      guard let controller = viewControllers?[selectedIndex] as? UINavigationController else { return }
+        switch selectedIndex {
+            case 0:
+                onFeedSelect?(controller)
+            case 1:
+                onProfileSelect?(controller)
+            case 2:
+                onFavoriteSelect?(controller)
+            default:
+                print("Неизвестная вкладка")
+        }
     }
 }

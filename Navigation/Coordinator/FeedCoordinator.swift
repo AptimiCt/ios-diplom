@@ -11,33 +11,11 @@ import StorageService
 
 class FeedCoordinator: BaseCoordinator {
     
-    func showPostVC(post: Post) {
-        let postViewController = PostViewController(post: post, coordinator: self)
-        navigationController.pushViewController(postViewController, animated: true)
-    }
-    func showFileVC() {
+    override func start(){
+        let feedTabBarIcon = UIImage(named: "Home")
+        let feedTabBarItem = UITabBarItem(title: "Fav", image: feedTabBarIcon, selectedImage: nil)
+        navigationController.tabBarItem = feedTabBarItem
         let filesViewController = FilesViewController()
-        navigationController.pushViewController(filesViewController, animated: true)
-    }
-    
-    func showInfo(){
-        
-    }
-    
-    func showAlert(in controller: UIViewController){
-        let title = Constants.alertButtonActionTitle
-        let message = Constants.alertButtonActionMessage
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      preferredStyle: .alert)
-        let actionCancel = UIAlertAction(title: Constants.alertButtonActionCancel, style: .destructive) { _ in
-            print(Constants.alertButtonActionCancelPressed)
-        }
-        let actionOk = UIAlertAction(title: Constants.alertButtonActionOk, style: .default) { _ in
-            print(Constants.alertButtonActionOkPressed)
-        }
-        alert.addAction(actionCancel)
-        alert.addAction(actionOk)
-        controller.present(alert, animated: true, completion: nil)
+        navigationController.setViewControllers([filesViewController], animated: false)
     }
 }

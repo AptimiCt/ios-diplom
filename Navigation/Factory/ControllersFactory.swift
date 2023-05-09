@@ -28,7 +28,7 @@ final class ControllersFactory {
     private func createTabBarViewController(){
         switch tab {
             case .feed:
-                let profileCoordinator = LoginCoordinator(navigationController: controller)
+                let profileCoordinator = ProfileCoordinator(user: User(fullName: Constants.testUserServiceFullName, avatar: "", status: ""), navigationController: controller)
                 let profileViewController = Self.createProfileViewController(loginName: Constants.testUserServiceFullName, userService: TestUserService(), coordinator: profileCoordinator)
                 controller.setViewControllers([profileViewController], animated: true)
             case .profile:
@@ -49,7 +49,7 @@ final class ControllersFactory {
         }
     }
     
-    static func createProfileViewController(loginName: String, userService: UserService, coordinator: LoginCoordinator) -> UIViewController {
+    static func createProfileViewController(loginName: String, userService: UserService, coordinator: ProfileCoordinator) -> UIViewController {
         let posts = Storage.posts
         let viewModel = ProfileViewModel(posts: posts)
         let profileViewController = ProfileViewController(

@@ -16,16 +16,6 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     override func start() {
         loginViewConfigure()
     }
-    func showProfileVC(loginName: String) {
-        let userService = userServiceScheme()
-        let profileViewController = ControllersFactory.createProfileViewController(loginName: loginName, userService: userService, coordinator: self)
-        navigationController.pushViewController(profileViewController, animated: true)
-    }
-    
-    func showPhotosVC(){
-        let nvc = PhotosViewController()
-        navigationController.pushViewController(nvc, animated: true)
-    }
     func showAlertController(message: String) {
         var presentingController: UIViewController
         if let presentedController = self.navigationController.visibleViewController {
@@ -34,10 +24,6 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
             presentingController = self.navigationController
         }
         AlertController.defaultController.showAlert(in: presentingController, message: message)
-    }
-    
-    deinit{
-        print("LoginCoordinator удален deinit")
     }
 }
 
