@@ -15,6 +15,11 @@
 		612756222A081CBE008842D4 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612756212A081CBE008842D4 /* Presentable.swift */; };
 		613F15482A02B863006FBA8E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613F15472A02B863006FBA8E /* MainCoordinator.swift */; };
 		613FF3232A0A3D0500D0BB71 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3222A0A3D0500D0BB71 /* ProfileCoordinator.swift */; };
+		613FF3262A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3252A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift */; };
+		613FF3292A0AA62200D0BB71 /* ControllersFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3282A0AA62200D0BB71 /* ControllersFactoryProtocol.swift */; };
+		613FF32F2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF32E2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift */; };
+		613FF3322A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3312A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift */; };
+		613FF3362A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3352A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift */; };
 		61484AFF299EA8400093FBF1 /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */; };
 		614D33D129E75319003E1A83 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614D33D029E75319003E1A83 /* Profile.swift */; };
 		6150EECF296871C70023BA7D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EECE296871C70023BA7D /* ProfileViewModel.swift */; };
@@ -121,6 +126,11 @@
 		612756212A081CBE008842D4 /* Presentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentable.swift; sourceTree = "<group>"; };
 		613F15472A02B863006FBA8E /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		613FF3222A0A3D0500D0BB71 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		613FF3252A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerProtocol.swift; sourceTree = "<group>"; };
+		613FF3282A0AA62200D0BB71 /* ControllersFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllersFactoryProtocol.swift; sourceTree = "<group>"; };
+		613FF32E2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerProtocol.swift; sourceTree = "<group>"; };
+		613FF3312A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewControllerProtocol.swift; sourceTree = "<group>"; };
+		613FF3352A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewControllerProtocol.swift; sourceTree = "<group>"; };
 		61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
 		614D33D029E75319003E1A83 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		6150EECE296871C70023BA7D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -229,6 +239,8 @@
 		611CA4FA29BDF5E700B42FAD /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				613FF3242A0AA4A800D0BB71 /* Protocol */,
+				613FF3372A0AE7FC00D0BB71 /* Coordinator */,
 				611CA4FB29BDF60F00B42FAD /* ViewModel */,
 				BB38BC4C2794180600FF4B2E /* LoginViewController.swift */,
 				611CA4FC29BDF65C00B42FAD /* LoginView.swift */,
@@ -243,6 +255,69 @@
 				61DAFB5E29DE19180026F3F3 /* LoginViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		613FF3242A0AA4A800D0BB71 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				613FF3252A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		613FF3272A0AA5FE00D0BB71 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				613FF3282A0AA62200D0BB71 /* ControllersFactoryProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		613FF32D2A0AE5BE00D0BB71 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				613FF32E2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		613FF3302A0AE63200D0BB71 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				613FF3312A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		613FF3332A0AE67000D0BB71 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				613FF3352A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		613FF3372A0AE7FC00D0BB71 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				BB47EFFB288A003400FFB5EC /* LoginCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		613FF3382A0AE96500D0BB71 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		613FF3392A0AE9A100D0BB71 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				6127561F2A03CCE0008842D4 /* FavoriteCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		6150EECD2968718B0023BA7D /* ViewModel */ = {
@@ -288,6 +363,8 @@
 		BB06900629584DE5009A2C24 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				613FF3392A0AE9A100D0BB71 /* Coordinator */,
+				613FF3302A0AE63200D0BB71 /* Protocol */,
 				BB06900729584E6D009A2C24 /* FavoritesViewController.swift */,
 			);
 			path = Favorites;
@@ -339,6 +416,7 @@
 		BB1578CE281B33C300579E09 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				613FF3272A0AA5FE00D0BB71 /* Protocol */,
 				BB1578CC28195B7500579E09 /* LoginFactory.swift */,
 				BB1578CF281B341400579E09 /* CurrentLoginFactory.swift */,
 				BB47EFF42888C12400FFB5EC /* ControllersFactory.swift */,
@@ -369,9 +447,13 @@
 		BB53FB22276A8F100094AF1D /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				613FF32D2A0AE5BE00D0BB71 /* Protocol */,
+				613FF3382A0AE96500D0BB71 /* Coordinator */,
+				613FF3222A0A3D0500D0BB71 /* ProfileCoordinator.swift */,
 				6150EECD2968718B0023BA7D /* ViewModel */,
 				BBBBC9162753E9DB003DDF50 /* ProfileViewController.swift */,
 				BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */,
+				BBD735CB27AEE206002397A0 /* Photos */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -381,11 +463,8 @@
 			children = (
 				BB9D5EC8285FB3310039DFE7 /* AppCoordinator.swift */,
 				BB47EFF9288A002000FFB5EC /* FeedCoordinator.swift */,
-				BB47EFFB288A003400FFB5EC /* LoginCoordinator.swift */,
 				61FF1EE829FF2686002D0331 /* BaseCoordinator.swift */,
 				613F15472A02B863006FBA8E /* MainCoordinator.swift */,
-				6127561F2A03CCE0008842D4 /* FavoriteCoordinator.swift */,
-				613FF3222A0A3D0500D0BB71 /* ProfileCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -429,6 +508,7 @@
 		BBD735CB27AEE206002397A0 /* Photos */ = {
 			isa = PBXGroup;
 			children = (
+				613FF3332A0AE67000D0BB71 /* Protocol */,
 				BBD735CC27AEE22A002397A0 /* PhotosTableViewCell.swift */,
 				BBA2D94727AFD2D2002AC2A1 /* PhotosViewController.swift */,
 				BBF7294F27B4238100D737EF /* PhotosCollectionViewCell.swift */,
@@ -458,6 +538,8 @@
 			isa = PBXGroup;
 			children = (
 				611CA4FA29BDF5E700B42FAD /* Login */,
+				BB53FB22276A8F100094AF1D /* Profile */,
+				BB06900629584DE5009A2C24 /* Favorites */,
 				61007C292996B4EF00AD7922 /* Alert */,
 				BB47EFF62889EA2500FFB5EC /* View */,
 				BB9D5EC7285FB3080039DFE7 /* Coordinator */,
@@ -467,11 +549,8 @@
 				BB15250A282FBFDE0045275F /* SystemDelegate */,
 				BB152503282FBFCE0045275F /* Model */,
 				BB1578CE281B33C300579E09 /* Factory */,
-				BBD735CB27AEE206002397A0 /* Photos */,
 				BBD735C627A72C95002397A0 /* Post */,
 				BB06900929584EFB009A2C24 /* Feed */,
-				BB53FB22276A8F100094AF1D /* Profile */,
-				BB06900629584DE5009A2C24 /* Favorites */,
 				BBF7295127B45F6500D737EF /* Helpers */,
 				61DAFB5D29DD91DF0026F3F3 /* SupportingFiles */,
 			);
@@ -642,10 +721,12 @@
 				61FF1EE929FF2686002D0331 /* BaseCoordinator.swift in Sources */,
 				BBD735CD27AEE22A002397A0 /* PhotosTableViewCell.swift in Sources */,
 				BB47EFFA288A002000FFB5EC /* FeedCoordinator.swift in Sources */,
+				613FF3322A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift in Sources */,
 				BBBD5CD5291AD5BD00A63966 /* FilesViewController.swift in Sources */,
 				BB152509282FBFCE0045275F /* TestUserService.swift in Sources */,
 				BBA2D94827AFD2D2002AC2A1 /* PhotosViewController.swift in Sources */,
 				61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */,
+				613FF3362A0AE69B00D0BB71 /* PhotosViewControllerProtocol.swift in Sources */,
 				61484AFF299EA8400093FBF1 /* LocalNotificationsService.swift in Sources */,
 				BBBD5CD9291C205800A63966 /* FileManagerServiceProtocol.swift in Sources */,
 				BB1578D0281B341400579E09 /* CurrentLoginFactory.swift in Sources */,
@@ -666,6 +747,7 @@
 				BB5D0B5E28EE191300B14768 /* CheckerServiceProtocol.swift in Sources */,
 				BB06900829584E6D009A2C24 /* FavoritesViewController.swift in Sources */,
 				61007C2B2996B50D00AD7922 /* AlertController.swift in Sources */,
+				613FF32F2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift in Sources */,
 				BBD735C827A72CAE002397A0 /* PostTableViewCell.swift in Sources */,
 				61FF1EED29FFC6BD002D0331 /* OutputCoordinator.swift in Sources */,
 				BB21600A28E087B500715635 /* NetworkManager.swift in Sources */,
@@ -683,6 +765,7 @@
 				61BD14FF29F4364A00BA4438 /* EnumsLoginModule.swift in Sources */,
 				BBBBC9152753E9A6003DDF50 /* FeedViewController.swift in Sources */,
 				BBF7295027B4238100D737EF /* PhotosCollectionViewCell.swift in Sources */,
+				613FF3262A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift in Sources */,
 				BBFCF302290FC14100C4D597 /* FirebaseResponseError.swift in Sources */,
 				BB1578CD28195B7500579E09 /* LoginFactory.swift in Sources */,
 				BBBD5CDB291C214700A63966 /* FileManagerService.swift in Sources */,
@@ -691,6 +774,7 @@
 				6180AC67297D333E00A3281A /* K.swift in Sources */,
 				BB0C6A4828FC73AC00C665D5 /* AuthenticationError.swift in Sources */,
 				BB0C6A4628FA060E00C665D5 /* AuthModel.swift in Sources */,
+				613FF3292A0AA62200D0BB71 /* ControllersFactoryProtocol.swift in Sources */,
 				61BD14FD29F42D9B00BA4438 /* LoginView+Ext.swift in Sources */,
 				BB962F2D283457B10080A2D1 /* CustomButton.swift in Sources */,
 				BBF7295327B45F8100D737EF /* Cells.swift in Sources */,

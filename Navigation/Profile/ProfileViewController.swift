@@ -8,10 +8,10 @@
 import UIKit
 import StorageService
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
-    private weak var coordinator: ProfileCoordinator!
-    private var viewModel: ProfileViewModelProtocol!
+    internal weak var coordinator: ProfileCoordinator!
+    internal var viewModel: ProfileViewModelProtocol!
     
     //MARK: - vars
     private let tabBarItemProfileView = UITabBarItem(title: Constants.tabBarItemProfileViewTitle,
@@ -251,7 +251,6 @@ extension ProfileViewController: UITableViewDelegate {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         if indexPath.section == 0 {
             coordinator.showPhotosVC()
-            
         }
     }
 }

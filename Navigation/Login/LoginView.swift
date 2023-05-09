@@ -50,7 +50,6 @@ class LoginView: UIView {
         super.layoutSubviews()
         switch stateView {
             case .initial:
-//                print("Пройдите регистрацию")
                 break
             case .loading:
                 activityIndicatorOn()

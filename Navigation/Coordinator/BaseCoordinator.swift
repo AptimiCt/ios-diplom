@@ -37,3 +37,14 @@ class BaseCoordinator: Coordinator {
         }
     }
 }
+extension BaseCoordinator {
+    func showAlertController(message: String) {
+        var presentingController: UIViewController
+        if let presentedController = self.navigationController.visibleViewController {
+            presentingController = presentedController
+        } else {
+            presentingController = self.navigationController
+        }
+        AlertController.defaultController.showAlert(in: presentingController, message: message)
+    }
+}

@@ -8,14 +8,14 @@
 import UIKit
 import StorageService
 
-class FavoritesViewController: UIViewController {
+class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol {
     
     //MARK: - vars
     private let tabBarItemFavoritesView = UITabBarItem(title: Constants.tabBarItemFavoritesViewTitle,
                                                        image: UIImage(systemName: "star.fill"),
                                                        tag: 3)
     
-    private let tableView: UITableView = {
+    internal let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.toAutoLayout()
         tableView.rowHeight = UITableView.automaticDimension

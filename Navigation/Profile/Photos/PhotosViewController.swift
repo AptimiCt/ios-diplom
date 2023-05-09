@@ -8,10 +8,10 @@
 import UIKit
 import iOSIntPackage
 
-class PhotosViewController: UIViewController {
+class PhotosViewController: UIViewController, PhotosViewControllerProtocol {
     
     //MARK: - vars
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    internal let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var imagePublisherFacade: ImagePublisherFacade?
     private var photos: [UIImage] = []
     private var timer: Timer?

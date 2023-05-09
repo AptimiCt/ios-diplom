@@ -7,11 +7,11 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, LoginViewControllerProtocol {
     
     //MARK: - property
-    private var viewModel: LoginViewModelProtocol
-    private var loginView: LoginView!
+    internal var viewModel: LoginViewModelProtocol
+    internal var loginView: LoginView!
     
     //MARK: - init
     init(loginView: LoginView, viewModel: LoginViewModel) {
