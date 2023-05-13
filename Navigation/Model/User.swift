@@ -20,11 +20,15 @@ enum State {
 
 final class User {
     
-    let fullName: String
     var uid: String?
-    var avatar: String
-    var status: String
+    var name: String?
+    var surname: String?
+    var fullName: String
+    var status: String?
     var gender: String?
+    var dateOfBirth: Date?
+    var avatar: String
+    var updateDate: Date?
     
     init(fullName: String, avatar: String, status: String){
         self.fullName = fullName

@@ -31,9 +31,10 @@ final class ControllerFactory: AuthControllerFactoryProtocol,
                                                    tag: 1)
         return loginViewController
     }
-    func makeUpdateInfoProfile(user: User) -> UpdateInfoProfileProtocol {
+    func makeUpdateInfoProfile(user: User, coordinator: LoginCoordinator) -> UpdateInfoProfileProtocol {
         let viewModel = UpdateInfoProfileViewModel(user: user)
-        return UpdateInfoProfile(viewModel: viewModel)
+        viewModel.coordinator = coordinator
+        return UpdateInfoProfileController(viewModel: viewModel)
     }
     func makeProfileController(with user: User, and coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol {
         let posts = Storage.posts

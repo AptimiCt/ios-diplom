@@ -57,6 +57,10 @@ class LoginView: UIView {
                 activityIndicatorOff(with: buttonTapped)
             case .failure:
                 activityIndicatorOff(with: buttonTapped)
+            case .keyboardWillShow(_):
+                break
+            case .keyboardWillHide(_):
+                break
         }
         setupConstrains()
     }

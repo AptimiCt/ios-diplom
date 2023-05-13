@@ -11,7 +11,7 @@ import UIKit
 
 protocol AuthControllerFactoryProtocol {
     func makeLoginController(with coordinator: LoginCoordinator) -> LoginViewControllerProtocol
-    func makeUpdateInfoProfile(user: User) -> UpdateInfoProfileProtocol
+    func makeUpdateInfoProfile(user: User, coordinator: LoginCoordinator) -> UpdateInfoProfileProtocol
 }
 
 protocol ProfileControllerFactoryProtocol {

@@ -16,6 +16,12 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     override func start() {
         loginViewConfigure()
     }
+    
+    func runInfoProfileController(authModel: AuthModel) {
+        let controller = ControllerFactory(navigationController: navigationController).makeUpdateInfoProfile(user: User(authModel: authModel), coordinator: self)
+        guard let controller = controller.toPresent() else { return }
+        navigationController.present(controller, animated: true)
+    }
 }
 
 private extension LoginCoordinator {

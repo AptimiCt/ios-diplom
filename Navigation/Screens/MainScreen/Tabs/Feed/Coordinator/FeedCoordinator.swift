@@ -12,10 +12,14 @@ import StorageService
 class FeedCoordinator: BaseCoordinator {
     
     override func start(){
-        let feedTabBarIcon = UIImage(named: "Home")
-        let feedTabBarItem = UITabBarItem(title: "Fav", image: feedTabBarIcon, selectedImage: nil)
+        let feedTabBarIconSelected = UIImage(systemName: "house.fill")
+        let feedTabBarIcon = UIImage(systemName: "house")
+        let feedTabBarItem = UITabBarItem(title: Constants.navigationItemFeedTitle,
+                                          image: feedTabBarIcon,
+                                          selectedImage: feedTabBarIconSelected)
         navigationController.tabBarItem = feedTabBarItem
-        let filesViewController = FilesViewController()
-        navigationController.setViewControllers([filesViewController], animated: false)
+        let controller = ControllerFactory(navigationController: navigationController).makeUpdateInfoProfile(user: User(fullName: "Test", avatar: "", status: ""), coordinator: LoginCoordinator(navigationController: navigationController))
+        guard let controller = controller.toPresent() else { return }
+        navigationController.setViewControllers([controller], animated: false)
     }
 }

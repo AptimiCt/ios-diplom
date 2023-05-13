@@ -13,16 +13,16 @@ import LocalAuthentication
 extension LoginView {
     func makeLoginTextView() -> TextFieldWithPadding {
         let textField = TextFieldWithPadding()
-        textField.layer.borderWidth = 0.5
-        textField.configureTextField(with: Constants.loginTextViewPlaceholder)
-        textField.toAutoLayout()
+        textField.configureTextField(with: Constants.loginTextViewPlaceholder,
+                                     cornerRadius: 0)
         return textField
     }
     func makePasswordTextView() -> TextFieldWithPadding {
         let textField = TextFieldWithPadding()
-        textField.configureTextField(with: Constants.passwordTextViewPlaceholder)
+        textField.configureTextField(with: Constants.passwordTextViewPlaceholder,
+                                     borderWidth: 0,
+                                     cornerRadius: 0)
         textField.isSecureTextEntry = true
-        textField.toAutoLayout()
         return textField
     }
     
@@ -92,28 +92,5 @@ extension LoginView {
             @unknown default:
                 return UIImage(systemName: "questionmark")
         }
-    }
-}
-
-//MARK: - fileprivate extension UITextField
-extension UITextField {
-    //Настройка textField
-    func configureTextField(with placeholder: String) {
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        self.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
-        self.attributedPlaceholder = NSAttributedString(string: placeholder,
-                                                        attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
-        self.textColor = .createColor(lightMode: .black, darkMode: .white)
-        self.tintColor = UIColor(named: "AccentColor")
-        self.font = .systemFont(ofSize: 16)
-        self.autocapitalizationType = .none
-    }
-}
-//MARK: - fileprivate extension UIButton
-private extension UIButton {
-    func configureButtons() {
-        self.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel"), for: .normal)
-        self.layer.cornerRadius = 10
-        self.clipsToBounds = true
     }
 }

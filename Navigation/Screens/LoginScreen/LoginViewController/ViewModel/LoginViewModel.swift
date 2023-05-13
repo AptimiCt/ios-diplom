@@ -10,16 +10,6 @@
 import Foundation
 import FirebaseAuth
 
-protocol LoginViewModelProtocol {
-    
-    var stateModel: StateModel { get set }
-    var stateChanged: ((LoginViewModelProtocol) -> Void)? { get set }
-    func checkCredentionalsToLogin(email: String, password: String)
-    func checkCredentionalsForRegistration(email: String, password: String)
-    func loginWithBiometrics()
-}
-
-
 final class LoginViewModel: LoginViewModelProtocol {
     
     private var profile = Profile()
@@ -35,7 +25,7 @@ final class LoginViewModel: LoginViewModelProtocol {
         do {
             try checkCredentionalsOnError(email: email, password: password)
             CheckerService.shared.checkCredentialsService(email: email, password: password) { [weak self] authDataResult, error in
-                self?.handler(authDataResult: authDataResult, and: error)
+                self?.handler(authDataResult: authDataResult, and: error, for: .login)
             }
         } catch {
             self.handle(with: error as! AuthenticationError)
@@ -45,7 +35,7 @@ final class LoginViewModel: LoginViewModelProtocol {
         do {
             try checkCredentionalsOnError(email: email, password: password)
             CheckerService.shared.signUpService(email: email, password: password) { [weak self] authDataResult, error in
-                self?.handler(authDataResult: authDataResult, and: error)
+                self?.handler(authDataResult: authDataResult, and: error, for: .registration)
             }
         } catch {
             self.handle(with: error as! AuthenticationError)
@@ -67,7 +57,7 @@ final class LoginViewModel: LoginViewModelProtocol {
 }
 
 private extension LoginViewModel {
-    func handler(authDataResult: AuthDataResult?, and error: AuthenticationError?) {
+    func handler(authDataResult: AuthDataResult?, and error: AuthenticationError?, for buttonType: ButtonsTapped) {
         if let error = error {
             self.handle(with: error)
             return
@@ -79,8 +69,17 @@ private extension LoginViewModel {
         let name = Constants.currentUserServiceFullName
         let uid = authDataResult.user.uid
         let authModel = AuthModel(name: name, uid: uid)
-        self.profile.update(with: authModel)
-        self.finishFlow(authModel)
+        
+        switch buttonType {
+            case .login:
+                self.profile.update(with: authModel)
+                self.finishFlow(authModel)
+            case .registration:
+                self.coordinator.runInfoProfileController(authModel: authModel)
+            default:
+                break
+        }
+        
     }
     //Медод проверки учетных данных на корректность который может выбрасывать ошибки
     func checkCredentionalsOnError(email: String, password: String) throws {

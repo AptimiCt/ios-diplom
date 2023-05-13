@@ -8,6 +8,6 @@
     
 
 import Foundation
-protocol UpdateInfoProfileProtocol {
+protocol UpdateInfoProfileProtocol: Presentable {
     var viewModel: UpdateInfoProfileVidewModelProtocol { get set }
 }
