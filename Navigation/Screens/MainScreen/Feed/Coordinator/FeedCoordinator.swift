@@ -5,17 +5,25 @@
 //  Created by Александр Востриков on 22.07.2022.
 //
 
-import Foundation
 import UIKit
-import StorageService
 
 class FeedCoordinator: BaseCoordinator {
     
+    private let router: Router
+    private var factory: FeedControllerFactoryProtocol
+    
+    init(router: Router, factory: FeedControllerFactoryProtocol) {
+        self.router = router
+        self.factory = factory
+    }
+    
     override func start(){
-        let feedTabBarIcon = UIImage(named: "Home")
-        let feedTabBarItem = UITabBarItem(title: "Fav", image: feedTabBarIcon, selectedImage: nil)
+        let feedTabBarIcon = UIImage(systemName: "doc")
+        let feedTabBarItem = UITabBarItem(title: "Files", image: feedTabBarIcon, selectedImage: nil)
+        navigationController.tabBarItem = feedTabBarItem
+        guard let navigationController = router.toPresent() as? UINavigationController else { return }
         navigationController.tabBarItem = feedTabBarItem
         let filesViewController = FilesViewController()
-        navigationController.setViewControllers([filesViewController], animated: false)
+        router.setRootModule(filesViewController, hideBar: true)
     }
 }

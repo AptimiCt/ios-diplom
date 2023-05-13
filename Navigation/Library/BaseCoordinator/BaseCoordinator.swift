@@ -12,12 +12,8 @@ import UIKit
 class BaseCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
-    
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-    
+    var navigationController = UINavigationController()
+
     func start() {}
     
     func addCoordinator(_ coordinator: Coordinator) {
