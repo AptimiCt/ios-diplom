@@ -11,7 +11,7 @@ import UIKit
 final class RouterImpl: Router {
     
     private weak var rootController: UINavigationController?
-    private var completions: [UIViewController : () -> Void]
+    private var completions: [UIViewController : VoidClosure]
     
     init(rootController: UINavigationController) {
         self.rootController = rootController
@@ -35,7 +35,7 @@ final class RouterImpl: Router {
         dismissModule(animated: true, completion: nil)
     }
     
-    func dismissModule(animated: Bool, completion: (() -> Void)?) {
+    func dismissModule(animated: Bool, completion: VoidClosure?) {
         rootController?.dismiss(animated: animated, completion: completion)
     }
     
@@ -51,11 +51,11 @@ final class RouterImpl: Router {
         push(module, animated: animated, completion: nil)
     }
     
-    func push(_ module: Presentable?, animated: Bool, completion: (() -> Void)?) {
+    func push(_ module: Presentable?, animated: Bool, completion: VoidClosure?) {
         push(module, animated: animated, hideBottomBar: false, hideBar: false, completion: completion)
     }
     
-    func push(_ module: Presentable?, animated: Bool, hideBottomBar: Bool, hideBar: Bool, completion: (() -> Void)?) {
+    func push(_ module: Presentable?, animated: Bool, hideBottomBar: Bool, hideBar: Bool, completion: VoidClosure?) {
         guard
             let controller = module?.toPresent(),
             (controller is UINavigationController == false)

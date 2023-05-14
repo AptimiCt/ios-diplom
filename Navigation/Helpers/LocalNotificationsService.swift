@@ -91,7 +91,7 @@ extension LocalNotificationsService: UNUserNotificationCenterDelegate {
     private func setCountBadgeToZero() {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping VoidClosure) {
         switch response.actionIdentifier {
             case UNNotificationDefaultActionIdentifier:
                 //Удаление доставленных уведомлений и обнуление значка на приложении

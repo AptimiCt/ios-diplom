@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		61007C282994322500AD7922 /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61007C272994322500AD7922 /* LocalAuthorizationService.swift */; };
-		61007C2B2996B50D00AD7922 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61007C2A2996B50D00AD7922 /* AlertController.swift */; };
 		61007C2D2996CEC500AD7922 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61007C2C2996CEC500AD7922 /* String+Ext.swift */; };
 		611CA4FD29BDF65C00B42FAD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611CA4FC29BDF65C00B42FAD /* LoginView.swift */; };
 		612756202A03CCE0008842D4 /* FavoriteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6127561F2A03CCE0008842D4 /* FavoriteCoordinator.swift */; };
@@ -24,6 +23,9 @@
 		614D33D129E75319003E1A83 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614D33D029E75319003E1A83 /* Profile.swift */; };
 		614E09272A10031400A923BE /* RouterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614E09262A10031400A923BE /* RouterImpl.swift */; };
 		614E09292A10034900A923BE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614E09282A10034900A923BE /* Router.swift */; };
+		614E092B2A10EF5B00A923BE /* UIAlertControllerInputData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614E092A2A10EF5B00A923BE /* UIAlertControllerInputData.swift */; };
+		614E092D2A10F0FD00A923BE /* UIAlertController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614E092C2A10F0FD00A923BE /* UIAlertController+Ext.swift */; };
+		614E092F2A10FA2800A923BE /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614E092E2A10FA2800A923BE /* Types.swift */; };
 		6150EECF296871C70023BA7D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EECE296871C70023BA7D /* ProfileViewModel.swift */; };
 		6150EF142969EDDA0023BA7D /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */; };
 		6180AC67297D333E00A3281A /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC66297D333E00A3281A /* K.swift */; };
@@ -121,7 +123,6 @@
 
 /* Begin PBXFileReference section */
 		61007C272994322500AD7922 /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
-		61007C2A2996B50D00AD7922 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		61007C2C2996CEC500AD7922 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		611CA4FC29BDF65C00B42FAD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6127561F2A03CCE0008842D4 /* FavoriteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCoordinator.swift; sourceTree = "<group>"; };
@@ -137,6 +138,9 @@
 		614D33D029E75319003E1A83 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		614E09262A10031400A923BE /* RouterImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterImpl.swift; sourceTree = "<group>"; };
 		614E09282A10034900A923BE /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		614E092A2A10EF5B00A923BE /* UIAlertControllerInputData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerInputData.swift; sourceTree = "<group>"; };
+		614E092C2A10F0FD00A923BE /* UIAlertController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Ext.swift"; sourceTree = "<group>"; };
+		614E092E2A10FA2800A923BE /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		6150EECE296871C70023BA7D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		6180AC66297D333E00A3281A /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
@@ -232,12 +236,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		61007C292996B4EF00AD7922 /* Alert */ = {
+		61007C292996B4EF00AD7922 /* UIAlertController+Ext */ = {
 			isa = PBXGroup;
 			children = (
-				61007C2A2996B50D00AD7922 /* AlertController.swift */,
+				614E092A2A10EF5B00A923BE /* UIAlertControllerInputData.swift */,
 			);
-			path = Alert;
+			path = "UIAlertController+Ext";
 			sourceTree = "<group>";
 		};
 		611CA4FA29BDF5E700B42FAD /* LoginScreen */ = {
@@ -378,7 +382,6 @@
 			children = (
 				611CA4FA29BDF5E700B42FAD /* LoginScreen */,
 				613FF33A2A0AED5100D0BB71 /* MainScreen */,
-				61007C292996B4EF00AD7922 /* Alert */,
 				BB47EFF62889EA2500FFB5EC /* View */,
 			);
 			path = Screens;
@@ -409,6 +412,14 @@
 				614E09282A10034900A923BE /* Router.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		614E09302A10FA6800A923BE /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				614E092E2A10FA2800A923BE /* Types.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		6150EECD2968718B0023BA7D /* ViewModel */ = {
@@ -556,9 +567,11 @@
 		BBA2D94927AFE061002AC2A1 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				61007C292996B4EF00AD7922 /* UIAlertController+Ext */,
 				BBA2D94A27AFE082002AC2A1 /* UIView+Ext.swift */,
 				61C61227298065C900206131 /* UIColor+Ext.swift */,
 				61007C2C2996CEC500AD7922 /* String+Ext.swift */,
+				614E092C2A10F0FD00A923BE /* UIAlertController+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -653,6 +666,7 @@
 				61007C272994322500AD7922 /* LocalAuthorizationService.swift */,
 				61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */,
 				61FF1EEE2A0011C5002D0331 /* Enums */,
+				614E09302A10FA6800A923BE /* Types */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -825,8 +839,8 @@
 				61C61228298065C900206131 /* UIColor+Ext.swift in Sources */,
 				BB5D0B5E28EE191300B14768 /* CheckerServiceProtocol.swift in Sources */,
 				BB06900829584E6D009A2C24 /* FavoritesViewController.swift in Sources */,
-				61007C2B2996B50D00AD7922 /* AlertController.swift in Sources */,
 				613FF32F2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift in Sources */,
+				614E092F2A10FA2800A923BE /* Types.swift in Sources */,
 				BBD735C827A72CAE002397A0 /* PostTableViewCell.swift in Sources */,
 				61FF1EED29FFC6BD002D0331 /* OutputCoordinator.swift in Sources */,
 				BB21600A28E087B500715635 /* NetworkManager.swift in Sources */,
@@ -849,6 +863,7 @@
 				BBFCF302290FC14100C4D597 /* FirebaseResponseError.swift in Sources */,
 				BB1578CD28195B7500579E09 /* LoginFactory.swift in Sources */,
 				BBBD5CDB291C214700A63966 /* FileManagerService.swift in Sources */,
+				614E092D2A10F0FD00A923BE /* UIAlertController+Ext.swift in Sources */,
 				BB0B224A279343AD00C51B3D /* Constants.swift in Sources */,
 				BB53FB24276A8F9D0094AF1D /* ProfileTableHederView.swift in Sources */,
 				6180AC67297D333E00A3281A /* K.swift in Sources */,
@@ -865,6 +880,7 @@
 				613F15482A02B863006FBA8E /* MainCoordinator.swift in Sources */,
 				BB0C6A4428FA045500C665D5 /* LoginViewControllerDelegate.swift in Sources */,
 				BB152507282FBFCE0045275F /* User.swift in Sources */,
+				614E092B2A10EF5B00A923BE /* UIAlertControllerInputData.swift in Sources */,
 				61007C282994322500AD7922 /* LocalAuthorizationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

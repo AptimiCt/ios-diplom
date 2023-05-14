@@ -23,6 +23,10 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     override func start() {
         loginViewConfigure()
     }
+    func showAlert(inputData: UIAlertControllerInputData) {
+        let alert = UIAlertController(inputData: inputData)
+        router.present(alert)
+    }
 }
 
 private extension LoginCoordinator {

@@ -20,7 +20,6 @@ class FeedCoordinator: BaseCoordinator {
     override func start(){
         let feedTabBarIcon = UIImage(systemName: "doc")
         let feedTabBarItem = UITabBarItem(title: "Files", image: feedTabBarIcon, selectedImage: nil)
-        navigationController.tabBarItem = feedTabBarItem
         guard let navigationController = router.toPresent() as? UINavigationController else { return }
         navigationController.tabBarItem = feedTabBarItem
         let filesViewController = FilesViewController()
