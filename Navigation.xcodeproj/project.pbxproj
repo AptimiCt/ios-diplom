@@ -576,15 +576,6 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
-		BB15250F282FBFF90045275F /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */,
-				BBBD5CD8291C205800A63966 /* FileManagerServiceProtocol.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		BB1578CE281B33C300579E09 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
@@ -714,7 +705,6 @@
 				614E09232A1002DB00A923BE /* Library */,
 				61F0628F2958A7AE00017C0F /* Database */,
 				BBBD5CD3291AD57900A63966 /* FilesView */,
-				BB15250F282FBFF90045275F /* Protocols */,
 				BB15250A282FBFDE0045275F /* Application */,
 				BB152503282FBFCE0045275F /* Model */,
 				BB1578CE281B33C300579E09 /* Factory */,
@@ -732,12 +722,14 @@
 				BBA2D94927AFE061002AC2A1 /* Extension */,
 				BBF7295227B45F8100D737EF /* Cells.swift */,
 				BBD68B7C281726C0007BD77E /* CheckerService.swift */,
+				BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */,
 				BBD68B7E281742B1007BD77E /* LoginInspector.swift */,
 				BB38C9CC28CE000D00739803 /* BruteForceManager.swift */,
 				BB21600928E087B500715635 /* NetworkManager.swift */,
 				BB0C6A4728FC73AC00C665D5 /* AuthenticationError.swift */,
 				BBFCF301290FC14100C4D597 /* FirebaseResponseError.swift */,
 				BBBD5CDA291C214700A63966 /* FileManagerService.swift */,
+				BBBD5CD8291C205800A63966 /* FileManagerServiceProtocol.swift */,
 				6180AC68297D346500A3281A /* LocalizationShortCut.swift */,
 				61007C272994322500AD7922 /* LocalAuthorizationService.swift */,
 				61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */,

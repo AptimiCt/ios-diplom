@@ -5,6 +5,7 @@
 //
 // Created by Александр Востриков
 //
-import Foundation
+import FirebaseAuth
 
 typealias VoidClosure = () -> Void
+typealias AuthenticationCompletionBlock = (AuthDataResult?, AuthenticationError?)-> Void
