@@ -5,11 +5,18 @@
 //  Created by Александр Востриков on 22.07.2022.
 //
 
-import Foundation
 import UIKit
-import StorageService
+//import StorageService
 
 class FeedCoordinator: BaseCoordinator {
+    
+    private let router: Router
+    private var factory: AuthControllerFactoryProtocol
+    
+    init(router: Router, factory: AuthControllerFactoryProtocol) {
+        self.router = router
+        self.factory = factory
+    }
     
     override func start(){
         let feedTabBarIconSelected = UIImage(systemName: "house.fill")
@@ -17,9 +24,10 @@ class FeedCoordinator: BaseCoordinator {
         let feedTabBarItem = UITabBarItem(title: Constants.navigationItemFeedTitle,
                                           image: feedTabBarIcon,
                                           selectedImage: feedTabBarIconSelected)
+        guard let navigationController = router.toPresent() as? UINavigationController else { return }
         navigationController.tabBarItem = feedTabBarItem
-        let controller = ControllerFactory(navigationController: navigationController).makeUpdateInfoProfile(user: User(fullName: "Test", avatar: "", status: ""), coordinator: LoginCoordinator(navigationController: navigationController))
-        guard let controller = controller.toPresent() else { return }
-        navigationController.setViewControllers([controller], animated: false)
+        
+        let controller = factory.makeUpdateInfoProfile(user: User(fullName: "Test", avatar: "", status: ""), coordinator: LoginCoordinator(router: router, factory: factory))
+        router.setRootModule(controller)
     }
 }

@@ -12,12 +12,7 @@ import UIKit
 class BaseCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
-    
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-    
+
     func start() {}
     
     func addCoordinator(_ coordinator: Coordinator) {
@@ -35,16 +30,5 @@ class BaseCoordinator: Coordinator {
             childCoordinators.remove(at: index)
             break
         }
-    }
-}
-extension BaseCoordinator {
-    func showAlertController(message: String) {
-        var presentingController: UIViewController
-        if let presentedController = self.navigationController.visibleViewController {
-            presentingController = presentedController
-        } else {
-            presentingController = self.navigationController
-        }
-        AlertController.defaultController.showAlert(in: presentingController, message: message)
     }
 }

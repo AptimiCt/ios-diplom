@@ -5,10 +5,9 @@
 //  Created by Александр Востриков on 19.06.2022.
 //
 
-import Foundation
-import UIKit
-
 final class AppCoordinator: BaseCoordinator {
+    
+    private let router: Router
     
     private var isAutorized = false
     private var instructor: LaunchInstructor {
@@ -17,6 +16,10 @@ final class AppCoordinator: BaseCoordinator {
     private var user: User?
     
     private let localNotificationService = LocalNotificationsService()
+    
+    init(router: Router) {
+        self.router = router
+    }
     
     override func start() {
         switch instructor {
@@ -28,7 +31,7 @@ final class AppCoordinator: BaseCoordinator {
 
 private extension AppCoordinator {
     func runAuthFlow() {
-        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
+        let loginCoordinator = LoginCoordinator(router: router, factory: ControllerFactory())
         loginCoordinator.finishFlow = { [weak self, weak loginCoordinator] user in
             if user != nil {
                 self?.isAutorized = true
@@ -43,7 +46,7 @@ private extension AppCoordinator {
     func runMainFlow() {
         guard let user else { return }
         lazy var mainTabBarVC = TabBarController()
-        let mainCoordinator = MainCoordinator(navigationController: navigationController, tabBarVC: mainTabBarVC, with: user)
+        let mainCoordinator = MainCoordinator(router: router, tabBarVC: mainTabBarVC, with: user)
         mainCoordinator.finishFlow = { [weak self, weak mainCoordinator] user in
             if user == nil {
                 self?.isAutorized = false
@@ -53,10 +56,8 @@ private extension AppCoordinator {
             self?.removeCoordinator(mainCoordinator)
         }
         addCoordinator(mainCoordinator)
+        router.setRootModule(mainTabBarVC, hideBar: true)
         mainCoordinator.start()
-        guard let controller = mainTabBarVC.toPresent() else { return }
-        navigationController.setViewControllers([controller], animated: true)
-        
     }
     func appConfiguration() {
         let appConfiguration = AppConfiguration.allCases.randomElement()

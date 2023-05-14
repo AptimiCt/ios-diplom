@@ -101,7 +101,7 @@ final class CoreDataManager {
     private func handler(for type: CompletionHandlerType,
                          using context: NSManagedObjectContext,
                          contextWorksInOwnQueue: Bool = true,
-                         with completionHandler: (() -> Void)?,
+                         with completionHandler: VoidClosure?,
                          and failureCompletion: ((DatabaseError) -> Void)?) {
         switch type {
             case .success:

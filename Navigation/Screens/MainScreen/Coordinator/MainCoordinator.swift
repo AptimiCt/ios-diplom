@@ -13,17 +13,19 @@ final class MainCoordinator: BaseCoordinator, OutputCoordinator {
     
     var finishFlow: ((User?) -> Void)?
     
+    private let router: Router
+    
     private var user: User?
     private var tabBarController: TabBarController
     
     init(
-        navigationController: UINavigationController,
+        router: Router,
         tabBarVC: TabBarController,
         with user: User
     ) {
         self.tabBarController = tabBarVC
         self.user = user
-        super.init(navigationController: navigationController)
+        self.router = router
     }
     override func start() {
         tabBarController.onFeedSelect = runFeedSelect()
@@ -38,7 +40,8 @@ private extension MainCoordinator {
     func runFeedSelect() -> ((UINavigationController) -> ()) {
         return { [unowned self] navController in
             if navController.viewControllers.isEmpty == true {
-                let feedCoordinator = FeedCoordinator(navigationController: navController)
+                let router = RouterImpl(rootController: navController)
+                let feedCoordinator = FeedCoordinator(router: router, factory: ControllerFactory())
                 self.addCoordinator(feedCoordinator)
                 feedCoordinator.start()
             }
@@ -49,7 +52,8 @@ private extension MainCoordinator {
         return { [unowned self] navController in
             if navController.viewControllers.isEmpty == true {
                 guard let user else { return }
-                let profileCoordinator = ProfileCoordinator(user: user, navigationController: navController)
+                let router = RouterImpl(rootController: navController)
+                let profileCoordinator = ProfileCoordinator(user: user, router: router, factory: ControllerFactory())
                 profileCoordinator.finishFlow = { [weak self, weak profileCoordinator] user in
                     if user == nil {
                         self?.user = nil
@@ -65,7 +69,8 @@ private extension MainCoordinator {
     func runFavoriteSelect() -> ((UINavigationController) -> ()) {
         return { [unowned self] navController in
             if navController.viewControllers.isEmpty == true {
-                let favoriteCoordinator = FavoriteCoordinator(navigationController: navController)
+                let router = RouterImpl(rootController: navController)
+                let favoriteCoordinator = FavoriteCoordinator(router: router, factory: ControllerFactory())
                 addCoordinator(favoriteCoordinator)
                 favoriteCoordinator.start()
             }

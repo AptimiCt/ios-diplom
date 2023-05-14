@@ -9,7 +9,7 @@ import UIKit
 
 final class CustomButton: UIButton {
     
-    var action: (() -> Void)?
+    var action: VoidClosure?
     
     init(title: String? = nil, titleColor: UIColor? = nil) {
         super.init(frame: .zero)

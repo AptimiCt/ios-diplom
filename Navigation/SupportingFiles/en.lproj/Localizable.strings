@@ -116,3 +116,7 @@
 "LocalNotificationsService.content.title" = "Update";
 "LocalNotificationsService.content.body" = "Look for the latest updates";
 "LocalNotificationsService.delegate.didReceive" = "Unknown button pressed";
+
+//MARK: - UIAlertController
+"UIAC.ok" = "Ok";
+"UIAC.cancel" = "Cancel";

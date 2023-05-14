@@ -15,7 +15,6 @@ enum ScreenType {
 }
 final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     
-    //var finishFlow: ((User?) -> Void)?
     weak var coordinator: LoginCoordinator?
     var user: User {
         didSet {

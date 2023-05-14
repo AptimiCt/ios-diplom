@@ -6,9 +6,8 @@
 // Created by Александр Востриков
 //
 
-
-import Foundation
 import FirebaseAuth
+import UIKit
 
 final class LoginViewModel: LoginViewModelProtocol {
     
@@ -110,29 +109,30 @@ private extension LoginViewModel {
     //Метод отвечатет за повявление alert при появлении ошибки
     func handle(with error: AuthenticationError) {
         self.stateModel = .failure(error)
+        let inputData = UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "UIAC.ok".localized)])
         switch error {
             case .incorrectCredentials:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .emptyEmail:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .emptyPassword:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .invalidEmail:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .userNotFound:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .userDisabled:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .loginInUse:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .weakPassword(_):
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .networkError:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .tooManyRequests:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
             case .unknown:
-                coordinator.showAlertController(message: error.localizedDescription)
+                coordinator.showAlert(inputData: inputData)
         }
     }
     //Переход в основной поток

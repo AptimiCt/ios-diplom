@@ -5,29 +5,37 @@
 //  Created by Александр Востриков on 22.07.2022.
 //
 
-import Foundation
 import UIKit
-import StorageService
+//import StorageService
 
 class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     
     var finishFlow: ((User?) -> Void)?
+    private let router: Router
+    private let factory: AuthControllerFactoryProtocol
+    
+    init(router: Router, factory: AuthControllerFactoryProtocol) {
+        self.router = router
+        self.factory = factory
+    }
     
     override func start() {
         loginViewConfigure()
     }
     
     func runInfoProfileController(authModel: AuthModel) {
-        let controller = ControllerFactory(navigationController: navigationController).makeUpdateInfoProfile(user: User(authModel: authModel), coordinator: self)
-        guard let controller = controller.toPresent() else { return }
-        navigationController.present(controller, animated: true)
+        let controller = factory.makeUpdateInfoProfile(user: User(authModel: authModel), coordinator: self)
+        router.present(controller)
+    }
+    func showAlert(inputData: UIAlertControllerInputData) {
+        let alert = UIAlertController(inputData: inputData)
+        router.present(alert)
     }
 }
 
 private extension LoginCoordinator {
     func loginViewConfigure() {
-        let controller = ControllerFactory(navigationController: navigationController).makeLoginController(with: self)
-        guard let controller = controller.toPresent() else { return }
-        navigationController.setViewControllers([controller], animated: false)
+        let controller = factory.makeLoginController(with: self)
+        router.setRootModule(controller, hideBar: true)
     }
 }
