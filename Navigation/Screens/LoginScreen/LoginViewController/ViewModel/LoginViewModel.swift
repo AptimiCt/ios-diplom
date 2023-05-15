@@ -49,7 +49,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 self.finishFlow(authModel)
             } else {
                 //guard let error else { return }
-                self.handle(with: .unknown)
+                self.handle(with: .unknown(""))
             }
         }
     }
@@ -62,7 +62,7 @@ private extension LoginViewModel {
             return
         }
         guard let authDataResult else {
-            self.handle(with: .unknown)
+            self.handle(with: .unknown(""))
             return
         }
         let name = Constants.currentUserServiceFullName

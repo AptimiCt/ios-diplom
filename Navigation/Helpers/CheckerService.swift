@@ -56,7 +56,7 @@ final class CheckerService: CheckerServiceProtocol {
                     return .weakPassword(reason)
                 } else {
                     print("error.userInfo_weakPassword:\(error.userInfo)")
-                    return .unknown
+                    return .unknown("error.userInfo_default:\(error.userInfo)")
                 }
             case .networkError:
                 return .networkError
@@ -65,7 +65,7 @@ final class CheckerService: CheckerServiceProtocol {
            
             default:
                 print("error.userInfo_default:\(error.userInfo)")
-                return .unknown
+                return .unknown("error.userInfo_default:\(error.userInfo)")
             
         }
     }

@@ -18,7 +18,7 @@ enum AuthenticationError {
     case weakPassword(String)
     case networkError
     case tooManyRequests
-    case unknown
+    case unknown(String?)
 }
 extension AuthenticationError: LocalizedError {
     var errorDescription: String? {
@@ -43,8 +43,8 @@ extension AuthenticationError: LocalizedError {
                 return "networkError".localized
             case .tooManyRequests:
                 return "tooManyRequests".localized
-            case .unknown:
-                return "AuthenticationError.unknown".localized
+            case .unknown(let error):
+                return "\("AuthenticationError.unknown".localized). \(error ?? "nil")"
         }
     }
 }
