@@ -6,9 +6,36 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 final class TestUserService: UserService {
-    func userService(loginName: String) -> User? {
-        return User(fullName: Constants.testUserServiceFullName, avatar: Constants.testUserServiceAvatar, status: Constants.status)
+
+    private let firestore: DatabeseManagerProtocol = FirestoreManager()
+    private(set) var user: User?
+    
+    init() {
+        print("TestUserService создан")
+    }
+    func getUser() -> User {
+        guard let user else { return User(avatar: "avatar") }
+        return user
+    }
+    func set(user: User?) {
+        self.user = user
+    }
+    func fetchUser(uid: String, completion: @escaping (User?) -> Void) {
+        firestore.fetchUser(uid: uid) { result in
+            switch result {
+                case .success(let user):
+                    self.user = user
+                    completion(user)
+                case .failure(let failure):
+                    print("error TestUserService:\(failure)")
+                    completion(nil)
+            }
+        }
+    }
+    deinit {
+        print("TestUserService удален")
     }
 }

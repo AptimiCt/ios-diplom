@@ -1,11 +1,12 @@
 //
 //
-// FirestoreEnum.swift
+// ScreenType.swift
 // Navigation
 //
 // Created by Александр Востриков
 //
     
-enum FirestoreCollection: String {
-    case usersCollection
+enum ScreenType {
+    case new
+    case update
 }

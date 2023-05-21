@@ -11,11 +11,12 @@ import UIKit
 
 protocol AuthControllerFactoryProtocol {
     func makeLoginController(with coordinator: LoginCoordinator) -> LoginViewControllerProtocol
-    func makeUpdateInfoProfile(user: User, coordinator: LoginCoordinator) -> UpdateInfoProfileProtocol
+    func makeUpdateInfoProfile(coordinator: LoginCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol
 }
 
 protocol ProfileControllerFactoryProtocol {
     func makeProfileController(with user: User, and coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol
+    func makeProfileController(coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol
     func makePhotosController() -> PhotosViewControllerProtocol
 }
 
@@ -25,4 +26,10 @@ protocol FavoriteControllerFactoryProtocol {
 protocol FeedControllerFactoryProtocol {
     func makeFeedController(with user: User, and coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol
     func makePhotosController() -> PhotosViewControllerProtocol
+}
+
+protocol ControllersFactoryProtocol: ProfileControllerFactoryProtocol,
+                                     FavoriteControllerFactoryProtocol,
+                                     FeedControllerFactoryProtocol,
+                                     AuthControllerFactoryProtocol {
 }

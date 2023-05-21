@@ -18,6 +18,7 @@ class UpdateInfoProfileView: UIView {
             setNeedsLayout()
         }
     }
+    private var screenType: ScreenType
     
     private lazy var scrollView = UIScrollView()
     private lazy var contentView = UIView()
@@ -31,10 +32,11 @@ class UpdateInfoProfileView: UIView {
     private lazy var dateOfBirthLabel = makeDateOfBirthLabel()
     private lazy var dateOfBirthTextField = makeDateOfBirthTextField()
     private lazy var profilePictureImageView = makeLogoImageView()
-    private lazy var signUpButton = makeSignUpButton()
+    private lazy var signUpButton = makeSignUpButton(screenType: screenType)
     
     //MARK: - init
-    init() {
+    init(screenType: ScreenType) {
+        self.screenType = screenType
         super.init(frame: .zero)
         setupView()
         buttonsAction()
@@ -96,33 +98,19 @@ private extension UpdateInfoProfileView {
                   let dateOfBirth = self.dateOfBirthTextField.text,
                   let profilePictureImageView = self.profilePictureImageView.image
             else { return }
-            //signUpButton.isEnabled = true
-            //            self.switchDelegateMethod(button: button, email: loginText, password: passwordText)
             self.delegate?.updateName(name: nameText)
             self.delegate?.updateSurname(surname: surnameText)
             self.delegate?.updateGender(gender: genderText)
             self.delegate?.updateDateOfBirth(dateOfBirth: dateOfBirth)
             self.delegate?.updateProfilePicture(image: profilePictureImageView)
-            self.delegate?.updateUser()
+            switch screenType {
+                case .new:
+                    self.delegate?.addUser()
+                case .update:
+                    self.delegate?.updateUser()
+            }
         }
     }
-    //Выбор метода делегата для вызова в зависимости от нажатой кнопки
-    //    func switchDelegateMethod(button: CustomButton, email: String, password: String) {
-    //        activityIndicatorOn()
-    //        switch button {
-    //            case loginButton:
-    //                buttonTapped = .login
-    //                self.delegate?.login(email: email, password: password)
-    //            case signUpButton:
-    //                buttonTapped = .registration
-    //                self.delegate?.signUp(email: email, password: password)
-    //            case loginWithBiometrics:
-    //                buttonTapped = .loginWithBiometrics
-    //                self.delegate?.loginWithBiometrics()
-    //            default:
-    //                button.isEnabled = true
-    //        }
-    //    }
     func update(userData: StateModelProfile.UserData?) {
         nameTextField.text = userData?.name
         surnameTextField.text = userData?.surname

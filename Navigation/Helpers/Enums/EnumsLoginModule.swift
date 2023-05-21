@@ -26,7 +26,7 @@ enum StateView {
 enum StateModel {
     case initial
     case loading
-    case success(AuthModel)
+    case success
     case failure(AuthenticationError)
 }
 

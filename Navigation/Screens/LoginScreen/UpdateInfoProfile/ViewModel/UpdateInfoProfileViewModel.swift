@@ -9,18 +9,11 @@
 
 import UIKit
 
-enum ScreenType {
-    case new
-    case update
-}
 final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     
     weak var coordinator: LoginCoordinator?
-    var user: User {
-        didSet {
-            stateChanged?(.success(viewData))
-        }
-    }
+    private let userService: UserService
+    private let firestore: DatabeseManagerProtocol
     
     var stateChanged: ((StateModelProfile) -> Void)?
     
@@ -32,24 +25,31 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     private var surname: String = ""
     private var gender: String = ""
     private var dateOfBirth: Date = Date()
-    private var profilePicture: String = "avatar"//"defaultProfilePicture"
+    private var profilePicture: String = "defaultProfilePicture"
     
-    init(user: User) {
-        self.user = user
+    init(userService: UserService, firestore: DatabeseManagerProtocol) {
+        self.userService = userService
+        self.firestore = firestore
+        self.configureProperty()
     }
     
     func updateUser() {
-        user.name = name
-        user.surname = surname
-        user.gender = gender
-        user.updateDate = Date()
-        user.dateOfBirth = dateOfBirth
-        user.avatar = profilePicture
-        coordinator?.finishFlow?(user)
+        updateUserFromProperty()
+        firestore.updateUser(user: userService.getUser()) { [weak self] err in
+            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: err?.localizedDescription, buttons: [.init(title: "ОК")]))
+            self?.coordinator?.finishFlow?(self?.userService.getUser())
+        }
+    }
+    func addUser() {
+        updateUserFromProperty()
+        firestore.addUser(user: userService.getUser()) { [weak self] err in
+            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: err?.localizedDescription, buttons: [.init(title: "ОК")]))
+            self?.coordinator?.finishFlow?(self?.userService.getUser())
+        }
     }
     
     func fullName() -> String {
-        user.fullName
+        ""
     }
     
     func updateName(_ name: String) {
@@ -73,5 +73,22 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     }
     func setupView() {
         stateChanged?(.success(viewData))
+    }
+    private func configureProperty() {
+        if let name = userService.getUser().name {
+            self.name = name
+        } else {
+            self.name = userService.getUser().uid
+        }
+    }
+    private func updateUserFromProperty() {
+        let user = userService.getUser()
+        user.name = name
+        user.surname = surname
+        user.gender = gender
+        user.updateDate = Date()
+        user.dateOfBirth = dateOfBirth
+        user.avatar = profilePicture
+        userService.set(user: user)
     }
 }

@@ -41,14 +41,15 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     //MARK: - init
     
     init(
-        loginName: String,
         userService: UserService,
         coordinator: ProfileCoordinator,
         viewModel: ProfileViewModel
+        
     ) {
         self.viewModel = viewModel
         self.userService = userService
         self.coordinator = coordinator
+        print("ProfileViewController создан")
         super.init(nibName: nil, bundle: nil)
         #if DEBUG
         view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
@@ -56,10 +57,6 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         view.backgroundColor = .systemRed
         #endif
         self.tabBarItem = tabBarItemProfileView
-        guard let user = self.userService.userService(loginName: loginName) else { return }
-        profileTableHeaderView.fullNameLabel.text = user.fullName
-        profileTableHeaderView.avatarImageView.image = UIImage(named: user.avatar)
-        profileTableHeaderView.statusLabel.text = user.status
     }
     
     required init?(coder: NSCoder) {
@@ -77,6 +74,9 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        profileTableHeaderView.fullNameLabel.text = userService.getUser().name
+        profileTableHeaderView.avatarImageView.image = UIImage(named: userService.getUser().avatar ?? "")
+        profileTableHeaderView.statusLabel.text = userService.getUser().status
         viewModel.changeState { [weak self] in
             self?.tableView.reloadData()
         }
@@ -206,6 +206,9 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         profileTableHeaderView.closeButton.action = { [weak self] in
             self?.coordinator.finishFlow?(nil)
         }
+    }
+    deinit {
+        print("ProfileViewController удален")
     }
 }
 

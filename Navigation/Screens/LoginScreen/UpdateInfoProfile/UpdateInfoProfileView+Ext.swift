@@ -51,9 +51,16 @@ extension UpdateInfoProfileView {
         let label = CustomLabel(title: "Дата рождения")
         return label
     }
-    func makeSignUpButton() -> CustomButton {
+    func makeSignUpButton(screenType: ScreenType) -> CustomButton {
+        let title: String
+        switch screenType {
+            case .new:
+                title = "UIPV.tappedButton.new".localized
+            case .update:
+                title = "UIPV.tappedButton.update".localized
+        }
         let button = CustomButton(
-            title: Constants.signUp,
+            title: title,
             titleColor: .createColor(lightMode: .white,
                                      darkMode: .black)
         )

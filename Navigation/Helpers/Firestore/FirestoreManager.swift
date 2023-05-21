@@ -6,34 +6,65 @@
 // Created by Александр Востриков
 //
     
-
-import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-final class FirestoreManager {
-    
-    private let db = Firestore.firestore()
-    private var fcUsers: String = FirestoreCollection.users.rawValue
+final class FirestoreManager: DatabeseManagerProtocol {
+
+    private let firestoreDB = Firestore.firestore()
+    private var usersCollection: String = FirestoreCollection.usersCollection.rawValue
     
     var users: [User] = []
      
     func addUser(user: User, completion: @escaping OptionalAuthenticationErrorClosure) {
-        db.collection(fcUsers).addDocument(data: user.dictonaryForFirestore as [String : Any]) { error in
-            completion(.unknown(error?.localizedDescription))
+        let uid = user.uid
+        let docRef = firestoreDB.collection(usersCollection).document(uid)
+        do {
+            try docRef.setData(from: user)
+            completion(nil)
+        } catch {
+            completion(error)
         }
     }
-    
-    func getUsers(completion: @escaping OptionalAuthenticationErrorClosure) {
-        db.collection(fcUsers).getDocuments { [weak self] querySnapshot, error in
-            if let error { completion(.unknown(error.localizedDescription)); return }
-            guard let querySnapshot else { completion(.unknown("querySnapshot is nil")); return }
-            self?.users = []
-            for document in querySnapshot.documents {
-                let user = User(document: document)
-                self?.users.append(user)
+    func fetchUser(uid: String, completion: @escaping (Result<User, Error>) -> Void) {
+        let docRef = firestoreDB.collection(usersCollection).document(uid)
+        docRef.getDocument(as: User.self) { result in
+            completion(result)
+        }
+    }
+ 
+    func fetchUsers(completion: @escaping OptionalAuthenticationErrorClosure) {
+        
+        let docRef = firestoreDB.collection(usersCollection)
+        
+        docRef.getDocuments { [weak self] querySnapshot, error in
+            
+            if let error { completion(error); return }
+            guard let self, let querySnapshot else { completion(nil); return }
+            
+            self.users = querySnapshot.documents.compactMap({ querySnapshot in
+                do {
+                    return try querySnapshot.data(as: User.self)
+                } catch {
+                    print(error)
+                }
+                return nil
+            })
+            for user in self.users {
+                print("user.uid FirestoreManager:\(user.uid)")
             }
-            completion(.unknown(nil))
+            completion(nil)
         }
     }
     
+    func updateUser(user: User, completion: @escaping OptionalAuthenticationErrorClosure) {
+        let uid = user.uid
+        let docRef = firestoreDB.collection(usersCollection).document(uid)
+        do {
+            try docRef.setData(from: user)
+            completion(nil)
+        } catch {
+            completion(error)
+        }
+    }
 }

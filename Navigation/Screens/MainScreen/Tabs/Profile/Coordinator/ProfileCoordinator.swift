@@ -11,13 +11,12 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
     var finishFlow: ((User?) -> Void)?
     
     private let router: Router
-    private let user: User
     private var factory: ProfileControllerFactoryProtocol
     
-    init(user: User, router: Router ,factory: ProfileControllerFactoryProtocol) {
-        self.user = user
+    init(router: Router ,factory: ProfileControllerFactoryProtocol) {
         self.router = router
         self.factory = factory
+        print("ProfileCoordinator создан")
     }
     
     override func start() {
@@ -27,11 +26,14 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
         let controller = factory.makePhotosController()
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
+    deinit {
+        print("ProfileCoordinator удален")
+    }
 }
 
 private extension ProfileCoordinator {
     func runProfile() {
-        let controller = factory.makeProfileController(with: user, and: self)
+        let controller = factory.makeProfileController(coordinator: self)
         router.setRootModule(controller, hideBar: true)
     }
 }

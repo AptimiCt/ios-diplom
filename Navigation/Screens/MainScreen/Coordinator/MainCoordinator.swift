@@ -14,18 +14,21 @@ final class MainCoordinator: BaseCoordinator, OutputCoordinator {
     var finishFlow: ((User?) -> Void)?
     
     private let router: Router
-    
-    private var user: User?
+    private var userService: UserService
     private var tabBarController: TabBarController
+    private var factory: ControllersFactoryProtocol
     
     init(
         router: Router,
         tabBarVC: TabBarController,
-        with user: User
+        userService: UserService,
+        factory: ControllersFactoryProtocol
     ) {
         self.tabBarController = tabBarVC
-        self.user = user
         self.router = router
+        self.userService = userService
+        self.factory = factory
+        print("MainCoordinator создан")
     }
     override func start() {
         tabBarController.onFeedSelect = runFeedSelect()
@@ -33,7 +36,11 @@ final class MainCoordinator: BaseCoordinator, OutputCoordinator {
         tabBarController.onFavoriteSelect = runFavoriteSelect()
         tabBarController.firstLoad()
     }
+    deinit {
+        print("MainCoordinator удален")
+    }
 }
+
 
 private extension MainCoordinator {
     
@@ -41,22 +48,20 @@ private extension MainCoordinator {
         return { [unowned self] navController in
             if navController.viewControllers.isEmpty == true {
                 let router = RouterImpl(rootController: navController)
-                let feedCoordinator = FeedCoordinator(router: router, factory: ControllerFactory())
+                let feedCoordinator = FeedCoordinator(router: router, factory: factory)
                 self.addCoordinator(feedCoordinator)
                 feedCoordinator.start()
             }
         }
     }
-    
     func runProfileSelect() -> ((UINavigationController) -> ()) {
         return { [unowned self] navController in
             if navController.viewControllers.isEmpty == true {
-                guard let user else { return }
                 let router = RouterImpl(rootController: navController)
-                let profileCoordinator = ProfileCoordinator(user: user, router: router, factory: ControllerFactory())
+                let profileCoordinator = ProfileCoordinator(router: router, factory: factory)
                 profileCoordinator.finishFlow = { [weak self, weak profileCoordinator] user in
                     if user == nil {
-                        self?.user = nil
+                        self?.userService.set(user: nil)
                     }
                     self?.removeCoordinator(profileCoordinator)
                     self?.finishFlow?(user)
@@ -70,7 +75,7 @@ private extension MainCoordinator {
         return { [unowned self] navController in
             if navController.viewControllers.isEmpty == true {
                 let router = RouterImpl(rootController: navController)
-                let favoriteCoordinator = FavoriteCoordinator(router: router, factory: ControllerFactory())
+                let favoriteCoordinator = FavoriteCoordinator(router: router, factory: factory)
                 addCoordinator(favoriteCoordinator)
                 favoriteCoordinator.start()
             }

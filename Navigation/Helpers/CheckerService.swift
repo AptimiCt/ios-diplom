@@ -27,7 +27,6 @@ final class CheckerService: CheckerServiceProtocol {
     
     func signUpService(email: String, password: String, completion: @escaping AuthenticationCompletionBlock) {
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] createResult, error in
-            
             if let error = error as NSError?,
                let code = AuthErrorCode.Code(rawValue: error.code)
             {
@@ -36,6 +35,19 @@ final class CheckerService: CheckerServiceProtocol {
             } else {
                 completion(createResult, nil)
             }
+        }
+    }
+    func validateUser(withCompletion completion: @escaping ((User?) -> Void)) {
+        guard let currentUser = Auth.auth().currentUser else { completion(nil) ;return }
+        let user = User(uid: currentUser.uid, email: currentUser.email ?? "")
+        completion(user)
+    }
+    func logout(withCompletion completion: (Error?)-> Void) {
+        do {
+            try Auth.auth().signOut()
+            completion(nil)
+        } catch let error as NSError {
+            completion(error)
         }
     }
     

@@ -15,8 +15,8 @@ final class LoginInspector: LoginViewControllerDelegate {
                 completion(.failure(error!))
             } else {
                 let name = Constants.currentUserServiceFullName
-                guard let uid = result?.user.uid else { return }
-                let authModel = AuthModel(name: name, uid: uid)
+                guard let uid = result?.user.uid, let email = result?.user.email else { return }
+                let authModel = AuthModel(name: name, uid: uid, email: email)
                 completion(.success(authModel))
             }
         }
@@ -28,8 +28,8 @@ final class LoginInspector: LoginViewControllerDelegate {
                 completion(.failure(error!))
             } else {
                 let name = Constants.currentUserServiceFullName
-                guard let uid = result?.user.uid else { return }
-                let authModel = AuthModel(name: name, uid: uid)
+                guard let uid = result?.user.uid, let email = result?.user.email else { return }
+                let authModel = AuthModel(name: name, uid: uid, email: email)
                 completion(.success(authModel))
             }
         }

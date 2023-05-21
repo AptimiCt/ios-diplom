@@ -11,7 +11,8 @@ import UIKit
 
 final class LoginViewModel: LoginViewModelProtocol {
     
-    private var profile = Profile()
+    var userService: UserService?
+    private let firestore: DatabeseManagerProtocol
     weak var coordinator: LoginCoordinator!
     var stateModel: StateModel = .initial {
         didSet {
@@ -20,6 +21,9 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
     var stateChanged: ((LoginViewModelProtocol) -> Void)?
     
+    init(firestore: DatabeseManagerProtocol){
+        self.firestore = firestore
+    }
     func checkCredentionalsToLogin(email: String, password: String) {
         do {
             try checkCredentionalsOnError(email: email, password: password)
@@ -44,11 +48,9 @@ final class LoginViewModel: LoginViewModelProtocol {
     func loginWithBiometrics() {
         LocalAuthorizationService().authorizeIfPossible { [weak self] sucsses, error  in
             guard let self else { return }
-            let authModel = AuthModel(name: Constants.currentUserServiceFullName, uid: UUID().uuidString)
             if sucsses {
-                self.finishFlow(authModel)
+                self.finishFlow(User())
             } else {
-                //guard let error else { return }
                 self.handle(with: .unknown(""))
             }
         }
@@ -62,23 +64,24 @@ private extension LoginViewModel {
             return
         }
         guard let authDataResult else {
-            self.handle(with: .unknown(""))
+            self.handle(with: .unknown("authDataResult nil"))
             return
         }
-        let name = Constants.currentUserServiceFullName
         let uid = authDataResult.user.uid
-        let authModel = AuthModel(name: name, uid: uid)
-        
+        if userService?.user == nil {
+            let name = authDataResult.user.displayName
+            let email = authDataResult.user.email
+            let user = User(uid: uid, email: email, name: name ?? Constants.currentUserServiceFullName)
+            userService?.set(user: user)
+        }
         switch buttonType {
             case .login:
-                self.profile.update(with: authModel)
-                self.finishFlow(authModel)
+                self.fetchUser(for: uid)
             case .registration:
-                self.coordinator.runInfoProfileController(authModel: authModel)
+                self.coordinator.runInfoProfileController(screenType: .new)
             default:
                 break
         }
-        
     }
     //Медод проверки учетных данных на корректность который может выбрасывать ошибки
     func checkCredentionalsOnError(email: String, password: String) throws {
@@ -136,9 +139,21 @@ private extension LoginViewModel {
         }
     }
     //Переход в основной поток
-    func finishFlow(_ authModel: AuthModel) {
-        let user = User(authModel: authModel)
-        self.stateModel = .success(authModel)
+    func finishFlow(_ user: User) {
+        self.stateModel = .success
         self.coordinator.finishFlow?(user)
+    }
+    func fetchUser(for uid: String) {
+        self.firestore.fetchUser(uid: uid) { [weak self, weak coordinator] result in
+            switch result {
+                case .success(let user):
+                    self?.finishFlow(user)
+                case .failure(let error):
+                    print("error LoginViewModel:\(error)")
+                    self?.stateModel = .failure(AuthenticationError.unknown(error.localizedDescription))
+                    let inputData = UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "UIAC.ok".localized)])
+                    coordinator?.showAlert(inputData: inputData)
+            }
+        }
     }
 }

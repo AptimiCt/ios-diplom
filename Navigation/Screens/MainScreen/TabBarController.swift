@@ -12,12 +12,22 @@ class TabBarController: UITabBarController {
     var onFeedSelect: ((UINavigationController) -> ())?
     var onProfileSelect: ((UINavigationController) -> ())?
     var onFavoriteSelect: ((UINavigationController) -> ())?
+    init() {
+        print("TabBarController создан")
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setControllers()
         configTabBar()
         delegate = self
+    }
+    deinit {
+        print("TabBarController удален")
     }
 }
 extension TabBarController {

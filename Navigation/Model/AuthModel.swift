@@ -10,4 +10,5 @@ import Foundation
 struct AuthModel {
     let name: String
     let uid: String
+    let email: String?
 }

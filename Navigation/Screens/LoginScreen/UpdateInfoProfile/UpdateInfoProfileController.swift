@@ -12,12 +12,14 @@ import UIKit
 final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProtocol {
     
     //MARK: - property
+    private var screenType: ScreenType
     var viewModel: UpdateInfoProfileVidewModelProtocol
     var updateInfoProfileView: UpdateInfoProfileView
     //MARK: - init
-    init(viewModel: UpdateInfoProfileVidewModelProtocol) {
+    init(viewModel: UpdateInfoProfileVidewModelProtocol, screenType: ScreenType) {
+        self.screenType = screenType
         self.viewModel = viewModel
-        self.updateInfoProfileView = UpdateInfoProfileView()
+        self.updateInfoProfileView = UpdateInfoProfileView(screenType: screenType)
         super.init(nibName: nil, bundle: nil)
         self.updateInfoProfileView.delegate = self
     }
@@ -44,6 +46,9 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    deinit {
+        print("UpdateInfoProfileController удален")
     }
 }
 //MARK: - private funcs in extension
@@ -80,6 +85,10 @@ extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
     func updateProfilePicture(image: UIImage) {
         viewModel.updateProfilePicture("avatar")
     }
+    func addUser() {
+        viewModel.addUser()
+        dismiss(animated: true)
+    }
     func updateUser() {
         viewModel.updateUser()
         dismiss(animated: true)
@@ -89,13 +98,11 @@ extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
 @objc private extension UpdateInfoProfileController {
     //Метод выполняются когда появляется клавиатура
     func keyboardWillShow(notification: NSNotification){
-        //updateInfoProfileView.keyboardWillShow(notification: notification)
         self.updateInfoProfileView.stateView = .keyboardWillShow(notification)
     }
     //Метод выполняются когда скрывается клавиатура
     func keyboardWillHide(notification: NSNotification){
         self.updateInfoProfileView.stateView = .keyboardWillHide(notification)
-        //updateInfoProfileView.keyboardWillHide(notification: notification)
     }
 }
 

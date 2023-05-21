@@ -23,5 +23,7 @@ protocol UpdateInfoProfileVidewModelProtocol {
     
     func updateUser()
     
+    func addUser()
+    
     func setupView()
 }

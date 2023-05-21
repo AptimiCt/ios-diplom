@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 import FirebaseCore
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -28,13 +27,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    func sceneDidDisconnect(_ scene: UIScene) {
-        do {
-            try FirebaseAuth.Auth.auth().signOut()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
-    }
     func sceneDidBecomeActive(_ scene: UIScene) {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }

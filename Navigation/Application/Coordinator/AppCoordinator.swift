@@ -5,37 +5,65 @@
 //  Created by Александр Востриков on 19.06.2022.
 //
 
+import UIKit
+
 final class AppCoordinator: BaseCoordinator {
     
-    private let router: Router
-    
     private var isAutorized = false
+    private var isCheckedUser = true
+    private var isNotFirstLogin: Bool {
+        UserDefaults.standard.bool(forKey: UserDefaultsEnum.isNotFirstLogin.rawValue)
+    }
+    
     private var instructor: LaunchInstructor {
         return LaunchInstructor.configure(isAutorized: isAutorized)
     }
-    private var user: User?
-    
+    private var userService: UserService
+    private let router: Router
+    private var factory: ControllersFactoryProtocol
     private let localNotificationService = LocalNotificationsService()
     
     init(router: Router) {
         self.router = router
+        #if DEBUG
+        self.userService = TestUserService()
+        #else
+        self.userService = CurrentUserService()
+        #endif
+        self.factory = ControllerFactory(userService: userService)
     }
     
     override func start() {
-        switch instructor {
-            case .auth: runAuthFlow()
-            case .main: runMainFlow()
+        if isCheckedUser && isNotFirstLogin {
+            CheckerService.shared.validateUser { [weak self] user in
+                guard let self, let user else { self?.runAuthFlow(); return }
+                self.userService.set(user: user)
+                self.userService.fetchUser(uid: user.uid, completion: { userFirestore in
+                    if let userFirestore {
+                        self.userService.set(user: userFirestore)
+                    }
+                })
+                self.runMainFlow()
+            }
+        } else {
+            if !isNotFirstLogin {
+                UserDefaults.standard.set(true, forKey: UserDefaultsEnum.isNotFirstLogin.rawValue)
+            }
+            switch self.instructor {
+                case .auth: self.runAuthFlow()
+                case .main: self.runMainFlow()
+            }
         }
     }
 }
 
 private extension AppCoordinator {
     func runAuthFlow() {
-        let loginCoordinator = LoginCoordinator(router: router, factory: ControllerFactory())
+        let loginCoordinator = LoginCoordinator(router: router, factory: factory)
         loginCoordinator.finishFlow = { [weak self, weak loginCoordinator] user in
             if user != nil {
                 self?.isAutorized = true
-                self?.user = user
+                self?.userService.set(user: user)
             }
             self?.start()
             self?.removeCoordinator(loginCoordinator)
@@ -44,13 +72,19 @@ private extension AppCoordinator {
         loginCoordinator.start()
     }
     func runMainFlow() {
-        guard let user else { return }
         lazy var mainTabBarVC = TabBarController()
-        let mainCoordinator = MainCoordinator(router: router, tabBarVC: mainTabBarVC, with: user)
+        let mainCoordinator = MainCoordinator(router: router, tabBarVC: mainTabBarVC, userService: userService, factory: factory)
         mainCoordinator.finishFlow = { [weak self, weak mainCoordinator] user in
             if user == nil {
                 self?.isAutorized = false
-                self?.user = user
+                self?.isCheckedUser = true
+                self?.userService.set(user: user)
+                CheckerService.shared.logout { error in
+                    if let error {
+                        let inputData = UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "UIAC.ok".localized)])
+                        self?.showAlert(inputData: inputData)
+                    }
+                }
             }
             self?.start()
             self?.removeCoordinator(mainCoordinator)
@@ -65,5 +99,9 @@ private extension AppCoordinator {
     }
     func localNotificationRegister() {
         localNotificationService.registeForLatestUpdatesIfPossible()
+    }
+    private func showAlert(inputData: UIAlertControllerInputData) {
+        let alert = UIAlertController(inputData: inputData)
+        router.present(alert)
     }
 }

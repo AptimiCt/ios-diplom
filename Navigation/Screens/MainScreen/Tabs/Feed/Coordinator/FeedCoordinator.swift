@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import StorageService
 
 class FeedCoordinator: BaseCoordinator {
     
@@ -27,7 +26,10 @@ class FeedCoordinator: BaseCoordinator {
         guard let navigationController = router.toPresent() as? UINavigationController else { return }
         navigationController.tabBarItem = feedTabBarItem
         
-        let controller = factory.makeUpdateInfoProfile(user: User(fullName: "Test", avatar: "", status: ""), coordinator: LoginCoordinator(router: router, factory: factory))
+        let controller = factory.makeUpdateInfoProfile(coordinator: LoginCoordinator(router: router, factory: factory), screenType: .update)
         router.setRootModule(controller)
+    }
+    deinit {
+        print("FeedCoordinator удален")
     }
 }

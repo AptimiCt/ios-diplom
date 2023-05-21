@@ -37,6 +37,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
         #endif
         self.tabBarItem = tabBarItemFavoritesView
         self.title = Constants.tabBarItemFavoritesViewTitle
+        print("FavoritesViewController создан")
     }
     
     required init?(coder: NSCoder) {
@@ -98,6 +99,9 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
                     print(error.localizedDescription)
             }
         }
+    }
+    deinit {
+        print("FavoritesViewController удален")
     }
 }
 

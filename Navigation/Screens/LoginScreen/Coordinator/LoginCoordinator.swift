@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import StorageService
 
 class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     
@@ -17,19 +16,23 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     init(router: Router, factory: AuthControllerFactoryProtocol) {
         self.router = router
         self.factory = factory
+        print("LoginCoordinator создан")
     }
     
     override func start() {
         loginViewConfigure()
     }
     
-    func runInfoProfileController(authModel: AuthModel) {
-        let controller = factory.makeUpdateInfoProfile(user: User(authModel: authModel), coordinator: self)
+    func runInfoProfileController(screenType: ScreenType) {
+        let controller = factory.makeUpdateInfoProfile(coordinator: self, screenType: screenType)
         router.present(controller)
     }
     func showAlert(inputData: UIAlertControllerInputData) {
         let alert = UIAlertController(inputData: inputData)
         router.present(alert)
+    }
+    deinit {
+        print("LoginCoordinator удален")
     }
 }
 

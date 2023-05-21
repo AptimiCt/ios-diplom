@@ -161,7 +161,7 @@ extension ProfileHeaderView{
         }
         fullNameLabel.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(Constants.topMarginForFullNameLabel)
-            make.trailing.greaterThanOrEqualTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForFullNameLabel)
+            make.trailing.lessThanOrEqualTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForFullNameLabel)
         }
         statusLabel.snp.makeConstraints { make in
             make.leading.equalTo(fullNameLabel.snp.leading)

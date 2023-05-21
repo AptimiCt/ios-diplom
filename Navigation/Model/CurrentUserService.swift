@@ -9,26 +9,32 @@ import Foundation
 
 final class CurrentUserService: UserService {
     
-    private let user: User
-    private let firestore: FirestoreManager
+    private let firestore: DatabeseManagerProtocol = FirestoreManager()
+    private(set) var user: User?
     
     init() {
-        self.firestore = FirestoreManager()
-        self.user = User(fullName: Constants.currentUserServiceFullName, avatar: Constants.currentUserServiceAvatar, status: Constants.status)
+        print("CurrentUserService создан")
     }
-    
-    func userService(loginName: String) -> User? {
-//        firestore.addUser(user: user) { err in
-//            print(err)
-//        }
-        
-        firestore.getUsers { err in
-            print(self.firestore.users.first?.status)
-            print(err)
+    func getUser() -> User {
+        guard let user else { return User(avatar: "avatar") }
+        return user
+    }
+    func set(user: User?) {
+        self.user = user
+    }
+    func fetchUser(uid: String, completion: @escaping (User?) -> Void) {
+        firestore.fetchUser(uid: uid) { result in
+            switch result {
+                case .success(let user):
+                    self.user = user
+                    completion(user)
+                case .failure(let failure):
+                    print("error TestUserService:\(failure)")
+                    completion(nil)
+            }
         }
-        if loginName == user.fullName  {
-            return user
-        }
-        return nil
+    }
+    deinit {
+        print("CurrentUserService удален")
     }
 }

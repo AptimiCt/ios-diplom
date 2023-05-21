@@ -97,6 +97,10 @@
 //MARK: - MapViewController
 "tabBarItemMap.title" = "Map";
 
+//MARK: - UpdateInfoProfileView
+"UIPV.tappedButton.new" = "Add data";
+"UIPV.tappedButton.update" = "Update data";
+
 //MARK: - SceneDelegate
 "sceneDelegate.post" = "Post";
 
