@@ -6,6 +6,7 @@
 // Created by Александр Востриков
 //
     
-enum FirestoreCollection: String {
-    case usersCollection
+enum FirestoreCollection {
+    static let usersCollection = "usersCollection"
+    static let usersPosts = "usersPosts"
 }

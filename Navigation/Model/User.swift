@@ -22,16 +22,18 @@ enum State {
 
 final class User: Codable {
     
-    var uid: String
+    let uid: String
     var name: String?
     var surname: String?
-    var email: String?
-    var status: String?
+    let email: String?
+    let status: String?
     var gender: String?
     var dateOfBirth: Date?
     var avatar: String?
+    let posts: [String]
+    let friends: [String]
     var updateDate: Date?
-    var createdDate: Date
+    let createdDate: Date
     
     init(uid: String = UUID().uuidString,
          email: String? = "",
@@ -39,6 +41,11 @@ final class User: Codable {
          surname: String = "",
          avatar: String = "defaultProfilePicture",
          status: String = "",
+         gender: String = "undefined",
+         dateOfBirth: Date? = nil,
+         posts: [String] = [],
+         friends: [String] = [],
+         updateDate: Date? = Date(),
          createdDate: Date = Date()
     ) {
         self.uid = uid
@@ -47,6 +54,11 @@ final class User: Codable {
         self.email = email
         self.avatar = avatar
         self.status = status
+        self.gender = gender
+        self.dateOfBirth = dateOfBirth
+        self.posts = posts
+        self.friends = friends
+        self.updateDate = updateDate
         self.createdDate = createdDate
     }
 

@@ -9,4 +9,5 @@ import FirebaseAuth
 
 typealias VoidClosure = () -> Void
 typealias AuthenticationCompletionBlock = (AuthDataResult?, AuthenticationError?)-> Void
-typealias OptionalAuthenticationErrorClosure = (Error?) -> Void
+typealias OptionalErrorClosure = (Error?) -> Void
+typealias BoolClosure = (Bool) -> Void

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AuthenticationError {
+enum AuthenticationError: Error {
     case incorrectCredentials
     case emptyEmail
     case emptyPassword
