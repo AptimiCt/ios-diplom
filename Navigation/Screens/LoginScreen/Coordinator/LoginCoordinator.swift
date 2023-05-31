@@ -24,7 +24,7 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     }
     
     func runInfoProfileController(screenType: ScreenType) {
-        let controller = factory.makeUpdateInfoProfile(coordinator: self, screenType: screenType)
+        let controller = factory.makeUpdateInfoProfile(with: self, screenType: screenType)
         router.present(controller)
     }
     func showAlert(inputData: UIAlertControllerInputData) {

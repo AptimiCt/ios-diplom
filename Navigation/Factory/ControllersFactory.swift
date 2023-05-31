@@ -23,35 +23,25 @@ final class ControllerFactory: ControllersFactoryProtocol {
         loginViewModel.userService = userService
         return loginViewController
     }
-    func makeUpdateInfoProfile(coordinator: LoginCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol {
+    func makeUpdateInfoProfile(with coordinator: LoginCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol {
         let viewModel = UpdateInfoProfileViewModel(userService: userService, firestore: FirestoreManager())
         viewModel.coordinator = coordinator
         return UpdateInfoProfileController(viewModel: viewModel, screenType: screenType)
     }
     
-    func makeFeedController(with user: User, and coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol {
-        let posts = Storage.posts
-        let viewModel = ProfileViewModel(posts: posts)
-        let profileViewController = ProfileViewController(
-            userService: userService,
-            coordinator: coordinator,
-            viewModel: viewModel
-        )
-        return profileViewController
-    }
     
-    func makeProfileController(with user: User, and coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol {
+    func makeFeedController(with coordinator: FeedCoordinator) ->  FeedViewControllerProtocol {
         let posts = Storage.posts
-        let viewModel = ProfileViewModel(posts: posts)
-        let profileViewController = ProfileViewController(
-            userService: userService,
+//        let viewModel = FeedViewModel(posts: posts)
+        let viewModel = FeedViewModel(firestore: FirestoreManager())
+        let feedViewController = FeedViewController(
             coordinator: coordinator,
-            viewModel: viewModel
+            viewModel: viewModel,
+            userService: userService
         )
-        
-        return profileViewController
+        return feedViewController
     }
-    func makeProfileController(coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol {
+    func makeProfileController(with coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol {
         let posts = Storage.posts
         let viewModel = ProfileViewModel(posts: posts)
         let profileViewController = ProfileViewController(

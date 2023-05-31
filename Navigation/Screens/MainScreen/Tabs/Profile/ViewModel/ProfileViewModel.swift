@@ -10,7 +10,7 @@ import StorageService
 
 protocol ProfileViewModelProtocol: AnyObject {
 
-    var stateChanged: ((State) -> Void)? { get set }
+    var stateChanged: ((ProfileViewModel.State) -> Void)? { get set }
     func changeState(completion: @escaping ()->())
     func numberOfRowsInSection() -> Int
     func getPostFor(_ indexPath: IndexPath) -> Post
@@ -18,13 +18,19 @@ protocol ProfileViewModelProtocol: AnyObject {
 
 final class ProfileViewModel: ProfileViewModelProtocol {
     
+    enum State {
+        case initial
+        case loaded(ProfileViewModelProtocol)
+        case error
+    }
+    
     var posts: [Post] {
         didSet{
             stateChanged?(.loaded(self))
         }
     }
     
-    var stateChanged: ((State) -> Void)?
+    var stateChanged: ((ProfileViewModel.State) -> Void)?
 
     init(posts: [Post]){
         stateChanged?(.initial)

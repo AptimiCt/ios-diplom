@@ -33,7 +33,7 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
 
 private extension ProfileCoordinator {
     func runProfile() {
-        let controller = factory.makeProfileController(coordinator: self)
+        let controller = factory.makeProfileController(with: self)
         router.setRootModule(controller, hideBar: true)
     }
 }

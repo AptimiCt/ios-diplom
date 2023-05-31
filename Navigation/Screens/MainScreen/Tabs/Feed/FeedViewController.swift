@@ -8,193 +8,146 @@
 import UIKit
 import StorageService
 
-class FeedViewController: UIViewController {
+class FeedViewController: UIViewController, FeedViewControllerProtocol {
+    
+    private(set) var viewModel: FeedViewModelProtocol!
+    private(set) var coordinator: FeedCoordinator!
+    private var userService: UserService
+    private var photos: [UIImage] = []
     
     //MARK: - vars
-    private var coordinator: FeedCoordinator
-    private var post: Post?
-    private let tabBarItemLocal = UITabBarItem(title: Constants.navigationItemFeedTitle,
-                                       image: UIImage(systemName: "f.circle.fill"),
-                                       tag: 0)
-    
-    private let buttonToPostFirst: CustomButton = {
-        let firstButton = CustomButton(title: Constants.firstButton, titleColor: .createColor(lightMode: .black, darkMode: .white))
-        firstButton.layer.shadowOpacity = 0.7
-        firstButton.layer.shadowRadius = 4
-        firstButton.layer.shadowOffset.width = 4
-        firstButton.layer.shadowOffset.height = 4
-        return firstButton
-    }()
-    private let buttonToPostSecond: CustomButton = {
-        let filesButton = CustomButton(title: Constants.files, titleColor: .createColor(lightMode: .black, darkMode: .white))
-        filesButton.layer.shadowOpacity = 0.7
-        filesButton.layer.shadowRadius = 4
-        filesButton.layer.shadowOffset.width = 4
-        filesButton.layer.shadowOffset.height = 4
-        return filesButton
+    private var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.toAutoLayout()
+        return activityIndicator
     }()
     
-    private let checkWordButton: CustomButton = {
-        let checkButton = CustomButton(title: Constants.checkWord, titleColor: .createColor(lightMode: .black, darkMode: .white))
-        checkButton.setTitleColor(UIColor.systemPurple, for: .highlighted)
-        checkButton.backgroundColor = .systemBlue
-        checkButton.layer.cornerRadius = 10
-        checkButton.layer.shadowOpacity = 0.7
-        checkButton.layer.shadowRadius = 4
-        checkButton.layer.shadowOffset.width = 4
-        checkButton.layer.shadowOffset.height = 4
-        checkButton.toAutoLayout()
-        return checkButton
+    let tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.backgroundColor = . createColor(lightMode: .lightGray, darkMode: .systemGray6)
+        tableView.toAutoLayout()
+        return tableView
     }()
-    
-    private let wordTextField: CustomTextField = {
-        let textField = CustomTextField(font: .systemFont(ofSize: 18, weight: .bold), placeholder: Constants.wordTextField)
-        textField.attributedPlaceholder = NSAttributedString(string: Constants.wordTextField,
-                                                              attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
-        textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
-        textField.backgroundColor = .lightText
-        textField.layer.cornerRadius = 10
-        textField.clipsToBounds = true
-        textField.toAutoLayout()
-        return textField
-    }()
-    
-    private lazy var labelCheck: UILabel = {
-        let label = UILabel()
-        label.alpha = 0
-        label.backgroundColor = .systemIndigo
-        label.layer.cornerRadius = 10
-        label.isUserInteractionEnabled = true
-        label.textAlignment = .center
-        label.clipsToBounds = true
-        label.toAutoLayout()
-        return label
-    }()
-    
-    private let stackView = UIStackView()
     
     //MARK: - init
-    init(coordinator: FeedCoordinator){
+    init(coordinator: FeedCoordinator, viewModel: FeedViewModelProtocol, userService: UserService){
+        self.viewModel = viewModel
+        self.userService = userService
         self.coordinator = coordinator
+        print("FeedViewController создан")
         super.init(nibName: nil, bundle: nil)
-        self.tabBarItem = tabBarItemLocal
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
+        
     }
-    
-    convenience init(post: Post, coordinator: FeedCoordinator){
-        self.init(coordinator: coordinator)
-        self.post = post
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - override
+    //MARK: - override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupLayerColorFor(traitCollection.userInterfaceStyle)
+        photos = Photos.fetchPhotos()
         setupView()
-        setupButtons()
-        setupStack()
-        setupConstraints()
-        buttonsAction()
+        setupViewModel()
+        finishFlow()
     }
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        guard let previousTraitCollection else { return }
-        if traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle {
-            if traitCollection.userInterfaceStyle == .light {
-                setupLayerColorFor(.light)
-            } else {
-                setupLayerColorFor(.dark)
-            }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
         }
     }
-    
-    //MARK: - private func
-    private func setupLayerColorFor(_ style: UIUserInterfaceStyle, isStart: Bool = false) {
-        if  style == .dark  {
-            checkWordButton.layer.shadowColor = UIColor.systemGray.cgColor
-            buttonToPostFirst.layer.shadowColor = UIColor.systemGray.cgColor
-            buttonToPostSecond.layer.shadowColor = UIColor.systemGray.cgColor
-        } else {
-            checkWordButton.layer.shadowColor = UIColor.black.cgColor
-            buttonToPostFirst.layer.shadowColor = UIColor.black.cgColor
-            buttonToPostSecond.layer.shadowColor = UIColor.black.cgColor
-        }
-    }
+    //MARK: - funcs
     private func setupView() {
-        view.backgroundColor = .systemGray3
-        self.navigationItem.title = Constants.navigationItemFeedTitle
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        configureConstraints()
     }
     
-    private func setupButtons(){
-        buttonToPostFirst.toAutoLayout()
-        buttonToPostSecond.toAutoLayout()
-        buttonToPostFirst.backgroundColor = .systemRed
-        buttonToPostFirst.layer.cornerRadius = 10
+    private func configureConstraints(){
+        view.addSubview(tableView)
+        view.addSubview(activityIndicator)
+        tableView.register(PostTableViewCellFS.self, forCellReuseIdentifier: Cells.cellForPostFeed)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
         
-        buttonToPostSecond.backgroundColor = .systemBlue
-        buttonToPostSecond.layer.cornerRadius = 10
-    }
-    
-    private func setupStack(){
-        stackView.toAutoLayout()
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.addArrangedSubview(buttonToPostFirst)
-        stackView.addArrangedSubview(buttonToPostSecond)
-        view.addSubviews(stackView, wordTextField, checkWordButton, labelCheck)
-    }
-    
-    private func setupConstraints(){
-        let constraints = [
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stackView.topAnchor.constraint(equalTo: checkWordButton.bottomAnchor, constant: 15),
+        let constraints: [NSLayoutConstraint] = [
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            checkWordButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            checkWordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            checkWordButton.topAnchor.constraint(equalTo: wordTextField.bottomAnchor, constant: 15),
-            
-            wordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            wordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            wordTextField.heightAnchor.constraint(equalToConstant: 34),
-            labelCheck.bottomAnchor.constraint(equalTo: checkWordButton.topAnchor, constant: -5),
-            labelCheck.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            labelCheck.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            labelCheck.heightAnchor.constraint(equalToConstant: 70),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
     }
     
-    private func labelShow(text: String, color: UIColor){
-        labelCheck.text = text
-        labelCheck.textColor = color
-        UIView.animateKeyframes(withDuration: 3, delay: 0) {
-            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.3) {
-                self.labelCheck.alpha = 1
-            }
-            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 1) {
-                self.labelCheck.alpha = 0
+    //MARK: - setupViewModel
+    private func setupViewModel(){
+        viewModel.stateChanged = { [weak self] state in
+            guard let self else { return }
+            switch state {
+                case .initial:
+                    self.activityIndicator(animate: true)
+                case .loaded(let viewModel):
+                    self.viewModel = viewModel
+                    self.activityIndicator(animate: false)
+                    self.tableView.reloadData()
+                case .error:
+                    break
             }
         }
     }
+    private func activityIndicator(animate: Bool){
+        activityIndicator.isHidden = !animate
+        DispatchQueue.main.async {
+            animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+        }
+    }
     
-    private func buttonsAction(){
-        buttonToPostFirst.action = { [weak self] in
-            guard let self, let post = self.post else { return }
-            //self.coordinator.showPostVC(post: post)
+    //Переход поток авторизации
+    func finishFlow() {
+        //        profileTableHeaderView.closeButton.action = { [weak self] in
+        //            self?.coordinator.finishFlow?(nil)
+        //        }
+    }
+    deinit {
+        print("FeedViewController удален")
+    }
+}
+
+//MARK: - extensions
+extension FeedViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        section == 0 ? 1 : viewModel.numberOfRowsInSection()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSection,
+                                                           for: indexPath) as? PhotosTableViewCell else { return UITableViewCell() }
+            cell.photos = photos
+            return cell
         }
-        buttonToPostSecond.action = { [weak self] in
-            guard let self else { return }
-            //self.coordinator.showFileVC()
-        }
-        checkWordButton.action = { [weak self] in
-            guard let self, let word = self.wordTextField.text, !(word.isEmpty),let post = self.post else { return }
-            let check = post.checker(word: word)
-            check ? self.labelShow(text: Constants.checkWordButtonTrue, color: .green) : self.labelShow(text: Constants.checkWordButtonFalse, color: .red)
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFeed) as? PostTableViewCellFS else {
+            return UITableViewCell() }
+        cell.post = viewModel.getPostFor(indexPath)
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+}
+
+extension FeedViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.selectionStyle = .none
+        if indexPath.section == 0 {
+            coordinator.showPhotosVC()
         }
     }
 }

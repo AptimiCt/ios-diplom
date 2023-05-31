@@ -14,12 +14,6 @@ protocol UserService{
     func fetchUser(uid: String, completion: @escaping (User?) -> Void)
 }
 
-enum State {
-    case initial
-    case loaded(ProfileViewModelProtocol)
-    case error
-}
-
 final class User: Codable {
     
     let uid: String
