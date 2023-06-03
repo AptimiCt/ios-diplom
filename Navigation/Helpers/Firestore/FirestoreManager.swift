@@ -153,7 +153,7 @@ extension FirestoreManager: DatabeseManagerProtocol {
     }
     func updateLike(postId: String, completion: @escaping OptionalErrorClosure) {
         let usersPostsDocumentRef = firestoreDB.collection(usersPosts).document(postId)
-        let likes = [PostProperties.likes: FieldValue.increment(Int64(1))]
+        let likes = [PostProperties.likes: FieldValue.arrayUnion([postId])]
         usersPostsDocumentRef.updateData(likes) { error in
             completion(error)
         }
@@ -171,7 +171,7 @@ struct PostFS: Codable {
     let title: String?
     let body: String
     let imageUrl: String?
-    let likes: Int
+    let likes: [String]
     let views: Int
     let createdDate: Date
     let updateDate: Date
@@ -180,7 +180,8 @@ struct PostFS: Codable {
          title: String? = "",
          body: String,
          imageUrl: String? = nil,
-         likes: Int = 0, views: Int = 0,
+         likes: [String] = [],
+         views: Int = 0,
          frends: [String] = [],
          createdDate: Date = Date(),
          updateDate: Date = Date()

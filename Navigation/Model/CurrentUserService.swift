@@ -16,7 +16,7 @@ final class CurrentUserService: UserService {
         print("CurrentUserService создан")
     }
     func getUser() -> User {
-        guard let user else { return User(avatar: "avatar") }
+        guard let user else { return User() }
         return user
     }
     func set(user: User?) {

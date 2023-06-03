@@ -37,13 +37,13 @@ final class AppCoordinator: BaseCoordinator {
         if isCheckedUser && isNotFirstLogin {
             CheckerService.shared.validateUser { [weak self] user in
                 guard let self, let user else { self?.runAuthFlow(); return }
-                self.userService.set(user: user)
                 self.userService.fetchUser(uid: user.uid, completion: { userFirestore in
                     if let userFirestore {
                         self.userService.set(user: userFirestore)
+                        self.runMainFlow()
                     }
                 })
-                self.runMainFlow()
+                runSplashScreen()
             }
         } else {
             if !isNotFirstLogin {
@@ -93,6 +93,10 @@ private extension AppCoordinator {
         router.setRootModule(mainTabBarVC, hideBar: true)
         mainCoordinator.start()
     }
+    func runSplashScreen() {
+        let svc = factory.makeSplashController()
+        router.setRootModule(svc, hideBar: true)
+    }
     func appConfiguration() {
         let appConfiguration = AppConfiguration.allCases.randomElement()
         NetworkManager.request(for: appConfiguration)
@@ -100,7 +104,7 @@ private extension AppCoordinator {
     func localNotificationRegister() {
         localNotificationService.registeForLatestUpdatesIfPossible()
     }
-    private func showAlert(inputData: UIAlertControllerInputData) {
+    func showAlert(inputData: UIAlertControllerInputData) {
         let alert = UIAlertController(inputData: inputData)
         router.present(alert)
     }

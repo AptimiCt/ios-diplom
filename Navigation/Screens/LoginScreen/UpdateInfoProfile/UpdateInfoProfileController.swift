@@ -21,7 +21,6 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         self.viewModel = viewModel
         self.updateInfoProfileView = UpdateInfoProfileView(screenType: screenType)
         super.init(nibName: nil, bundle: nil)
-        self.updateInfoProfileView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -35,6 +34,7 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         super.viewDidLoad()
         self.switchStateViewModel()
         viewModel.setupView()
+        self.updateInfoProfileView.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

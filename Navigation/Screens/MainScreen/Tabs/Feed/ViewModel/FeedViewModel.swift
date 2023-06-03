@@ -30,8 +30,17 @@ final class FeedViewModel: FeedViewModelProtocol {
     }
     
     func changeState(completion: @escaping () -> ()) {
-        self.posts = [PostFS(userUid: "sdfkjsdhkjfksd", title: "Foo Bar", body: ~K.Storage.Keys.firstPostDescription.rawValue, imageUrl: "karib", likes: 10, views: 100, frends: [], createdDate: Date(), updateDate: Date()),
-                      PostFS(userUid: "sdfkjsdhkjfksd", title: "Foo Bar", body: ~K.Storage.Keys.firstPostDescription.rawValue, imageUrl: "karib", likes: 10, views: 100, frends: [], createdDate: Date(), updateDate: Date())]
+        firestore.fetchAllPosts(uid: "yLIesutMQmXTxtANvhjb8cBljmy1") { result in
+            switch result {
+                case .success(let posts):
+                    print("posts:\(posts)")
+                    self.posts = posts
+                    self.stateChanged?(.loaded(self))
+                    completion()
+                case .failure(let error):
+                    print("error:\(error)")
+            }
+        }
         completion()
     }
     

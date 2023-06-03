@@ -35,6 +35,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         self.userService = userService
         self.coordinator = coordinator
         print("FeedViewController создан")
+        print("userService.getUser():\(userService.getUser().name) \(userService.getUser().surname)")
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         
@@ -133,7 +134,9 @@ extension FeedViewController: UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFeed) as? PostTableViewCellFS else {
             return UITableViewCell() }
-        cell.post = viewModel.getPostFor(indexPath)
+        let post = viewModel.getPostFor(indexPath)
+        print("userService.getUser():\(userService.getUser().name) \(userService.getUser().surname)")
+        cell.configure(post: post, with: userService.getUser())
         return cell
     }
     

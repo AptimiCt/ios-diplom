@@ -12,27 +12,34 @@ import iOSIntPackage
 
 class PostTableViewCellFS: UITableViewCell {
     
-    var post: PostFS? {
-        didSet{
-            guard let author = post?.title else { return }
-            authorLabel.text = author
-            guard let image = post?.imageUrl else { return }
-            guard let sourceImage = UIImage(named: image) else { return }
-            let imageProcessor = ImageProcessor()
-            let filter = ColorFilter.AllCases().randomElement() ?? .sepia(intensity: 3)
-            imageProcessor.processImage(sourceImage: sourceImage, filter: filter) { image in
-                postImageView.image = image
-            }
-            jobLabel.text = "Ingener"
-            viewsImageView.image = UIImage(systemName: "message")
-            fotoImageView.image = UIImage(named: "defaultProfilePicture")
-            bodyLabel.text = post?.body
-            guard let likes = post?.likes else { return }
-            likesLabel.text = "\(likes)"
-            guard let views = post?.views else { return }
-            viewsLabel.text = "\(views)"
-        }
-    }
+    
+    
+//    var post: PostFS? {
+//        didSet{
+//            guard let author = post?.title else { return }
+//            authorLabel.text = author
+//            jobLabel.text = "Ingener"
+//            viewsImageView.image = UIImage(systemName: "message")
+//            fotoImageView.image = UIImage(named: "defaultProfilePicture")
+//            bodyLabel.text = post?.body
+//            guard let likes = post?.likes else { return }
+//            likesLabel.text = "\(likes.count)"
+//            guard let views = post?.views else { return }
+//            viewsLabel.text = "\(views)"
+//            guard let image = post?.imageUrl else { return }
+//            guard let sourceImage = UIImage(named: image) else { return }
+//            postImageView.image = sourceImage
+//        }
+//    }
+    
+//    private var isLiked: Bool {
+//        print(post)
+//        print("\n")
+//        guard let likes = post?.likes else { return true }
+//        print("\n")
+//        print("likes.contains(yLIesutMQmXTxtANvhjb8cBljmy1):\(likes.contains("yLIesutMQmXTxtANvhjb8cBljmy1"))")
+//        return likes.contains("yLIesutMQmXTxtANvhjb8cBljmy1") ? true : false
+//    }
     
     private let authorLabel: UILabel = {
         let label = UILabel()
@@ -101,7 +108,6 @@ class PostTableViewCellFS: UITableViewCell {
         let likesImage = CustomButton()
         likesImage.toAutoLayout()
         likesImage.setImage(UIImage(systemName: "heart"), for: .normal)
-        likesImage.setImage(UIImage(systemName: "heart.fill"), for: .highlighted)
         likesImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
         likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
         return likesImage
@@ -141,7 +147,13 @@ class PostTableViewCellFS: UITableViewCell {
             self.contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         }
     }
-    @objc private func addPostToFavorite(){
+    
+    @objc private func addPostToFavorite() {
+        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, frends: [], createdDate: Date(), updateDate: Date())
+        print("error:")
+        FirestoreManager().addNewPost(post: post) { error in
+            print("error:\(error)")
+        }
 //        guard let post else { return }
 //        CoreDataManager.dataManager.create(post: post) { [weak self] result in
 //            switch result {
@@ -154,11 +166,37 @@ class PostTableViewCellFS: UITableViewCell {
 //        }
     }
     @objc private func likesButtonTapped(){
-        likesButton.tintColor = .systemRed
-        likesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//        if isLiked {
+//            likesButton.tintColor = .systemRed
+//            likesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//        } else {
+//            likesButton.tintColor = .createColor(lightMode: .black, darkMode: .white)
+//            likesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//        }
     }
     @objc private func readMoreButtonTapped(){
         bodyLabel.numberOfLines = 0
+        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: ["QlufJ421c5Xl0TprswE1II2sHXI3"], views: 47, frends: [], createdDate: Date(), updateDate: Date())
+        
+        print("error:")
+        FirestoreManager().addNewPost(post: post) { error in
+            print("error:\(error)")
+        }
+
+    }
+    
+    func configure(post: PostFS, with user: User) {
+        authorLabel.text = user.getFullName()
+        viewsImageView.image = UIImage(systemName: "message")
+        if let imageUrl = user.avatar {
+            fotoImageView.image = UIImage(named: imageUrl)
+        }
+        bodyLabel.text = post.body
+        likesLabel.text = "\(post.likes.count)"
+        viewsLabel.text = "\(post.views)"
+        guard let image = post.imageUrl else { return }
+        guard let sourceImage = UIImage(named: image) else { return }
+        postImageView.image = sourceImage
     }
 }
 

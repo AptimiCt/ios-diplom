@@ -13,6 +13,9 @@ final class ControllerFactory: ControllersFactoryProtocol {
         self.userService = userService
         print("ControllerFactory создан")
     }
+    func makeSplashController() -> SplashViewController {
+        return SplashViewController()
+    }
     func makeLoginController(with coordinator: LoginCoordinator) -> LoginViewControllerProtocol {
         let biometricService = LocalAuthorizationService()
         let loginView = LoginView(biometricType: biometricService.biometricType)
@@ -31,7 +34,7 @@ final class ControllerFactory: ControllersFactoryProtocol {
     
     
     func makeFeedController(with coordinator: FeedCoordinator) ->  FeedViewControllerProtocol {
-        let posts = Storage.posts
+//        let posts = Storage.posts
 //        let viewModel = FeedViewModel(posts: posts)
         let viewModel = FeedViewModel(firestore: FirestoreManager())
         let feedViewController = FeedViewController(

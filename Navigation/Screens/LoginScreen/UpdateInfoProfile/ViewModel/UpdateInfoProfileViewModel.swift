@@ -35,21 +35,21 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     
     func updateUser() {
         updateUserFromProperty()
-        firestore.updateUser(user: userService.getUser()) { [weak self] err in
-            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: err?.localizedDescription, buttons: [.init(title: "ОК")]))
+        firestore.updateUser(user: userService.getUser()) { [weak self] error in
+            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: error?.localizedDescription, buttons: [.init(title: "ОК")]))
             self?.coordinator?.finishFlow?(self?.userService.getUser())
         }
     }
     func addUser() {
         updateUserFromProperty()
-        firestore.addUser(user: userService.getUser()) { [weak self] err in
-            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: err?.localizedDescription, buttons: [.init(title: "ОК")]))
+        firestore.addUser(user: userService.getUser()) { [weak self] error in
+            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: error?.localizedDescription, buttons: [.init(title: "ОК")]))
             self?.coordinator?.finishFlow?(self?.userService.getUser())
         }
     }
     
     func fullName() -> String {
-        ""
+        userService.getUser().getFullName()
     }
     
     func updateName(_ name: String) {
@@ -75,11 +75,8 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         stateChanged?(.success(viewData))
     }
     private func configureProperty() {
-        if let name = userService.getUser().name {
-            self.name = name
-        } else {
-            self.name = userService.getUser().uid
-        }
+        self.name = userService.getUser().name
+        self.surname = userService.getUser().surname
     }
     private func updateUserFromProperty() {
         let user = userService.getUser()

@@ -26,9 +26,13 @@ protocol FeedControllerFactoryProtocol {
     func makeFeedController(with coordinator: FeedCoordinator) -> FeedViewControllerProtocol
     func makePhotosController() -> PhotosViewControllerProtocol
 }
+protocol SplashControllerFactoryProtocol {
+    func makeSplashController() -> SplashViewController
+}
 
 protocol ControllersFactoryProtocol: ProfileControllerFactoryProtocol,
                                      FavoriteControllerFactoryProtocol,
                                      FeedControllerFactoryProtocol,
-                                     AuthControllerFactoryProtocol {
+                                     AuthControllerFactoryProtocol,
+                                     SplashControllerFactoryProtocol {
 }

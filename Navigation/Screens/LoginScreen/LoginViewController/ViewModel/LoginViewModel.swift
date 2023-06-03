@@ -71,7 +71,7 @@ private extension LoginViewModel {
         if userService?.user == nil {
             let name = authDataResult.user.displayName
             let email = authDataResult.user.email
-            let user = User(uid: uid, email: email, name: name ?? Constants.currentUserServiceFullName)
+            let user = User(uid: uid, email: email, name: name ?? email ?? Constants.currentUserServiceFullName)
             userService?.set(user: user)
         }
         switch buttonType {

@@ -17,8 +17,8 @@ protocol UserService{
 final class User: Codable {
     
     let uid: String
-    var name: String?
-    var surname: String?
+    var name: String
+    var surname: String
     let email: String?
     let status: String?
     var gender: String?
@@ -56,7 +56,7 @@ final class User: Codable {
         self.createdDate = createdDate
     }
 
-    private func getFullName() -> String {
+    func getFullName() -> String {
         return "\(String(describing: surname)) \(String(describing: name))"
     }
 }
