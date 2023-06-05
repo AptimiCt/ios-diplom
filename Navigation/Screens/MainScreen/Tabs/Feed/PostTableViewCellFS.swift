@@ -12,35 +12,6 @@ import iOSIntPackage
 
 class PostTableViewCellFS: UITableViewCell {
     
-    
-    
-//    var post: PostFS? {
-//        didSet{
-//            guard let author = post?.title else { return }
-//            authorLabel.text = author
-//            jobLabel.text = "Ingener"
-//            viewsImageView.image = UIImage(systemName: "message")
-//            fotoImageView.image = UIImage(named: "defaultProfilePicture")
-//            bodyLabel.text = post?.body
-//            guard let likes = post?.likes else { return }
-//            likesLabel.text = "\(likes.count)"
-//            guard let views = post?.views else { return }
-//            viewsLabel.text = "\(views)"
-//            guard let image = post?.imageUrl else { return }
-//            guard let sourceImage = UIImage(named: image) else { return }
-//            postImageView.image = sourceImage
-//        }
-//    }
-    
-//    private var isLiked: Bool {
-//        print(post)
-//        print("\n")
-//        guard let likes = post?.likes else { return true }
-//        print("\n")
-//        print("likes.contains(yLIesutMQmXTxtANvhjb8cBljmy1):\(likes.contains("yLIesutMQmXTxtANvhjb8cBljmy1"))")
-//        return likes.contains("yLIesutMQmXTxtANvhjb8cBljmy1") ? true : false
-//    }
-    
     private let authorLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
@@ -204,10 +175,10 @@ extension PostTableViewCellFS {
     private func setupViews(){
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         contentView.addSubviews(fotoImageView,authorLabel, jobLabel, postImageView,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
-        contentView.layer.cornerRadius = 10
+        self.layer.cornerRadius = 20
+        self.clipsToBounds = true
     }
     private func configureConstraints(){
-        
         let constraints: [NSLayoutConstraint] = [
             fotoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             fotoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),

@@ -33,7 +33,7 @@ final class FeedViewModel: FeedViewModelProtocol {
         firestore.fetchAllPosts(uid: "yLIesutMQmXTxtANvhjb8cBljmy1") { result in
             switch result {
                 case .success(let posts):
-                    print("posts:\(posts)")
+//                    print("posts:\(posts)")
                     self.posts = posts
                     self.stateChanged?(.loaded(self))
                     completion()

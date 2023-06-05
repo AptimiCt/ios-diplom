@@ -31,6 +31,9 @@
 //MARK: - PhotosTableViewCell
 "photosLabel.text" = "Фотографии";
 
+//MARK: - FriendsViewCell
+"friendsLabel.text" = "Друзья";
+
 //MARK: - PhotosViewController
 "photo.gallery" = "Галерея фото";
 

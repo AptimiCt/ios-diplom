@@ -53,6 +53,8 @@
 		6180AC6D297D371600A3281A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6180AC6F297D371600A3281A /* Localizable.strings */; };
 		618F60F42A1A4F42006C3F55 /* UserDefaultsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618F60F32A1A4F42006C3F55 /* UserDefaultsEnum.swift */; };
 		618F60F62A1AA8AF006C3F55 /* ScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618F60F52A1AA8AF006C3F55 /* ScreenType.swift */; };
+		61ABC2C52A2B3230006748BF /* FriendsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABC2C42A2B3230006748BF /* FriendsViewCell.swift */; };
+		61ABC2C72A2B383D006748BF /* FriendsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABC2C62A2B383D006748BF /* FriendsCollectionViewCell.swift */; };
 		61B69DBB29C11C2B00D6225E /* LoginViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */; };
 		61BD14FD29F42D9B00BA4438 /* LoginView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */; };
 		61BD14FF29F4364A00BA4438 /* EnumsLoginModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD14FE29F4364A00BA4438 /* EnumsLoginModule.swift */; };
@@ -192,6 +194,8 @@
 		6180AC74297DDB0900A3281A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		618F60F32A1A4F42006C3F55 /* UserDefaultsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsEnum.swift; sourceTree = "<group>"; };
 		618F60F52A1AA8AF006C3F55 /* ScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenType.swift; sourceTree = "<group>"; };
+		61ABC2C42A2B3230006748BF /* FriendsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewCell.swift; sourceTree = "<group>"; };
+		61ABC2C62A2B383D006748BF /* FriendsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCollectionViewCell.swift; sourceTree = "<group>"; };
 		61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewDelegate.swift; sourceTree = "<group>"; };
 		61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+Ext.swift"; sourceTree = "<group>"; };
 		61BD14FE29F4364A00BA4438 /* EnumsLoginModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumsLoginModule.swift; sourceTree = "<group>"; };
@@ -463,6 +467,7 @@
 				BB53FB22276A8F100094AF1D /* Profile */,
 				BB06900629584DE5009A2C24 /* Favorites */,
 				BBD735C627A72C95002397A0 /* Post */,
+				61ABC2C32A2B30D1006748BF /* Friends */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -581,6 +586,15 @@
 			children = (
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		61ABC2C32A2B30D1006748BF /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				61ABC2C42A2B3230006748BF /* FriendsViewCell.swift */,
+				61ABC2C62A2B383D006748BF /* FriendsCollectionViewCell.swift */,
+			);
+			path = Friends;
 			sourceTree = "<group>";
 		};
 		61CDA6A92A2A9152003FA31B /* SplashScreen */ = {
@@ -1003,6 +1017,7 @@
 				613FF3542A0D583800D0BB71 /* UITextField+Ext.swift in Sources */,
 				BB38C9CD28CE000D00739803 /* BruteForceManager.swift in Sources */,
 				BB15250D282FBFDE0045275F /* AppDelegate.swift in Sources */,
+				61ABC2C52A2B3230006748BF /* FriendsViewCell.swift in Sources */,
 				618F60F62A1AA8AF006C3F55 /* ScreenType.swift in Sources */,
 				61DAFB5F29DE19180026F3F3 /* LoginViewModel.swift in Sources */,
 				6150EECF296871C70023BA7D /* ProfileViewModel.swift in Sources */,
@@ -1045,6 +1060,7 @@
 				613FF34C2A0CF74B00D0BB71 /* UpdateInfoProfileView+Ext.swift in Sources */,
 				6180AC67297D333E00A3281A /* K.swift in Sources */,
 				613FF3522A0D552600D0BB71 /* CustomLabel.swift in Sources */,
+				61ABC2C72A2B383D006748BF /* FriendsCollectionViewCell.swift in Sources */,
 				BB0C6A4828FC73AC00C665D5 /* AuthenticationError.swift in Sources */,
 				613FF3442A0AF7FD00D0BB71 /* UpdateInfoProfileController.swift in Sources */,
 				BB0C6A4628FA060E00C665D5 /* AuthModel.swift in Sources */,

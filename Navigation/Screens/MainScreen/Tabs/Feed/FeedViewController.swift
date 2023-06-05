@@ -70,14 +70,14 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
         tableView.register(PostTableViewCellFS.self, forCellReuseIdentifier: Cells.cellForPostFeed)
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
+        tableView.register(FriendsViewCell.self, forCellReuseIdentifier: Cells.cellForSectionToCollection)
         
         let constraints: [NSLayoutConstraint] = [
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
@@ -125,17 +125,17 @@ extension FeedViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSection,
-                                                           for: indexPath) as? PhotosTableViewCell else { return UITableViewCell() }
-            cell.photos = photos
+        var friends: [User] = [User(name: "sds", surname: "Abe", avatar: "avatar"), User(name: "Chif", surname: "TOr", avatar: "master_chif"), User(name: "Chif", surname: "TOr", avatar: ""), User(name: "Chif", surname: "TOr", avatar: "master_chif") ]
+        if indexPath.section == 0 && !friends.isEmpty {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSectionToCollection,
+                                                           for: indexPath) as? FriendsViewCell else { return UITableViewCell() }
+            cell.friends = friends
             return cell
         }
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFeed) as? PostTableViewCellFS else {
             return UITableViewCell() }
         let post = viewModel.getPostFor(indexPath)
-        print("userService.getUser():\(userService.getUser().name) \(userService.getUser().surname)")
         cell.configure(post: post, with: userService.getUser())
         return cell
     }
@@ -150,7 +150,7 @@ extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         if indexPath.section == 0 {
-            coordinator.showPhotosVC()
+//            coordinator.showPhotosVC()
         }
     }
 }
