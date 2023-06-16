@@ -6,14 +6,12 @@
 //
 
 import UIKit
-import StorageService
 
 class FeedViewController: UIViewController, FeedViewControllerProtocol {
     
     private(set) var viewModel: FeedViewModelProtocol!
     private(set) var coordinator: FeedCoordinator!
-    private var userService: UserService
-    private var photos: [UIImage] = []
+    //private var photos: [UIImage] = []
     
     //MARK: - vars
     private var activityIndicator: UIActivityIndicatorView = {
@@ -30,15 +28,10 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     }()
     
     //MARK: - init
-    init(coordinator: FeedCoordinator, viewModel: FeedViewModelProtocol, userService: UserService){
+    init(viewModel: FeedViewModelProtocol){
         self.viewModel = viewModel
-        self.userService = userService
-        self.coordinator = coordinator
         print("FeedViewController создан")
-        print("userService.getUser():\(userService.getUser().name) \(userService.getUser().surname)")
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
-        
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -47,7 +40,6 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     //MARK: - override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
-        photos = Photos.fetchPhotos()
         setupView()
         setupViewModel()
         finishFlow()
@@ -63,6 +55,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         configureConstraints()
     }
     
@@ -121,22 +114,29 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
 //MARK: - extensions
 extension FeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? 1 : viewModel.numberOfRowsInSection()
+        let count: Int
+        let friends = viewModel.getFriens()
+        if section == 0 {
+            count = friends.isEmpty ? 0 : 1
+        } else {
+            count = viewModel.numberOfRowsInSection()
+        }
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var friends: [User] = [User(name: "sds", surname: "Abe", avatar: "avatar"), User(name: "Chif", surname: "TOr", avatar: "master_chif"), User(name: "Chif", surname: "TOr", avatar: ""), User(name: "Chif", surname: "TOr", avatar: "master_chif") ]
-        if indexPath.section == 0 && !friends.isEmpty {
+        
+        if indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSectionToCollection,
                                                            for: indexPath) as? FriendsViewCell else { return UITableViewCell() }
-            cell.friends = friends
+            cell.friends = viewModel.getFriens()
             return cell
         }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFeed) as? PostTableViewCellFS else { return UITableViewCell() }
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFeed) as? PostTableViewCellFS else {
-            return UITableViewCell() }
         let post = viewModel.getPostFor(indexPath)
-        cell.configure(post: post, with: userService.getUser())
+        let user = viewModel.getUser()
+        cell.configure(post: post, with: user)
         return cell
     }
     

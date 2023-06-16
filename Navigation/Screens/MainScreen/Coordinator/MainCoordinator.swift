@@ -61,6 +61,7 @@ private extension MainCoordinator {
                 let profileCoordinator = ProfileCoordinator(router: router, factory: factory)
                 profileCoordinator.finishFlow = { [weak self, weak profileCoordinator] user in
                     if user == nil {
+                        self?.userService.friends = []
                         self?.userService.set(user: nil)
                     }
                     self?.removeCoordinator(profileCoordinator)

@@ -34,14 +34,9 @@ final class ControllerFactory: ControllersFactoryProtocol {
     
     
     func makeFeedController(with coordinator: FeedCoordinator) ->  FeedViewControllerProtocol {
-//        let posts = Storage.posts
-//        let viewModel = FeedViewModel(posts: posts)
-        let viewModel = FeedViewModel(firestore: FirestoreManager())
-        let feedViewController = FeedViewController(
-            coordinator: coordinator,
-            viewModel: viewModel,
-            userService: userService
-        )
+
+        let viewModel = FeedViewModel(firestore: FirestoreManager(), coordinator: coordinator, userService: userService)
+        let feedViewController = FeedViewController(viewModel: viewModel)
         return feedViewController
     }
     func makeProfileController(with coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol {

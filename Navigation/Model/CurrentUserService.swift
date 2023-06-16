@@ -8,10 +8,19 @@
 import Foundation
 
 final class CurrentUserService: UserService {
+    func fetchFiends(completion: @escaping () -> Void) {
+        
+    }
+    
+    func fetchUser(uid: String, completion: @escaping (Result<User, Error>) -> Void) {
+        
+    }
+    
+    var friendsId: [String] = []
     
     private let firestore: DatabeseManagerProtocol = FirestoreManager()
     private(set) var user: User?
-    
+    var friends: [User] = []
     init() {
         print("CurrentUserService создан")
     }

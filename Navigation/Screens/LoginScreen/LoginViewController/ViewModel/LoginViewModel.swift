@@ -144,7 +144,7 @@ private extension LoginViewModel {
         self.coordinator.finishFlow?(user)
     }
     func fetchUser(for uid: String) {
-        self.firestore.fetchUser(uid: uid) { [weak self, weak coordinator] result in
+        userService?.fetchUser(uid: uid) { [weak self, weak coordinator] result in
             switch result {
                 case .success(let user):
                     self?.finishFlow(user)

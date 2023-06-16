@@ -130,18 +130,38 @@ extension FirestoreManager: DatabeseManagerProtocol {
         }
     }
     func fetchAllPosts(uid: String, completion: @escaping (Result<[PostFS], Error>) -> Void) {
-        self.posts = []
         let usersPostsRef = firestoreDB.collection(usersPosts)
         usersPostsRef
-            .whereField(PostProperties.userUid, isEqualTo: uid)
+            .whereField(PostProperties.userUid, in: [uid])
             .getDocuments { [weak self] querySnapshot, error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
                     guard let self else { completion(.failure(FirestoreDatabaseError.error(desription: "self is nil"))); return}
-                    self.posts = querySnapshot!.documents.compactMap { querySnapshot in
+                    self.posts = querySnapshot!.documents.compactMap { querySnapshotDocument in
                         do {
-                            return try querySnapshot.data(as: PostFS.self)
+                            return try querySnapshotDocument.data(as: PostFS.self)
+                        } catch {
+                            completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пост.")))
+                            return nil
+                        }
+                    }
+                    completion(.success(self.posts))
+                }
+            }
+    }
+    func fetchAllPosts(uids: [String], completion: @escaping (Result<[PostFS], Error>) -> Void) {
+        let usersPostsRef = firestoreDB.collection(usersPosts)
+        usersPostsRef
+            .whereField(PostProperties.userUid, in: uids)
+            .getDocuments { [weak self] querySnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    guard let self else { completion(.failure(FirestoreDatabaseError.error(desription: "self is nil"))); return}
+                    self.posts = querySnapshot!.documents.compactMap { querySnapshotDocument in
+                        do {
+                            return try querySnapshotDocument.data(as: PostFS.self)
                         } catch {
                             completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пост.")))
                             return nil

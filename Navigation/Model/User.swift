@@ -7,11 +7,14 @@
 
 import Foundation
 
-protocol UserService{
+protocol UserService {
     var user: User? { get }
+    var friendsId: [String] { get }
+    var friends: [User] { get set }
     func getUser() -> User
     func set(user: User?)
-    func fetchUser(uid: String, completion: @escaping (User?) -> Void)
+    func fetchUser(uid: String, completion: @escaping (Result<User, Error>) -> Void)
+    func fetchFiends(completion: @escaping () -> Void)
 }
 
 final class User: Codable {

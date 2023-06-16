@@ -24,6 +24,7 @@ final class FriendsViewCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.toAutoLayout()
+        collectionView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         return collectionView
     }()
     var friends: [User] = []
@@ -84,7 +85,7 @@ extension FriendsViewCell: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: width)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    }
 }

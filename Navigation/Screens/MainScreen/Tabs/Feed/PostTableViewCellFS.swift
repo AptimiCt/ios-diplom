@@ -8,7 +8,6 @@
     
 
 import UIKit
-import iOSIntPackage
 
 class PostTableViewCellFS: UITableViewCell {
     
@@ -21,12 +20,12 @@ class PostTableViewCellFS: UITableViewCell {
         return label
     }()
     
-    private let jobLabel: UILabel = {
+    private let dateLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
-        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .createColor(lightMode: .secondaryLabel, darkMode: .white)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         return label
     }()
     
@@ -103,7 +102,7 @@ class PostTableViewCellFS: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         configureConstraints()
-        guard reuseIdentifier == Cells.cellForPostFeed else { return }
+//        guard reuseIdentifier == Cells.cellForPostFeed else { return }
 //        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
 //                doubleTap.numberOfTapsRequired = 2
 //                self.addGestureRecognizer(doubleTap)
@@ -147,13 +146,12 @@ class PostTableViewCellFS: UITableViewCell {
     }
     @objc private func readMoreButtonTapped(){
         bodyLabel.numberOfLines = 0
-        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: ["QlufJ421c5Xl0TprswE1II2sHXI3"], views: 47, frends: [], createdDate: Date(), updateDate: Date())
-        
-        print("error:")
-        FirestoreManager().addNewPost(post: post) { error in
-            print("error:\(error)")
-        }
-
+//        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: ["QlufJ421c5Xl0TprswE1II2sHXI3"], views: 47, frends: [], createdDate: Date(), updateDate: Date())
+//
+//        print("error:")
+//        FirestoreManager().addNewPost(post: post) { error in
+//            print("error:\(error)")
+//        }
     }
     
     func configure(post: PostFS, with user: User) {
@@ -162,6 +160,11 @@ class PostTableViewCellFS: UITableViewCell {
         if let imageUrl = user.avatar {
             fotoImageView.image = UIImage(named: imageUrl)
         }
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = .current
+        dateFormatter.dateFormat = "d MMM yyyy hh:mm"
+        let dateString = dateFormatter.string(from: post.createdDate)
+        dateLabel.text = dateString
         bodyLabel.text = post.body
         likesLabel.text = "\(post.likes.count)"
         viewsLabel.text = "\(post.views)"
@@ -174,7 +177,7 @@ class PostTableViewCellFS: UITableViewCell {
 extension PostTableViewCellFS {
     private func setupViews(){
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
-        contentView.addSubviews(fotoImageView,authorLabel, jobLabel, postImageView,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
+        contentView.addSubviews(fotoImageView,authorLabel, dateLabel, postImageView,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
         self.layer.cornerRadius = 20
         self.clipsToBounds = true
     }
@@ -189,10 +192,10 @@ extension PostTableViewCellFS {
             
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            authorLabel.bottomAnchor.constraint(equalTo: jobLabel.topAnchor, constant: -4),
+            authorLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -4),
             
-            jobLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
-            jobLabel.bottomAnchor.constraint(lessThanOrEqualTo: bodyLabel.topAnchor, constant: 4),
+            dateLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
+            dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: bodyLabel.topAnchor, constant: 4),
             
             bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),

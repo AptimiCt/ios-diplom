@@ -37,12 +37,18 @@ final class AppCoordinator: BaseCoordinator {
         if isCheckedUser && isNotFirstLogin {
             CheckerService.shared.validateUser { [weak self] user in
                 guard let self, let user else { self?.runAuthFlow(); return }
-                self.userService.fetchUser(uid: user.uid, completion: { userFirestore in
-                    if let userFirestore {
-                        self.userService.set(user: userFirestore)
-                        self.runMainFlow()
+                self.userService.fetchUser(uid: user.uid) { result in
+                    switch result {
+                        case .success:
+                            self.userService.fetchFiends {
+                                self.runMainFlow()
+                            }
+                        case .failure(let failure):
+                            print("failure runAuthFlow:\(failure)")
+                            self.runAuthFlow()
                     }
-                })
+                }
+                
                 runSplashScreen()
             }
         } else {
