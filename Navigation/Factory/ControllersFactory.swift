@@ -32,6 +32,11 @@ final class ControllerFactory: ControllersFactoryProtocol {
         return UpdateInfoProfileController(viewModel: viewModel, screenType: screenType)
     }
     
+    func makePostDetailController(post: PostFS) -> PostDetailViewControllerProtocol {
+        let viewModel = PostDetailViewModel(userService: userService, firestore: FirestoreManager(), post: post)
+        let postDetailController = PostDetailController(viewModel: viewModel)
+        return postDetailController
+    }
     
     func makeFeedController(with coordinator: FeedCoordinator) ->  FeedViewControllerProtocol {
 

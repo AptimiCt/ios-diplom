@@ -25,6 +25,10 @@ protocol FavoriteControllerFactoryProtocol {
 protocol FeedControllerFactoryProtocol {
     func makeFeedController(with coordinator: FeedCoordinator) -> FeedViewControllerProtocol
     func makePhotosController() -> PhotosViewControllerProtocol
+    func makePostDetailController(post: PostFS) -> PostDetailViewControllerProtocol
+}
+protocol PostDetailControllerFactoryProtocol {
+    func makePostDetailController(post: PostFS) -> PostDetailViewControllerProtocol
 }
 protocol SplashControllerFactoryProtocol {
     func makeSplashController() -> SplashViewController
@@ -34,5 +38,6 @@ protocol ControllersFactoryProtocol: ProfileControllerFactoryProtocol,
                                      FavoriteControllerFactoryProtocol,
                                      FeedControllerFactoryProtocol,
                                      AuthControllerFactoryProtocol,
-                                     SplashControllerFactoryProtocol {
+                                     SplashControllerFactoryProtocol,
+                                     PostDetailControllerFactoryProtocol {
 }

@@ -17,6 +17,6 @@ protocol DatabeseManagerProtocol {
     func fetchPost(postId: String, completion: @escaping (Result<PostFS, Error>) -> Void)
     func fetchAllPosts(uid: String, completion: @escaping (Result<[PostFS], Error>) -> Void)
     func fetchAllPosts(uids: [String], completion: @escaping (Result<[PostFS], Error>) -> Void)
-    func updateLike(postId: String, completion: @escaping OptionalErrorClosure)
+    func updateLike(postId: String, from userUID: String, completion: @escaping OptionalErrorClosure)
     func updateViews(postId: String, completion: @escaping OptionalErrorClosure)
 }

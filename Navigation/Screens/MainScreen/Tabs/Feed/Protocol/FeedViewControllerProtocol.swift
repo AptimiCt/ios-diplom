@@ -8,5 +8,4 @@
     
 protocol FeedViewControllerProtocol: Presentable {
     var viewModel: FeedViewModelProtocol! { get }
-    var coordinator: FeedCoordinator! { get }
 }

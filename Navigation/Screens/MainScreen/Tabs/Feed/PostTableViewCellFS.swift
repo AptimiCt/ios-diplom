@@ -11,6 +11,10 @@ import UIKit
 
 class PostTableViewCellFS: UITableViewCell {
     
+    weak var delegate: PostTableViewCellFSDelegate?
+    var indexPath: IndexPath!
+    private lazy var heightAnchorReadMoreButton: NSLayoutConstraint = readMore.heightAnchor.constraint(equalToConstant: 0)
+    
     private let authorLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
@@ -19,7 +23,6 @@ class PostTableViewCellFS: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-    
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
@@ -28,7 +31,6 @@ class PostTableViewCellFS: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-    
     private let fotoImageView: UIImageView = {
         let image = UIImageView()
         image.toAutoLayout()
@@ -38,7 +40,6 @@ class PostTableViewCellFS: UITableViewCell {
         image.clipsToBounds = true
         return image
     }()
-    
     private let postImageView: UIImageView = {
         let image = UIImageView()
         image.toAutoLayout()
@@ -48,7 +49,6 @@ class PostTableViewCellFS: UITableViewCell {
         image.clipsToBounds = true
         return image
     }()
-    
     private let bodyLabel: UILabel = {
         let description = UILabel()
         description.toAutoLayout()
@@ -79,7 +79,7 @@ class PostTableViewCellFS: UITableViewCell {
         likesImage.toAutoLayout()
         likesImage.setImage(UIImage(systemName: "heart"), for: .normal)
         likesImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
-        likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
+//        likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
         return likesImage
     }()
     private let viewsLabel: UILabel = {
@@ -111,49 +111,6 @@ class PostTableViewCellFS: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private func vizualizeAdd(color: UIColor) {
-        contentView.backgroundColor = color
-        UIView.animate(withDuration: 1, delay: 0) {
-            self.contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
-        }
-    }
-    
-    @objc private func addPostToFavorite() {
-        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, frends: [], createdDate: Date(), updateDate: Date())
-        print("error:")
-        FirestoreManager().addNewPost(post: post) { error in
-            print("error:\(error)")
-        }
-//        guard let post else { return }
-//        CoreDataManager.dataManager.create(post: post) { [weak self] result in
-//            switch result {
-//                case .success(_):
-//                    self?.vizualizeAdd(color: .systemGreen)
-//                case .failure(let error):
-//                    self?.vizualizeAdd(color: .systemRed)
-//                    print(error.localizedDescription)
-//            }
-//        }
-    }
-    @objc private func likesButtonTapped(){
-//        if isLiked {
-//            likesButton.tintColor = .systemRed
-//            likesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-//        } else {
-//            likesButton.tintColor = .createColor(lightMode: .black, darkMode: .white)
-//            likesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-//        }
-    }
-    @objc private func readMoreButtonTapped(){
-        bodyLabel.numberOfLines = 0
-//        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: ["QlufJ421c5Xl0TprswE1II2sHXI3"], views: 47, frends: [], createdDate: Date(), updateDate: Date())
-//
-//        print("error:")
-//        FirestoreManager().addNewPost(post: post) { error in
-//            print("error:\(error)")
-//        }
-    }
-    
     func configure(post: PostFS, with user: User) {
         authorLabel.text = user.getFullName()
         viewsImageView.image = UIImage(systemName: "message")
@@ -173,7 +130,39 @@ class PostTableViewCellFS: UITableViewCell {
         postImageView.image = sourceImage
     }
 }
-
+private extension PostTableViewCellFS {
+    func vizualizeAdd(color: UIColor) {
+        contentView.backgroundColor = color
+        UIView.animate(withDuration: 1, delay: 0) {
+            self.contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
+        }
+    }
+}
+@objc private extension PostTableViewCellFS {
+    func readMoreButtonTapped(){
+       bodyLabel.numberOfLines = 0
+       readMore.isHidden = true
+       heightAnchorReadMoreButton.isActive = true
+       delegate?.moreReadButtonTapped(indexPath: indexPath)
+    }
+    func addPostToFavorite() {
+        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, frends: [], createdDate: Date(), updateDate: Date())
+        print("error:")
+        FirestoreManager().addNewPost(post: post) { error in
+            print("error:\(error)")
+        }
+//        guard let post else { return }
+//        CoreDataManager.dataManager.create(post: post) { [weak self] result in
+//            switch result {
+//                case .success(_):
+//                    self?.vizualizeAdd(color: .systemGreen)
+//                case .failure(let error):
+//                    self?.vizualizeAdd(color: .systemRed)
+//                    print(error.localizedDescription)
+//            }
+//        }
+    }
+}
 extension PostTableViewCellFS {
     private func setupViews(){
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)

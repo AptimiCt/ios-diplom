@@ -10,8 +10,6 @@ import UIKit
 class FeedViewController: UIViewController, FeedViewControllerProtocol {
     
     private(set) var viewModel: FeedViewModelProtocol!
-    private(set) var coordinator: FeedCoordinator!
-    //private var photos: [UIImage] = []
     
     //MARK: - vars
     private var activityIndicator: UIActivityIndicatorView = {
@@ -24,6 +22,8 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = . createColor(lightMode: .lightGray, darkMode: .systemGray6)
         tableView.toAutoLayout()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 40.0
         return tableView
     }()
     
@@ -42,7 +42,6 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         super.viewDidLoad()
         setupView()
         setupViewModel()
-        finishFlow()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -52,6 +51,8 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     }
     //MARK: - funcs
     private func setupView() {
+        title = Constants.navigationItemFeedTitle
+        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -99,13 +100,6 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
             animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
-    
-    //Переход поток авторизации
-    func finishFlow() {
-        //        profileTableHeaderView.closeButton.action = { [weak self] in
-        //            self?.coordinator.finishFlow?(nil)
-        //        }
-    }
     deinit {
         print("FeedViewController удален")
     }
@@ -119,7 +113,7 @@ extension FeedViewController: UITableViewDataSource {
         if section == 0 {
             count = friends.isEmpty ? 0 : 1
         } else {
-            count = viewModel.numberOfRowsInSection()
+            count = viewModel.numberOfRows()
         }
         return count
     }
@@ -135,8 +129,10 @@ extension FeedViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFeed) as? PostTableViewCellFS else { return UITableViewCell() }
         
         let post = viewModel.getPostFor(indexPath)
-        let user = viewModel.getUser()
+        let user = viewModel.getUser(for: post.userUid)
         cell.configure(post: post, with: user)
+        cell.indexPath = indexPath
+        cell.delegate = self
         return cell
     }
     
@@ -146,11 +142,22 @@ extension FeedViewController: UITableViewDataSource {
 }
 
 extension FeedViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
-        if indexPath.section == 0 {
-//            coordinator.showPhotosVC()
+        if indexPath.section != 0 {
+            let post = viewModel.getPostFor(indexPath)
+            viewModel.updateViews(postUID: post.postUid)
+            viewModel.showDetail(post: post)
         }
     }
+}
+extension FeedViewController: PostTableViewCellFSDelegate {
+    func moreReadButtonTapped(indexPath: IndexPath) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+}
+
+protocol PostTableViewCellFSDelegate: AnyObject {
+    func moreReadButtonTapped(indexPath: IndexPath)
 }

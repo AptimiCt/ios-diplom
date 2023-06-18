@@ -104,9 +104,11 @@ extension FirestoreManager: DatabeseManagerProtocol {
     }
     
     func addNewPost(post: PostFS, completion: @escaping OptionalErrorClosure) {
+        var newPost = post
         let usersPostsRef = firestoreDB.collection(usersPosts)
+        newPost.postUid = usersPostsRef.collectionID
         do {
-            let postDocumentIdRef = try usersPostsRef.addDocument(from: post) { error in
+            let postDocumentIdRef = try usersPostsRef.addDocument(from: newPost) { error in
                 if error != nil {
                     completion(error)
                 }
@@ -171,9 +173,9 @@ extension FirestoreManager: DatabeseManagerProtocol {
                 }
             }
     }
-    func updateLike(postId: String, completion: @escaping OptionalErrorClosure) {
+    func updateLike(postId: String, from userUID: String, completion: @escaping OptionalErrorClosure) {
         let usersPostsDocumentRef = firestoreDB.collection(usersPosts).document(postId)
-        let likes = [PostProperties.likes: FieldValue.arrayUnion([postId])]
+        let likes = [PostProperties.likes: FieldValue.arrayUnion([userUID])]
         usersPostsDocumentRef.updateData(likes) { error in
             completion(error)
         }
@@ -186,8 +188,10 @@ extension FirestoreManager: DatabeseManagerProtocol {
         }
     }
 }
+
 struct PostFS: Codable {
     let userUid: String
+    var postUid: String
     let title: String?
     let body: String
     let imageUrl: String?
@@ -197,6 +201,7 @@ struct PostFS: Codable {
     let updateDate: Date
     
     init(userUid: String,
+         postUid: String = "",
          title: String? = "",
          body: String,
          imageUrl: String? = nil,
@@ -207,6 +212,7 @@ struct PostFS: Codable {
          updateDate: Date = Date()
     ) {
         self.userUid = userUid
+        self.postUid = postUid
         self.title = title
         self.body = body
         self.imageUrl = imageUrl

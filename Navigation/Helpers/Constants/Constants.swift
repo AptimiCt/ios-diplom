@@ -173,6 +173,8 @@ struct Constants {
     //MARK: - SceneDelegate
     static let post = ~K.SceneDelegate.Keys.post.rawValue
     
+    static let defaultProfilePicture = "defaultProfilePicture"
+    
     static let people = "https://swapi.dev/api/people/8"
     static let starships = "https://swapi.dev/api/starships/3"
     static let planets = "https://swapi.dev/api/planets/5"

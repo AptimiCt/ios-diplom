@@ -26,6 +26,10 @@ class FeedCoordinator: BaseCoordinator {
         let controller = factory.makePhotosController()
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
+    func showDetail(post: PostFS) {
+        let controller = factory.makePostDetailController(post: post)
+        router.push(controller, hideBottomBar: true, hideBar: false)
+    }
     deinit {
         print("FeedCoordinator удален")
     }
@@ -42,6 +46,6 @@ private extension FeedCoordinator {
         navigationController.tabBarItem = feedTabBarItem
         
         let controller = factory.makeFeedController(with: self)
-        router.setRootModule(controller, hideBar: true)
+        router.setRootModule(controller)
     }
 }
