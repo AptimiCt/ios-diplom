@@ -176,11 +176,10 @@ private extension PostDetailController {
         }
         likesLabel.text = "\(post.likes)"
         viewsLabel.text = "\(post.views)"
-        if let postImage = post.postImage {
+        if let postImage = post.postImage, let image = UIImage(named: postImage) {
             postImageView.isHidden = false
-            postImageView.image = UIImage(named: postImage)
+            postImageView.image = image
         } else {
-            
             postImageView.isHidden = true
             heightAnchorPostImageView.constant = 0
         }

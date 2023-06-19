@@ -14,6 +14,8 @@ class PostTableViewCellFS: UITableViewCell {
     weak var delegate: PostTableViewCellFSDelegate?
     var indexPath: IndexPath!
     private lazy var heightAnchorReadMoreButton: NSLayoutConstraint = readMore.heightAnchor.constraint(equalToConstant: 0)
+    private let constantHeightPostImageView = (Constants.screenWeight) / 3
+    private lazy var heightAnchorPostImageView: NSLayoutConstraint = postImageView.heightAnchor.constraint(equalToConstant: constantHeightPostImageView)
     
     private let authorLabel: UILabel = {
         let label = UILabel()
@@ -126,7 +128,10 @@ class PostTableViewCellFS: UITableViewCell {
         likesLabel.text = "\(post.likes.count)"
         viewsLabel.text = "\(post.views)"
         guard let image = post.imageUrl else { return }
-        guard let sourceImage = UIImage(named: image) else { return }
+        guard let sourceImage = UIImage(named: image) else {
+            heightAnchorPostImageView.constant = 0
+            return
+        }
         postImageView.image = sourceImage
     }
 }
@@ -197,7 +202,7 @@ extension PostTableViewCellFS {
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             postImageView.widthAnchor.constraint(equalToConstant: Constants.screenWeight - 32),
-            postImageView.heightAnchor.constraint(equalToConstant: (Constants.screenWeight) / 3),
+//            postImageView.heightAnchor.constraint(equalToConstant: (Constants.screenWeight) / 3),
             postImageView.bottomAnchor.constraint(equalTo: likesButton.topAnchor, constant: -20),
             postImageView.bottomAnchor.constraint(equalTo: viewsImageView.topAnchor, constant: -20),
             
@@ -220,5 +225,6 @@ extension PostTableViewCellFS {
             viewsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -18)
         ]
         NSLayoutConstraint.activate(constraints)
+        heightAnchorPostImageView.isActive = true
     }
 }

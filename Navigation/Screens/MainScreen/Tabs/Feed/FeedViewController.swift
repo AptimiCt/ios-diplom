@@ -18,6 +18,12 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         return activityIndicator
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let  refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
+    
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = . createColor(lightMode: .lightGray, darkMode: .systemGray6)
@@ -49,15 +55,22 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
             self?.tableView.reloadData()
         }
     }
+    @objc func refresh(sender: UIRefreshControl) {
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+            sender.endRefreshing()
+        }
+    }
     //MARK: - funcs
     private func setupView() {
         title = Constants.navigationItemFeedTitle
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         configureConstraints()
+        tableView.refreshControl = refreshControl
     }
     
     private func configureConstraints(){
