@@ -21,6 +21,8 @@ protocol UpdateInfoProfileVidewModelProtocol {
     
     func updateProfilePicture(_ profilePicture: String)
     
+    func showImagePicker()
+    
     func updateUser()
     
     func addUser()

@@ -206,6 +206,9 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         profileTableHeaderView.closeButton.action = { [weak self] in
             self?.coordinator.finishFlow?(nil)
         }
+        profileTableHeaderView.setStatusButton.action = { [weak self] in
+            self?.coordinator.showPhotosVC()
+        }
     }
     deinit {
         print("ProfileViewController удален")

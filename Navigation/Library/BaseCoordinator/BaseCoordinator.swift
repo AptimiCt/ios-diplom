@@ -9,7 +9,7 @@
 
 import UIKit
 
-class BaseCoordinator: Coordinator {
+class BaseCoordinator: NSObject, Coordinator {
     
     var childCoordinators: [Coordinator] = []
 

@@ -12,23 +12,49 @@ import UIKit
 extension UpdateInfoProfileView {
     func makeNameTextField() -> TextFieldWithPadding {
         let textField = TextFieldWithPadding()
+        textField.toAutoLayout()
         textField.configureTextField(with: "Введите имя")
+        textField.becomeFirstResponder()
         return textField
     }
     func makeLastNameTextField() -> TextFieldWithPadding {
         let textField = TextFieldWithPadding()
+        textField.toAutoLayout()
         textField.configureTextField(with: "Введите фамилию", autocapitalizationType: .words)
         return textField
     }
-    func makeGenderTextField() -> TextFieldWithPadding {
-        let textField = TextFieldWithPadding()
-        textField.configureTextField(with: "Введите пол")
-        return textField
+    func makeGenderButton() -> UIButton {
+        let genderButton = UIButton(type: .system)
+        genderButton.toAutoLayout()
+        genderButton.tintColor = .systemBlue
+        genderButton.showsMenuAsPrimaryAction = true
+        genderButton.backgroundColor = .lightGray
+        return genderButton
     }
-    func makeDateOfBirthTextField() -> TextFieldWithPadding {
-        let textField = TextFieldWithPadding()
-        textField.configureTextField(with: "Введите дату рождения")
-        return textField
+    func makeMenu() -> UIMenu {
+        let handler: UIActionHandler = { [weak self] action in
+            self?.delegate?.updateGender(gender: action.title)
+        }
+        let man = UIAction(title: "Мужской", handler: handler)
+        let woman = UIAction(title: "Женский", handler: handler)
+        let notSet = UIAction(title: "Не установлен", image: UIImage (systemName: "person.fill.questionmark"), handler: handler)
+        let menu = UIMenu(children: [man, woman, notSet])
+        return menu
+    }
+    func makeDateOfBirthPicker() -> UIDatePicker {
+        let datePicker = UIDatePicker()
+        datePicker.toAutoLayout()
+        datePicker.preferredDatePickerStyle = .automatic
+        datePicker.datePickerMode = .date
+        return datePicker
+    }
+    func makeDateOfBirthStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.toAutoLayout()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.alignment = .center
+        return stackView
     }
     func makeLogoImageView() -> UIImageView {
         let imageView = UIImageView(image: UIImage(named: "logo"))
@@ -48,7 +74,7 @@ extension UpdateInfoProfileView {
         return label
     }
     func makeDateOfBirthLabel() -> CustomLabel {
-        let label = CustomLabel(title: "Дата рождения")
+        let label = CustomLabel(title: "Дата рождения:")
         return label
     }
     func makeSignUpButton(screenType: ScreenType) -> CustomButton {

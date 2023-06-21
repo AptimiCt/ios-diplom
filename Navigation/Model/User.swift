@@ -24,8 +24,8 @@ final class User: Codable {
     var surname: String
     let email: String?
     let status: String?
-    var gender: String?
-    var dateOfBirth: Date?
+    var gender: String
+    var dateOfBirth: Date
     var avatar: String?
     let posts: [String]
     let friends: [String]
@@ -39,7 +39,7 @@ final class User: Codable {
          avatar: String = "defaultProfilePicture",
          status: String = "",
          gender: String = "undefined",
-         dateOfBirth: Date? = nil,
+         dateOfBirth: Date = Date(),
          posts: [String] = [],
          friends: [String] = [],
          updateDate: Date? = Date(),

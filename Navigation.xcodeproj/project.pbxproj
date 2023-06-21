@@ -62,6 +62,7 @@
 		61B69DBB29C11C2B00D6225E /* LoginViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */; };
 		61BD14FD29F42D9B00BA4438 /* LoginView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */; };
 		61BD14FF29F4364A00BA4438 /* EnumsLoginModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD14FE29F4364A00BA4438 /* EnumsLoginModule.swift */; };
+		61C0CB942A40C67E0023EFD7 /* ImagePickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C0CB932A40C67E0023EFD7 /* ImagePickerCoordinator.swift */; };
 		61C6121D297F22FB00206131 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61C6121F297F22FB00206131 /* InfoPlist.strings */; };
 		61C61223297F3F6E00206131 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 61C61225297F3F6E00206131 /* Localizable.stringsdict */; };
 		61C61228298065C900206131 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C61227298065C900206131 /* UIColor+Ext.swift */; };
@@ -207,6 +208,7 @@
 		61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewDelegate.swift; sourceTree = "<group>"; };
 		61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+Ext.swift"; sourceTree = "<group>"; };
 		61BD14FE29F4364A00BA4438 /* EnumsLoginModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumsLoginModule.swift; sourceTree = "<group>"; };
+		61C0CB932A40C67E0023EFD7 /* ImagePickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCoordinator.swift; sourceTree = "<group>"; };
 		61C6121E297F22FB00206131 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		61C61220297F23A500206131 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		61C61224297F3F6E00206131 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 		613FF34D2A0D523900D0BB71 /* UpdateInfoProfile */ = {
 			isa = PBXGroup;
 			children = (
+				61C0CB922A40C6610023EFD7 /* Coordinator */,
 				613FF3502A0D52C300D0BB71 /* Protocol */,
 				613FF34E2A0D526200D0BB71 /* ViewModel */,
 				613FF3492A0CF6B900D0BB71 /* UpdateInfoProfileView.swift */,
@@ -639,6 +642,14 @@
 				61ABC2C62A2B383D006748BF /* FriendsCollectionViewCell.swift */,
 			);
 			path = Friends;
+			sourceTree = "<group>";
+		};
+		61C0CB922A40C6610023EFD7 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				61C0CB932A40C67E0023EFD7 /* ImagePickerCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		61CDA6A92A2A9152003FA31B /* SplashScreen */ = {
@@ -992,6 +1003,7 @@
 				BB0C073E2810BF1D00C0D950 /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
 				61F0628C29589BC500017C0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				BB5AF66D297729E600796C65 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				61C0CB952A410F260023EFD7 /* XCRemoteSwiftPackageReference "iOSDropDown" */,
 			);
 			productRefGroup = BBDC802D2749E2FF000A302B /* Products */;
 			projectDirPath = "";
@@ -1099,6 +1111,7 @@
 				613FF3262A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift in Sources */,
 				613FF3482A0AF9B500D0BB71 /* UpdateInfoProfileViewModel.swift in Sources */,
 				BBFCF302290FC14100C4D597 /* FirebaseResponseError.swift in Sources */,
+				61C0CB942A40C67E0023EFD7 /* ImagePickerCoordinator.swift in Sources */,
 				BB1578CD28195B7500579E09 /* LoginFactory.swift in Sources */,
 				BBBD5CDB291C214700A63966 /* FileManagerService.swift in Sources */,
 				614E092D2A10F0FD00A923BE /* UIAlertController+Ext.swift in Sources */,
@@ -1489,6 +1502,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		61C0CB952A410F260023EFD7 /* XCRemoteSwiftPackageReference "iOSDropDown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jriosdev/iOSDropDown.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
+			};
+		};
 		61F0628C29589BC500017C0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";

@@ -11,9 +11,9 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
     var finishFlow: ((User?) -> Void)?
     
     private let router: Router
-    private var factory: ProfileControllerFactoryProtocol
+    private var factory: ControllersFactoryProtocol
     
-    init(router: Router ,factory: ProfileControllerFactoryProtocol) {
+    init(router: Router ,factory: ControllersFactoryProtocol ) {
         self.router = router
         self.factory = factory
         print("ProfileCoordinator создан")
@@ -23,8 +23,12 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
         runProfile()
     }
     func showPhotosVC(){
-        let controller = factory.makePhotosController()
-        router.push(controller, hideBottomBar: true, hideBar: false)
+//        let controller = factory.makePhotosController()
+//        router.push(controller, hideBottomBar: true, hideBar: false)
+        
+        let controller = factory.makeUpdateInfoProfile(with: LoginCoordinator(router: router, factory: factory), screenType: .update)
+        router.present(controller)
+
     }
     deinit {
         print("ProfileCoordinator удален")

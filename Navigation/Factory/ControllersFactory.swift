@@ -31,7 +31,11 @@ final class ControllerFactory: ControllersFactoryProtocol {
         viewModel.coordinator = coordinator
         return UpdateInfoProfileController(viewModel: viewModel, screenType: screenType)
     }
-    
+//    func makeImagePicker() -> UIImagePickerController {
+//        let viewModel = UpdateInfoProfileViewModel(userService: userService, firestore: FirestoreManager())
+//        viewModel.coordinator = coordinator
+//        return UIImagePickerController()
+//    }
     func makePostDetailController(post: PostFS) -> PostDetailViewControllerProtocol {
         let viewModel = PostDetailViewModel(userService: userService, firestore: FirestoreManager(), post: post)
         let postDetailController = PostDetailController(viewModel: viewModel)

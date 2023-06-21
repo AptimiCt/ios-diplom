@@ -54,29 +54,37 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     
     func updateName(_ name: String) {
         self.name = name
+        setupView()
     }
     
     func updateSurname(_ surname: String) {
         self.surname = surname
+        setupView()
     }
     
     func updateGender(_ gender: String) {
         self.gender = gender
+        setupView()
     }
     
     func updateDateOfBirth(_ dateOfBirth: Date) {
         self.dateOfBirth = dateOfBirth
+        setupView()
     }
     
     func updateProfilePicture(_ profilePicture: String) {
         self.profilePicture = profilePicture
+        setupView()
     }
     func setupView() {
         stateChanged?(.success(viewData))
     }
     private func configureProperty() {
-        self.name = userService.getUser().name
-        self.surname = userService.getUser().surname
+        let user = userService.getUser()
+        self.name = user.name
+        self.surname = user.surname
+        self.gender = user.gender
+        self.dateOfBirth = user.dateOfBirth
     }
     private func updateUserFromProperty() {
         let user = userService.getUser()
@@ -87,5 +95,8 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         user.dateOfBirth = dateOfBirth
         user.avatar = profilePicture
         userService.set(user: user)
+    }
+    func showImagePicker () {
+        
     }
 }

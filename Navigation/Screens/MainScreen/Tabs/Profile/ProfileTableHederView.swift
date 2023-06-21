@@ -22,7 +22,7 @@ class ProfileHeaderView: UIView {
         return imageView
     }()
     
-    private let setStatusButton: CustomButton = {
+    let setStatusButton: CustomButton = {
         let button = CustomButton(
             title: Constants.showStatus,
             titleColor: .createColor(lightMode: .white,
@@ -125,10 +125,11 @@ class ProfileHeaderView: UIView {
     
     //MARK: - private func
     private func tapSetStatusButton(){
-        setStatusButton.action = { [weak self] in
-            guard let status = self?.statusLabel.text else { return }
-            print("\(status)")
-        }
+//        setStatusButton.action = { [weak self] in
+//            guard let status = self?.statusLabel.text else { return }
+//            print("\(status)")
+//            
+//        }
     }
     @objc func statusTextChanged(_ textField: UITextField) {
         guard let statusText = textField.text else { return }

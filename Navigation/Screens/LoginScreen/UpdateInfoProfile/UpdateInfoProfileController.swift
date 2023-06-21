@@ -74,12 +74,8 @@ extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
         viewModel.updateGender(gender)
     }
     
-    func updateDateOfBirth(dateOfBirth: String) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        let date = dateFormatter.date(from: dateOfBirth)
-        guard let date else { return }
-        viewModel.updateDateOfBirth(date)
+    func updateDateOfBirth(dateOfBirth: Date) {
+        viewModel.updateDateOfBirth(dateOfBirth)
     }
     
     func updateProfilePicture(image: UIImage) {
