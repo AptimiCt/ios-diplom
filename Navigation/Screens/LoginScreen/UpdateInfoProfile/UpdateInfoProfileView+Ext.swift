@@ -59,6 +59,12 @@ extension UpdateInfoProfileView {
     func makeLogoImageView() -> UIImageView {
         let imageView = UIImageView(image: UIImage(named: "logo"))
         imageView.toAutoLayout()
+        imageView.layer.cornerRadius = 50
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .createColor(lightMode: .white,
+                                                 darkMode: .black)
+        imageView.layer.borderColor = UIColor.systemBlue.cgColor
+        imageView.layer.borderWidth = 1
         return imageView
     }
     func makeNameLabel() -> CustomLabel {

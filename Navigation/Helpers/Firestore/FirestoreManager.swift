@@ -8,10 +8,14 @@
 
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseStorage
 
 final class FirestoreManager {
     
     private let firestoreDB = Firestore.firestore()
+    private let firebaseStorage = FirebaseStorage.Storage.storage().reference()
+    private let profilePictureURL: String = FirestoreCollection.profilePictureURL
+    private let postPictureURL: String = FirestoreCollection.postPictureURL
     private let usersCollection: String = FirestoreCollection.usersCollection
     private let usersPosts: String = FirestoreCollection.usersPosts
     private var users: [User] = []
@@ -187,6 +191,55 @@ extension FirestoreManager: DatabeseManagerProtocol {
             completion(error)
         }
     }
+    func uploadProfilePicture(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion) {
+        
+        let profilePictureRef = firebaseStorage.child(profilePictureURL).child(fileName)
+        let uploadMetadata = StorageMetadata()
+        uploadMetadata.contentType = "image/jpeg"
+        
+        profilePictureRef.putData(data, metadata: uploadMetadata) { downloadMetadata, error in
+            if let error {
+                print("failed to upload data to firebase for profile picture")
+                print("error:\(error)")
+                completion(.failure(FirestoreDatabaseError.failedToUpload))
+                return
+            }
+            profilePictureRef.downloadURL(completion: { url, error in
+                guard let url = url else {
+                    print("Failed to get download url")
+                    completion(.failure(FirestoreDatabaseError.failedToGetDownloadUrl))
+                    return
+                }
+                let urlString = url.absoluteString
+                print("download url returned: \(urlString)")
+                completion(.success(urlString))
+            })
+        }
+    }
+    func uploadPostPicture(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion) {
+        let postPictureRef = firebaseStorage.child(postPictureURL).child(fileName)
+        let uploadMetadata = StorageMetadata()
+        uploadMetadata.contentType = "image/jpeg"
+        
+        postPictureRef.putData(data, metadata: uploadMetadata) { downloadMetadata, error in
+            if let error {
+                print("failed to upload data to firebase for post picture")
+                print("error:\(error)")
+                completion(.failure(FirestoreDatabaseError.failedToUpload))
+                return
+            }
+            postPictureRef.downloadURL(completion: { url, error in
+                guard let url = url else {
+                    print("Failed to get download url")
+                    completion(.failure(FirestoreDatabaseError.failedToGetDownloadUrl))
+                    return
+                }
+                let urlString = url.absoluteString
+                print("download url returned: \(urlString)")
+                completion(.success(urlString))
+            })
+        }
+    }
 }
 
 struct PostFS: Codable {
@@ -194,7 +247,10 @@ struct PostFS: Codable {
     var postUid: String
     let title: String?
     let body: String
-    let imageUrl: String?
+    var imageUrl: String?
+    var postImageFilename: String {
+        return postUid + "_post"
+    }
     let likes: [String]
     let views: Int
     let createdDate: Date
@@ -225,6 +281,8 @@ struct PostFS: Codable {
 
 enum FirestoreDatabaseError: Error {
     case failureGetPost
+    case failedToUpload
+    case failedToGetDownloadUrl
     case error(desription: String)
 }
 

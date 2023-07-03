@@ -26,7 +26,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
         }
         let createdDate = DateFormatter().string(from: post.createdDate)
         return StateModelPost.PostData(uidUser: post.userUid,
-                                       profilePicture: user.avatar ?? Constants.defaultProfilePicture,
+                                       profilePicture: user.profilePictureUrl ?? Constants.defaultProfilePicture,
                                        fullName: user.getFullName(),
                                        createdDate: createdDate,
                                        uidPost: post.postUid,

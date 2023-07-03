@@ -7,7 +7,7 @@
 //
     
 
-import Foundation
+import UIKit
 
 enum ButtonsTapped {
     case login
@@ -43,7 +43,7 @@ enum StateModelProfile {
         var surname: String
         var gender: String
         var dateOfBirth: Date
-        var profilePicture: String
+        var profilePicture: UIImage?
     }
 }
 

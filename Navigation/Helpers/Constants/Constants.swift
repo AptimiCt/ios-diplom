@@ -116,7 +116,6 @@ struct Constants {
     //MARK: - Constant string
     //MARK: - CurrentUserService
     static let currentUserServiceFullName = ~K.CurrentUserService.Keys.currentUserServiceFullName.rawValue
-    static let currentUserServiceAvatar = "avatar"
     
     //MARK: - TestUserService
     static let testUserServiceFullName = ~K.TestUserService.Keys.testUserServiceFullName.rawValue

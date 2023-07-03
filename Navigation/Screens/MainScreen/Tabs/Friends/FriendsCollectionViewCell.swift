@@ -39,8 +39,9 @@ class FriendsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     func configure(user: User) {
-        if let photo = user.avatar, !photo.isEmpty {
-            photoImageView.image = UIImage(named: photo)
+        if let photo = user.profilePictureUrl, !photo.isEmpty {
+            guard let url = URL(string: photo) else { return }
+            photoImageView.sd_setImage(with: url)
         } else {
             photoImageView.image = UIImage(systemName: "person.crop.square.fill")
         }

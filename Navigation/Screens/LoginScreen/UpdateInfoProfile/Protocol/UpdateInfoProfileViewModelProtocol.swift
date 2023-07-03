@@ -19,7 +19,7 @@ protocol UpdateInfoProfileVidewModelProtocol {
     
     func updateDateOfBirth(_ dateOfBirth: Date)
     
-    func updateProfilePicture(_ profilePicture: String)
+    func updateProfilePicture(_ profilePicture: UIImage)
     
     func showImagePicker()
     

@@ -79,7 +79,7 @@ extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
     }
     
     func updateProfilePicture(image: UIImage) {
-        viewModel.updateProfilePicture("avatar")
+        viewModel.updateProfilePicture(image)
     }
     func addUser() {
         viewModel.addUser()
@@ -88,6 +88,9 @@ extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
     func updateUser() {
         viewModel.updateUser()
         dismiss(animated: true)
+    }
+    func choicePhoto() {
+        presentPhotoActionSheet()
     }
 }
 //MARK: - @objc private funcs in extension
@@ -99,6 +102,46 @@ extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
     //Метод выполняются когда скрывается клавиатура
     func keyboardWillHide(notification: NSNotification){
         self.updateInfoProfileView.stateView = .keyboardWillHide(notification)
+    }
+}
+extension UpdateInfoProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func presentPhotoActionSheet() {
+        let actionSheet = UIAlertController(title: "Profile photo",
+                                            message: "Как вы хотите выбрать фото?",
+                                            preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil) 
+        let camera = UIAlertAction(title: "camera", style: .default) { [weak self] _ in
+            self?.presentCamera()
+        }
+        let photoLibrary = UIAlertAction(title: "photoLibrary", style: .default) { [weak self] _ in
+            self?.presentPhotoPicker()
+        }
+        actionSheet.addAction(cancel)
+        actionSheet.addAction(camera)
+        actionSheet.addAction(photoLibrary)
+        present(actionSheet, animated: true)
+    }
+    
+    func presentCamera() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
+    func presentPhotoPicker() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        guard let image = info[.editedImage] as? UIImage else { return }
+        viewModel.updateProfilePicture(image)
     }
 }
 

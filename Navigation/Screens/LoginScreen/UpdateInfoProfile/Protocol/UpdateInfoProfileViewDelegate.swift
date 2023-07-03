@@ -15,6 +15,7 @@ protocol UpdateInfoProfileViewDelegate: AnyObject {
     func updateGender(gender: String)
     func updateDateOfBirth(dateOfBirth: Date)
     func updateProfilePicture(image: UIImage)
+    func choicePhoto()
     func updateUser()
     func addUser()
 }

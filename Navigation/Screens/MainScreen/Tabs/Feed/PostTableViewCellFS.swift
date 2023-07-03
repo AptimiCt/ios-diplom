@@ -113,12 +113,16 @@ class PostTableViewCellFS: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        heightAnchorPostImageView = postImageView.heightAnchor.constraint(equalToConstant: constantHeightPostImageView)
+        readMore.isHidden = false
+        heightAnchorReadMoreButton.isActive = false
+        bodyLabel.numberOfLines = 4
+    }
     func configure(post: PostFS, with user: User) {
         authorLabel.text = user.getFullName()
         viewsImageView.image = UIImage(systemName: "message")
-        if let imageUrl = user.avatar {
-            fotoImageView.image = UIImage(named: imageUrl)
-        }
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .current
         dateFormatter.dateFormat = "d MMM yyyy hh:mm"
@@ -127,12 +131,20 @@ class PostTableViewCellFS: UITableViewCell {
         bodyLabel.text = post.body
         likesLabel.text = "\(post.likes.count)"
         viewsLabel.text = "\(post.views)"
-        guard let image = post.imageUrl else { return }
-        guard let sourceImage = UIImage(named: image) else {
-            heightAnchorPostImageView.constant = 0
-            return
+        if let profilePictureUrl = user.profilePictureUrl {
+            guard let imageUrl = URL(string: profilePictureUrl) else { return }
+            fotoImageView.sd_setImage(with: imageUrl)
         }
-        postImageView.image = sourceImage
+        if let postImageUrl = post.imageUrl {
+            guard let imageUrl = URL(string: postImageUrl) else {
+                heightAnchorPostImageView.constant = 0
+                return
+            }
+            postImageView.sd_setImage(with: imageUrl)
+        }
+        else {
+            heightAnchorPostImageView.constant = 0
+        }
     }
 }
 private extension PostTableViewCellFS {
@@ -154,7 +166,8 @@ private extension PostTableViewCellFS {
         let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, frends: [], createdDate: Date(), updateDate: Date())
         print("error:")
         FirestoreManager().addNewPost(post: post) { error in
-            print("error:\(error)")
+            guard let error else { return }
+            print("error:\(error.localizedDescription)")
         }
 //        guard let post else { return }
 //        CoreDataManager.dataManager.create(post: post) { [weak self] result in
@@ -168,14 +181,14 @@ private extension PostTableViewCellFS {
 //        }
     }
 }
-extension PostTableViewCellFS {
-    private func setupViews(){
+private extension PostTableViewCellFS {
+    func setupViews(){
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         contentView.addSubviews(fotoImageView,authorLabel, dateLabel, postImageView,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
         self.layer.cornerRadius = 20
         self.clipsToBounds = true
     }
-    private func configureConstraints(){
+    func configureConstraints(){
         let constraints: [NSLayoutConstraint] = [
             fotoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             fotoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -202,7 +215,6 @@ extension PostTableViewCellFS {
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             postImageView.widthAnchor.constraint(equalToConstant: Constants.screenWeight - 32),
-//            postImageView.heightAnchor.constraint(equalToConstant: (Constants.screenWeight) / 3),
             postImageView.bottomAnchor.constraint(equalTo: likesButton.topAnchor, constant: -20),
             postImageView.bottomAnchor.constraint(equalTo: viewsImageView.topAnchor, constant: -20),
             

@@ -74,9 +74,13 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        profileTableHeaderView.fullNameLabel.text = userService.getUser().name
-        profileTableHeaderView.avatarImageView.image = UIImage(named: userService.getUser().avatar ?? "")
+        if let urlString = userService.getUser().profilePictureUrl, let url = URL(string: urlString) {
+            profileTableHeaderView.avatarImageView.sd_setImage(with: url)
+        } else {
+            profileTableHeaderView.avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
+        }
         profileTableHeaderView.statusLabel.text = userService.getUser().status
+        profileTableHeaderView.fullNameLabel.text = userService.getUser().getFullName()
         viewModel.changeState { [weak self] in
             self?.tableView.reloadData()
         }

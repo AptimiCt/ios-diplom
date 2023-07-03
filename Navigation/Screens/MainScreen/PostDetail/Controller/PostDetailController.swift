@@ -164,7 +164,9 @@ private extension PostDetailController {
     func configure(post: StateModelPost.PostData) {
         authorLabel.text = post.fullName
         viewsImageView.image = UIImage(systemName: "message")
-        fotoImageView.image = UIImage(named: post.profilePicture)
+        if let postPictireUrl = URL(string: post.profilePicture) {
+            fotoImageView.sd_setImage(with: postPictireUrl)
+        }
         dateLabel.text = post.createdDate
         bodyLabel.text = post.body
         if post.isLiked {
@@ -176,9 +178,11 @@ private extension PostDetailController {
         }
         likesLabel.text = "\(post.likes)"
         viewsLabel.text = "\(post.views)"
-        if let postImage = post.postImage, let image = UIImage(named: postImage) {
-            postImageView.isHidden = false
-            postImageView.image = image
+        if let postImage = post.postImage {
+            if let postImageUrl = URL(string: postImage) {
+                postImageView.isHidden = false
+                postImageView.sd_setImage(with: postImageUrl)
+            }
         } else {
             postImageView.isHidden = true
             heightAnchorPostImageView.constant = 0

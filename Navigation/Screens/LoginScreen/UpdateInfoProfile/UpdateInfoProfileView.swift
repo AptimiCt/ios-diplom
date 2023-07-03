@@ -119,7 +119,7 @@ private extension UpdateInfoProfileView {
         surnameTextField.text = userData.surname
         genderButton.setTitle(userData.gender, for: .normal)
         datePickerView.setDate(userData.dateOfBirth, animated: true)
-        profilePictureImageView.image = UIImage(named: userData.profilePicture)
+        profilePictureImageView.image = userData.profilePicture
     }
     
     //Добавление и настройка view
@@ -130,7 +130,11 @@ private extension UpdateInfoProfileView {
         
         genderButton.menu = makeMenu()
         datePickerView.addTarget (self, action: #selector (dateChanged), for: .valueChanged)
-
+        
+        let choicePhoto = UITapGestureRecognizer(target: self, action: #selector(choicePhoto))
+        choicePhoto.numberOfTapsRequired = 1
+        self.addGestureRecognizer(choicePhoto)
+        
         scrollView.toAutoLayout()
         contentView.toAutoLayout()
         self.addSubviews(scrollView, activityIndicator)
@@ -217,6 +221,9 @@ private extension UpdateInfoProfileView {
 @objc private extension UpdateInfoProfileView {
     func dateChanged() {
         delegate?.updateDateOfBirth(dateOfBirth: datePickerView.date)
+    }
+    func  choicePhoto() {
+        delegate?.choicePhoto()
     }
 }
 //MARK: - extension UpdateInfoProfileView: UITextFieldDelegate
