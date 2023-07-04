@@ -41,7 +41,7 @@ final class User: Codable {
          surname: String = "",
          profilePicture: String = Constants.defaultProfilePicture,
          status: String = "",
-         gender: String = "undefined",
+         gender: String = "Не установлен",
          dateOfBirth: Date = Date(),
          posts: [String] = [],
          friends: [String] = [],

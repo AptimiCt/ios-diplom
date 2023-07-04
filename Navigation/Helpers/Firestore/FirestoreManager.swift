@@ -211,7 +211,6 @@ extension FirestoreManager: DatabeseManagerProtocol {
                     return
                 }
                 let urlString = url.absoluteString
-                print("download url returned: \(urlString)")
                 completion(.success(urlString))
             })
         }
@@ -235,7 +234,6 @@ extension FirestoreManager: DatabeseManagerProtocol {
                     return
                 }
                 let urlString = url.absoluteString
-                print("download url returned: \(urlString)")
                 completion(.success(urlString))
             })
         }

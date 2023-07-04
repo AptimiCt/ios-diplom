@@ -26,6 +26,8 @@ extension UpdateInfoProfileView {
     func makeGenderButton() -> UIButton {
         let genderButton = UIButton(type: .system)
         genderButton.toAutoLayout()
+        genderButton.layer.cornerRadius = 10
+        genderButton.layer.masksToBounds = true
         genderButton.tintColor = .systemBlue
         genderButton.showsMenuAsPrimaryAction = true
         genderButton.backgroundColor = .lightGray
@@ -76,7 +78,7 @@ extension UpdateInfoProfileView {
         return label
     }
     func makeGenderLabel() -> CustomLabel {
-        let label = CustomLabel(title: "Пол")
+        let label = CustomLabel(title: "Пол:")
         return label
     }
     func makeDateOfBirthLabel() -> CustomLabel {

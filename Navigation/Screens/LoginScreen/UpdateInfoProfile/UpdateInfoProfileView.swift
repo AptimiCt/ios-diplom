@@ -133,7 +133,8 @@ private extension UpdateInfoProfileView {
         
         let choicePhoto = UITapGestureRecognizer(target: self, action: #selector(choicePhoto))
         choicePhoto.numberOfTapsRequired = 1
-        self.addGestureRecognizer(choicePhoto)
+        profilePictureImageView.addGestureRecognizer(choicePhoto)
+        profilePictureImageView.isUserInteractionEnabled = true
         
         scrollView.toAutoLayout()
         contentView.toAutoLayout()
