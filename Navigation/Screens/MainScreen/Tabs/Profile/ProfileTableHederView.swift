@@ -124,13 +124,12 @@ class ProfileHeaderView: UIView {
     }
     
     //MARK: - private func
-    #warning("Расскоментировать")
     private func tapSetStatusButton(){
-//        setStatusButton.action = { [weak self] in
-//            guard let status = self?.statusLabel.text else { return }
-//            print("\(status)")
-//            
-//        }
+        setStatusButton.action = { [weak self] in
+            guard let status = self?.statusLabel.text else { return }
+            print("\(status)")
+            
+        }
     }
     @objc func statusTextChanged(_ textField: UITextField) {
         guard let statusText = textField.text else { return }

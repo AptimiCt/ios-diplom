@@ -23,12 +23,8 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
         runProfile()
     }
     func showPhotosVC(){
-//        let controller = factory.makePhotosController()
-//        router.push(controller, hideBottomBar: true, hideBar: false)
-        
-        let controller = factory.makeUpdateInfoProfile(with: LoginCoordinator(router: router, factory: factory), screenType: .update)
-        router.present(controller)
-
+        let controller = factory.makePhotosController()
+        router.push(controller, hideBottomBar: true, hideBar: false)
     }
     deinit {
         print("ProfileCoordinator удален")

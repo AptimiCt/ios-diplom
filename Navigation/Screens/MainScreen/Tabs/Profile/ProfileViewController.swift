@@ -51,11 +51,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         self.coordinator = coordinator
         print("ProfileViewController создан")
         super.init(nibName: nil, bundle: nil)
-        #if DEBUG
         view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        #else
-        view.backgroundColor = .systemRed
-        #endif
         self.tabBarItem = tabBarItemProfileView
     }
     
@@ -209,9 +205,6 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     func finishFlow() {
         profileTableHeaderView.closeButton.action = { [weak self] in
             self?.coordinator.finishFlow?(nil)
-        }
-        profileTableHeaderView.setStatusButton.action = { [weak self] in
-            self?.coordinator.showPhotosVC()
         }
     }
     deinit {

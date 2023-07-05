@@ -64,7 +64,6 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     //MARK: - funcs
     private func setupView() {
         title = Constants.navigationItemFeedTitle
-//        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
