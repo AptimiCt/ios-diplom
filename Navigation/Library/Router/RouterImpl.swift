@@ -30,6 +30,15 @@ final class RouterImpl: Router {
         guard let controller = module?.toPresent() else { return }
         rootController?.present(controller, animated: animated, completion: nil)
     }
+    func present(_ module: Presentable?, hideBar: Bool) {
+        guard let controller = module?.toPresent() else { return }
+        if !hideBar {
+            let navController = UINavigationController(rootViewController: controller)
+            present(navController)
+            return
+        }
+        present(controller)
+    }
     
     func dismissModule() {
         dismissModule(animated: true, completion: nil)

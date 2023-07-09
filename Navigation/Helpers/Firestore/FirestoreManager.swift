@@ -73,6 +73,13 @@ extension FirestoreManager: DatabeseManagerProtocol {
             completion(error)
         }
     }
+    func removeFromFriend(userId: String, friendId: String, completion: @escaping OptionalErrorClosure) {
+        let usersCollectionDocumentRef = firestoreDB.collection(usersCollection).document(userId)
+        let friends = [UserProperties.friends: FieldValue.arrayRemove([friendId])]
+        usersCollectionDocumentRef.updateData(friends) { error in
+            completion(error)
+        }
+    }
     func fetchFriends(friendsIds: [String], completion: @escaping (Result<[User], Error>) -> Void) {
         self.users = []
         let usersCollectionRef = firestoreDB.collection(usersCollection)

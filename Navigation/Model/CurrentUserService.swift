@@ -8,7 +8,7 @@
 import Foundation
 
 final class CurrentUserService: UserService {
-    func fetchFiends(completion: @escaping () -> Void) {
+    func fetchFriends(completion: @escaping () -> Void) {
         
     }
     

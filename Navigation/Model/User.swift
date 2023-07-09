@@ -14,10 +14,10 @@ protocol UserService {
     func getUser() -> User
     func set(user: User?)
     func fetchUser(uid: String, completion: @escaping (Result<User, Error>) -> Void)
-    func fetchFiends(completion: @escaping () -> Void)
+    func fetchFriends(completion: @escaping () -> Void)
 }
 
-final class User: Codable {
+final class User: Codable, Equatable {
     
     let uid: String
     var name: String
@@ -64,5 +64,8 @@ final class User: Codable {
 
     func getFullName() -> String {
         return "\(String(describing: surname)) \(String(describing: name))"
+    }
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.uid == rhs.uid
     }
 }

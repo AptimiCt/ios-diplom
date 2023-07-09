@@ -17,6 +17,7 @@ protocol AuthControllerFactoryProtocol {
 protocol ProfileControllerFactoryProtocol {
     func makeProfileController(with coordinator: ProfileCoordinator) -> ProfileViewControllerProtocol
     func makePhotosController() -> PhotosViewControllerProtocol
+    func makeFindFriendController(with coordinator: ProfileCoordinator) -> FindFriendViewControllerProtocol
 }
 
 protocol FavoriteControllerFactoryProtocol {

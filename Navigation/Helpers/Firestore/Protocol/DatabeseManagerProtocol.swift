@@ -14,6 +14,7 @@ protocol DatabeseManagerProtocol {
     func fetchUser(uid: String, completion: @escaping (Result<User, Error>) -> Void)
     func updateUser(user: User, completion:  @escaping OptionalErrorClosure)
     func addFriend(userId: String, friendId: String, completion: @escaping OptionalErrorClosure)
+    func removeFromFriend(userId: String, friendId: String, completion: @escaping OptionalErrorClosure)
     func fetchFriends(friendsIds: [String], completion: @escaping (Result<[User], Error>) -> Void)
     func addNewPost(post: PostFS, completion: @escaping OptionalErrorClosure)
     func fetchPost(postId: String, completion: @escaping (Result<PostFS, Error>) -> Void)

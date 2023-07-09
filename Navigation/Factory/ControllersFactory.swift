@@ -66,6 +66,12 @@ final class ControllerFactory: ControllersFactoryProtocol {
         let favoritesNavigationController = FavoritesViewController()
         return favoritesNavigationController
     }
+    func makeFindFriendController(with coordinator: ProfileCoordinator) -> FindFriendViewControllerProtocol {
+        let findFriendViewController = FindFriendViewController()
+        let viewModel = FindFriendViewModel(firestore: FirestoreManager(), coordinator: coordinator, userService: userService)
+        findFriendViewController.viewModel = viewModel
+        return findFriendViewController
+    }
     deinit {
         print("ControllerFactory удален")
     }

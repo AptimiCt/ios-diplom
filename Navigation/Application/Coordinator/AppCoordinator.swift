@@ -40,7 +40,7 @@ final class AppCoordinator: BaseCoordinator {
                 self.userService.fetchUser(uid: user.uid) { result in
                     switch result {
                         case .success:
-                            self.userService.fetchFiends {
+                            self.userService.fetchFriends {
                                 self.runMainFlow()
                             }
                         case .failure(let failure):

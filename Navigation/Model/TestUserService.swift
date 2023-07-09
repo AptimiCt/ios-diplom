@@ -41,7 +41,7 @@ final class TestUserService: UserService {
             }
         }
     }
-    func fetchFiends(completion: @escaping () -> Void) {
+    func fetchFriends(completion: @escaping () -> Void) {
         firestore.fetchFriends(friendsIds: friendsId) { [weak self] result in
             switch result {
                 case .success(let friends):
