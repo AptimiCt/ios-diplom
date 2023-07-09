@@ -31,7 +31,7 @@ final class User: Codable, Equatable {
         return uid + "_profilePicture.jpg"
     }
     let posts: [String]
-    let friends: [String]
+    var friends: [String]
     var updateDate: Date
     let createdDate: Date
     

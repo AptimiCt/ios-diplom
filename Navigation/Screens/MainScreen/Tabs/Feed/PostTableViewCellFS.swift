@@ -36,7 +36,7 @@ class PostTableViewCellFS: UITableViewCell {
     private let fotoImageView: UIImageView = {
         let image = UIImageView()
         image.toAutoLayout()
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         image.backgroundColor = .black
         image.layer.cornerRadius = 30
         image.clipsToBounds = true

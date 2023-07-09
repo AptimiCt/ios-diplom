@@ -65,8 +65,9 @@ final class FeedViewModel: FeedViewModelProtocol {
     func getUser(for userUID: String) -> User {
         let friends = userService.friends
         var user = userService.getUser()
-        if user.uid != userUID {
-            user = friends.first { $0.uid == userUID }!
+        if user.uid != userUID, !friends.isEmpty {
+            guard let friend = friends.first(where: { $0.uid == userUID }) else { return user }
+            user = friend
         }
         return user
     }

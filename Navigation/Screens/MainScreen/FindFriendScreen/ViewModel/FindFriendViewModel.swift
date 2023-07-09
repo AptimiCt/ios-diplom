@@ -5,7 +5,6 @@
 //
 // Created by Александр Востриков
 //
-    
 
 import UIKit
 
@@ -15,10 +14,10 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
     private let coordinator: ProfileCoordinator
     private let userService: UserService
     
-    private var users = [SearchResult]()
+    private var users = [User]()
     private var filtredUsers = [SearchResult]()
     private var hasFetched = false
-
+    
     init(firestore: DatabeseManagerProtocol, coordinator: ProfileCoordinator, userService: UserService) {
         self.firestore = firestore
         self.coordinator = coordinator
@@ -61,14 +60,16 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
         firestore.addFriend(userId: userService.getUser().uid, friendId: friend.uid) { [weak self] error in
             guard let self else { return }
             if error == nil {
-                let newFriend = SearchResult(uid: friend.uid, name: friend.name, profileImageUrl: friend.profileImageUrl, isFriend: true)
+                let newFriend = SearchResult(uid: friend.uid,
+                                             name: friend.name,
+                                             profileImageUrl: friend.profileImageUrl,
+                                             isFriend: true)
                 self.filtredUsers[indexPath.row] = newFriend
-                self.users = self.users.map { user in
-                    if user == newFriend {
-                        return newFriend
-                    }
-                    return user
-                }
+                let user = userService.getUser()
+                var friends = user.friends
+                friends.append(friend.uid)
+                user.friends = friends
+                userService.set(user: user)
                 userService.fetchFriends {
                     completion()
                 }
@@ -85,14 +86,16 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
         firestore.removeFromFriend(userId: userService.getUser().uid, friendId: friend.uid) { [weak self] error in
             guard let self else { return }
             if error == nil {
-                let newFriend = SearchResult(uid: friend.uid, name: friend.name, profileImageUrl: friend.profileImageUrl, isFriend: false)
+                let newFriend = SearchResult(uid: friend.uid,
+                                             name: friend.name,
+                                             profileImageUrl: friend.profileImageUrl,
+                                             isFriend: false)
                 self.filtredUsers[indexPath.row] = newFriend
-                self.users = self.users.map { user in
-                    if user == newFriend {
-                        return newFriend
-                    }
-                    return user
-                }
+                let user = userService.getUser()
+                var friends = user.friends
+                friends.removeAll(where: { $0 == friend.uid } )
+                user.friends = friends
+                userService.set(user: user)
                 userService.fetchFriends {
                     completion()
                 }
@@ -105,36 +108,25 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
     }
 }
 private extension FindFriendViewModel {
-    func getAllUsers(completion: @escaping (Result<[SearchResult], Error>) -> Void) {
-        firestore.fetchAllUsers(without: userService.getUser().uid) { [weak self] result in
-            switch result {
-                case .success(let success):
-                    guard let self else { return }
-                    let users = success.compactMap { user in
-                        let isFriend = self.getFriens().contains(user)
-                        let searchResult = SearchResult(uid: user.uid, name: user.name, profileImageUrl: user.profilePictureUrl, isFriend: isFriend)
-                        return searchResult
-                    }
-                    completion(.success(users))
-                case .failure(let error):
-                    completion(.failure(error))
-            }
+    func getAllUsers(completion: @escaping (Result<[User], Error>) -> Void) {
+        firestore.fetchAllUsers(without: userService.getUser().uid) { result in
+            completion(result)
         }
     }
-    func filterUsers(with term: String, completion: @escaping () -> Void) {
+    func filterUsers(with searchText: String, completion: @escaping () -> Void) {
         
         let filtredUsers: [SearchResult] = users.filter({
-            if !term.isEmpty {
-                let name = $0.name.lowercased()
-                let lowerTerm = term.lowercased()
-                return name.contains(lowerTerm)
-            } else {
-                return true
-            }
+            let name = $0.getFullName().lowercased()
+            let lowerSearchText = searchText.lowercased()
+            return name.contains(lowerSearchText)
         }).compactMap({
-            SearchResult(uid: $0.uid,  name: $0.name, profileImageUrl: $0.profileImageUrl, isFriend: $0.isFriend)
+            let isFriend = self.getFriens().contains($0)
+            return SearchResult(uid: $0.uid,
+                                name: $0.getFullName(),
+                                profileImageUrl: $0.profilePictureUrl,
+                                isFriend: isFriend)
         })
-
+        
         self.filtredUsers = filtredUsers
         completion()
     }

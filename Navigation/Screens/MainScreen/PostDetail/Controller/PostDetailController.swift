@@ -38,7 +38,7 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
     private let fotoImageView: UIImageView = {
         let image = UIImageView()
         image.toAutoLayout()
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 20
         image.clipsToBounds = true
         return image
