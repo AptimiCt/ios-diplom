@@ -168,8 +168,13 @@ extension FeedViewController: PostTableViewCellFSDelegate {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
+    func addFavorite(index: Int, completion: @escaping BoolClosure) {
+            completion(true)
+            print(#function)
+    }
 }
 
 protocol PostTableViewCellFSDelegate: AnyObject {
     func moreReadButtonTapped(indexPath: IndexPath)
+    func addFavorite(index: Int, completion: @escaping BoolClosure)
 }

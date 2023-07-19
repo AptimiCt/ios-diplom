@@ -5,16 +5,6 @@
 //  Created by Александр Востриков on 06.01.2023.
 //
 
-import Foundation
-import StorageService
-
-protocol ProfileViewModelProtocol: AnyObject {
-
-    var stateChanged: ((ProfileViewModel.State) -> Void)? { get set }
-    func changeState(completion: @escaping ()->())
-    func numberOfRowsInSection() -> Int
-    func getPostFor(_ indexPath: IndexPath) -> Post
-}
 
 final class ProfileViewModel: ProfileViewModelProtocol {
     
@@ -24,28 +14,65 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case error
     }
     
-    var posts: [Post] {
-        didSet{
-            stateChanged?(.loaded(self))
-        }
-    }
+    private let firestore: DatabeseManagerProtocol
+    private let coordinator: ProfileCoordinator
+    private let userService: UserService
+    
+    private var posts: [PostFS] = []
     
     var stateChanged: ((ProfileViewModel.State) -> Void)?
 
-    init(posts: [Post]){
+    init(firestore: DatabeseManagerProtocol, coordinator: ProfileCoordinator, userService: UserService) {
         stateChanged?(.initial)
-        self.posts = posts
+        self.firestore = firestore
+        self.coordinator = coordinator
+        self.userService = userService
     }
     
-    func numberOfRowsInSection() -> Int {
+    func changeState(completion: @escaping VoidClosure) {
+        let userId = getUser().uid
+        firestore.fetchAllPosts(uid: userId) { result in
+            switch result {
+                case .success(let posts):
+                    self.posts = posts.sorted(by: { $0.createdDate > $1.createdDate })
+                    self.stateChanged?(.loaded(self))
+                case .failure(let error):
+                    print("error posts:\(error)")
+            }
+            completion()
+        }
+    }
+    
+    func numberOfRows() -> Int {
         posts.count
     }
-    func getPostFor(_ indexPath: IndexPath) -> Post {
-        posts[indexPath.row]
+    func getPostFor(_ index: Int) -> PostFS {
+        posts[index]
+    }
+    func getUser() -> User {
+        userService.getUser()
+    }
+    func addCoreData(_ index: Int, completion: @escaping BoolClosure) {
+        let post = getPostFor(index)
+        //        CoreDataManager.dataManager.create(post: post) { [weak self] result in
+        //            switch result {
+        //                case .success(_):
+        //                    completion(true)
+        //                case .failure(let error):
+        //                    completion(false)
+        //                    print(error.localizedDescription)
+        //            }
+        //        }
+        completion(true)
+    }
+    func showPhotosVC() {
+        coordinator.showPhotosVC()
+    }
+    func showFindFriendVC() {
+        coordinator.showFindFriendVC()
+    }
+    func finishFlow() {
+        coordinator.finishFlow?(nil)
     }
     
-    func changeState(completion: @escaping ()->()) {
-        self.posts = Storage.posts
-        completion()
-    }
 }

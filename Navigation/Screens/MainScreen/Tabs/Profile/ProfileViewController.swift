@@ -6,11 +6,9 @@
 //
 
 import UIKit
-import StorageService
 
 class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
-    internal weak var coordinator: ProfileCoordinator!
     internal var viewModel: ProfileViewModelProtocol!
     
     //MARK: - vars
@@ -20,7 +18,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     private var avatar: UIImageView?
     private var offsetAvatar: CGFloat = 0
-    private var userService: UserService
+
     private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.toAutoLayout()
@@ -40,18 +38,10 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     //MARK: - init
     
-    init(
-        userService: UserService,
-        coordinator: ProfileCoordinator,
-        viewModel: ProfileViewModel
-        
-    ) {
+    init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
-        self.userService = userService
-        self.coordinator = coordinator
         print("ProfileViewController создан")
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         self.tabBarItem = tabBarItemProfileView
     }
     
@@ -67,19 +57,20 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         closeButtonTaped()
         setupViewModel()
         finishFlow()
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let urlString = userService.getUser().profilePictureUrl, let url = URL(string: urlString) {
+        if let urlString = viewModel.getUser().profilePictureUrl, let url = URL(string: urlString) {
             profileTableHeaderView.avatarImageView.sd_setImage(with: url)
         } else {
             profileTableHeaderView.avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
         }
-        profileTableHeaderView.statusLabel.text = userService.getUser().status
-        profileTableHeaderView.fullNameLabel.text = userService.getUser().getFullName()
-        viewModel.changeState { [weak self] in
-            self?.tableView.reloadData()
-        }
+        profileTableHeaderView.statusLabel.text = viewModel.getUser().status
+                profileTableHeaderView.fullNameLabel.text = viewModel.getUser().getFullName()
+        
 
     }
     //MARK: - funcs
@@ -87,13 +78,14 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         configureConstraints()
     }
     
     private func configureConstraints(){
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPostProfile)
+        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: Cells.cellForProfileTableViewCell)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
         let constraints: [NSLayoutConstraint] = [
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -204,10 +196,10 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     //Переход поток авторизации
     func finishFlow() {
         profileTableHeaderView.closeButton.action = { [weak self] in
-            self?.coordinator.finishFlow?(nil)
+            self?.viewModel.finishFlow()
         }
         profileTableHeaderView.setStatusButton.action = { [weak self] in
-            self?.coordinator.showFindFriendVC()
+            self?.viewModel.showFindFriendVC()
         }
     }
     deinit {
@@ -218,7 +210,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
 //MARK: - extensions
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == 0 ? 1 : viewModel.numberOfRowsInSection()
+        section == 0 ? 1 : viewModel.numberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -229,8 +221,12 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostProfile) as? PostTableViewCell else { return UITableViewCell() }
-            cell.post = viewModel.getPostFor(indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForProfileTableViewCell) as? ProfileTableViewCell else { return UITableViewCell() }
+        let post = viewModel.getPostFor(indexPath.row)
+        let user = viewModel.getUser()
+        cell.configure(post: post, with: user)
+        cell.indexPath = indexPath
+        cell.delegate = self
         return cell
     }
     
@@ -256,7 +252,19 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         if indexPath.section == 0 {
-            coordinator.showPhotosVC()
+            viewModel.showPhotosVC()
         }
+    }
+}
+extension ProfileViewController: PostTableViewCellFSDelegate {
+    func addFavorite(index: Int, completion: @escaping BoolClosure) {
+        viewModel.addCoreData(index) { isFavorite in
+            completion(isFavorite)
+        }
+    }
+    
+    func moreReadButtonTapped(indexPath: IndexPath) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 }

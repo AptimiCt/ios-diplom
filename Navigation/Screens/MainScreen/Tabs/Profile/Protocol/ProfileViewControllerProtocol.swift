@@ -11,5 +11,4 @@ import UIKit
 
 protocol ProfileViewControllerProtocol: Presentable {
     var viewModel: ProfileViewModelProtocol! { get }
-    var coordinator: ProfileCoordinator! { get }
 }

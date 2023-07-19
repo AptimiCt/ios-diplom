@@ -69,6 +69,8 @@
 		61C61223297F3F6E00206131 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 61C61225297F3F6E00206131 /* Localizable.stringsdict */; };
 		61C61228298065C900206131 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C61227298065C900206131 /* UIColor+Ext.swift */; };
 		61CDA6AB2A2A9195003FA31B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CDA6AA2A2A9195003FA31B /* SplashViewController.swift */; };
+		61D204932A6725CA0052E36B /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D204922A6725CA0052E36B /* ProfileTableViewCell.swift */; };
+		61D204952A6759590052E36B /* ProfileViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D204942A6759590052E36B /* ProfileViewModelProtocol.swift */; };
 		61DAFB5F29DE19180026F3F3 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DAFB5E29DE19180026F3F3 /* LoginViewModel.swift */; };
 		61F0628E29589BC500017C0F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 61F0628D29589BC500017C0F /* FirebaseAuth */; };
 		61F062922958A7D800017C0F /* PostDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61F062902958A7D800017C0F /* PostDataModel.xcdatamodeld */; };
@@ -224,6 +226,8 @@
 		61C61227298065C900206131 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		61CDA6AA2A2A9195003FA31B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		61CDA6AD2A2A983A003FA31B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		61D204922A6725CA0052E36B /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		61D204942A6759590052E36B /* ProfileViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelProtocol.swift; sourceTree = "<group>"; };
 		61DAFB5E29DE19180026F3F3 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		61F062912958A7D800017C0F /* PostDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostDataModel.xcdatamodel; sourceTree = "<group>"; };
 		61F062932958A93200017C0F /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -423,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				613FF32E2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift */,
+				61D204942A6759590052E36B /* ProfileViewModelProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -832,6 +837,7 @@
 				6150EECD2968718B0023BA7D /* ViewModel */,
 				BBBBC9162753E9DB003DDF50 /* ProfileViewController.swift */,
 				BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */,
+				61D204922A6725CA0052E36B /* ProfileTableViewCell.swift */,
 				BBD735CB27AEE206002397A0 /* Photos */,
 			);
 			path = Profile;
@@ -1148,6 +1154,7 @@
 				BB06900829584E6D009A2C24 /* FavoritesViewController.swift in Sources */,
 				613FF32F2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift in Sources */,
 				613FF3562A0D58C300D0BB71 /* UIButton+Ext.swift in Sources */,
+				61D204932A6725CA0052E36B /* ProfileTableViewCell.swift in Sources */,
 				614E092F2A10FA2800A923BE /* Types.swift in Sources */,
 				BBD735C827A72CAE002397A0 /* PostTableViewCell.swift in Sources */,
 				61F4F63A2A56285600937A6E /* FindFriendViewModel.swift in Sources */,
@@ -1203,6 +1210,7 @@
 				61CDA6AB2A2A9195003FA31B /* SplashViewController.swift in Sources */,
 				BB152508282FBFCE0045275F /* CurrentUserService.swift in Sources */,
 				613F15482A02B863006FBA8E /* MainCoordinator.swift in Sources */,
+				61D204952A6759590052E36B /* ProfileViewModelProtocol.swift in Sources */,
 				BB0C6A4428FA045500C665D5 /* LoginViewControllerDelegate.swift in Sources */,
 				BB152507282FBFCE0045275F /* User.swift in Sources */,
 				614E092B2A10EF5B00A923BE /* UIAlertControllerInputData.swift in Sources */,
