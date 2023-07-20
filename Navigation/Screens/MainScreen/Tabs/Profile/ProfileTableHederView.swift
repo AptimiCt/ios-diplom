@@ -22,7 +22,7 @@ class ProfileHeaderView: UIView {
         return imageView
     }()
     
-    let setStatusButton: CustomButton = {
+    let editProfileButton: CustomButton = {
         let button = CustomButton(
             title: Constants.showStatus,
             titleColor: .createColor(lightMode: .white,
@@ -37,34 +37,62 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset.height = 4
         return button
     }()
-    
+    let exitButton: CustomButton = {
+        let button = CustomButton(imageSystemName: "rectangle.portrait.and.arrow.right.fill")
+        button.layer.cornerRadius = 10
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowRadius = 4
+        button.layer.shadowOffset.width = 4
+        button.layer.shadowOffset.height = 4
+        return button
+    }()
+    let findFriendsButton: CustomButton = {
+        let button = CustomButton(imageSystemName: "person.fill.badge.plus")
+        button.layer.cornerRadius = 10
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowRadius = 4
+        button.layer.shadowOffset.width = 4
+        button.layer.shadowOffset.height = 4
+        return button
+    }()
+    let addPostButton: CustomButton = {
+        let button = CustomButton(imageSystemName: "square.and.pencil")
+        button.layer.cornerRadius = 10
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowRadius = 4
+        button.layer.shadowOffset.width = 4
+        button.layer.shadowOffset.height = 4
+        return button
+    }()
+    let addPhotoButton: CustomButton = {
+        let button = CustomButton(imageSystemName: "photo.fill")
+        button.layer.cornerRadius = 10
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowRadius = 4
+        button.layer.shadowOffset.width = 4
+        button.layer.shadowOffset.height = 4
+        return button
+    }()
+    let upStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        stackView.alignment = .center
+        return stackView
+    }()
+    let downStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
     let fullNameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
         nameLabel.textColor = .createColor(lightMode: .black, darkMode: .white)
         return nameLabel
-    }()
-    
-    let statusLabel: UILabel = {
-        let statusLabel = UILabel()
-        statusLabel.text = Constants.status
-        statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        statusLabel.textColor = .createColor(lightMode: .gray, darkMode: .white)
-        return statusLabel
-    }()
-    
-    let statusTextField: TextFieldWithPadding = {
-        let statusTextField = TextFieldWithPadding()
-        statusTextField.placeholder = Constants.status
-        statusTextField.font = .systemFont(ofSize: 15, weight: .regular)
-        statusTextField.textColor = .createColor(lightMode: .gray, darkMode: .white)
-        statusTextField.attributedPlaceholder = NSAttributedString(string: Constants.status,
-                                                                    attributes: [NSAttributedString.Key.foregroundColor : UIColor.createColor(lightMode: .placeholderText, darkMode: .white)])
-        statusTextField.layer.cornerRadius = 12
-        statusTextField.layer.borderWidth = 1
-        statusTextField.layer.borderColor = UIColor.black.cgColor
-        statusTextField.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .gray)
-        return statusTextField
     }()
     
     lazy var backgroundView: UIView = {
@@ -87,30 +115,13 @@ class ProfileHeaderView: UIView {
     //MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubviews(
-            fullNameLabel, statusLabel,
-            statusTextField, setStatusButton,
-            backgroundView, closeButton, avatarImageView
-        )
-        statusTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-        self.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        self.setupLayerColorFor(traitCollection.userInterfaceStyle)
+        setupViews()
         snpConstraints()
-        tapSetStatusButton()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private func setupLayerColorFor(_ style: UIUserInterfaceStyle) {
-        if  style == .dark  {
-            setStatusButton.layer.shadowColor = UIColor.white.cgColor
-            avatarImageView.layer.borderColor = UIColor.white.cgColor
-        } else {
-            setStatusButton.layer.shadowColor = UIColor.black.cgColor
-            avatarImageView.layer.borderColor = UIColor.black.cgColor
-        }
-    }
+    //MARK: - override func
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         guard let previousTraitCollection else { return }
@@ -122,30 +133,26 @@ class ProfileHeaderView: UIView {
             }
         }
     }
-    
-    //MARK: - private func
-    private func tapSetStatusButton(){
-//        setStatusButton.action = { [weak self] in
-//            guard let status = self?.statusLabel.text else { return }
-//            print("\(status)")
-//
-//        }
-        
-    }
-    @objc func statusTextChanged(_ textField: UITextField) {
-        guard let statusText = textField.text else { return }
-        if statusText != "" {
-            self.statusLabel.text = statusText
-        } else {
-            self.statusLabel.text = statusTextField.placeholder
-        }
-    }
 }
 
-//MARK: - extension
-extension ProfileHeaderView{
-    
-    fileprivate func snpConstraints() {
+//MARK: - private extension
+private extension ProfileHeaderView {
+
+    func setupViews() {
+        addSubviews(
+            fullNameLabel,upStackView, downStackView,
+            backgroundView, closeButton, avatarImageView
+        )
+        upStackView.addArrangedSubview(editProfileButton)
+        upStackView.addArrangedSubview(exitButton)
+        downStackView.addArrangedSubview(addPostButton)
+        downStackView.addArrangedSubview(addPhotoButton)
+        downStackView.addArrangedSubview(findFriendsButton)
+        
+        backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
+        setupLayerColorFor(traitCollection.userInterfaceStyle)
+    }
+    func snpConstraints() {
         backgroundView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(UIScreen.main.bounds.height)
@@ -163,25 +170,31 @@ extension ProfileHeaderView{
         }
         fullNameLabel.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(Constants.topMarginForFullNameLabel)
-            make.trailing.lessThanOrEqualTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForFullNameLabel)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForFullNameLabel)
+            make.bottom.lessThanOrEqualTo(upStackView.snp.top)
         }
-        statusLabel.snp.makeConstraints { make in
-            make.leading.equalTo(fullNameLabel.snp.leading)
-            make.trailing.equalTo(fullNameLabel.snp.trailing)
-            make.bottom.equalTo(statusTextField.snp.top).offset(-10)
-            make.bottom.equalTo(avatarImageView.snp.bottom).offset(-18)
-        }
-        statusTextField.snp.makeConstraints { make in
-            make.leading.equalTo(statusLabel.snp.leading)
-            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForSetStatusButton)
-            make.height.equalTo(40)
-            make.bottom.equalTo(setStatusButton.snp.top).offset(-10)
-        }
-        setStatusButton.snp.makeConstraints { make in
+        upStackView.snp.makeConstraints { make in
             make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(Constants.leadingMarginForSetStatusButton)
-            make.top.greaterThanOrEqualTo(avatarImageView.snp.bottom).offset(Constants.topMarginForSetStatusButton)
-            make.trailing.greaterThanOrEqualTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForSetStatusButton)
-            make.height.equalTo(Constants.heightForSetStatusButton)
+            make.top.equalTo(avatarImageView.snp.bottom).offset(Constants.topMarginForSetStatusButton)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForSetStatusButton)
+            make.bottom.equalTo(downStackView.snp.top).offset(-16)
+        }
+        downStackView.snp.makeConstraints { make in
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(Constants.leadingMarginForSetStatusButton)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(Constants.trailingMarginForSetStatusButton)
+            make.bottom.greaterThanOrEqualTo(self.safeAreaLayoutGuide.snp.bottom).offset(-16)
+        }
+        editProfileButton.snp.makeConstraints { make in
+            make.height.equalTo(Constants.heightForEditProfileButton)
+        }
+    }
+    func setupLayerColorFor(_ style: UIUserInterfaceStyle) {
+        if  style == .dark  {
+            editProfileButton.layer.shadowColor = UIColor.white.cgColor
+            avatarImageView.layer.borderColor = UIColor.white.cgColor
+        } else {
+            editProfileButton.layer.shadowColor = UIColor.black.cgColor
+            avatarImageView.layer.borderColor = UIColor.black.cgColor
         }
     }
 }

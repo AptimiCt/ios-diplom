@@ -58,11 +58,11 @@ struct Constants {
     static let leadingMarginForSetStatusButton: CGFloat = 16
     static let topMarginForSetStatusButton: CGFloat = 16
     static let trailingMarginForSetStatusButton: CGFloat = -16
-    static let heightForSetStatusButton: CGFloat = 50
+    static let heightForEditProfileButton: CGFloat = 44
     
     //MARK: - Constants for ProfileViewController
     //MARK: - for profileHeaderView
-    static let heightForProfileHeaderView: CGFloat = 220
+    static let heightForProfileHeaderView: CGFloat = 250
     
     
     //MARK: - Constants for LoginViewController
@@ -122,7 +122,7 @@ struct Constants {
     static let testUserServiceAvatar = "master_chif"
     
     //MARK: - ProfileHeaderView
-    static let showStatus = ~K.ProfileHV.Keys.setStatusButtonTitle.rawValue
+    static let showStatus = ~K.ProfileHV.Keys.editProfileButtonTitle.rawValue
     static let status = ~K.ProfileHV.Keys.statusLabelText.rawValue
     
     //MARK: - LoginViewController

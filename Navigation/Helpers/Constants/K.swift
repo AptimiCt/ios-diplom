@@ -81,7 +81,7 @@ struct K {
     //MARK: - ProfileHeaderView
     struct ProfileHV {
         enum Keys: String {
-            case setStatusButtonTitle = "setStatusButton.title"
+            case editProfileButtonTitle = "editProfileButton.title"
             case statusLabelText = "statusLabel.text"
         }
     }

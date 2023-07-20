@@ -17,5 +17,8 @@ protocol ProfileViewModelProtocol: AnyObject {
     func getUser() -> User
     func showPhotosVC()
     func showFindFriendVC()
+    func showEditProfileVC()
+    func showAddPostVC()
+    func showAddPhoto()
     func finishFlow()
 }

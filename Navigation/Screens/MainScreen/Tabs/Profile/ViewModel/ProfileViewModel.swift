@@ -68,11 +68,19 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func showPhotosVC() {
         coordinator.showPhotosVC()
     }
+    func showEditProfileVC() {
+        print(#function)
+    }
     func showFindFriendVC() {
         coordinator.showFindFriendVC()
+    }
+    func showAddPostVC() {
+        print(#function)
+    }
+    func showAddPhoto() {
+        print(#function)
     }
     func finishFlow() {
         coordinator.finishFlow?(nil)
     }
-    
 }

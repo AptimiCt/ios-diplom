@@ -18,6 +18,14 @@ final class CustomButton: UIButton {
         self.toAutoLayout()
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
+    init(imageSystemName: String) {
+        super.init(frame: .zero)
+        let config = UIImage.SymbolConfiguration(scale: .large)
+        let image = UIImage(systemName: imageSystemName, withConfiguration: config)
+        self.setImage(image, for: .normal)
+        self.toAutoLayout()
+        self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

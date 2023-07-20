@@ -110,7 +110,7 @@ extension UpdateInfoProfileController: UIImagePickerControllerDelegate, UINaviga
         let actionSheet = UIAlertController(title: "Profile photo",
                                             message: "Как вы хотите выбрать фото?",
                                             preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil) 
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         let camera = UIAlertAction(title: "camera", style: .default) { [weak self] _ in
             self?.presentCamera()
         }

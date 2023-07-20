@@ -37,14 +37,12 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     var photos: [UIImage] = []
     
     //MARK: - init
-    
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
         print("ProfileViewController создан")
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = tabBarItemProfileView
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -56,6 +54,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         setupView()
         closeButtonTaped()
         setupViewModel()
+        actionsForProfileTableHeaderViewButton()
         finishFlow()
         viewModel.changeState { [weak self] in
             self?.tableView.reloadData()
@@ -68,38 +67,18 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         } else {
             profileTableHeaderView.avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
         }
-        profileTableHeaderView.statusLabel.text = viewModel.getUser().status
-                profileTableHeaderView.fullNameLabel.text = viewModel.getUser().getFullName()
-        
+        profileTableHeaderView.fullNameLabel.text = viewModel.getUser().getFullName()
+    }
+    //MARK: - override funcs
+    deinit {
+        print("ProfileViewController удален")
+    }
+}
 
-    }
-    //MARK: - funcs
-    private func setupView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        configureConstraints()
-    }
-    
-    private func configureConstraints(){
-        view.addSubview(tableView)
-        view.addSubview(activityIndicator)
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: Cells.cellForProfileTableViewCell)
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
-        let constraints: [NSLayoutConstraint] = [
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ]
-        
-        NSLayoutConstraint.activate(constraints)
-    }
-    
-    @objc private func tapOnAvatar(sender: UITapGestureRecognizer){
+//MARK: - extensions
+//MARK: - @objc private extension
+@objc private extension ProfileViewController {
+    func tapOnAvatar(sender: UITapGestureRecognizer){
         
         let duration: TimeInterval = 0.8
         offsetAvatar = tableView.contentOffset.y
@@ -140,8 +119,52 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         }
         
     }
-    
-    private func closeButtonTaped(){
+}
+//MARK: - private extension
+private extension ProfileViewController {
+    func actionsForProfileTableHeaderViewButton() {
+        profileTableHeaderView.editProfileButton.action = { [weak self] in
+            self?.viewModel.showEditProfileVC()
+        }
+        profileTableHeaderView.addPostButton.action = { [weak self] in
+            self?.viewModel.showAddPostVC()
+        }
+        profileTableHeaderView.addPhotoButton.action = { [weak self] in
+            self?.viewModel.showAddPhoto()
+        }
+        profileTableHeaderView.findFriendsButton.action = { [weak self] in
+            self?.viewModel.showFindFriendVC()
+        }
+    }
+    //Переход поток авторизации
+    func finishFlow() {
+        profileTableHeaderView.exitButton.action = { [weak self] in
+            self?.viewModel.finishFlow()
+        }
+    }
+    //MARK: - setupViewModel
+    func setupViewModel(){
+        viewModel.stateChanged = { [weak self] state in
+            guard let self else { return }
+            switch state {
+                case .initial:
+                    self.activityIndicator(animate: true)
+                case .loaded(let viewModel):
+                    self.viewModel = viewModel
+                    self.activityIndicator(animate: false)
+                    self.tableView.reloadData()
+                case .error:
+                    break
+            }
+        }
+    }
+    func activityIndicator(animate: Bool){
+        activityIndicator.isHidden = !animate
+        DispatchQueue.main.async {
+            animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+        }
+    }
+    func closeButtonTaped(){
         profileTableHeaderView.closeButton.action = {
             guard let avatar = self.avatar else { return }
             
@@ -165,49 +188,35 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
             avatar.isUserInteractionEnabled = true
         }
     }
-    
-    private func tableViewInteraction(to toggle: Bool){
+    func tableViewInteraction(to toggle: Bool){
         tableView.allowsSelection = toggle
         tableView.isScrollEnabled = toggle
     }
-    //MARK: - setupViewModel
-    private func setupViewModel(){
-        viewModel.stateChanged = { [weak self] state in
-            guard let self else { return }
-            switch state {
-                case .initial:
-                    self.activityIndicator(animate: true)
-                case .loaded(let viewModel):
-                    self.viewModel = viewModel
-                    self.activityIndicator(animate: false)
-                    self.tableView.reloadData()
-                case .error:
-                    break
-            }
-        }
+    func setupView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
+        configureConstraints()
     }
-    private func activityIndicator(animate: Bool){
-        activityIndicator.isHidden = !animate
-        DispatchQueue.main.async {
-            animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
-        }
-    }
-    
-    //Переход поток авторизации
-    func finishFlow() {
-        profileTableHeaderView.closeButton.action = { [weak self] in
-            self?.viewModel.finishFlow()
-        }
-        profileTableHeaderView.setStatusButton.action = { [weak self] in
-            self?.viewModel.showFindFriendVC()
-        }
-    }
-    deinit {
-        print("ProfileViewController удален")
+    func configureConstraints(){
+        view.addSubview(tableView)
+        view.addSubview(activityIndicator)
+        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: Cells.cellForProfileTableViewCell)
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
+        let constraints: [NSLayoutConstraint] = [
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
     }
 }
-
-//MARK: - extensions
+//MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         section == 0 ? 1 : viewModel.numberOfRows()
@@ -234,7 +243,7 @@ extension ProfileViewController: UITableViewDataSource {
         2
     }
 }
-
+//MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
@@ -256,6 +265,7 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
 }
+//MARK: - PostTableViewCellFSDelegate
 extension ProfileViewController: PostTableViewCellFSDelegate {
     func addFavorite(index: Int, completion: @escaping BoolClosure) {
         viewModel.addCoreData(index) { isFavorite in

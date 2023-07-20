@@ -72,7 +72,10 @@
 "tabBarItemProfileView.title" = "Профиль";
 
 //MARK: - ProfileHeaderView
-"setStatusButton.title" = "Показать статус";
+"editProfileButton.title" = "Редактировать профиль";
+"findFriendsButton.title" = "Поиск друзей";
+"addPost.title" = "Добавить запись";
+"addPhoto.title" = "Добавить фото";
 "statusLabel.text" = "Ожидание чего-то...";
 
 //MARK: - LoginViewController
