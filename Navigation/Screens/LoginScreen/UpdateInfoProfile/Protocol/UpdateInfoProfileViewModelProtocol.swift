@@ -27,5 +27,7 @@ protocol UpdateInfoProfileVidewModelProtocol {
     
     func addUser()
     
+    func exit(with error: Error?)
+    
     func setupView()
 }

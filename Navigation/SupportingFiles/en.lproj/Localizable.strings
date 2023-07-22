@@ -23,6 +23,10 @@
 "tooManyRequests" = "Too many authentication requests have been received from your device. Please try again in 10 minutes.";
 "AuthenticationError.unknown" = "An unknown error has occurred.";
 
+//MARK: - AppError
+"AppError.incorectLogicApp" = "Application logic error.";
+"AppError.unknown" = "An unknown error has occurred.";
+
 //MARK: - LocationService
 //"restricted" = "Access to geolocation is denied through parental controls!";
 //"denied" = "You have denied access to geolocation!";
@@ -54,8 +58,6 @@
 "alertButton.title" = "Alert";
 "alertButton.action.title" = "Notification";
 "alertButton.action.message" = "Button pressed in InfoViewController";
-"alertButton.action.cancel" = "Cancel";
-"alertButton.action.ok" = "Ok";
 "alertButton.action.cancel.pressed" = "\"Cancel\" button is pressed";
 "alertButton.action.ok.pressed" = "The \"OK\" button is pressed";
 
@@ -98,7 +100,6 @@
 "tabBarItemFavoritesView.title" = "Favorites";
 "applyFilter.alertController.title" = "Enter the author";
 "applyFilter.alertController.okAction" = "Apply";
-"applyFilter.alertController.cancelAction" = "Cancel";
 
 //MARK: - MapViewController
 "tabBarItemMap.title" = "Map";
@@ -122,11 +123,23 @@
 
 //MARK: - LocalNotificationsService
 "LocalNotificationsService.actionCheck.title" = "Check";
-"LocalNotificationsService.actionCancel.title" = "Cancel";
 "LocalNotificationsService.content.title" = "Update";
 "LocalNotificationsService.content.body" = "Look for the latest updates";
 "LocalNotificationsService.delegate.didReceive" = "Unknown button pressed";
 
-//MARK: - UIAlertController
+//MARK: - UpdateInfoProfileController
+"UIPC.alertSheetTitle" = "Select the action";
+"UIPC.saveActionTitle.new" = "Add";
+"UIPC.unSaveActionTitle.new" = "Do not add";
+
+"UIPC.saveActionTitle.update" = "Update";
+"UIPC.unSaveActionTitle.update" = "Do not update";
+
+//MARK: - All files
 "UIAC.ok" = "Ok";
 "UIAC.cancel" = "Cancel";
+
+//MARK: - UpdateInfoProfile
+"UIP.actionSheet.title" = "How do you want to choose the photo?";
+"UIP.actionSheetCamera.title" = "Camera";
+"UIP.actionSheetPhotoLibrary.title" = "Photo Library";

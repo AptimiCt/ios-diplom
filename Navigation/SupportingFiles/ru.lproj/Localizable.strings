@@ -23,6 +23,10 @@
 "tooManyRequests" = "С вашего устройства поступило слишком много запросов аутентификации. Пожалуйста, повторите попытку через 10 минут.";
 "AuthenticationError.unknown" = "Произошла неизвестная ошибка.";
 
+//MARK: - AppError
+"AppError.incorectLogicApp" = "Ошибка логики приложения.";
+"AppError.unknown" = "Произошла неизвестная ошибка.";
+
 //MARK: - LocationService
 //"restricted" = "Доступ к геолокации запрещен через родительский контроль!";
 //"denied" = "Вы запретили доступ к геолокации!";
@@ -54,8 +58,6 @@
 "alertButton.title" = "Оповещение";
 "alertButton.action.title" = "Уведомление";
 "alertButton.action.message" = "Нажата кнопка в InfoViewController";
-"alertButton.action.cancel" = "Отмена";
-"alertButton.action.ok" = "Хорошо";
 "alertButton.action.cancel.pressed" = "Нажата кнопка \"Отмена\"";
 "alertButton.action.ok.pressed" = "Нажата кнопка \"Хорошо\"";
 
@@ -98,7 +100,6 @@
 "tabBarItemFavoritesView.title" = "Избранное";
 "applyFilter.alertController.title" = "Введите автора";
 "applyFilter.alertController.okAction" = "Применить";
-"applyFilter.alertController.cancelAction" = "Отменить";
 
 //MARK: - MapViewController
 "tabBarItemMap.title" = "Карта";
@@ -122,11 +123,23 @@
 
 //MARK: - LocalNotificationsService
 "LocalNotificationsService.actionCheck.title" = "Проверить";
-"LocalNotificationsService.actionCancel.title" = "Отменить";
 "LocalNotificationsService.content.title" = "Обновления";
 "LocalNotificationsService.content.body" = "Посмотрите последние обновления";
 "LocalNotificationsService.delegate.didReceive" = "Нажата неизвестная кнопка";
 
-//MARK: - UIAlertController
+//MARK: - UpdateInfoProfileController
+"UIPC.alertSheetTitle" = "Выберите действие";
+"UIPC.saveActionTitle.new" = "Добавить";
+"UIPC.unSaveActionTitle.new" = "Не добавлять";
+
+"UIPC.saveActionTitle.update" = "Обновить";
+"UIPC.unSaveActionTitle.update" = "Не обновлять";
+
+//MARK: - All files
 "UIAC.ok" = "Хорошо";
-"UIAC.cancel" = "Отмена";
+"UIAC.cancel" = "Отменить";
+
+//MARK: - UpdateInfoProfile
+"UIP.actionSheet.title" = "Как вы хотите выбрать фото?";
+"UIP.actionSheetCamera.title" = "Камера";
+"UIP.actionSheetPhotoLibrary.title" = "Библиотека фото";

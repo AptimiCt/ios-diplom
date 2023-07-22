@@ -54,7 +54,7 @@ final class LocalNotificationsService: NSObject {
         )
         let actionCancel = UNNotificationAction(
                 identifier: CategoriesActions.cancel.rawValue,
-                title: NSString.localizedUserNotificationString(forKey: "LocalNotificationsService.actionCancel.title", arguments: .none),
+                title: NSString.localizedUserNotificationString(forKey: "UIAC.cancel", arguments: .none),
                 options: [.destructive]
         )
         let category = UNNotificationCategory(

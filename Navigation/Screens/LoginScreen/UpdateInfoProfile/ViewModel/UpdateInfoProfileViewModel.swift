@@ -12,7 +12,7 @@ import SDWebImage
 
 final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     
-    weak var coordinator: LoginCoordinator?
+    weak var coordinator: UpdateInfoProfileCoordinator?
     private let userService: UserService
     private let firestore: DatabeseManagerProtocol
     private let defaultProfilePicture = UIImage(named: Constants.defaultProfilePicture)
@@ -33,54 +33,54 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         self.userService = userService
         self.firestore = firestore
         self.configureProperty()
+        print("UpdateInfoProfileViewModel создан")
     }
     
     func updateUser() {
         guard let profilePicture else { return }
         let filename = userService.getUser().profilePictureFilename
-        uploadImage(image: profilePicture, fileName: filename) { result in
+        uploadImage(image: profilePicture, fileName: filename) { [weak self] result in
             switch result {
                 case .success(let url):
-                    self.updateUserFromProperty(with: url)
-                    let user = self.userService.getUser()
-                    self.firestore.updateUser(user: user) { [weak self] error in
-                        if let error {
-                            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
-                            self?.coordinator?.finishFlow?(self?.userService.getUser())
-                        }
-                    }
+                    self?.updateUserFromProperty(with: url)
                 case .failure(let error):
+                    self?.updateUserFromProperty(with: nil)
                     print("error uploadImage:\(error)")
             }
+            guard let self else { self?.exit(with: AppError.incorectLogicApp); return }
+            let user = self.userService.getUser()
+            self.firestore.updateUser(user: user) { error in
+                if let error {
+                    self.exit(with: error)
+                }
+            }
+            exit(with: nil)
         }
     }
     func addUser() {
         guard let profilePicture else { return }
         let filename = userService.getUser().profilePictureFilename
-        uploadImage(image: profilePicture, fileName: filename) { result in
+        uploadImage(image: profilePicture, fileName: filename) { [weak self] result in
+            guard let self else { self?.exit(with: AppError.incorectLogicApp); return }
             switch result {
                 case .success(let url):
                     self.updateUserFromProperty(with: url)
                     let user = self.userService.getUser()
-                    self.firestore.addUser(user: user) { [weak self] error in
+                    self.firestore.addUser(user: user) {  error in
                         if let error {
-                            self?.coordinator?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
-                            self?.coordinator?.finishFlow?(self?.userService.getUser())
-                        } else {
-                            self?.coordinator?.finishFlow?(self?.userService.getUser())
+                            self.exit(with: error)
                         }
-                        
+                        self.exit(with: nil)
                     }
                 case .failure(let error):
                     print("error uploadImage:\(error)")
+                    self.exit(with: error)
             }
         }
     }
-    
-    func fullName() -> String {
-        userService.getUser().getFullName()
+    func exit(with error: Error?) {
+        coordinator?.finishFlow?(error)
     }
-    
     func updateName(_ name: String) {
         self.name = name
         setupView()
@@ -120,9 +120,8 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
             guard let profileUrlString = user.profilePictureUrl else { return }
             self.profilePicture = cachedImage(stringUrl: profileUrlString) ?? defaultProfilePicture
         }
-
     }
-    private func updateUserFromProperty(with url: String) {
+    private func updateUserFromProperty(with url: String?) {
         let user = userService.getUser()
         user.name = name
         user.surname = surname
@@ -138,11 +137,12 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
     private func cachedImage(stringUrl: String) -> UIImage? {
         var image: UIImage? = nil
         guard let url = URL(string: stringUrl) else { return nil }
-        SDWebImageManager.shared.loadImage(with: url, progress: nil) { cachedImage, _, _, _, _, _ in
+        SDWebImageManager.shared.loadImage(with: url, progress: nil) { [weak self] cachedImage, _, _, _, _, _ in
             image = cachedImage
             if cachedImage != nil {
-                self.profilePicture = cachedImage
+                self?.profilePicture = cachedImage
             }
+            guard let self else { self?.exit(with: AppError.incorectLogicApp); return }
             self.stateChanged?(.success(self.viewData))
         }
         return image
@@ -152,5 +152,8 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         firestore.uploadProfilePicture(with: imageData, fileName: fileName) { result in
             completion(result)
         }
+    }
+    deinit {
+        print("UpdateInfoProfileViewModel удален")
     }
 }

@@ -26,7 +26,7 @@ final class ControllerFactory: ControllersFactoryProtocol {
         loginViewModel.userService = userService
         return loginViewController
     }
-    func makeUpdateInfoProfile(with coordinator: LoginCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol {
+    func makeUpdateInfoProfile(with coordinator: UpdateInfoProfileCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol {
         let viewModel = UpdateInfoProfileViewModel(userService: userService, firestore: FirestoreManager())
         viewModel.coordinator = coordinator
         return UpdateInfoProfileController(viewModel: viewModel, screenType: screenType)

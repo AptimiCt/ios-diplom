@@ -11,7 +11,10 @@ import UIKit
 
 protocol AuthControllerFactoryProtocol {
     func makeLoginController(with coordinator: LoginCoordinator) -> LoginViewControllerProtocol
-    func makeUpdateInfoProfile(with coordinator: LoginCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol
+}
+
+protocol UpdateInfoProfileControllerFactoryProtocol {
+    func makeUpdateInfoProfile(with coordinator: UpdateInfoProfileCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol
 }
 
 protocol ProfileControllerFactoryProtocol {
@@ -40,5 +43,6 @@ protocol ControllersFactoryProtocol: ProfileControllerFactoryProtocol,
                                      FeedControllerFactoryProtocol,
                                      AuthControllerFactoryProtocol,
                                      SplashControllerFactoryProtocol,
-                                     PostDetailControllerFactoryProtocol {
+                                     PostDetailControllerFactoryProtocol,
+                                     UpdateInfoProfileControllerFactoryProtocol,AnyObject {
 }

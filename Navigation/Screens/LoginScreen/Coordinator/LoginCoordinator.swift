@@ -11,9 +11,9 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     
     var finishFlow: ((User?) -> Void)?
     private let router: Router
-    private let factory: AuthControllerFactoryProtocol
+    private let factory: ControllersFactoryProtocol
     
-    init(router: Router, factory: AuthControllerFactoryProtocol) {
+    init(router: Router, factory: ControllersFactoryProtocol) {
         self.router = router
         self.factory = factory
         print("LoginCoordinator создан")
@@ -24,8 +24,15 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     }
     
     func runInfoProfileController(screenType: ScreenType) {
-        let controller = factory.makeUpdateInfoProfile(with: self, screenType: screenType)
-        router.present(controller)
+        let coordinator = UpdateInfoProfileCoordinator(router: router, factory: factory)
+        coordinator.finishFlow = { [weak self, weak coordinator] error in            self?.router.dismissModule()
+            if let error {
+                self?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
+            }
+            self?.removeCoordinator(coordinator)
+        }
+        addCoordinator(coordinator)
+        coordinator.start()
     }
     func showAlert(inputData: UIAlertControllerInputData) {
         let alert = UIAlertController(inputData: inputData)

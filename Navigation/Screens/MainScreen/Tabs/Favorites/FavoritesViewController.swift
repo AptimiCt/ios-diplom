@@ -113,16 +113,23 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
     }
     
     func applyFilter() {
-        let alertController = UIAlertController(title: "applyFilter.alertController.title".localized, message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: "applyFilter.alertController.title".localized,
+            message: nil,
+            preferredStyle: .alert
+        )
+        
         let okAction = UIAlertAction(title: "applyFilter.alertController.okAction".localized, style: .default, handler: { [weak self] action in
             guard let textFields = alertController.textFields?[0], let text = textFields.text else { return }
             self?.filterFavorites(author: text, isFiltred: true)
             self?.applyFilterButton.tintColor = .systemRed
         })
-        let cancelAction = UIAlertAction(title: "applyFilter.alertController.cancelAction".localized, style: .default)
+        let cancelAction = UIAlertAction(title: "UIAC.cancel".localized, style: .default)
+        
         alertController.addTextField()
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
+        
         self.present(alertController, animated: true)
     }
 }

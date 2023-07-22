@@ -53,7 +53,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         userService.getUser()
     }
     func addCoreData(_ index: Int, completion: @escaping BoolClosure) {
-        let post = getPostFor(index)
+        #warning("Изменить кордату")
+//        let post = getPostFor(index)
         //        CoreDataManager.dataManager.create(post: post) { [weak self] result in
         //            switch result {
         //                case .success(_):
@@ -69,7 +70,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         coordinator.showPhotosVC()
     }
     func showEditProfileVC() {
-        print(#function)
+        coordinator.showEditProfileVC()
     }
     func showFindFriendVC() {
         coordinator.showFindFriendVC()

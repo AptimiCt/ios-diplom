@@ -22,7 +22,6 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         self.updateInfoProfileView = UpdateInfoProfileView(screenType: screenType)
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -32,9 +31,13 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.switchStateViewModel()
+        switchStateViewModel()
         viewModel.setupView()
-        self.updateInfoProfileView.delegate = self
+        setupDelegate()
+        if screenType == .new {
+            isModalInPresentation = true
+        }
+        print("UpdateInfoProfileController создан")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -53,73 +56,38 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
 }
 //MARK: - private funcs in extension
 private extension UpdateInfoProfileController {
+    func setupDelegate() {
+        self.updateInfoProfileView.delegate = self
+        self.presentationController?.delegate = self
+    }
     func switchStateViewModel() {
         viewModel.stateChanged = { [weak self] stateView in
             guard let self else { return }
             self.updateInfoProfileView.stateView = stateView
         }
     }
-}
-extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
-    
-    func updateName(name: String) {
-        viewModel.updateName(name)
+    func saveAndExit() {
+        screenType == .new ? addUser() : updateUser()
     }
-    
-    func updateSurname(surname: String) {
-        viewModel.updateSurname(surname)
-    }
-    
-    func updateGender(gender: String) {
-        viewModel.updateGender(gender)
-    }
-    
-    func updateDateOfBirth(dateOfBirth: Date) {
-        viewModel.updateDateOfBirth(dateOfBirth)
-    }
-    
-    func updateProfilePicture(image: UIImage) {
-        viewModel.updateProfilePicture(image)
-    }
-    func addUser() {
-        viewModel.addUser()
-        dismiss(animated: true)
-    }
-    func updateUser() {
-        viewModel.updateUser()
-        dismiss(animated: true)
-    }
-    func choicePhoto() {
-        presentPhotoActionSheet()
-    }
-}
-//MARK: - @objc private funcs in extension
-@objc private extension UpdateInfoProfileController {
-    //Метод выполняются когда появляется клавиатура
-    func keyboardWillShow(notification: NSNotification){
-        self.updateInfoProfileView.stateView = .keyboardWillShow(notification)
-    }
-    //Метод выполняются когда скрывается клавиатура
-    func keyboardWillHide(notification: NSNotification){
-        self.updateInfoProfileView.stateView = .keyboardWillHide(notification)
-    }
-}
-extension UpdateInfoProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func presentPhotoActionSheet() {
-        let actionSheet = UIAlertController(title: "Profile photo",
-                                            message: "Как вы хотите выбрать фото?",
-                                            preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        let camera = UIAlertAction(title: "camera", style: .default) { [weak self] _ in
+        let actionSheet = UIAlertController(
+            title: "UIP.actionSheet.title".localized,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        let camera = UIAlertAction(title: "UIP.actionSheetCamera.title".localized, style: .default) { [weak self] _ in
             self?.presentCamera()
         }
-        let photoLibrary = UIAlertAction(title: "photoLibrary", style: .default) { [weak self] _ in
+        let photoLibrary = UIAlertAction(title: "UIP.actionSheetPhotoLibrary.title".localized, style: .default) { [weak self] _ in
             self?.presentPhotoPicker()
         }
+        let cancel = UIAlertAction(title: "UIAC.cancel".localized, style: .cancel)
+        
         actionSheet.addAction(cancel)
         actionSheet.addAction(camera)
         actionSheet.addAction(photoLibrary)
+        
         present(actionSheet, animated: true)
     }
     
@@ -137,11 +105,105 @@ extension UpdateInfoProfileController: UIImagePickerControllerDelegate, UINaviga
         imagePickerController.delegate = self
         present(imagePickerController, animated: true)
     }
+
+    func showAlertSheet(with title: AlertSheetForExit) {
+        
+        let alertSheet = UIAlertController(
+            title: title.alertSheetTitle,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        let saveAction = UIAlertAction(title: title.saveActionTitle, style: .default) { [weak self] _ in
+            self?.saveAndExit()
+        }
+        let unSaveAction = UIAlertAction(title: title.unSaveActionTitle, style: .destructive) { [weak self] _ in
+            self?.viewModel.exit(with: nil)
+        }
+        let cancelAction = UIAlertAction(title: title.cancelActionTitle, style: .cancel)
+        
+        alertSheet.addAction(saveAction)
+        alertSheet.addAction(unSaveAction)
+        alertSheet.addAction(cancelAction)
+        
+        present(alertSheet, animated: true)
+    }
+    func titleForActionSheet() -> AlertSheetForExit {
+        let alertSheetTitle = "UIPC.alertSheetTitle".localized
+        let saveActionTitle = "UIPC.saveActionTitle.\(screenType)".localized
+        let unSaveActionTitle = "UIPC.unSaveActionTitle.\(screenType)".localized
+        let cancelActionTitle = "UIAC.cancel".localized
+        
+        return AlertSheetForExit(alertSheetTitle: alertSheetTitle, saveActionTitle: saveActionTitle, unSaveActionTitle: unSaveActionTitle, cancelActionTitle: cancelActionTitle)
+    }
+    struct AlertSheetForExit {
+        let alertSheetTitle: String
+        let saveActionTitle: String
+        let unSaveActionTitle: String
+        let cancelActionTitle: String
+    }
+}
+extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
     
+    func updateName(name: String) {
+        isModalInPresentation = true
+        viewModel.updateName(name)
+    }
+    
+    func updateSurname(surname: String) {
+        isModalInPresentation = true
+        viewModel.updateSurname(surname)
+    }
+    
+    func updateGender(gender: String) {
+        isModalInPresentation = true
+        viewModel.updateGender(gender)
+    }
+    
+    func updateDateOfBirth(dateOfBirth: Date) {
+        isModalInPresentation = true
+        viewModel.updateDateOfBirth(dateOfBirth)
+    }
+    
+    func updateProfilePicture(image: UIImage) {
+        isModalInPresentation = true
+        viewModel.updateProfilePicture(image)
+    }
+    func addUser() {
+        viewModel.addUser()
+    }
+    func updateUser() {
+        viewModel.updateUser()
+    }
+    func choicePhoto() {
+        isModalInPresentation = true
+        presentPhotoActionSheet()
+    }
+}
+//MARK: - @objc private funcs in extension
+@objc private extension UpdateInfoProfileController {
+    //Метод выполняются когда появляется клавиатура
+    func keyboardWillShow(notification: NSNotification){
+        self.updateInfoProfileView.stateView = .keyboardWillShow(notification)
+    }
+    //Метод выполняются когда скрывается клавиатура
+    func keyboardWillHide(notification: NSNotification){
+        self.updateInfoProfileView.stateView = .keyboardWillHide(notification)
+    }
+}
+extension UpdateInfoProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[.editedImage] as? UIImage else { return }
         viewModel.updateProfilePicture(image)
     }
 }
-
+extension UpdateInfoProfileController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        viewModel.exit(with: nil)
+    }
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        showAlertSheet(with: titleForActionSheet())
+    }
+}

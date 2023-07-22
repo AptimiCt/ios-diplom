@@ -54,8 +54,8 @@ struct K {
             case alertButtonTitle = "alertButton.title"
             case alertButtonActionTitle = "alertButton.action.title"
             case alertButtonActionMessage = "alertButton.action.message"
-            case alertButtonActionCancel = "alertButton.action.cancel"
-            case alertButtonActionOk = "alertButton.action.ok"
+            case alertButtonActionCancel = "UIAC.cancel"
+            case alertButtonActionOk = "UIAC.ok"
             case alertButtonActionCancelPressed = "alertButton.action.cancel.pressed"
             case alertButtonActionOkPressed = "alertButton.action.ok.pressed"
         }
@@ -97,7 +97,7 @@ struct K {
             case choosePasswordButtonSec =  "choose.password.button.sec"
             case tabBarItemLoginVCTitle = "tabBarItemLoginVC.title"
             case alertForErrorTitle = "alertForError.title"
-            case alertButtonActionOk = "alertButton.action.ok"
+            case alertButtonActionOk = "UIAC.ok"
         }
     }
     //MARK: - FavoritesViewController

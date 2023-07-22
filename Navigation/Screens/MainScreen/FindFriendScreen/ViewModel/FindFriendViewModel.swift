@@ -10,6 +10,8 @@ import UIKit
 
 final class FindFriendViewModel: FindFriendViewModelProtocol {
     
+    var finishFlow: VoidClosure?
+    
     private let firestore: DatabeseManagerProtocol
     private let coordinator: ProfileCoordinator
     private let userService: UserService
