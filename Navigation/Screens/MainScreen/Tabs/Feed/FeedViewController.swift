@@ -11,6 +11,8 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     
     private(set) var viewModel: FeedViewModelProtocol!
     
+    private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
+    
     //MARK: - vars
     private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
@@ -48,6 +50,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         super.viewDidLoad()
         setupView()
         setupViewModel()
+        addNotificationForReloadAllAfterUpdateProfile()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,14 +58,36 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
             self?.tableView.reloadData()
         }
     }
-    @objc func refresh(sender: UIRefreshControl) {
+    deinit {
+        removeNotificationForReloadAllAfterUpdateProfile()
+        Logger.standart.remove(on: self)
+    }
+}
+
+//MARK: - extensions
+@objc private extension FeedViewController {
+    func reloadDataInScreen() {
+        tableView.reloadData()
+    }
+    func refresh(sender: UIRefreshControl) {
         viewModel.changeState { [weak self] in
             self?.tableView.reloadData()
             sender.endRefreshing()
         }
     }
-    //MARK: - funcs
-    private func setupView() {
+}
+private extension FeedViewController {
+    func addNotificationForReloadAllAfterUpdateProfile() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadDataInScreen),
+                                               name: notificationForUpdateProfile,
+                                               object: nil)
+
+    }
+    func removeNotificationForReloadAllAfterUpdateProfile() {
+        NotificationCenter.default.removeObserver(self, name: notificationForUpdateProfile, object: nil)
+    }
+    func setupView() {
         title = Constants.navigationItemFeedTitle
         tableView.dataSource = self
         tableView.delegate = self
@@ -71,8 +96,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         configureConstraints()
         tableView.refreshControl = refreshControl
     }
-    
-    private func configureConstraints(){
+    func configureConstraints(){
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
         tableView.register(PostTableViewCellFS.self, forCellReuseIdentifier: Cells.cellForPostFeed)
@@ -91,7 +115,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     }
     
     //MARK: - setupViewModel
-    private func setupViewModel(){
+    func setupViewModel(){
         viewModel.stateChanged = { [weak self] state in
             guard let self else { return }
             switch state {
@@ -106,18 +130,13 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
             }
         }
     }
-    private func activityIndicator(animate: Bool){
+    func activityIndicator(animate: Bool){
         activityIndicator.isHidden = !animate
         DispatchQueue.main.async {
             animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
-    deinit {
-        Logger.standart.remove(on: self)
-    }
 }
-
-//MARK: - extensions
 extension FeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count: Int
