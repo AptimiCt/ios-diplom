@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.backgroundColor = . createColor(lightMode: .white, darkMode: .systemGray6)
+        tableView.backgroundColor = . createColor(lightMode: .systemGray6, darkMode: .systemGray6)
         tableView.toAutoLayout()
         return tableView
     }()
@@ -138,7 +138,7 @@ private extension ProfileViewController {
     }
     func updateProfileHeaderView() {
         if let urlString = viewModel.getUser().profilePictureUrl, let url = URL(string: urlString) {
-            profileTableHeaderView.avatarImageView.sd_setImage(with: url)
+            profileTableHeaderView.avatarImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "person"))
         } else {
             profileTableHeaderView.avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
         }
