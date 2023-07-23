@@ -33,7 +33,7 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         self.userService = userService
         self.firestore = firestore
         self.configureProperty()
-        print("UpdateInfoProfileViewModel создан")
+        Logger.standart.start(on: self)
     }
     
     func updateUser() {
@@ -79,7 +79,8 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         }
     }
     func exit(with error: Error?) {
-        coordinator?.finishFlow?(error)
+        let user = self.userService.getUser()
+        coordinator?.finishFlow?(user, error)
     }
     func updateName(_ name: String) {
         self.name = name
@@ -154,6 +155,6 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         }
     }
     deinit {
-        print("UpdateInfoProfileViewModel удален")
+        Logger.standart.remove(on: self)
     }
 }

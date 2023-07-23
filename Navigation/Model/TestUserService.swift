@@ -20,7 +20,7 @@ final class TestUserService: UserService {
     }
     
     init() {
-        print("TestUserService создан")
+        Logger.standart.start(on: self)
     }
     func getUser() -> User {
         guard let user else { return User() }
@@ -54,6 +54,6 @@ final class TestUserService: UserService {
     }
     
     deinit {
-        print("TestUserService удален")
+        Logger.standart.remove(on: self)
     }
 }

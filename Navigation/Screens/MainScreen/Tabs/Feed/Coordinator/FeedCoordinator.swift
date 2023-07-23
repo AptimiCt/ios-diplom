@@ -15,7 +15,8 @@ class FeedCoordinator: BaseCoordinator {
     init(router: Router, factory: FeedControllerFactoryProtocol) {
         self.router = router
         self.factory = factory
-        print("FeedCoordinator создан")
+        super.init()
+        Logger.standart.start(on: self)
     }
     
     override func start(){
@@ -31,7 +32,7 @@ class FeedCoordinator: BaseCoordinator {
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
     deinit {
-        print("FeedCoordinator удален")
+        Logger.standart.remove(on: self)
     }
 }
 

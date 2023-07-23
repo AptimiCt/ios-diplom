@@ -36,8 +36,8 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     //MARK: - init
     init(viewModel: FeedViewModelProtocol){
         self.viewModel = viewModel
-        print("FeedViewController создан")
         super.init(nibName: nil, bundle: nil)
+        Logger.standart.start(on: self)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -113,7 +113,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         }
     }
     deinit {
-        print("FeedViewController удален")
+        Logger.standart.remove(on: self)
     }
 }
 

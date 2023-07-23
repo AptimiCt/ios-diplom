@@ -10,13 +10,15 @@ import UIKit
 class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     
     var finishFlow: ((User?) -> Void)?
+    
     private let router: Router
     private let factory: ControllersFactoryProtocol
     
     init(router: Router, factory: ControllersFactoryProtocol) {
         self.router = router
         self.factory = factory
-        print("LoginCoordinator создан")
+        super.init()
+        Logger.standart.start(on: self)
     }
     
     override func start() {
@@ -25,9 +27,13 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
     
     func runInfoProfileController(screenType: ScreenType) {
         let coordinator = UpdateInfoProfileCoordinator(router: router, factory: factory)
-        coordinator.finishFlow = { [weak self, weak coordinator] error in            self?.router.dismissModule()
+        coordinator.finishFlow = { [weak self, weak coordinator] user, error in
+            self?.router.dismissModule()
             if let error {
                 self?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
+                self?.loginViewConfigure()
+            } else {
+                self?.finishFlow?(user)
             }
             self?.removeCoordinator(coordinator)
         }
@@ -39,7 +45,7 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
         router.present(alert)
     }
     deinit {
-        print("LoginCoordinator удален")
+        Logger.standart.remove(on: self)
     }
 }
 

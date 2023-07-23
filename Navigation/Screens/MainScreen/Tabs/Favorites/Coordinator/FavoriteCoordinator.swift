@@ -15,7 +15,8 @@ final class FavoriteCoordinator: BaseCoordinator {
     init(router: Router, factory: FavoriteControllerFactoryProtocol) {
         self.router = router
         self.factory = factory
-        print("FavoriteCoordinator создан")
+        super.init()
+        Logger.standart.start(on: self)
     }
     
     override func start() {
@@ -23,6 +24,6 @@ final class FavoriteCoordinator: BaseCoordinator {
         router.setRootModule(controller)
     }
     deinit {
-        print("FavoriteCoordinator удален")
+        Logger.standart.remove(on: self)
     }
 }

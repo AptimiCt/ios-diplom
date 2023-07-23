@@ -18,6 +18,7 @@ class LoginViewController: UIViewController, LoginViewControllerProtocol {
         self.loginView = loginView
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        Logger.standart.start(on: self)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -41,6 +42,9 @@ class LoginViewController: UIViewController, LoginViewControllerProtocol {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    deinit {
+        Logger.standart.remove(on: self)
     }
 }
 //MARK: - private funcs in extension

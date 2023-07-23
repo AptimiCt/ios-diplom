@@ -28,7 +28,8 @@ final class MainCoordinator: BaseCoordinator, OutputCoordinator {
         self.router = router
         self.userService = userService
         self.factory = factory
-        print("MainCoordinator создан")
+        super.init()
+        Logger.standart.start(on: self)
     }
     override func start() {
         tabBarController.onFeedSelect = runFeedSelect()
@@ -37,10 +38,9 @@ final class MainCoordinator: BaseCoordinator, OutputCoordinator {
         tabBarController.firstLoad()
     }
     deinit {
-        print("MainCoordinator удален")
+        Logger.standart.remove(on: self)
     }
 }
-
 
 private extension MainCoordinator {
     

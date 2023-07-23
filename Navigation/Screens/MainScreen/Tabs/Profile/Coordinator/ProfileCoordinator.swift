@@ -18,7 +18,8 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
     init(router: Router ,factory: ControllersFactoryProtocol ) {
         self.router = router
         self.factory = factory
-        print("ProfileCoordinator создан")
+        super.init()
+        Logger.standart.start(on: self)
     }
     
     override func start() {
@@ -35,7 +36,7 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
     func showEditProfileVC(){
             let coordinator = UpdateInfoProfileCoordinator(router: router, factory: factory)
             coordinator.screenType = .update
-            coordinator.finishFlow = { [weak self, weak coordinator] error in
+            coordinator.finishFlow = { [weak self, weak coordinator] user, error in
                 self?.router.dismissModule()
                 if let error {
                     self?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
@@ -50,7 +51,7 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
         router.present(alert)
     }
     deinit {
-        print("ProfileCoordinator удален")
+        Logger.standart.remove(on: self)
     }
 }
 

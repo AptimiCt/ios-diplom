@@ -10,7 +10,7 @@ import UIKit
 
 class UpdateInfoProfileCoordinator: BaseCoordinator {
     
-    var finishFlow: OptionalErrorClosure?
+    var finishFlow: OptionalUserAndErrorClosure?
     
     var screenType: ScreenType! = .new
     
@@ -20,7 +20,8 @@ class UpdateInfoProfileCoordinator: BaseCoordinator {
     init(router: Router, factory: UpdateInfoProfileControllerFactoryProtocol) {
         self.router = router
         self.factory = factory
-        print("UpdateInfoProfileCoordinator создан")
+        super.init()
+        Logger.standart.start(on: self)
     }
     
     override func start() {
@@ -28,7 +29,7 @@ class UpdateInfoProfileCoordinator: BaseCoordinator {
     }
 
     deinit {
-        print("UpdateInfoProfileCoordinator удален")
+        Logger.standart.remove(on: self)
     }
 }
 

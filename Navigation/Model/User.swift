@@ -39,7 +39,7 @@ final class User: Codable, Equatable {
          email: String? = "",
          name: String = "",
          surname: String = "",
-         profilePicture: String = Constants.defaultProfilePicture,
+         profilePicture: String? = nil,// = Constants.defaultProfilePicture,
          status: String = "",
          gender: String = "Не установлен",
          dateOfBirth: Date = Date(),

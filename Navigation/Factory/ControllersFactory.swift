@@ -11,7 +11,7 @@ final class ControllerFactory: ControllersFactoryProtocol {
     
     init(userService: UserService) {
         self.userService = userService
-        print("ControllerFactory создан")
+        Logger.standart.start(on: self)
     }
     func makeSplashController() -> SplashViewController {
         return SplashViewController()
@@ -68,6 +68,6 @@ final class ControllerFactory: ControllersFactoryProtocol {
         return findFriendViewController
     }
     deinit {
-        print("ControllerFactory удален")
+        Logger.standart.remove(on: self)
     }
 }

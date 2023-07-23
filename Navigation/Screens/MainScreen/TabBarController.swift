@@ -13,8 +13,8 @@ class TabBarController: UITabBarController {
     var onProfileSelect: ((UINavigationController) -> ())?
     var onFavoriteSelect: ((UINavigationController) -> ())?
     init() {
-        print("TabBarController создан")
         super.init(nibName: nil, bundle: nil)
+        Logger.standart.start(on: self)
     }
     
     required init?(coder: NSCoder) {
@@ -27,7 +27,7 @@ class TabBarController: UITabBarController {
         delegate = self
     }
     deinit {
-        print("TabBarController удален")
+        Logger.standart.remove(on: self)
     }
 }
 extension TabBarController {

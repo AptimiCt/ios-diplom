@@ -16,7 +16,8 @@ final class ImagePickerCoordinator: BaseCoordinator {
     init(router: Router, factory: AuthControllerFactoryProtocol) {
         self.router = router
         self.factory = factory
-        print("ImagePickerCoordinator создан")
+        super.init()
+        Logger.standart.start(on: self)
     }
     
     override func start() {
@@ -28,7 +29,7 @@ final class ImagePickerCoordinator: BaseCoordinator {
     }
     
     deinit {
-        print("ImagePickerCoordinator удален")
+        Logger.standart.remove(on: self)
     }
 }
 extension ImagePickerCoordinator: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

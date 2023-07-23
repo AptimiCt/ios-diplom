@@ -23,6 +23,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     
     init(firestore: DatabeseManagerProtocol){
         self.firestore = firestore
+        Logger.standart.start(on: self)
     }
     func checkCredentionalsToLogin(email: String, password: String) {
         do {
@@ -42,7 +43,6 @@ final class LoginViewModel: LoginViewModelProtocol {
             }
         } catch {
             self.handle(with: error as! AuthenticationError)
-            
         }
     }
     func loginWithBiometrics() {
@@ -54,6 +54,9 @@ final class LoginViewModel: LoginViewModelProtocol {
                 self.handle(with: .unknown(""))
             }
         }
+    }
+    deinit {
+        Logger.standart.remove(on: self)
     }
 }
 
@@ -72,7 +75,11 @@ private extension LoginViewModel {
             let name = authDataResult.user.displayName
             let email = authDataResult.user.email
             let user = User(uid: uid, email: email, name: name ?? email ?? Constants.currentUserServiceFullName)
-            userService?.set(user: user)
+            if buttonType == .registration {
+                firestore.addUser(user: user) { error in
+                    self.userService?.set(user: user)
+                }
+            }
         }
         switch buttonType {
             case .login:

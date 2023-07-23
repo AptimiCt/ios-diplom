@@ -21,6 +21,7 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         self.viewModel = viewModel
         self.updateInfoProfileView = UpdateInfoProfileView(screenType: screenType)
         super.init(nibName: nil, bundle: nil)
+        Logger.standart.start(on: self)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -37,7 +38,6 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         if screenType == .new {
             isModalInPresentation = true
         }
-        print("UpdateInfoProfileController создан")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -51,7 +51,7 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     deinit {
-        print("UpdateInfoProfileController удален")
+        Logger.standart.remove(on: self)
     }
 }
 //MARK: - private funcs in extension

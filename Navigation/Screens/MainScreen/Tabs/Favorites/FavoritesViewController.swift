@@ -30,14 +30,9 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
     //MARK: - init
     init() {
         super.init(nibName: nil, bundle: nil)
-        #if DEBUG
-        view.backgroundColor = .systemGray6
-        #else
-        view.backgroundColor = .systemRed
-        #endif
         self.tabBarItem = tabBarItemFavoritesView
         self.title = Constants.tabBarItemFavoritesViewTitle
-        print("FavoritesViewController создан")
+        Logger.standart.start(on: self)
     }
     
     required init?(coder: NSCoder) {
@@ -61,6 +56,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
     }
     //MARK: - funcs
     private func setupView() {
+        view.backgroundColor = .systemGray6
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -101,7 +97,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
         }
     }
     deinit {
-        print("FavoritesViewController удален")
+        Logger.standart.remove(on: self)
     }
 }
 

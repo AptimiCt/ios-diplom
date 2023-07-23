@@ -39,9 +39,9 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     //MARK: - init
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
-        print("ProfileViewController создан")
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = tabBarItemProfileView
+        Logger.standart.start(on: self)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -69,9 +69,9 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         }
         profileTableHeaderView.fullNameLabel.text = viewModel.getUser().getFullName()
     }
-    //MARK: - override funcs
+    
     deinit {
-        print("ProfileViewController удален")
+        Logger.standart.remove(on: self)
     }
 }
 

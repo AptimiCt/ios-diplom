@@ -57,6 +57,7 @@
 		6150EF142969EDDA0023BA7D /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */; };
 		61765CD92A6BD77300216874 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61765CD82A6BD77300216874 /* DatabaseError.swift */; };
 		61765CDB2A6BD7F000216874 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61765CDA2A6BD7F000216874 /* AppError.swift */; };
+		61765CDE2A6C194000216874 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61765CDD2A6C194000216874 /* Logger.swift */; };
 		6180AC67297D333E00A3281A /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC66297D333E00A3281A /* K.swift */; };
 		6180AC69297D346500A3281A /* LocalizationShortCut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC68297D346500A3281A /* LocalizationShortCut.swift */; };
 		6180AC6D297D371600A3281A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6180AC6F297D371600A3281A /* Localizable.strings */; };
@@ -212,6 +213,7 @@
 		6150EF132969EDDA0023BA7D /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		61765CD82A6BD77300216874 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		61765CDA2A6BD7F000216874 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		61765CDD2A6C194000216874 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6180AC66297D333E00A3281A /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		6180AC68297D346500A3281A /* LocalizationShortCut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationShortCut.swift; sourceTree = "<group>"; };
 		6180AC6C297D36E400A3281A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -970,6 +972,7 @@
 				61484AFE299EA8400093FBF1 /* LocalNotificationsService.swift */,
 				61FF1EEE2A0011C5002D0331 /* Enums */,
 				614E09302A10FA6800A923BE /* Types */,
+				61765CDD2A6C194000216874 /* Logger.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1178,6 +1181,7 @@
 				614E09272A10031400A923BE /* RouterImpl.swift in Sources */,
 				61F4F63C2A56292100937A6E /* FindFriendViewModelProtocol.swift in Sources */,
 				61FF1EF02A0011E8002D0331 /* LaunchInstructor.swift in Sources */,
+				61765CDE2A6C194000216874 /* Logger.swift in Sources */,
 				6150EF142969EDDA0023BA7D /* TextFieldWithPadding.swift in Sources */,
 				61B69DBB29C11C2B00D6225E /* LoginViewDelegate.swift in Sources */,
 				BB38BC4D2794180600FF4B2E /* LoginViewController.swift in Sources */,

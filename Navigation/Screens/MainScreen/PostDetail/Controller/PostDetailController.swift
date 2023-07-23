@@ -148,7 +148,7 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
         }
     }
     deinit {
-        print("PostDetailController удален")
+        Logger.standart.remove(on: self)
     }
 }
 @objc private extension PostDetailController {
