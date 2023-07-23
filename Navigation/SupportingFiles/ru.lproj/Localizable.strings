@@ -98,7 +98,7 @@
 
 //MARK: - FavoritesViewController
 "tabBarItemFavoritesView.title" = "Избранное";
-"applyFilter.alertController.title" = "Введите автора";
+"applyFilter.alertController.title" = "Введите текст для поиска по записи.";
 "applyFilter.alertController.okAction" = "Применить";
 
 //MARK: - MapViewController

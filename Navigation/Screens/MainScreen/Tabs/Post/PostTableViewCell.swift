@@ -11,25 +11,42 @@ import StorageService
 
 class PostTableViewCell: UITableViewCell {
     
-    var post: Post? {
-        didSet{
-            guard let author = post?.author else { return }
-            authorLabel.text = author
-            guard let image = post?.image else { return }
-            guard let sourceImage = UIImage(named: image) else { return }
-            let imageProcessor = ImageProcessor()
-            let filter = ColorFilter.AllCases().randomElement() ?? .sepia(intensity: 3)
-            imageProcessor.processImage(sourceImage: sourceImage, filter: filter) { image in
-                postImageView.image = image
+//    var post: Post? {
+//        didSet{
+//            guard let author = post?.author else { return }
+//            authorLabel.text = author
+//            guard let image = post?.image else { return }
+//            guard let sourceImage = UIImage(named: image) else { return }
+//            let imageProcessor = ImageProcessor()
+//            let filter = ColorFilter.AllCases().randomElement() ?? .sepia(intensity: 3)
+//            imageProcessor.processImage(sourceImage: sourceImage, filter: filter) { image in
+//                postImageView.image = image
+//            }
+//            descriptionLabel.text = post?.description
+//            guard let likes = post?.likes else { return }
+//            likesLabel.text = String(format: ~K.Likes.Keys.likes.rawValue, likes)
+//            guard let views = post?.views else { return }
+//            viewsLabel.text = String(format: ~K.Views.Keys.views.rawValue, views)
+//        }
+//    }
+    var post: PostFS? {
+            didSet{
+                guard let author = post?.userUid else { return }
+                authorLabel.text = author
+                guard let image = post?.imageUrl else { return }
+                guard let sourceImage = UIImage(named: image) else { return }
+                let imageProcessor = ImageProcessor()
+                let filter = ColorFilter.AllCases().randomElement() ?? .sepia(intensity: 3)
+                imageProcessor.processImage(sourceImage: sourceImage, filter: filter) { image in
+                    postImageView.image = image
+                }
+                descriptionLabel.text = post?.body
+                guard let likes = post?.likes.count else { return }
+                likesLabel.text = String(format: ~K.Likes.Keys.likes.rawValue, likes)
+                guard let views = post?.views else { return }
+                viewsLabel.text = String(format: ~K.Views.Keys.views.rawValue, views)
             }
-            descriptionLabel.text = post?.description
-            guard let likes = post?.likes else { return }
-            likesLabel.text = String(format: ~K.Likes.Keys.likes.rawValue, likes)
-            guard let views = post?.views else { return }
-            viewsLabel.text = String(format: ~K.Views.Keys.views.rawValue, views)
         }
-    }
-    
     private let authorLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()

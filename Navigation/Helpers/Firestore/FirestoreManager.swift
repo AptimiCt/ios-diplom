@@ -268,7 +268,6 @@ struct PostFS: Codable {
          imageUrl: String? = nil,
          likes: [String] = [],
          views: Int = 0,
-         frends: [String] = [],
          createdDate: Date = Date(),
          updateDate: Date = Date()
     ) {

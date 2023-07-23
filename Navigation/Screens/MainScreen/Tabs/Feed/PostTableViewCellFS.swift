@@ -163,7 +163,7 @@ private extension PostTableViewCellFS {
        delegate?.moreReadButtonTapped(indexPath: indexPath)
     }
     func addPostToFavorite() {
-        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, frends: [], createdDate: Date(), updateDate: Date())
+        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, createdDate: Date(), updateDate: Date())
         print("error:")
         FirestoreManager().addNewPost(post: post) { error in
             guard let error else { return }

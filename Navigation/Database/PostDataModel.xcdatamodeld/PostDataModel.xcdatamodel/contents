@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PostCoreData" representedClassName="PostCoreData" syncable="YES" codeGenerationType="class">
-        <attribute name="author" optional="YES" attributeType="String" minValueString="2" defaultValueString="Нет автора"/>
-        <attribute name="data" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="descriptionPost" optional="YES" attributeType="String" minValueString="3" defaultValueString="Нет данных"/>
-        <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="image" optional="YES" attributeType="String"/>
-        <attribute name="likes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="views" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="word" optional="YES" transient="YES" attributeType="String"/>
+        <attribute name="body" attributeType="String"/>
+        <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String"/>
+        <attribute name="likes" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="postUid" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="updateDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="userUid" attributeType="String"/>
+        <attribute name="views" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="UserCoreData" representedClassName="UserCoreData" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateOfBirth" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="friends" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="gender" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="posts" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="profilePictureUrl" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="surname" attributeType="String"/>
+        <attribute name="uid" attributeType="String"/>
+        <attribute name="updateDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
 </model>

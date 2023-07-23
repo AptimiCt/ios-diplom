@@ -53,17 +53,16 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         userService.getUser()
     }
     func addCoreData(_ index: Int, completion: @escaping BoolClosure) {
-        #warning("Изменить кордату")
-//        let post = getPostFor(index)
-        //        CoreDataManager.dataManager.create(post: post) { [weak self] result in
-        //            switch result {
-        //                case .success(_):
-        //                    completion(true)
-        //                case .failure(let error):
-        //                    completion(false)
-        //                    print(error.localizedDescription)
-        //            }
-        //        }
+        let post = getPostFor(index)
+        CoreDataManager.dataManager.create(post: post) { result in
+            switch result {
+                case .success(_):
+                    completion(true)
+                case .failure(let error):
+                    completion(false)
+                    print("error create:\(error.localizedDescription)")
+            }
+        }
         completion(true)
     }
     func showPhotosVC() {

@@ -98,7 +98,7 @@
 
 //MARK: - FavoritesViewController
 "tabBarItemFavoritesView.title" = "Favorites";
-"applyFilter.alertController.title" = "Enter the author";
+"applyFilter.alertController.title" = "Enter text to search the post.";
 "applyFilter.alertController.okAction" = "Apply";
 
 //MARK: - MapViewController

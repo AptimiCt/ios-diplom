@@ -112,20 +112,23 @@ final class CoreDataManager {
         }
     }
     
-    private func configure(model: PostCoreData, from post: Post) {
-        model.identifier = Int64(post.id)
-        model.author = post.author
-        model.descriptionPost = post.description
-        model.image = post.image
+    private func configure(model: PostCoreData, from post: PostFS) {
+        model.userUid = post.userUid
+        model.postUid = post.postUid
+        model.title = post.title
+        model.body = post.body
+        model.imageUrl = post.imageUrl
+        model.likes = post.likes
         model.views = Int64(post.views)
-        model.likes = Int64(post.likes)
+        model.createdDate = post.createdDate
+        model.updateDate = post.updateDate
     }
 }
 
 extension CoreDataManager {
     
-    func create(post: Post, completion: @escaping (Result<PostCoreData?, DatabaseError>)->Void) {
-        let predicate = NSPredicate(format: "identifier == \(Int64(post.id))")
+    func create(post: PostFS, completion: @escaping (Result<PostCoreData?, DatabaseError>)->Void) {
+        let predicate = NSPredicate(format: "postUid == %@", post.postUid)
         fetch(predicate: predicate) { result in
             switch result {
                 case .success(let data):
