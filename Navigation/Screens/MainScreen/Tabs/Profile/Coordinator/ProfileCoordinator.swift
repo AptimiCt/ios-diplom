@@ -41,6 +41,7 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
                 if let error {
                     self?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
                 }
+                NotificationCenter.default.post(name: Notification.Name(Constants.notifiForUpdateProfile), object: nil)
                 self?.removeCoordinator(coordinator)
             }
             addCoordinator(coordinator)

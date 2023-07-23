@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     private var avatar: UIImageView?
     private var offsetAvatar: CGFloat = 0
+    private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
 
     private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
@@ -25,7 +26,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         return activityIndicator
     }()
     
-    let profileTableHeaderView = ProfileHeaderView()
+    let profileTableHeaderView: ProfileHeaderView! = ProfileHeaderView()
     
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -56,21 +57,20 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         setupViewModel()
         actionsForProfileTableHeaderViewButton()
         finishFlow()
+        addNotificationForReloadAllAfterUpdateProfile()
+        updateProfileHeaderView()
         viewModel.changeState { [weak self] in
+            self?.updateProfileHeaderView()
             self?.tableView.reloadData()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let urlString = viewModel.getUser().profilePictureUrl, let url = URL(string: urlString) {
-            profileTableHeaderView.avatarImageView.sd_setImage(with: url)
-        } else {
-            profileTableHeaderView.avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
-        }
-        profileTableHeaderView.fullNameLabel.text = viewModel.getUser().getFullName()
+        updateProfileHeaderView()
     }
     
     deinit {
+        removeNotificationForReloadAllAfterUpdateProfile()
         Logger.standart.remove(on: self)
     }
 }
@@ -119,9 +119,31 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         }
         
     }
+    func reloadDataInScreen() {
+        updateProfileHeaderView()
+        tableView.reloadData()
+    }
 }
 //MARK: - private extension
 private extension ProfileViewController {
+    func addNotificationForReloadAllAfterUpdateProfile() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadDataInScreen),
+                                               name: notificationForUpdateProfile,
+                                               object: nil)
+
+    }
+    func removeNotificationForReloadAllAfterUpdateProfile() {
+        NotificationCenter.default.removeObserver(self, name: notificationForUpdateProfile, object: nil)
+    }
+    func updateProfileHeaderView() {
+        if let urlString = viewModel.getUser().profilePictureUrl, let url = URL(string: urlString) {
+            profileTableHeaderView.avatarImageView.sd_setImage(with: url)
+        } else {
+            profileTableHeaderView.avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
+        }
+        profileTableHeaderView.fullNameLabel.text = viewModel.getUser().getFullName()
+    }
     func actionsForProfileTableHeaderViewButton() {
         profileTableHeaderView.editProfileButton.action = { [weak self] in
             self?.viewModel.showEditProfileVC()
@@ -224,8 +246,11 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSection,
-                                                           for: indexPath) as? PhotosTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Cells.cellForSection,
+                for: indexPath
+            ) as? PhotosTableViewCell else { return UITableViewCell() }
+            
             cell.photos = photos
             return cell
         }

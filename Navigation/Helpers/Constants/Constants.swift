@@ -178,4 +178,6 @@ struct Constants {
     static let starships = "https://swapi.dev/api/starships/3"
     static let planets = "https://swapi.dev/api/planets/5"
     static let dataModel = "PostDataModel"
+    
+    static let notifiForUpdateProfile = "updateProfile"
 }
