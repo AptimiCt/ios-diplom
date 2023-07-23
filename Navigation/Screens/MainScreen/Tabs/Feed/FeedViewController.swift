@@ -51,12 +51,11 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         setupView()
         setupViewModel()
         addNotificationForReloadAllAfterUpdateProfile()
+        viewModelChangeState()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.changeState { [weak self] in
-            self?.tableView.reloadData()
-        }
+        tableView.reloadData()
     }
     deinit {
         removeNotificationForReloadAllAfterUpdateProfile()
@@ -99,7 +98,7 @@ private extension FeedViewController {
     func configureConstraints(){
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        tableView.register(PostTableViewCellFS.self, forCellReuseIdentifier: Cells.cellForPostFeed)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCell)
         tableView.register(FriendsViewCell.self, forCellReuseIdentifier: Cells.cellForSectionToCollection)
         
         let constraints: [NSLayoutConstraint] = [
@@ -136,6 +135,11 @@ private extension FeedViewController {
             animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
+    func viewModelChangeState() {
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 }
 extension FeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -157,7 +161,7 @@ extension FeedViewController: UITableViewDataSource {
             cell.friends = viewModel.getFriens()
             return cell
         }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForPostFeed) as? PostTableViewCellFS else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForFeedPostTableViewCell) as? PostTableViewCell else { return UITableViewCell() }
         
         let post = viewModel.getPostFor(indexPath)
         let user = viewModel.getUser(for: post.userUid)
@@ -182,18 +186,13 @@ extension FeedViewController: UITableViewDelegate {
         }
     }
 }
-extension FeedViewController: PostTableViewCellFSDelegate {
+extension FeedViewController: PostTableViewCellDelegate {
     func moreReadButtonTapped(indexPath: IndexPath) {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
     func addFavorite(index: Int, completion: @escaping BoolClosure) {
-            completion(true)
-            print(#function)
+        completion(true)
+        print(#function)
     }
-}
-
-protocol PostTableViewCellFSDelegate: AnyObject {
-    func moreReadButtonTapped(indexPath: IndexPath)
-    func addFavorite(index: Int, completion: @escaping BoolClosure)
 }

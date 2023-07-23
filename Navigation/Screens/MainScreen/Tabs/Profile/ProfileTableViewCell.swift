@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileTableViewCell: UITableViewCell {
     
-    weak var delegate: PostTableViewCellFSDelegate?
+    weak var delegate: PostTableViewCellDelegate?
     var indexPath: IndexPath!
     
     private lazy var heightAnchorReadMoreButton: NSLayoutConstraint = readMore.heightAnchor.constraint(equalToConstant: 0)

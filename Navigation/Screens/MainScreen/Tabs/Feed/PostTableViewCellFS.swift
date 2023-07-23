@@ -11,7 +11,7 @@ import UIKit
 
 class PostTableViewCellFS: UITableViewCell {
     
-    weak var delegate: PostTableViewCellFSDelegate?
+    weak var delegate: PostTableViewCellDelegate?
     var indexPath: IndexPath!
     private lazy var heightAnchorReadMoreButton: NSLayoutConstraint = readMore.heightAnchor.constraint(equalToConstant: 0)
     private let constantHeightPostImageView = (Constants.screenWeight) / 3
@@ -104,7 +104,7 @@ class PostTableViewCellFS: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         configureConstraints()
-//        guard reuseIdentifier == Cells.cellForPostFeed else { return }
+//        guard reuseIdentifier == Cells.cellForFeedPostTableViewCell else { return }
 //        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
 //                doubleTap.numberOfTapsRequired = 2
 //                self.addGestureRecognizer(doubleTap)

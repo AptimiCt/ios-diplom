@@ -290,8 +290,8 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
 }
-//MARK: - PostTableViewCellFSDelegate
-extension ProfileViewController: PostTableViewCellFSDelegate {
+//MARK: - PostTableViewCellDelegate
+extension ProfileViewController: PostTableViewCellDelegate {
     func addFavorite(index: Int, completion: @escaping BoolClosure) {
         viewModel.addCoreData(index) { isFavorite in
             completion(isFavorite)

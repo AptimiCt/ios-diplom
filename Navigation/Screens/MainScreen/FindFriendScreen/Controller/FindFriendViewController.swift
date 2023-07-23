@@ -42,7 +42,7 @@ final class FindFriendViewController: UIViewController, FindFriendViewController
         setupView()
         setupLayout()
         setupDelegate()
-        
+        isModalInPresentation = true
         navigationItem.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .done,
@@ -52,6 +52,10 @@ final class FindFriendViewController: UIViewController, FindFriendViewController
     }
 
     @objc private func dismissSelf() {
+            NotificationCenter.default.post(
+                name: Notification.Name(Constants.notifiForUpdateProfile),
+                object: nil
+            )
         dismiss(animated: true, completion: nil)
     }
     
