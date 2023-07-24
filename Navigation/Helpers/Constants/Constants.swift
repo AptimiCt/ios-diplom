@@ -9,50 +9,20 @@ import UIKit
 
 struct Constants {
     
-    static let firstUrl = "https://jsonplaceholder.typicode.com/todos/21"
-    static let planetUrl = "https://swapi.dev/api/planets/1"
-    static let peoplesID = "peoplesID"
-    
     static let filesRID = "FilesTableViewCell"
     //MARK: - Constants for ProfileTableHederView
     static let screenWeight = UIScreen.main.bounds.width
     
     //MARK: - Constants for PostTableViewCell
-    //MARK: - for authorLabel
-    static let leadingMarginForAuthorLabel: CGFloat = 16
-    static let topMarginForAuthorLabel: CGFloat = 16
-    static let trailingMarginForAuthorLabel: CGFloat = 16
-    static let bottomForAuthorLabel: CGFloat = 16
-    
-    //MARK: - for descriptionLabel
-    static let leadingMarginForDescriptionLabel: CGFloat = 16
-    static let topMarginForDescriptionLabel: CGFloat = 16
-    static let trailingMarginForDescriptionLabel: CGFloat = -16
-    static let bottomForDescriptionLabel: CGFloat = -16
-    
-    //MARK: - for likesLabel
-    static let leadingMarginForLikesLabel: CGFloat = 16
-    static let trailingMarginForLikesLabel: CGFloat = -16
-    static let bottomForLikesLabel: CGFloat = -16
-    
-    //MARK: - for viewsLabel
-    static let topMarginForViewsLabel: CGFloat = 16
-    static let trailingMarginForViewsLabel: CGFloat = -16
-    static let bottomForViewsLabel: CGFloat = -16
-    
     //MARK: - for AvatarImageView
     static let leadingMarginForAvatarImageView: CGFloat = 16
     static let topMarginForAvatarImageView: CGFloat = 16
     static let heightForAvatarImageView: CGFloat = 100
-    static let widthForAvatarImageView: CGFloat = 100
     
     //MARK: - for fullNameLabel
     static let leadingMarginForFullNameLabel: CGFloat = -20
     static let topMarginForFullNameLabel: CGFloat = 27
     static let trailingMarginForFullNameLabel: CGFloat = -16
-    
-    //MARK: - for statusLabel
-    static let bottomMarginForStatusLabel: CGFloat = -34
     
     //MARK: - for setStatusButton
     static let leadingMarginForSetStatusButton: CGFloat = 16
@@ -117,9 +87,6 @@ struct Constants {
     //MARK: - CurrentUserService
     static let currentUserServiceFullName = ~K.CurrentUserService.Keys.currentUserServiceFullName.rawValue
     
-    //MARK: - TestUserService
-    static let testUserServiceFullName = ~K.TestUserService.Keys.testUserServiceFullName.rawValue
-    static let testUserServiceAvatar = "master_chif"
     
     //MARK: - ProfileHeaderView
     static let showStatus = ~K.ProfileHV.Keys.editProfileButtonTitle.rawValue
@@ -144,33 +111,17 @@ struct Constants {
     static let checkWordButtonTrue = ~K.FeedVC.Keys.checkWordButtonTrue.rawValue
     static let checkWordButtonFalse = ~K.FeedVC.Keys.checkWordButtonFalse.rawValue
     
-    //MARK: - InfoViewController
-    static let alert = ~K.InfoVC.Keys.alertButtonTitle.rawValue
-    static let alertButtonActionTitle = ~K.InfoVC.Keys.alertButtonActionTitle.rawValue
-    static let alertButtonActionMessage = ~K.InfoVC.Keys.alertButtonActionMessage.rawValue
-    static let alertButtonActionCancel = ~K.InfoVC.Keys.alertButtonActionCancel.rawValue
-    static let alertButtonActionOk = ~K.InfoVC.Keys.alertButtonActionOk.rawValue
-    static let alertButtonActionCancelPressed = ~K.InfoVC.Keys.alertButtonActionCancelPressed.rawValue
-    static let alertButtonActionOkPressed = ~K.InfoVC.Keys.alertButtonActionOkPressed.rawValue
-    
     //MARK: - ProfileViewController
     static let tabBarItemProfileViewTitle = ~K.ProfileVC.Keys.tabBarItemProfileViewTitle.rawValue
     
     //MARK: - FavoritesViewController
     static let tabBarItemFavoritesViewTitle = ~K.FavoritesVC.Keys.tabBarItemFavoritesViewTitle.rawValue
     
-    //MARK: - MapViewController
-    static let idView = "marker"
-    static let tabBarItemMapTitle = ~K.MapVC.Keys.tabBarItemMapTitle.rawValue
-    
     //MARK: - PhotosTableViewCell
     static let photosLabelText = ~K.PhotosTVCell.Keys.text.rawValue
     
     //MARK: - PhotosViewController
     static let photoGalleryText = ~K.PhotosVC.Keys.text.rawValue
-    
-    //MARK: - SceneDelegate
-    static let post = ~K.SceneDelegate.Keys.post.rawValue
     
     static let defaultProfilePicture = "defaultProfilePicture"
     

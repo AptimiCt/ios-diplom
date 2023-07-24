@@ -36,13 +36,6 @@
 //MARK: - PhotosViewController
 "photo.gallery" = "Галерея фото";
 
-//MARK: - FeedCoordinator
-"alertButton.title" = "Оповещение";
-"alertButton.action.title" = "Уведомление";
-"alertButton.action.message" = "Нажата кнопка в InfoViewController";
-"alertButton.action.cancel.pressed" = "Нажата кнопка \"Отмена\"";
-"alertButton.action.ok.pressed" = "Нажата кнопка \"Хорошо\"";
-
 //MARK: - FeedViewController
 "navigationItemFeed.title" = "Новости";
 "firstButton.title" = "Первая кнопка";
@@ -83,15 +76,9 @@
 "applyFilter.alertController.title" = "Введите текст для поиска по записи.";
 "applyFilter.alertController.okAction" = "Применить";
 
-//MARK: - MapViewController
-"tabBarItemMap.title" = "Карта";
-
 //MARK: - UpdateInfoProfileView
 "UIPV.tappedButton.new" = "Добавить данные";
 "UIPV.tappedButton.update" = "Обновить данные";
-
-//MARK: - SceneDelegate
-"sceneDelegate.post" = "Публикация";
 
 //MARK: - LocalAuthorizationService
 "LocalAuthorizationService.localizedReason" = "Доступ в приложение Navigation";

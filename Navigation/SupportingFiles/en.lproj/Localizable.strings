@@ -36,13 +36,6 @@
 //MARK: - PhotosViewController
 "photo.gallery" = "Photo Gallery";
 
-//MARK: - FeedCoordinator
-"alertButton.title" = "Alert";
-"alertButton.action.title" = "Notification";
-"alertButton.action.message" = "Button pressed in InfoViewController";
-"alertButton.action.cancel.pressed" = "\"Cancel\" button is pressed";
-"alertButton.action.ok.pressed" = "The \"OK\" button is pressed";
-
 //MARK: - FeedViewController
 "navigationItemFeed.title" = "Feed";
 "firstButton.title" = "First button";
@@ -83,15 +76,9 @@
 "applyFilter.alertController.title" = "Enter text to search the post.";
 "applyFilter.alertController.okAction" = "Apply";
 
-//MARK: - MapViewController
-"tabBarItemMap.title" = "Map";
-
 //MARK: - UpdateInfoProfileView
 "UIPV.tappedButton.new" = "Add data";
 "UIPV.tappedButton.update" = "Update data";
-
-//MARK: - SceneDelegate
-"sceneDelegate.post" = "Post";
 
 //MARK: - LocalAuthorizationService
 "LocalAuthorizationService.localizedReason" = "Access to the Navigation app";

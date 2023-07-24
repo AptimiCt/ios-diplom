@@ -28,18 +28,7 @@ struct K {
             case text = "photo.gallery"
         }
     }
-    //MARK: - InfoViewController
-    struct InfoVC {
-        enum Keys: String {
-            case alertButtonTitle = "alertButton.title"
-            case alertButtonActionTitle = "alertButton.action.title"
-            case alertButtonActionMessage = "alertButton.action.message"
-            case alertButtonActionCancel = "UIAC.cancel"
-            case alertButtonActionOk = "UIAC.ok"
-            case alertButtonActionCancelPressed = "alertButton.action.cancel.pressed"
-            case alertButtonActionOkPressed = "alertButton.action.ok.pressed"
-        }
-    }
+
     //MARK: - FeedViewController
     struct FeedVC {
         enum Keys: String {
@@ -86,28 +75,10 @@ struct K {
             case tabBarItemFavoritesViewTitle = "tabBarItemFavoritesView.title"
         }
     }
-    //MARK: - MapViewController
-    struct MapVC {
-        enum Keys: String {
-            case tabBarItemMapTitle = "tabBarItemMap.title"
-        }
-    }
-    //MARK: - TestUserService
-    struct TestUserService {
-        enum Keys: String {
-            case testUserServiceFullName = "testUserService.fullName"
-        }
-    }
     //MARK: - CurrentUserService
     struct CurrentUserService {
         enum Keys: String {
             case currentUserServiceFullName = "currentUserService.fullName"
-        }
-    }
-    //MARK: - SceneDelegate
-    struct SceneDelegate {
-        enum Keys: String {
-            case post = "sceneDelegate.post"
         }
     }
     //MARK: - Likes
