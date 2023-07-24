@@ -15,14 +15,7 @@ struct K {
             case title = "fvcTitle"
         }
     }
-    //MARK: - LocationService
-    struct LocationService {
-        enum Keys: String {
-            case restricted
-            case denied
-            case unknown
-        }
-    }
+
     //MARK: - PhotosTableViewCell
     struct PhotosTVCell {
         enum Keys: String {
@@ -33,19 +26,6 @@ struct K {
     struct PhotosVC {
         enum Keys: String {
             case text = "photo.gallery"
-        }
-    }
-    //MARK: - Storage
-    struct Storage {
-        enum Keys: String {
-            case firstPostAuthor = "firstPost.author"
-            case firstPostDescription = "firstPost.description"
-            case secondPostAuthor = "secondPost.author"
-            case secondPostDescription = "secondPost.description"
-            case thirdPostAuthor = "thirdPost.author"
-            case thirdPostDescription = "thirdPost.description"
-            case fourthPostAuthor = "fourthPost.author"
-            case fourthPostDescription = "fourthPost.description"
         }
     }
     //MARK: - InfoViewController
