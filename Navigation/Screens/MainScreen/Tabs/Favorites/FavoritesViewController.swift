@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import StorageService
 
 class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol {
     

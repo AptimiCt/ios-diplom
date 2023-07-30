@@ -10,6 +10,7 @@ import UIKit
 class FeedViewController: UIViewController, FeedViewControllerProtocol {
     
     private(set) var viewModel: FeedViewModelProtocol!
+    var cellFactory: Configurator?
     
     private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
     
@@ -26,7 +27,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         return refreshControl
     }()
     
-    let tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = . createColor(lightMode: .lightGray, darkMode: .systemGray6)
         tableView.toAutoLayout()
@@ -36,8 +37,9 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     }()
     
     //MARK: - init
-    init(viewModel: FeedViewModelProtocol){
+    init(viewModel: FeedViewModelProtocol) {
         self.viewModel = viewModel
+        self.cellFactory = ConfiguratorCell()
         super.init(nibName: nil, bundle: nil)
         Logger.standart.start(on: self)
     }
@@ -81,33 +83,34 @@ private extension FeedViewController {
                                                selector: #selector(reloadDataInScreen),
                                                name: notificationForUpdateProfile,
                                                object: nil)
-
     }
     func removeNotificationForReloadAllAfterUpdateProfile() {
         NotificationCenter.default.removeObserver(self, name: notificationForUpdateProfile, object: nil)
     }
     func setupView() {
         title = Constants.navigationItemFeedTitle
+    
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCell)
+        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCellWithoutImage)
+        tableView.register(FriendsViewCell.self, forCellReuseIdentifier: Cells.cellForSectionToCollection)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
-        configureConstraints()
         tableView.refreshControl = refreshControl
-    }
-    func configureConstraints(){
+        
+        view.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCell)
-        tableView.register(FriendsViewCell.self, forCellReuseIdentifier: Cells.cellForSectionToCollection)
-        
+        configureConstraints()
+    }
+    func configureConstraints(){
         let constraints: [NSLayoutConstraint] = [
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
@@ -123,7 +126,6 @@ private extension FeedViewController {
                 case .loaded(let viewModel):
                     self.viewModel = viewModel
                     self.activityIndicator(animate: false)
-                    self.tableView.reloadData()
                 case .error:
                     break
             }
@@ -144,33 +146,24 @@ private extension FeedViewController {
 extension FeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count: Int
-        let friends = viewModel.getFriens()
         if section == 0 {
-            count = friends.isEmpty ? 0 : 1
+            count = viewModel.numberOfSections() == 0 ? 0 : 1
         } else {
             count = viewModel.numberOfRows()
         }
         return count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cellFactory = cellFactory else { return UITableViewCell() }
         
         if indexPath.section == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSectionToCollection,
-                                                           for: indexPath) as? FriendsViewCell else { return UITableViewCell() }
-            cell.friends = viewModel.getFriens()
-            return cell
+            let friendsCell = cellFactory.makeCell(cellType: .friendsCell, viewModel: viewModel, delegate: nil, tableView: tableView, for: indexPath)
+            return friendsCell
         }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForFeedPostTableViewCell) as? PostTableViewCell else { return UITableViewCell() }
         
-        let post = viewModel.getPostFor(indexPath)
-        let user = viewModel.getUser(for: post.userUid)
-        cell.configure(post: post, with: user)
-        cell.indexPath = indexPath
-        cell.delegate = self
-        return cell
+        let cellType = viewModel.cellType(at: indexPath)
+        return cellFactory.makeCell(cellType: cellType, viewModel: viewModel, delegate: self, tableView: tableView, for: indexPath)
     }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         2
     }
@@ -180,19 +173,16 @@ extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
         if indexPath.section != 0 {
-            let post = viewModel.getPostFor(indexPath)
-            viewModel.updateViews(postUID: post.postUid)
-            viewModel.showDetail(post: post)
+            viewModel.didSelectRow(at: indexPath)
         }
     }
 }
 extension FeedViewController: PostTableViewCellDelegate {
-    func moreReadButtonTapped(indexPath: IndexPath) {
+    func moreReadButtonTapped() {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
     func addFavorite(index: Int, completion: @escaping BoolClosure) {
         completion(true)
-        print(#function)
     }
 }

@@ -92,11 +92,12 @@ class PostTableViewCell: UITableViewCell {
         return views
     }()
     private let viewsImageView: UIImageView = {
-        let image = UIImageView()
-        image.toAutoLayout()
-        image.contentMode = .scaleAspectFit
-        image.tintColor = .createColor(lightMode: .black, darkMode: .white)
-        return image
+        let viewsImage = UIImageView()
+        viewsImage.toAutoLayout()
+        viewsImage.contentMode = .scaleAspectFit
+        viewsImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
+        viewsImage.image = UIImage(systemName: "eyes")
+        return viewsImage
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -112,15 +113,20 @@ class PostTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         postImageView.image = nil
-        heightAnchorPostImageView = postImageView.heightAnchor.constraint(equalToConstant: constantHeightPostImageView)
+        authorLabel.text = nil
+        dateLabel.text = nil
+        bodyLabel.text = nil
+        likesLabel.text = nil
+        viewsLabel.text = nil
+        fotoImageView.image = nil
+        
         readMore.isHidden = false
         heightAnchorReadMoreButton.isActive = false
         bodyLabel.numberOfLines = 4
-        
     }
+    
     func configure(post: PostFS, with user: User) {
         authorLabel.text = user.getFullName()
-        viewsImageView.image = UIImage(systemName: "message")
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .current
         dateFormatter.dateFormat = "d MMM yyyy hh:mm"
@@ -134,14 +140,8 @@ class PostTableViewCell: UITableViewCell {
             fotoImageView.sd_setImage(with: imageUrl)
         }
         if let postImageUrl = post.imageUrl {
-            guard let imageUrl = URL(string: postImageUrl) else {
-                heightAnchorPostImageView.constant = 0
-                return
-            }
-            postImageView.sd_setImage(with: imageUrl)
-        }
-        else {
-            heightAnchorPostImageView.constant = 0
+            guard let imageUrl = URL(string: postImageUrl) else { return }
+            postImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(systemName: "photo"))
         }
     }
 }
@@ -164,10 +164,9 @@ private extension PostTableViewCell {
         bodyLabel.numberOfLines = 0
         readMore.isHidden = true
         heightAnchorReadMoreButton.isActive = true
-        delegate?.moreReadButtonTapped(indexPath: indexPath)
+        delegate?.moreReadButtonTapped()
     }
     func addPostToFavorite() {
-        print(#function)
         delegate?.addFavorite(index: indexPath.row) { [weak self] isFavorite in
             isFavorite ? self?.vizualizeAdd(color: .systemGreen) : self?.vizualizeAdd(color: .systemRed)
         }

@@ -58,6 +58,11 @@
 		61765CD92A6BD77300216874 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61765CD82A6BD77300216874 /* DatabaseError.swift */; };
 		61765CDB2A6BD7F000216874 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61765CDA2A6BD7F000216874 /* AppError.swift */; };
 		61765CDE2A6C194000216874 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61765CDD2A6C194000216874 /* Logger.swift */; };
+		617AC7852A71C649008B50A5 /* CellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617AC7842A71C649008B50A5 /* CellType.swift */; };
+		617AC7872A72E03F008B50A5 /* PostTableViewCellWithoutImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617AC7862A72E03F008B50A5 /* PostTableViewCellWithoutImage.swift */; };
+		617AC78A2A72E8BD008B50A5 /* PostTableViewCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617AC7892A72E8BD008B50A5 /* PostTableViewCellProtocol.swift */; };
+		617AC78E2A730EF9008B50A5 /* Configurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617AC78D2A730EF9008B50A5 /* Configurator.swift */; };
+		617AC7932A76896A008B50A5 /* ConfiguratorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617AC7922A76896A008B50A5 /* ConfiguratorCell.swift */; };
 		6180AC67297D333E00A3281A /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC66297D333E00A3281A /* K.swift */; };
 		6180AC69297D346500A3281A /* LocalizationShortCut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6180AC68297D346500A3281A /* LocalizationShortCut.swift */; };
 		6180AC6D297D371600A3281A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6180AC6F297D371600A3281A /* Localizable.strings */; };
@@ -185,6 +190,11 @@
 		61765CD82A6BD77300216874 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		61765CDA2A6BD7F000216874 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		61765CDD2A6C194000216874 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		617AC7842A71C649008B50A5 /* CellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellType.swift; sourceTree = "<group>"; };
+		617AC7862A72E03F008B50A5 /* PostTableViewCellWithoutImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellWithoutImage.swift; sourceTree = "<group>"; };
+		617AC7892A72E8BD008B50A5 /* PostTableViewCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellProtocol.swift; sourceTree = "<group>"; };
+		617AC78D2A730EF9008B50A5 /* Configurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurator.swift; sourceTree = "<group>"; };
+		617AC7922A76896A008B50A5 /* ConfiguratorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorCell.swift; sourceTree = "<group>"; };
 		6180AC66297D333E00A3281A /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		6180AC68297D346500A3281A /* LocalizationShortCut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationShortCut.swift; sourceTree = "<group>"; };
 		6180AC6C297D36E400A3281A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -386,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				613FF3282A0AA62200D0BB71 /* ControllersFactoryProtocol.swift */,
+				617AC78D2A730EF9008B50A5 /* Configurator.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -609,6 +620,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		617AC7882A72E86C008B50A5 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				617AC7892A72E8BD008B50A5 /* PostTableViewCellProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		618F60EF2A192D01006C3F55 /* UserService */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,6 +736,7 @@
 				614E093B2A118FBA00A923BE /* FirestoreEnum.swift */,
 				618F60F32A1A4F42006C3F55 /* UserDefaultsEnum.swift */,
 				618F60F52A1AA8AF006C3F55 /* ScreenType.swift */,
+				617AC7842A71C649008B50A5 /* CellType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -773,6 +793,7 @@
 				BB1578CC28195B7500579E09 /* LoginFactory.swift */,
 				BB1578CF281B341400579E09 /* CurrentLoginFactory.swift */,
 				BB47EFF42888C12400FFB5EC /* ControllersFactory.swift */,
+				617AC7922A76896A008B50A5 /* ConfiguratorCell.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -853,8 +874,10 @@
 		BBD735C627A72C95002397A0 /* Post */ = {
 			isa = PBXGroup;
 			children = (
+				617AC7882A72E86C008B50A5 /* Protocol */,
 				61F6B73B2A6DDE2900E3DD07 /* PostTableViewCellDelegate .swift */,
 				BBD735C727A72CAE002397A0 /* PostTableViewCell.swift */,
+				617AC7862A72E03F008B50A5 /* PostTableViewCellWithoutImage.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -1042,6 +1065,7 @@
 				61765CD92A6BD77300216874 /* DatabaseError.swift in Sources */,
 				613FF3422A0AF5B700D0BB71 /* UpdateInfoProfileProtocol.swift in Sources */,
 				611A7BBB2A3D1EB500030A9F /* PostDetailViewModel.swift in Sources */,
+				617AC7852A71C649008B50A5 /* CellType.swift in Sources */,
 				61484AFF299EA8400093FBF1 /* LocalNotificationsService.swift in Sources */,
 				BBBD5CD9291C205800A63966 /* FileManagerServiceProtocol.swift in Sources */,
 				BB1578D0281B341400579E09 /* CurrentLoginFactory.swift in Sources */,
@@ -1060,7 +1084,9 @@
 				BB15250D282FBFDE0045275F /* AppDelegate.swift in Sources */,
 				61ABC2C52A2B3230006748BF /* FriendsViewCell.swift in Sources */,
 				611A7BBD2A3D1F5000030A9F /* PostDetailViewModelProtocol.swift in Sources */,
+				617AC7872A72E03F008B50A5 /* PostTableViewCellWithoutImage.swift in Sources */,
 				618F60F62A1AA8AF006C3F55 /* ScreenType.swift in Sources */,
+				617AC78A2A72E8BD008B50A5 /* PostTableViewCellProtocol.swift in Sources */,
 				61DAFB5F29DE19180026F3F3 /* LoginViewModel.swift in Sources */,
 				6150EECF296871C70023BA7D /* ProfileViewModel.swift in Sources */,
 				BB47EFFC288A003400FFB5EC /* LoginCoordinator.swift in Sources */,
@@ -1129,6 +1155,8 @@
 				61CDA6AB2A2A9195003FA31B /* SplashViewController.swift in Sources */,
 				BB152508282FBFCE0045275F /* CurrentUserService.swift in Sources */,
 				613F15482A02B863006FBA8E /* MainCoordinator.swift in Sources */,
+				617AC7932A76896A008B50A5 /* ConfiguratorCell.swift in Sources */,
+				617AC78E2A730EF9008B50A5 /* Configurator.swift in Sources */,
 				61D204952A6759590052E36B /* ProfileViewModelProtocol.swift in Sources */,
 				BB0C6A4428FA045500C665D5 /* LoginViewControllerDelegate.swift in Sources */,
 				BB152507282FBFCE0045275F /* User.swift in Sources */,

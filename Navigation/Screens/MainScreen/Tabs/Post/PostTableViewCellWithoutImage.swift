@@ -1,21 +1,18 @@
 //
+//  PostTableViewCellWithoutImage.swift
+//  Navigation
 //
-// PostTableViewCellFS.swift
-// Navigation
+//  Created by Александр Востриков on 30.01.2022.
 //
-// Created by Александр Востриков
-//
-    
 
 import UIKit
 
-class PostTableViewCellFS: UITableViewCell {
+class PostTableViewCellWithoutImage: UITableViewCell {
     
     weak var delegate: PostTableViewCellDelegate?
     var indexPath: IndexPath!
+    
     private lazy var heightAnchorReadMoreButton: NSLayoutConstraint = readMore.heightAnchor.constraint(equalToConstant: 0)
-    private let constantHeightPostImageView = (Constants.screenWeight) / 3
-    private lazy var heightAnchorPostImageView: NSLayoutConstraint = postImageView.heightAnchor.constraint(equalToConstant: constantHeightPostImageView)
     
     private let authorLabel: UILabel = {
         let label = UILabel()
@@ -42,15 +39,7 @@ class PostTableViewCellFS: UITableViewCell {
         image.clipsToBounds = true
         return image
     }()
-    private let postImageView: UIImageView = {
-        let image = UIImageView()
-        image.toAutoLayout()
-        image.contentMode = .scaleToFill
-        image.backgroundColor = .black
-        image.layer.cornerRadius = 10
-        image.clipsToBounds = true
-        return image
-    }()
+
     private let bodyLabel: UILabel = {
         let description = UILabel()
         description.toAutoLayout()
@@ -81,7 +70,7 @@ class PostTableViewCellFS: UITableViewCell {
         likesImage.toAutoLayout()
         likesImage.setImage(UIImage(systemName: "heart"), for: .normal)
         likesImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
-//        likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
+        //        likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
         return likesImage
     }()
     private let viewsLabel: UILabel = {
@@ -93,36 +82,42 @@ class PostTableViewCellFS: UITableViewCell {
         return views
     }()
     private let viewsImageView: UIImageView = {
-        let image = UIImageView()
-        image.toAutoLayout()
-        image.contentMode = .scaleAspectFit
-        image.tintColor = .createColor(lightMode: .black, darkMode: .white)
-        return image
+        let viewsImage = UIImageView()
+        viewsImage.toAutoLayout()
+        viewsImage.contentMode = .scaleAspectFit
+        viewsImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
+        viewsImage.image = UIImage(systemName: "eyes")
+        return viewsImage
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         configureConstraints()
-//        guard reuseIdentifier == Cells.cellForFeedPostTableViewCell else { return }
-//        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
-//                doubleTap.numberOfTapsRequired = 2
-//                self.addGestureRecognizer(doubleTap)
+        addDoubleTapRecognizer()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        heightAnchorPostImageView = postImageView.heightAnchor.constraint(equalToConstant: constantHeightPostImageView)
+
+        authorLabel.text = nil
+        dateLabel.text = nil
+        bodyLabel.text = nil
+        likesLabel.text = nil
+        viewsLabel.text = nil
+        fotoImageView.image = nil
+    
         readMore.isHidden = false
         heightAnchorReadMoreButton.isActive = false
         bodyLabel.numberOfLines = 4
     }
+    
     func configure(post: PostFS, with user: User) {
         authorLabel.text = user.getFullName()
-        viewsImageView.image = UIImage(systemName: "message")
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .current
         dateFormatter.dateFormat = "d MMM yyyy hh:mm"
@@ -135,60 +130,43 @@ class PostTableViewCellFS: UITableViewCell {
             guard let imageUrl = URL(string: profilePictureUrl) else { return }
             fotoImageView.sd_setImage(with: imageUrl)
         }
-        if let postImageUrl = post.imageUrl {
-            guard let imageUrl = URL(string: postImageUrl) else {
-                heightAnchorPostImageView.constant = 0
-                return
-            }
-            postImageView.sd_setImage(with: imageUrl)
-        }
-        else {
-            heightAnchorPostImageView.constant = 0
-        }
     }
 }
-private extension PostTableViewCellFS {
+private extension PostTableViewCellWithoutImage {
     func vizualizeAdd(color: UIColor) {
         contentView.backgroundColor = color
         UIView.animate(withDuration: 1, delay: 0) {
             self.contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         }
     }
+    func addDoubleTapRecognizer() {
+        guard reuseIdentifier == Cells.cellForProfileTableViewCell else { return }
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
+        doubleTap.numberOfTapsRequired = 2
+        self.addGestureRecognizer(doubleTap)
+    }
 }
-@objc private extension PostTableViewCellFS {
+@objc private extension PostTableViewCellWithoutImage {
     func readMoreButtonTapped(){
-       bodyLabel.numberOfLines = 0
-       readMore.isHidden = true
-       heightAnchorReadMoreButton.isActive = true
-       delegate?.moreReadButtonTapped()
+        bodyLabel.numberOfLines = 0
+        readMore.isHidden = true
+        heightAnchorReadMoreButton.isActive = true
+        delegate?.moreReadButtonTapped()
     }
     func addPostToFavorite() {
-        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, createdDate: Date(), updateDate: Date())
-        print("error:")
-        FirestoreManager().addNewPost(post: post) { error in
-            guard let error else { return }
-            print("error:\(error.localizedDescription)")
+        delegate?.addFavorite(index: indexPath.row) { [weak self] isFavorite in
+            isFavorite ? self?.vizualizeAdd(color: .systemGreen) : self?.vizualizeAdd(color: .systemRed)
         }
-//        guard let post else { return }
-//        CoreDataManager.dataManager.create(post: post) { [weak self] result in
-//            switch result {
-//                case .success(_):
-//                    self?.vizualizeAdd(color: .systemGreen)
-//                case .failure(let error):
-//                    self?.vizualizeAdd(color: .systemRed)
-//                    print(error.localizedDescription)
-//            }
-//        }
     }
 }
-private extension PostTableViewCellFS {
-    func setupViews(){
+private extension PostTableViewCellWithoutImage {
+    func setupViews() {
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
-        contentView.addSubviews(fotoImageView,authorLabel, dateLabel, postImageView,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
+        contentView.addSubviews(fotoImageView,authorLabel, dateLabel,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
         self.layer.cornerRadius = 20
         self.clipsToBounds = true
     }
-    func configureConstraints(){
+    func configureConstraints() {
         let constraints: [NSLayoutConstraint] = [
             fotoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             fotoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -210,15 +188,9 @@ private extension PostTableViewCellFS {
             
             readMore.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             readMore.trailingAnchor.constraint(lessThanOrEqualTo: bodyLabel.trailingAnchor),
-            readMore.bottomAnchor.constraint(equalTo: postImageView.topAnchor, constant: -16),
+            readMore.bottomAnchor.constraint(equalTo: likesButton.topAnchor, constant: -16),
             
-            postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            postImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            postImageView.widthAnchor.constraint(equalToConstant: Constants.screenWeight - 32),
-            postImageView.bottomAnchor.constraint(equalTo: likesButton.topAnchor, constant: -20),
-            postImageView.bottomAnchor.constraint(equalTo: viewsImageView.topAnchor, constant: -20),
-            
-            likesButton.leadingAnchor.constraint(equalTo: postImageView.leadingAnchor, constant: 16),
+            likesButton.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor, constant: 16),
             likesButton.trailingAnchor.constraint(equalTo: likesLabel.leadingAnchor, constant: -8),
             likesButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -18),
             likesButton.heightAnchor.constraint(equalToConstant: 20),
@@ -232,11 +204,9 @@ private extension PostTableViewCellFS {
             viewsImageView.widthAnchor.constraint(equalToConstant: 20),
             viewsImageView.trailingAnchor.constraint(equalTo: viewsLabel.leadingAnchor, constant: -8),
             
-            viewsLabel.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 20),
             viewsLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16),
             viewsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -18)
         ]
         NSLayoutConstraint.activate(constraints)
-        heightAnchorPostImageView.isActive = true
     }
 }

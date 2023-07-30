@@ -13,9 +13,10 @@ protocol FeedViewModelProtocol: AnyObject {
     var stateChanged: ((FeedViewModel.State) -> Void)? { get set }
     func changeState(completion: @escaping ()->())
     func numberOfRows() -> Int
+    func numberOfSections() -> Int
     func getPostFor(_ indexPath: IndexPath) -> PostFS
-    func updateViews(postUID: String)
-    func showDetail(post: PostFS)
+    func cellType(at indexPath: IndexPath) -> CellType
     func getUser(for userUID: String) -> User
     func getFriens() -> [User]
+    func didSelectRow(at indexPath: IndexPath)
 }

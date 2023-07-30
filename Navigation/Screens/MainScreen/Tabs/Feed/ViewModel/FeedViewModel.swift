@@ -58,9 +58,11 @@ final class FeedViewModel: FeedViewModelProtocol {
             }
         }
     }
-    
     func numberOfRows() -> Int {
-        return posts.count
+        posts.count
+    }
+    func numberOfSections() -> Int {
+        friends.count
     }
     func getUser(for userUID: String) -> User {
         let friends = userService.friends
@@ -72,19 +74,42 @@ final class FeedViewModel: FeedViewModelProtocol {
         return user
     }
     func getFriens() -> [User] {
-        return userService.friends
+        userService.friends
     }
     func getPostFor(_ indexPath: IndexPath) -> PostFS {
         posts[indexPath.row]
     }
+    func cellType(at indexPath: IndexPath) -> CellType {
+        guard let _ = getPostFor(indexPath).imageUrl else { return .postCell }
+        return .postWithImageCell
+    }
     func showDetail(post: PostFS) {
         coordinator.showDetail(post: post)
     }
-    func updateViews(postUID: String) {
+    func didSelectRow(at indexPath: IndexPath) {
+        let post = posts[indexPath.row]
+        coordinator.showDetail(post: post)
+        updateViews(postUID: post.postUid) { [weak self] in
+            guard let self else { return }
+            self.firestore.fetchPost(postId: post.postUid) { result in
+                switch result {
+                    case .success(let post):
+                        self.posts[indexPath.row] = post
+                        self.stateChanged?(.loaded(self))
+                    case .failure(let error):
+                        print("error updateViews:\(error.localizedDescription)")
+                        return
+                }
+            }
+        }
+    }
+    func updateViews(postUID: String, completion: @escaping VoidClosure) {
         firestore.updateViews(postId: postUID) { error in
             if let error {
                 print("error updateViews:\(error.localizedDescription)")
+                return
             }
+            completion()
         }
     }
 }

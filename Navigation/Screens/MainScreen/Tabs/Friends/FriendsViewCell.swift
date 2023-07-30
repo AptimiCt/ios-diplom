@@ -27,7 +27,7 @@ final class FriendsViewCell: UITableViewCell {
         collectionView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         return collectionView
     }()
-    var friends: [User] = [] {
+    var friends: [User]! {
         didSet {
             friendsCollectionView.reloadData()
         }
