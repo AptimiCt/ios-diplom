@@ -119,10 +119,7 @@ class PostTableViewCell: UITableViewCell {
         likesLabel.text = nil
         viewsLabel.text = nil
         fotoImageView.image = nil
-        
-        readMore.isHidden = false
-        heightAnchorReadMoreButton.isActive = false
-        bodyLabel.numberOfLines = 4
+        indexPath = nil
     }
     
     func configure(post: PostFS, with user: User) {
@@ -161,10 +158,7 @@ private extension PostTableViewCell {
 }
 @objc private extension PostTableViewCell {
     func readMoreButtonTapped(){
-        bodyLabel.numberOfLines = 0
-        readMore.isHidden = true
-        heightAnchorReadMoreButton.isActive = true
-        delegate?.moreReadButtonTapped()
+        delegate?.moreReadButtonTapped(at: indexPath)
     }
     func addPostToFavorite() {
         delegate?.addFavorite(index: indexPath.row) { [weak self] isFavorite in
@@ -184,7 +178,7 @@ private extension PostTableViewCell {
             fotoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             fotoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             fotoImageView.heightAnchor.constraint(equalToConstant: 60),
-            fotoImageView.widthAnchor.constraint(equalTo: fotoImageView.heightAnchor),
+            fotoImageView.widthAnchor.constraint(equalToConstant: 60),
             fotoImageView.trailingAnchor.constraint(equalTo: authorLabel.leadingAnchor, constant: -24),
             fotoImageView.bottomAnchor.constraint(equalTo: bodyLabel.topAnchor, constant: -12),
             

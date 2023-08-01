@@ -297,7 +297,7 @@ extension ProfileViewController: PostTableViewCellDelegate {
             completion(isFavorite)
         }
     }
-    func moreReadButtonTapped() {
+    func moreReadButtonTapped(at indexPath: IndexPath) {
         tableView.beginUpdates()
         tableView.endUpdates()
     }

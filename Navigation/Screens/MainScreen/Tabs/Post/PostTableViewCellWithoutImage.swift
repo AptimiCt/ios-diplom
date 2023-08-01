@@ -110,10 +110,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         likesLabel.text = nil
         viewsLabel.text = nil
         fotoImageView.image = nil
-    
-        readMore.isHidden = false
-        heightAnchorReadMoreButton.isActive = false
-        bodyLabel.numberOfLines = 4
+        indexPath = nil
     }
     
     func configure(post: PostFS, with user: User) {
@@ -148,10 +145,7 @@ private extension PostTableViewCellWithoutImage {
 }
 @objc private extension PostTableViewCellWithoutImage {
     func readMoreButtonTapped(){
-        bodyLabel.numberOfLines = 0
-        readMore.isHidden = true
-        heightAnchorReadMoreButton.isActive = true
-        delegate?.moreReadButtonTapped()
+        delegate?.moreReadButtonTapped(at: indexPath)
     }
     func addPostToFavorite() {
         delegate?.addFavorite(index: indexPath.row) { [weak self] isFavorite in

@@ -160,7 +160,7 @@ private extension PostTableViewCellFS {
        bodyLabel.numberOfLines = 0
        readMore.isHidden = true
        heightAnchorReadMoreButton.isActive = true
-       delegate?.moreReadButtonTapped()
+       delegate?.moreReadButtonTapped(at: indexPath)
     }
     func addPostToFavorite() {
         let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, createdDate: Date(), updateDate: Date())

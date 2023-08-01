@@ -164,7 +164,7 @@ private extension ProfileTableViewCell {
         bodyLabel.numberOfLines = 0
         readMore.isHidden = true
         heightAnchorReadMoreButton.isActive = true
-        delegate?.moreReadButtonTapped()
+        delegate?.moreReadButtonTapped(at: indexPath)
     }
     func addPostToFavorite() {
         delegate?.addFavorite(index: indexPath.row) { [weak self] isFavorite in

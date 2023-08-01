@@ -29,6 +29,7 @@ struct ConfiguratorCell: Configurator {
                         
                         let user = viewModel.getUser(for: post.userUid)
                         cell.configure(post: post, with: user)
+                        cell.indexPath = indexPath
                         cell.delegate = delegate
                         return cell
                     case .postCell:
@@ -36,6 +37,7 @@ struct ConfiguratorCell: Configurator {
                         let post = viewModel.getPostFor(indexPath)
                         let user = viewModel.getUser(for: post.userUid)
                         cell.configure(post: post, with: user)
+                        cell.indexPath = indexPath
                         cell.delegate = delegate
                         return cell
                 }

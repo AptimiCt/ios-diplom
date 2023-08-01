@@ -172,15 +172,11 @@ extension FeedViewController: UITableViewDataSource {
 extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.selectionStyle = .none
-        if indexPath.section != 0 {
-            viewModel.didSelectRow(at: indexPath)
-        }
     }
 }
 extension FeedViewController: PostTableViewCellDelegate {
-    func moreReadButtonTapped() {
-        tableView.beginUpdates()
-        tableView.endUpdates()
+    func moreReadButtonTapped(at indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath)
     }
     func addFavorite(index: Int, completion: @escaping BoolClosure) {
         completion(true)
