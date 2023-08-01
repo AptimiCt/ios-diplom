@@ -16,7 +16,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     private var postData: StateModelPost.PostData {
         var isLiked = false
         let likes = post.likes
-        if likes.contains(post.userUid) {
+        if likes.contains(userService.getUser().uid) {
             isLiked = true
         }
         let friends = userService.friends
@@ -36,6 +36,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
                                        isLiked: isLiked,
                                        views: post.views)
     }
+    private let index: Int
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
@@ -43,11 +44,13 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     }()
     private let firestore: DatabeseManagerProtocol
     
-    init(userService: UserService, firestore: DatabeseManagerProtocol, post: PostFS) {
+    init(userService: UserService, firestore: DatabeseManagerProtocol, post: PostFS, index: Int) {
         self.userService = userService
         self.firestore = firestore
         self.post = post
+        self.index = index
         self.stateChanged?(.initial)
+        Logger.standart.start(on: self)
     }
     func setupView() {
         stateChanged?(.success(postData))
@@ -65,6 +68,8 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
                         switch result {
                             case .success(let post):
                                 self.post = post
+                                let postNotification = ["post": post, "index": self.index] as [String : Any]
+                                NotificationCenter.default.post(name: Notification.Name(Constants.notifiForUpdateProfile), object: postNotification)
                                 self.stateChanged?(.success(self.postData))
                             case .failure(let error):
                                 print("fetchPost:\(error.localizedDescription)")
@@ -74,5 +79,9 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
                 
             }
         }
+    }
+    
+    deinit {
+        Logger.standart.remove(on: self)
     }
 }

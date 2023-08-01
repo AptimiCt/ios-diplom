@@ -67,7 +67,12 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
 
 //MARK: - extensions
 @objc private extension FeedViewController {
-    func reloadDataInScreen() {
+    func reloadDataInScreen(notification: NSNotification) {
+        if let dict = notification.object as? NSDictionary {
+            if let post = dict["post"] as? PostFS, let index = dict["index"] as? Int {
+                viewModel.updatePost(post: post, for: index)
+            }
+        }
         tableView.reloadData()
     }
     func refresh(sender: UIRefreshControl) {

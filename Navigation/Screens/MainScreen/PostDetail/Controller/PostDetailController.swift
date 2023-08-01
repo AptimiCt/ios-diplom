@@ -88,6 +88,7 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
         image.toAutoLayout()
         image.contentMode = .scaleAspectFit
         image.tintColor = .createColor(lightMode: .black, darkMode: .white)
+        image.image = UIImage(systemName: "eyes")
         return image
     }()
     private let footerStackView: UIStackView = {
@@ -123,6 +124,7 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
         super.init(nibName: nil, bundle: nil)
         self.setupViews()
         self.configureConstraints()
+        Logger.standart.start(on: self)
     }
     
     required init?(coder: NSCoder) {
@@ -163,7 +165,6 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
 private extension PostDetailController {
     func configure(post: StateModelPost.PostData) {
         authorLabel.text = post.fullName
-        viewsImageView.image = UIImage(systemName: "message")
         if let postPictireUrl = URL(string: post.profilePicture) {
             fotoImageView.sd_setImage(with: postPictireUrl)
         }

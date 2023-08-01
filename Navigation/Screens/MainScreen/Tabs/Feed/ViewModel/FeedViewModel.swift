@@ -83,12 +83,12 @@ final class FeedViewModel: FeedViewModelProtocol {
         guard let _ = getPostFor(indexPath).imageUrl else { return .postCell }
         return .postWithImageCell
     }
-    func showDetail(post: PostFS) {
-        coordinator.showDetail(post: post)
+    func updatePost(post: PostFS, for index: Int) {
+        posts[index] = post
     }
     func didSelectRow(at indexPath: IndexPath) {
         let post = posts[indexPath.row]
-        coordinator.showDetail(post: post)
+        coordinator.showDetail(post: post, index: indexPath.row)
         updateViews(postUID: post.postUid) { [weak self] in
             guard let self else { return }
             self.firestore.fetchPost(postId: post.postUid) { result in

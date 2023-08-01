@@ -27,8 +27,8 @@ class FeedCoordinator: BaseCoordinator {
         let controller = factory.makePhotosController()
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
-    func showDetail(post: PostFS) {
-        let controller = factory.makePostDetailController(post: post)
+    func showDetail(post: PostFS, index: Int) {
+        let controller = factory.makePostDetailController(post: post, index: index)
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
     deinit {
