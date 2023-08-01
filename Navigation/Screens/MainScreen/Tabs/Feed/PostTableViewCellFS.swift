@@ -120,7 +120,7 @@ class PostTableViewCellFS: UITableViewCell {
         heightAnchorReadMoreButton.isActive = false
         bodyLabel.numberOfLines = 4
     }
-    func configure(post: PostFS, with user: User) {
+    func configure(post: Post, with user: User) {
         authorLabel.text = user.getFullName()
         viewsImageView.image = UIImage(systemName: "message")
         let dateFormatter = DateFormatter()
@@ -163,7 +163,7 @@ private extension PostTableViewCellFS {
        delegate?.moreReadButtonTapped(at: indexPath)
     }
     func addPostToFavorite() {
-        let post = PostFS(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, createdDate: Date(), updateDate: Date())
+        let post = Post(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, createdDate: Date(), updateDate: Date())
         print("error:")
         FirestoreManager().addNewPost(post: post) { error in
             guard let error else { return }

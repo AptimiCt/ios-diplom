@@ -14,10 +14,10 @@ protocol FeedViewModelProtocol: AnyObject {
     func changeState(completion: @escaping ()->())
     func numberOfRows() -> Int
     func numberOfSections() -> Int
-    func getPostFor(_ indexPath: IndexPath) -> PostFS
+    func getPostFor(_ indexPath: IndexPath) -> Post
     func cellType(at indexPath: IndexPath) -> CellType
     func getUser(for userUID: String) -> User
     func getFriens() -> [User]
-    func updatePost(post: PostFS, for index: Int)
+    func updatePost(post: Post, for index: Int)
     func didSelectRow(at indexPath: IndexPath)
 }

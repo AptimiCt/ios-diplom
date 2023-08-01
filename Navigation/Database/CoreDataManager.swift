@@ -111,7 +111,7 @@ final class CoreDataManager {
         }
     }
     
-    private func configure(model: PostCoreData, from post: PostFS) {
+    private func configure(model: PostCoreData, from post: Post) {
         model.userUid = post.userUid
         model.postUid = post.postUid
         model.title = post.title
@@ -126,7 +126,7 @@ final class CoreDataManager {
 
 extension CoreDataManager {
     
-    func create(post: PostFS, completion: @escaping (Result<PostCoreData?, DatabaseError>)->Void) {
+    func create(post: Post, completion: @escaping (Result<PostCoreData?, DatabaseError>)->Void) {
         let predicate = NSPredicate(format: "postUid == %@", post.postUid)
         fetch(predicate: predicate) { result in
             switch result {

@@ -19,7 +19,7 @@ final class FirestoreManager {
     private let usersCollection: String = FirestoreCollection.usersCollection
     private let usersPosts: String = FirestoreCollection.usersPosts
     private var users: [User] = []
-    private var posts: [PostFS] = []
+    private var posts: [Post] = []
 }
 extension FirestoreManager: DatabeseManagerProtocol {
     func addUser(user: User, completion: @escaping OptionalErrorClosure) {
@@ -114,7 +114,7 @@ extension FirestoreManager: DatabeseManagerProtocol {
         }
     }
     
-    func addNewPost(post: PostFS, completion: @escaping OptionalErrorClosure) {
+    func addNewPost(post: Post, completion: @escaping OptionalErrorClosure) {
         var newPost = post
         let usersPostsRef = firestoreDB.collection(usersPosts)
         newPost.postUid = usersPostsRef.collectionID
@@ -136,13 +136,13 @@ extension FirestoreManager: DatabeseManagerProtocol {
             completion(error)
         }
     }
-    func fetchPost(postId: String, completion: @escaping (Result<PostFS, Error>) -> Void) {
+    func fetchPost(postId: String, completion: @escaping (Result<Post, Error>) -> Void) {
         let usersPostsDocumentRef = firestoreDB.collection(usersPosts).document(postId)
-        usersPostsDocumentRef.getDocument(as: PostFS.self) { result in
+        usersPostsDocumentRef.getDocument(as: Post.self) { result in
             completion(result)
         }
     }
-    func fetchAllPosts(uid: String, completion: @escaping (Result<[PostFS], Error>) -> Void) {
+    func fetchAllPosts(uid: String, completion: @escaping (Result<[Post], Error>) -> Void) {
         let usersPostsRef = firestoreDB.collection(usersPosts)
         usersPostsRef
             .whereField(PostProperties.userUid, in: [uid])
@@ -153,7 +153,7 @@ extension FirestoreManager: DatabeseManagerProtocol {
                     guard let self else { completion(.failure(FirestoreDatabaseError.error(desription: "self is nil"))); return}
                     self.posts = querySnapshot!.documents.compactMap { querySnapshotDocument in
                         do {
-                            return try querySnapshotDocument.data(as: PostFS.self)
+                            return try querySnapshotDocument.data(as: Post.self)
                         } catch {
                             completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пост.")))
                             return nil
@@ -163,7 +163,7 @@ extension FirestoreManager: DatabeseManagerProtocol {
                 }
             }
     }
-    func fetchAllPosts(uids: [String], completion: @escaping (Result<[PostFS], Error>) -> Void) {
+    func fetchAllPosts(uids: [String], completion: @escaping (Result<[Post], Error>) -> Void) {
         let usersPostsRef = firestoreDB.collection(usersPosts)
         usersPostsRef
             .whereField(PostProperties.userUid, in: uids)
@@ -174,7 +174,7 @@ extension FirestoreManager: DatabeseManagerProtocol {
                     guard let self else { completion(.failure(FirestoreDatabaseError.error(desription: "self is nil"))); return}
                     self.posts = querySnapshot!.documents.compactMap { querySnapshotDocument in
                         do {
-                            return try querySnapshotDocument.data(as: PostFS.self)
+                            return try querySnapshotDocument.data(as: Post.self)
                         } catch {
                             completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пост.")))
                             return nil
@@ -245,60 +245,4 @@ extension FirestoreManager: DatabeseManagerProtocol {
             })
         }
     }
-}
-
-struct PostFS: Codable {
-    let userUid: String
-    var postUid: String
-    let title: String?
-    let body: String
-    var imageUrl: String?
-    var postImageFilename: String {
-        return postUid + "_post"
-    }
-    let likes: [String]
-    let views: Int
-    let createdDate: Date
-    let updateDate: Date
-    
-    init(userUid: String,
-         postUid: String = "",
-         title: String? = "",
-         body: String,
-         imageUrl: String? = nil,
-         likes: [String] = [],
-         views: Int = 0,
-         createdDate: Date = Date(),
-         updateDate: Date = Date()
-    ) {
-        self.userUid = userUid
-        self.postUid = postUid
-        self.title = title
-        self.body = body
-        self.imageUrl = imageUrl
-        self.likes = likes
-        self.views = views
-        self.createdDate = createdDate
-        self.updateDate = updateDate
-    }
-}
-
-enum FirestoreDatabaseError: Error {
-    case failureGetPost
-    case failedToUpload
-    case failedToGetDownloadUrl
-    case error(desription: String)
-}
-
-enum UserProperties {
-    static let uid = "uid"
-    static let posts = "posts"
-    static let friends = "friends"
-}
-enum PostProperties {
-    static let userUid = "userUid"
-    static let body = "body"
-    static let imageUrl = "imageUrl"
-    static let likes = "likes"
-    static let views = "views"
 }

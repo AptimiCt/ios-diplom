@@ -12,7 +12,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     
     private let userService: UserService
     var stateChanged: ((StateModelPost) -> Void)?
-    private var post: PostFS
+    private var post: Post
     private var postData: StateModelPost.PostData {
         var isLiked = false
         let likes = post.likes
@@ -44,7 +44,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     }()
     private let firestore: DatabeseManagerProtocol
     
-    init(userService: UserService, firestore: DatabeseManagerProtocol, post: PostFS, index: Int) {
+    init(userService: UserService, firestore: DatabeseManagerProtocol, post: Post, index: Int) {
         self.userService = userService
         self.firestore = firestore
         self.post = post

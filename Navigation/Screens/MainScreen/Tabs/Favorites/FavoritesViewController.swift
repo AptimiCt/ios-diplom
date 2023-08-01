@@ -24,7 +24,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
     private lazy var clearFilterButton = UIBarButtonItem(image: UIImage(systemName: "checklist.checked"), style: .plain, target: self, action: #selector(clearFilter))
     private lazy var applyFilterButton = UIBarButtonItem(image: UIImage(systemName: "checklist"), style: .plain, target: self, action: #selector(applyFilter))
     
-    private var posts: [PostFS] = []
+    private var posts: [Post] = []
     
     //MARK: - init
     init() {
@@ -79,9 +79,9 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
         NSLayoutConstraint.activate(constraints)
     }
     
-    private func mappingPost(postDataModel: PostCoreData) -> PostFS {
+    private func mappingPost(postDataModel: PostCoreData) -> Post {
         
-        return PostFS(userUid: postDataModel.userUid ?? "",
+        return Post(userUid: postDataModel.userUid ?? "",
                       postUid: postDataModel.postUid ?? "",
                       title: postDataModel.title,
                       body: postDataModel.body ?? "",

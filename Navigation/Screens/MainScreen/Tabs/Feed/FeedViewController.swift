@@ -69,7 +69,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
 @objc private extension FeedViewController {
     func reloadDataInScreen(notification: NSNotification) {
         if let dict = notification.object as? NSDictionary {
-            if let post = dict["post"] as? PostFS, let index = dict["index"] as? Int {
+            if let post = dict["post"] as? Post, let index = dict["index"] as? Int {
                 viewModel.updatePost(post: post, for: index)
             }
         }

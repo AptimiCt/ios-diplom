@@ -113,7 +113,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         indexPath = nil
     }
     
-    func configure(post: PostFS, with user: User) {
+    func configure(post: Post, with user: User) {
         authorLabel.text = user.getFullName()
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .current

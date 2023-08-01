@@ -20,8 +20,8 @@ final class FeedViewModel: FeedViewModelProtocol {
     private let coordinator: FeedCoordinator
     private let userService: UserService
     
-    private var posts: [PostFS] = []
-    private var postsForDate: [String: [PostFS]] = [:]
+    private var posts: [Post] = []
+    private var postsForDate: [String: [Post]] = [:]
     private var friends: [User] = []
     
     var stateChanged: ((FeedViewModel.State) -> Void)?
@@ -76,14 +76,14 @@ final class FeedViewModel: FeedViewModelProtocol {
     func getFriens() -> [User] {
         userService.friends
     }
-    func getPostFor(_ indexPath: IndexPath) -> PostFS {
+    func getPostFor(_ indexPath: IndexPath) -> Post {
         posts[indexPath.row]
     }
     func cellType(at indexPath: IndexPath) -> CellType {
         guard let _ = getPostFor(indexPath).imageUrl else { return .postCell }
         return .postWithImageCell
     }
-    func updatePost(post: PostFS, for index: Int) {
+    func updatePost(post: Post, for index: Int) {
         posts[index] = post
     }
     func didSelectRow(at indexPath: IndexPath) {

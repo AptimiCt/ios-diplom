@@ -118,7 +118,7 @@ class ProfileTableViewCell: UITableViewCell {
         heightAnchorReadMoreButton.isActive = false
         bodyLabel.numberOfLines = 4
     }
-    func configure(post: PostFS, with user: User) {
+    func configure(post: Post, with user: User) {
         authorLabel.text = user.getFullName()
         viewsImageView.image = UIImage(systemName: "message")
         let dateFormatter = DateFormatter()

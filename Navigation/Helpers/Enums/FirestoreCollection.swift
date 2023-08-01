@@ -1,6 +1,6 @@
 //
 //
-// FirestoreEnum.swift
+// FirestoreCollection.swift
 // Navigation
 //
 // Created by Александр Востриков

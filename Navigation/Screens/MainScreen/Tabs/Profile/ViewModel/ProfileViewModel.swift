@@ -18,7 +18,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     private let coordinator: ProfileCoordinator
     private let userService: UserService
     
-    private var posts: [PostFS] = []
+    private var posts: [Post] = []
     
     var stateChanged: ((ProfileViewModel.State) -> Void)?
 
@@ -46,7 +46,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func numberOfRows() -> Int {
         posts.count
     }
-    func getPostFor(_ index: Int) -> PostFS {
+    func getPostFor(_ index: Int) -> Post {
         posts[index]
     }
     func getUser() -> User {

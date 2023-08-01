@@ -12,7 +12,7 @@ protocol ProfileViewModelProtocol: AnyObject {
     var stateChanged: ((ProfileViewModel.State) -> Void)? { get set }
     func changeState(completion: @escaping ()->())
     func numberOfRows() -> Int
-    func getPostFor(_ index: Int) -> PostFS
+    func getPostFor(_ index: Int) -> Post
     func addCoreData(_ index: Int, completion: @escaping BoolClosure)
     func getUser() -> User
     func showPhotosVC()

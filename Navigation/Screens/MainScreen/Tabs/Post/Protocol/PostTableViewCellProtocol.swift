@@ -10,5 +10,5 @@
 protocol PostTableViewCellProtocol {
     
     var delegate: PostTableViewCellDelegate? { get set }
-    func configure(post: PostFS, with user: User)
+    func configure(post: Post, with user: User)
 }
