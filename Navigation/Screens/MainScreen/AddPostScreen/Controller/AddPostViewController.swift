@@ -24,6 +24,7 @@ final class AddPostViewController: UIViewController, AddPostViewControllerProtoc
     init(viewModel: AddPostViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
+        Logger.standart.start(on: self)
     }
     
     required init?(coder: NSCoder) {
@@ -41,6 +42,9 @@ final class AddPostViewController: UIViewController, AddPostViewControllerProtoc
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.viewDidDisappear()
+    }
+    deinit {
+        Logger.standart.remove(on: self)
     }
 }
 @objc private extension AddPostViewController {

@@ -12,7 +12,7 @@ import RSKPlaceholderTextView
 
 final class BodyImageViewCell: UITableViewCell {
     
-    private let placeholder = "Что нового?"
+    private let placeholder = "BIVC.placeholder".localized
     
     lazy var bodyTextView: RSKPlaceholderTextView = {
         let bodyTextView = RSKPlaceholderTextView()

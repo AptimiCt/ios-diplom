@@ -11,7 +11,7 @@ import UIKit
 
 final class AddPostViewModel {
     
-    let title = "Добавить запись"
+    let title = "APVM.title".localized
     var onUpdate: () -> Void = {}
     
     enum Cell {
@@ -34,6 +34,7 @@ final class AddPostViewModel {
         self.cellBuilder = cellBuilder
         self.firestore = firestore
         self.userService = userService
+        Logger.standart.start(on: self)
     }
     
     func viewDidLoad() {
@@ -50,16 +51,26 @@ final class AddPostViewModel {
     }
     
     func cell(for indexPath: IndexPath) -> Cell {
-        return cells[indexPath.row]
+        cells[indexPath.row]
     }
     
     func tappedDone() {
-        guard let bodyText = bodyCellViewModel?.bodyText else { return }
+        guard let bodyText = bodyCellViewModel?.bodyText, !bodyText.isEmpty else { return }
         let user = userService.getUser()
-        let post = Post(userUid: user.uid, body: bodyText, imageUrl: nil, likes: [], views: 0, createdDate: Date(), updateDate: Date())
-        FirestoreManager().addNewPost(post: post) { error in
-            guard let error else { return }
-            print("error:\(error.localizedDescription)")
+        let filename = "\(user.uid)_\(Date())_postImage"
+        if let postImage = postImageCellViewModel?.image {
+            #warning("weak self is nil")
+            //Если ослабить self метод не вызывается, так как self становится nil
+            uploadImage(image: postImage, fileName: filename) {  result in
+                switch result {
+                    case .success(let url):
+                        self.addPost(with: user.uid, bodyText: bodyText, and: url)
+                    case .failure(let error):
+                        print("error uploadImage:\(error)")
+                }
+            }
+        } else {
+            addPost(with: user.uid, bodyText: bodyText, and: nil)
         }
         coordinator.didFinishSavePost()
     }
@@ -81,8 +92,8 @@ final class AddPostViewModel {
     }
     func updateCell(indexPath: IndexPath, text: String) {
         switch cells[indexPath.row] {
-            case .bodyImageView(let BodyImageViewCellViewModel):
-                BodyImageViewCellViewModel.update(text)
+            case .bodyImageView(let bodyImageViewCellViewModel):
+                bodyImageViewCellViewModel.update(text)
         }
     }
     
@@ -97,12 +108,16 @@ final class AddPostViewModel {
                 }
         }
     }
+    deinit {
+        Logger.standart.remove(on: self)
+    }
 }
 
 private extension AddPostViewModel {
     func updateImage(with image: UIImage) -> BodyImageViewCellViewModel {
         let postImageCellViewModel = cellBuilder.makeBodyImageViewCellViewModel(.image)
         postImageCellViewModel.update(image)
+        self.postImageCellViewModel = postImageCellViewModel
         return postImageCellViewModel
     }
     
@@ -110,5 +125,19 @@ private extension AddPostViewModel {
         bodyCellViewModel = cellBuilder.makeBodyImageViewCellViewModel(.text)
         guard let bodyCellViewModel = bodyCellViewModel else { return }
         cells = [.bodyImageView(bodyCellViewModel)]
+    }
+    
+    func uploadImage(image: UIImage, fileName: String, completion: @escaping (Result<String, Error>)-> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 100) else { return }
+        firestore.uploadPostPicture(with: imageData, fileName: fileName) { result in
+            completion(result)
+        }
+    }
+    func addPost(with userUid: String, bodyText: String, and url: String?) {
+        let post = Post(userUid: userUid, body: bodyText, imageUrl: url, likes: [], views: 0, createdDate: Date(), updateDate: Date())
+        firestore.addNewPost(post: post) { error in
+            guard let error else { return }
+            print("error:\(error.localizedDescription)")
+        }
     }
 }
