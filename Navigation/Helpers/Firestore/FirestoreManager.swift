@@ -117,18 +117,19 @@ extension FirestoreManager: DatabeseManagerProtocol {
     func addNewPost(post: Post, completion: @escaping OptionalErrorClosure) {
         var newPost = post
         let usersPostsRef = firestoreDB.collection(usersPosts)
-        newPost.postUid = usersPostsRef.collectionID
+        let documentID = usersPostsRef.document().documentID
+        newPost.postUid = documentID
         do {
-            let postDocumentIdRef = try usersPostsRef.addDocument(from: newPost) { error in
+            try usersPostsRef.document(documentID).setData(from: newPost) { error in
                 if error != nil {
                     completion(error)
                 }
             }
             let usersCollectionDocumentRef = firestoreDB.collection(usersCollection).document(post.userUid)
-            let posts = [UserProperties.posts : FieldValue.arrayUnion([postDocumentIdRef.documentID])]
+            let posts = [UserProperties.posts : FieldValue.arrayUnion([documentID])]
             usersCollectionDocumentRef.updateData(posts) { error in
                 if error != nil {
-                    usersPostsRef.document(postDocumentIdRef.documentID).delete()
+                    usersPostsRef.document(documentID).delete()
                 }
                 completion(error)
             }

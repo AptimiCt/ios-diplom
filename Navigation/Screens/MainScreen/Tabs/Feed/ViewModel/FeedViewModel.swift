@@ -62,7 +62,7 @@ final class FeedViewModel: FeedViewModelProtocol {
         posts.count
     }
     func numberOfSections() -> Int {
-        friends.count
+        userService.friends.count
     }
     func getUser(for userUID: String) -> User {
         let friends = userService.friends
