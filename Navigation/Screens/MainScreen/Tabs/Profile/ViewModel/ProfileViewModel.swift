@@ -75,7 +75,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         coordinator.showFindFriendVC()
     }
     func showAddPostVC() {
-        print(#function)
+        coordinator.showAddPostVC()
     }
     func showAddPhoto() {
         print(#function)

@@ -71,6 +71,16 @@ final class ControllerFactory: ControllersFactoryProtocol {
         findFriendViewController.viewModel = viewModel
         return findFriendViewController
     }
+    func makeAddPostController(with coordinator: ProfileCoordinator) -> AddPostViewControllerProtocol {
+        let viewModel = AddPostViewModel(
+            cellBuilder: PostCellBuilder(),
+            firestore: FirestoreManager(),
+            userService: userService
+        )
+        viewModel.coordinator = coordinator
+        let addPostViewController = AddPostViewController(viewModel: viewModel)
+        return addPostViewController
+    }
     deinit {
         Logger.standart.remove(on: self)
     }
