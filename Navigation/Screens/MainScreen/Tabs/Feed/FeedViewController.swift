@@ -12,7 +12,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     private(set) var viewModel: FeedViewModelProtocol!
     var cellFactory: Configurator?
     
-    private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
+    private let notificationForUpdateProfile = Notification.Name(Constants.notifyForUpdateProfile)
     private let notificationForNewPost = Notification.Name(Constants.notificationForNewPost)
     
     //MARK: - vars

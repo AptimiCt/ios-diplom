@@ -34,7 +34,7 @@ final class AddPostViewModel {
         self.cellBuilder = cellBuilder
         self.firestore = firestore
         self.userService = userService
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     func viewDidLoad() {
@@ -109,7 +109,7 @@ final class AddPostViewModel {
         }
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 

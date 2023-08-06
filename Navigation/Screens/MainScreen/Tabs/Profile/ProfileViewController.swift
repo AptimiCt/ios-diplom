@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     private var avatar: UIImageView?
     private var offsetAvatar: CGFloat = 0
-    private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
+    private let notificationForUpdateProfile = Notification.Name(Constants.notifyForUpdateProfile)
     private let notificationForNewPost = Notification.Name(Constants.notificationForNewPost)
 
     private var activityIndicator: UIActivityIndicatorView = {
