@@ -19,7 +19,7 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
         self.router = router
         self.factory = factory
         super.init()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     override func start() {
@@ -41,7 +41,7 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
                 if let error {
                     self?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
                 }
-                NotificationCenter.default.post(name: Notification.Name(Constants.notifiForUpdateProfile), object: nil)
+                NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: nil)
                 self?.removeCoordinator(coordinator)
             }
             addCoordinator(coordinator)
@@ -52,7 +52,7 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
         router.present(alert)
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 

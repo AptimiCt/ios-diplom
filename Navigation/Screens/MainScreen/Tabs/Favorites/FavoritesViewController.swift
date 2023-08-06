@@ -31,7 +31,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = tabBarItemFavoritesView
         self.title = Constants.tabBarItemFavoritesViewTitle
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     required init?(coder: NSCoder) {
@@ -92,8 +92,8 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
                       updateDate: postDataModel.updateDate ?? Date())
     }
     
-    private func filterFavorites(findText: String = "", isFiltred: Bool = false) {
-        let predicate = isFiltred ? NSPredicate(format: "body CONTAINS[c] %@", findText) : nil
+    private func filterFavorites(findText: String = "", isFiltered: Bool = false) {
+        let predicate = isFiltered ? NSPredicate(format: "body CONTAINS[c] %@", findText) : nil
         CoreDataManager.dataManager.fetch(predicate: predicate) { [weak self] result in
             guard let self else { return }
             switch result {
@@ -107,7 +107,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
         }
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 
@@ -127,7 +127,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
         
         let okAction = UIAlertAction(title: "applyFilter.alertController.okAction".localized, style: .default, handler: { [weak self] action in
             guard let textFields = alertController.textFields?[0], let text = textFields.text else { return }
-            self?.filterFavorites(findText: text, isFiltred: true)
+            self?.filterFavorites(findText: text, isFiltered: true)
             self?.applyFilterButton.tintColor = .systemRed
         })
         let cancelAction = UIAlertAction(title: "UIAC.cancel".localized, style: .default)

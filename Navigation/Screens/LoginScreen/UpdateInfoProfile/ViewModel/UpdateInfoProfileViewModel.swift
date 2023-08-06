@@ -10,7 +10,7 @@
 import UIKit
 import SDWebImage
 
-final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
+final class UpdateInfoProfileViewModel: UpdateInfoProfileViewModelProtocol {
     
     weak var coordinator: UpdateInfoProfileCoordinator?
     private let userService: UserService
@@ -33,7 +33,7 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         self.userService = userService
         self.firestore = firestore
         self.configureProperty()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     func updateUser() {
@@ -47,7 +47,7 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
                     self?.updateUserFromProperty(with: nil)
                     print("error uploadImage:\(error)")
             }
-            guard let self else { self?.exit(with: AppError.incorectLogicApp); return }
+            guard let self else { self?.exit(with: AppError.incorrectLogicApp); return }
             let user = self.userService.getUser()
             self.firestore.updateUser(user: user) { error in
                 if let error {
@@ -61,7 +61,7 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         guard let profilePicture else { return }
         let filename = userService.getUser().profilePictureFilename
         uploadImage(image: profilePicture, fileName: filename) { [weak self] result in
-            guard let self else { self?.exit(with: AppError.incorectLogicApp); return }
+            guard let self else { self?.exit(with: AppError.incorrectLogicApp); return }
             switch result {
                 case .success(let url):
                     self.updateUserFromProperty(with: url)
@@ -143,7 +143,7 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
             if cachedImage != nil {
                 self?.profilePicture = cachedImage
             }
-            guard let self else { self?.exit(with: AppError.incorectLogicApp); return }
+            guard let self else { self?.exit(with: AppError.incorrectLogicApp); return }
             self.stateChanged?(.success(self.viewData))
         }
         return image
@@ -155,6 +155,6 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileVidewModelProtocol {
         }
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }

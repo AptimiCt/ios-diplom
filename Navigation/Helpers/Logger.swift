@@ -10,7 +10,7 @@
 import Foundation
 
 final class Logger {
-    static let standart = Logger()
+    static let standard = Logger()
     private init() {}
     func start(on types: AnyObject) {
         #if DEBUG

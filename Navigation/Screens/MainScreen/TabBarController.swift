@@ -14,7 +14,7 @@ class TabBarController: UITabBarController {
     var onFavoriteSelect: ((UINavigationController) -> ())?
     init() {
         super.init(nibName: nil, bundle: nil)
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     required init?(coder: NSCoder) {
@@ -27,7 +27,7 @@ class TabBarController: UITabBarController {
         delegate = self
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 extension TabBarController {

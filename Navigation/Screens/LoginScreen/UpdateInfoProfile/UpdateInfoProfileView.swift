@@ -71,13 +71,13 @@ class UpdateInfoProfileView: UIView {
 
 //MARK: - private extension UpdateInfoProfileView
 private extension UpdateInfoProfileView {
-    //Обрабока появление клавиатуры
+    //Обработка появление клавиатуры
     func keyboardWillShow(notification: NSNotification){
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         scrollView.contentInset.bottom = keyboardSize.height
         scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
     }
-    //Обрабока скрытия клавиатуры
+    //Обработка скрытия клавиатуры
     func keyboardWillHide(notification: NSNotification){
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero

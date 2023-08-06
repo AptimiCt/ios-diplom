@@ -11,5 +11,5 @@ enum FirestoreDatabaseError: Error {
     case failureGetPost
     case failedToUpload
     case failedToGetDownloadUrl
-    case error(desription: String)
+    case error(description: String)
 }

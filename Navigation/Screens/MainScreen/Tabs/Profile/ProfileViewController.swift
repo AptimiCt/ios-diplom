@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     private var avatar: UIImageView?
     private var offsetAvatar: CGFloat = 0
-    private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
+    private let notificationForUpdateProfile = Notification.Name(Constants.notifyForUpdateProfile)
 
     private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
@@ -42,7 +42,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = tabBarItemProfileView
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -71,7 +71,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     deinit {
         removeNotificationForReloadAllAfterUpdateProfile()
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 
@@ -158,7 +158,7 @@ private extension ProfileViewController {
             self?.viewModel.showFindFriendVC()
         }
     }
-    //Переход поток авторизации
+    //Переход в поток авторизации
     func finishFlow() {
         profileTableHeaderView.exitButton.action = { [weak self] in
             self?.viewModel.finishFlow()

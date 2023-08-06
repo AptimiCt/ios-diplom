@@ -73,7 +73,7 @@ final class FeedViewModel: FeedViewModelProtocol {
         }
         return user
     }
-    func getFriens() -> [User] {
+    func getFriends() -> [User] {
         userService.friends
     }
     func getPostFor(_ indexPath: IndexPath) -> Post {

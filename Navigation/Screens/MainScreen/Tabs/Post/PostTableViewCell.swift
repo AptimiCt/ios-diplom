@@ -143,7 +143,7 @@ class PostTableViewCell: UITableViewCell {
     }
 }
 private extension PostTableViewCell {
-    func vizualizeAdd(color: UIColor) {
+    func visualizeAdd(color: UIColor) {
         contentView.backgroundColor = color
         UIView.animate(withDuration: 1, delay: 0) {
             self.contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
@@ -162,7 +162,7 @@ private extension PostTableViewCell {
     }
     func addPostToFavorite() {
         delegate?.addFavorite(index: indexPath.row) { [weak self] isFavorite in
-            isFavorite ? self?.vizualizeAdd(color: .systemGreen) : self?.vizualizeAdd(color: .systemRed)
+            isFavorite ? self?.visualizeAdd(color: .systemGreen) : self?.visualizeAdd(color: .systemRed)
         }
     }
 }

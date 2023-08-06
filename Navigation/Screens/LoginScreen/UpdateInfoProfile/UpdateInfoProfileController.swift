@@ -13,15 +13,15 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
     
     //MARK: - property
     private var screenType: ScreenType
-    var viewModel: UpdateInfoProfileVidewModelProtocol
+    var viewModel: UpdateInfoProfileViewModelProtocol
     var updateInfoProfileView: UpdateInfoProfileView
     //MARK: - init
-    init(viewModel: UpdateInfoProfileVidewModelProtocol, screenType: ScreenType) {
+    init(viewModel: UpdateInfoProfileViewModelProtocol, screenType: ScreenType) {
         self.screenType = screenType
         self.viewModel = viewModel
         self.updateInfoProfileView = UpdateInfoProfileView(screenType: screenType)
         super.init(nibName: nil, bundle: nil)
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -51,7 +51,7 @@ final class UpdateInfoProfileController: UIViewController, UpdateInfoProfileProt
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 //MARK: - private funcs in extension
@@ -182,11 +182,11 @@ extension UpdateInfoProfileController: UpdateInfoProfileViewDelegate {
 }
 //MARK: - @objc private funcs in extension
 @objc private extension UpdateInfoProfileController {
-    //Метод выполняются когда появляется клавиатура
+    //Метод выполняется когда появляется клавиатура
     func keyboardWillShow(notification: NSNotification){
         self.updateInfoProfileView.stateView = .keyboardWillShow(notification)
     }
-    //Метод выполняются когда скрывается клавиатура
+    //Метод выполняется когда скрывается клавиатура
     func keyboardWillHide(notification: NSNotification){
         self.updateInfoProfileView.stateView = .keyboardWillHide(notification)
     }

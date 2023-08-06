@@ -17,7 +17,7 @@ final class ImagePickerCoordinator: BaseCoordinator {
         self.router = router
         self.factory = factory
         super.init()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     override func start() {
@@ -29,7 +29,7 @@ final class ImagePickerCoordinator: BaseCoordinator {
     }
     
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 extension ImagePickerCoordinator: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

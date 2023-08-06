@@ -20,7 +20,7 @@ final class TestUserService: UserService {
     }
     
     init() {
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     func getUser() -> User {
         guard let user else { return User() }
@@ -54,6 +54,6 @@ final class TestUserService: UserService {
     }
     
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }

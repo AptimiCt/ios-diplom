@@ -22,7 +22,7 @@ final class CurrentUserService: UserService {
     private(set) var user: User?
     var friends: [User] = []
     init() {
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     func getUser() -> User {
         guard let user else { return User() }
@@ -44,6 +44,6 @@ final class CurrentUserService: UserService {
         }
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }

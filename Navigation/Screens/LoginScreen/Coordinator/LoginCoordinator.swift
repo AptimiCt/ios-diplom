@@ -18,7 +18,7 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
         self.router = router
         self.factory = factory
         super.init()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     override func start() {
@@ -45,7 +45,7 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
         router.present(alert)
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 

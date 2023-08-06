@@ -21,7 +21,7 @@ struct ConfiguratorCell: Configurator {
                 switch cellType {
                     case .friendsCell:
                         guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSectionToCollection, for: indexPath) as? FriendsViewCell else { return UITableViewCell() }
-                        cell.friends = viewModel.getFriens()
+                        cell.friends = viewModel.getFriends()
                         return cell
                     case .postWithImageCell:
                         guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForFeedPostTableViewCell, for: indexPath) as? PostTableViewCell else { return UITableViewCell() }

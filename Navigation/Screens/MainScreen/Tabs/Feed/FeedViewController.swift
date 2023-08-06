@@ -12,7 +12,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     private(set) var viewModel: FeedViewModelProtocol!
     var cellFactory: Configurator?
     
-    private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
+    private let notificationForUpdateProfile = Notification.Name(Constants.notifyForUpdateProfile)
     
     //MARK: - vars
     private var activityIndicator: UIActivityIndicatorView = {
@@ -41,7 +41,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         self.viewModel = viewModel
         self.cellFactory = ConfiguratorCell()
         super.init(nibName: nil, bundle: nil)
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -61,7 +61,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     }
     deinit {
         removeNotificationForReloadAllAfterUpdateProfile()
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 

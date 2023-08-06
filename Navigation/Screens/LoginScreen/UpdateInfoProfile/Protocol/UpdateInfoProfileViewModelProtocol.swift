@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol UpdateInfoProfileVidewModelProtocol {
+protocol UpdateInfoProfileViewModelProtocol {
     var stateChanged: ((StateModelProfile) -> Void)? { get set }
     func updateName(_ name: String)
     
@@ -27,7 +27,6 @@ protocol UpdateInfoProfileVidewModelProtocol {
     
     func addUser()
     
-//    func exit(with user: User?, and error: Error?)
     func exit(with error: Error?)
     
     func setupView()

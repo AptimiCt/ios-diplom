@@ -16,7 +16,7 @@ class FeedCoordinator: BaseCoordinator {
         self.router = router
         self.factory = factory
         super.init()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     override func start(){
@@ -32,7 +32,7 @@ class FeedCoordinator: BaseCoordinator {
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 

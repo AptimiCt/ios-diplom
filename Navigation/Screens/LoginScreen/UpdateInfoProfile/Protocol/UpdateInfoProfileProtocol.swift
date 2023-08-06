@@ -9,5 +9,5 @@
 
 import Foundation
 protocol UpdateInfoProfileProtocol: Presentable {
-    var viewModel: UpdateInfoProfileVidewModelProtocol { get set }
+    var viewModel: UpdateInfoProfileViewModelProtocol { get set }
 }

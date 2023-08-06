@@ -108,7 +108,7 @@ private extension AppCoordinator {
         NetworkManager.request(for: appConfiguration)
     }
     func localNotificationRegister() {
-        localNotificationService.registeForLatestUpdatesIfPossible()
+        localNotificationService.registerForLatestUpdatesIfPossible()
     }
     func showAlert(inputData: UIAlertControllerInputData) {
         let alert = UIAlertController(inputData: inputData)

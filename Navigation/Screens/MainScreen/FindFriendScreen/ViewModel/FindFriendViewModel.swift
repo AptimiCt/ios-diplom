@@ -17,7 +17,7 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
     private let userService: UserService
     
     private var users = [User]()
-    private var filtredUsers = [SearchResult]()
+    private var filteredUsers = [SearchResult]()
     private var hasFetched = false
     
     init(firestore: DatabeseManagerProtocol, coordinator: ProfileCoordinator, userService: UserService) {
@@ -27,17 +27,17 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
     }
     
     func numberOfRows() -> Int {
-        filtredUsers.count
+        filteredUsers.count
     }
-    func getFriens() -> [User] {
+    func getFriends() -> [User] {
         return userService.friends
     }
     
     func getResultFor(_ indexPath: IndexPath) -> SearchResult {
-        filtredUsers[indexPath.row]
+        filteredUsers[indexPath.row]
     }
     func searchUsers(query: String, completion: @escaping VoidClosure)  {
-        filtredUsers.removeAll()
+        filteredUsers.removeAll()
         if hasFetched {
             filterUsers(with: query, completion: completion)
         }
@@ -57,7 +57,7 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
         }
     }
     func addFriend(for indexPath: IndexPath, completion: @escaping VoidClosure) {
-        let friend = filtredUsers[indexPath.row]
+        let friend = filteredUsers[indexPath.row]
         
         firestore.addFriend(userId: userService.getUser().uid, friendId: friend.uid) { [weak self] error in
             guard let self else { return }
@@ -66,7 +66,7 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
                                              name: friend.name,
                                              profileImageUrl: friend.profileImageUrl,
                                              isFriend: true)
-                self.filtredUsers[indexPath.row] = newFriend
+                self.filteredUsers[indexPath.row] = newFriend
                 let user = userService.getUser()
                 var friends = user.friends
                 friends.append(friend.uid)
@@ -83,7 +83,7 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
         }
     }
     func removeFromFriend(for indexPath: IndexPath, completion: @escaping VoidClosure) {
-        let friend = filtredUsers[indexPath.row]
+        let friend = filteredUsers[indexPath.row]
         
         firestore.removeFromFriend(userId: userService.getUser().uid, friendId: friend.uid) { [weak self] error in
             guard let self else { return }
@@ -92,7 +92,7 @@ final class FindFriendViewModel: FindFriendViewModelProtocol {
                                              name: friend.name,
                                              profileImageUrl: friend.profileImageUrl,
                                              isFriend: false)
-                self.filtredUsers[indexPath.row] = newFriend
+                self.filteredUsers[indexPath.row] = newFriend
                 let user = userService.getUser()
                 var friends = user.friends
                 friends.removeAll(where: { $0 == friend.uid } )
@@ -117,19 +117,19 @@ private extension FindFriendViewModel {
     }
     func filterUsers(with searchText: String, completion: @escaping () -> Void) {
         
-        let filtredUsers: [SearchResult] = users.filter({
+        let filteredUsers: [SearchResult] = users.filter({
             let name = $0.getFullName().lowercased()
             let lowerSearchText = searchText.lowercased()
             return name.contains(lowerSearchText)
         }).compactMap({
-            let isFriend = self.getFriens().contains($0)
+            let isFriend = self.getFriends().contains($0)
             return SearchResult(uid: $0.uid,
                                 name: $0.getFullName(),
                                 profileImageUrl: $0.profilePictureUrl,
                                 isFriend: isFriend)
         })
         
-        self.filtredUsers = filtredUsers
+        self.filteredUsers = filteredUsers
         completion()
     }
 }

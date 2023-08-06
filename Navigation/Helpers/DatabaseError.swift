@@ -14,11 +14,11 @@ enum DatabaseError: Error {
     /// Не найден momd файл.
     case find(model: String, bundle: Bundle?)
     /// Дубликат поста есть в базе
-    case dublicate
+    case duplicate
     /// Не найдена модель объекта.
     case wrongModel
     /// Кастомная ошибка.
-    case error(desription: String)
+    case error(description: String)
     /// Неизвестная ошибка.
     case unknown(error: Error)
 }

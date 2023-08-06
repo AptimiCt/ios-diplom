@@ -53,7 +53,7 @@ final class FindFriendViewController: UIViewController, FindFriendViewController
 
     @objc private func dismissSelf() {
             NotificationCenter.default.post(
-                name: Notification.Name(Constants.notifiForUpdateProfile),
+                name: Notification.Name(Constants.notifyForUpdateProfile),
                 object: nil
             )
         dismiss(animated: true, completion: nil)

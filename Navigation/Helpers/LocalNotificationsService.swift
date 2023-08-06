@@ -12,7 +12,7 @@ import UserNotifications
 
 final class LocalNotificationsService: NSObject {
     
-    private enum CategiesIds {
+    private enum CategoriesIds {
         static let update = "update"
     }
     private enum RequestIds {
@@ -28,7 +28,7 @@ final class LocalNotificationsService: NSObject {
 
     private let center = UNUserNotificationCenter.current()
     
-    func registeForLatestUpdatesIfPossible() {
+    func registerForLatestUpdatesIfPossible() {
         registerUpdatesCategory()
         
         center.removeAllPendingNotificationRequests()
@@ -58,7 +58,7 @@ final class LocalNotificationsService: NSObject {
                 options: [.destructive]
         )
         let category = UNNotificationCategory(
-                identifier: CategiesIds.update,
+                identifier: CategoriesIds.update,
                 actions: [actionCheck, actionCancel],
                 intentIdentifiers: [])
         
@@ -80,7 +80,7 @@ final class LocalNotificationsService: NSObject {
         content.title = NSString.localizedUserNotificationString(forKey: "LocalNotificationsService.content.title", arguments: .none)
         content.body = NSString.localizedUserNotificationString(forKey: "LocalNotificationsService.content.body",
                                                                 arguments: .none)
-        content.categoryIdentifier = CategiesIds.update
+        content.categoryIdentifier = CategoriesIds.update
 
         let request = UNNotificationRequest(identifier: RequestIds.update, content: content, trigger: trigger)
         return request

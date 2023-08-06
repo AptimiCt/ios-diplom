@@ -51,14 +51,14 @@ extension FirestoreManager: DatabeseManagerProtocol {
                 completion(.failure(error))
             } else {
                 guard let self, let querySnapshotDocuments = querySnapshot?.documents else {
-                    completion(.failure(FirestoreDatabaseError.error(desription: "self or querySnapshot is nil")))
+                    completion(.failure(FirestoreDatabaseError.error(description: "self or querySnapshot is nil")))
                     return }
-                let fitredQuerySnapshotDocuments = user.isEmpty ? querySnapshotDocuments :  querySnapshotDocuments.filter { $0.documentID != user }
-                self.users = fitredQuerySnapshotDocuments.compactMap { querySnapshot in
+                let filteredQuerySnapshotDocuments = user.isEmpty ? querySnapshotDocuments :  querySnapshotDocuments.filter { $0.documentID != user }
+                self.users = filteredQuerySnapshotDocuments.compactMap { querySnapshot in
                     do {
                         return try querySnapshot.data(as: User.self)
                     } catch {
-                        completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пользователя")))
+                        completion(.failure(FirestoreDatabaseError.error(description: "Не удалось получить пользователя")))
                         return nil
                     }
                 }
@@ -88,14 +88,14 @@ extension FirestoreManager: DatabeseManagerProtocol {
                 completion(.failure(error))
             } else {
                 guard let self, let querySnapshotDocuments = querySnapshot?.documents else {
-                    completion(.failure(FirestoreDatabaseError.error(desription: "self or querySnapshot is nil")))
+                    completion(.failure(FirestoreDatabaseError.error(description: "self or querySnapshot is nil")))
                     return }
-                let fitredQuerySnapshotDocuments = querySnapshotDocuments.filter({ friendsIds.contains($0.documentID) })
-                self.users = fitredQuerySnapshotDocuments.compactMap { querySnapshot in
+                let filteredQuerySnapshotDocuments = querySnapshotDocuments.filter({ friendsIds.contains($0.documentID) })
+                self.users = filteredQuerySnapshotDocuments.compactMap { querySnapshot in
                     do {
                         return try querySnapshot.data(as: User.self)
                     } catch {
-                        completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пользователя")))
+                        completion(.failure(FirestoreDatabaseError.error(description: "Не удалось получить пользователя")))
                         return nil
                     }
                 }
@@ -150,12 +150,12 @@ extension FirestoreManager: DatabeseManagerProtocol {
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    guard let self else { completion(.failure(FirestoreDatabaseError.error(desription: "self is nil"))); return}
+                    guard let self else { completion(.failure(FirestoreDatabaseError.error(description: "self is nil"))); return}
                     self.posts = querySnapshot!.documents.compactMap { querySnapshotDocument in
                         do {
                             return try querySnapshotDocument.data(as: Post.self)
                         } catch {
-                            completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пост.")))
+                            completion(.failure(FirestoreDatabaseError.error(description: "Не удалось получить пост.")))
                             return nil
                         }
                     }
@@ -171,12 +171,12 @@ extension FirestoreManager: DatabeseManagerProtocol {
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    guard let self else { completion(.failure(FirestoreDatabaseError.error(desription: "self is nil"))); return}
+                    guard let self else { completion(.failure(FirestoreDatabaseError.error(description: "self is nil"))); return}
                     self.posts = querySnapshot!.documents.compactMap { querySnapshotDocument in
                         do {
                             return try querySnapshotDocument.data(as: Post.self)
                         } catch {
-                            completion(.failure(FirestoreDatabaseError.error(desription: "Не удалось получить пост.")))
+                            completion(.failure(FirestoreDatabaseError.error(description: "Не удалось получить пост.")))
                             return nil
                         }
                     }

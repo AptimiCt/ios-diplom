@@ -124,7 +124,7 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
         super.init(nibName: nil, bundle: nil)
         self.setupViews()
         self.configureConstraints()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     required init?(coder: NSCoder) {
@@ -150,7 +150,7 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
         }
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 @objc private extension PostDetailController {
@@ -165,8 +165,8 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
 private extension PostDetailController {
     func configure(post: StateModelPost.PostData) {
         authorLabel.text = post.fullName
-        if let postPictireUrl = URL(string: post.profilePicture) {
-            fotoImageView.sd_setImage(with: postPictireUrl)
+        if let postPictureUrl = URL(string: post.profilePicture) {
+            fotoImageView.sd_setImage(with: postPictureUrl)
         }
         dateLabel.text = post.createdDate
         bodyLabel.text = post.body

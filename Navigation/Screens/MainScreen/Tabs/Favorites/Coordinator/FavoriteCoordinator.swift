@@ -16,7 +16,7 @@ final class FavoriteCoordinator: BaseCoordinator {
         self.router = router
         self.factory = factory
         super.init()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     
     override func start() {
@@ -24,6 +24,6 @@ final class FavoriteCoordinator: BaseCoordinator {
         router.setRootModule(controller)
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }

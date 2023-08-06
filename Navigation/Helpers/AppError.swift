@@ -10,14 +10,14 @@
 import Foundation
 
 enum AppError: Error {
-    case incorectLogicApp
+    case incorrectLogicApp
     case unknown(String?)
 }
 extension AppError: LocalizedError {
     var errorDescription: String? {
         switch self {
-            case .incorectLogicApp:
-                return "AppError.incorectLogicApp".localized
+            case .incorrectLogicApp:
+                return "AppError.incorrectLogicApp".localized
             case .unknown(let error):
                 return "\("AppError.unknown".localized). \(error ?? "nil")"
             

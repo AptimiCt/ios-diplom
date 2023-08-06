@@ -59,7 +59,7 @@ final class CoreDataManager {
         guard context.hasChanges else {
             if context.parent != nil {
                 print("context.hasChanges:\(context.hasChanges)")
-                self.handler(for: .failure(error: .error(desription: "Context has not changes")),
+                self.handler(for: .failure(error: .error(description: "Context has not changes")),
                              using: context, contextWorksInOwnQueue: false,
                              with: completionHandler,
                              and: failureCompletion)
@@ -70,7 +70,7 @@ final class CoreDataManager {
             do {
                 try context.save()
             } catch let error {
-                self.handler(for: .failure(error: .error(desription: "Unable to save changes of context.\nError - \(error.localizedDescription)")),
+                self.handler(for: .failure(error: .error(description: "Unable to save changes of context.\nError - \(error.localizedDescription)")),
                              using: context, contextWorksInOwnQueue: false,
                              with: completionHandler,
                              and: failureCompletion)
@@ -138,7 +138,7 @@ extension CoreDataManager {
                             self.save(with: self.saveContext, completionHandler: { completion(.success(postCoreData)) })
                         } else {
                             self.mainContext.perform {
-                                completion(.failure(.dublicate))
+                                completion(.failure(.duplicate))
                             }
                             
                         }
@@ -178,8 +178,8 @@ extension CoreDataManager {
                         return
                     }
                     self.saveContext.perform {
-                        fetchedObjects.forEach { fetchOject in
-                            self.saveContext.delete(fetchOject)
+                        fetchedObjects.forEach { fetchObject in
+                            self.saveContext.delete(fetchObject)
                         }
                         self.save(with: self.saveContext, completionHandler: { completion(.success(fetchedObjects)) }, failureCompletion: { error in completion(.failure(error))
                         })

@@ -23,7 +23,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     
     init(firestore: DatabeseManagerProtocol){
         self.firestore = firestore
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     func checkCredentionalsToLogin(email: String, password: String) {
         do {
@@ -46,9 +46,9 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
     func loginWithBiometrics() {
-        LocalAuthorizationService().authorizeIfPossible { [weak self] sucsses, error  in
+        LocalAuthorizationService().authorizeIfPossible { [weak self] success, error  in
             guard let self else { return }
-            if sucsses {
+            if success {
                 self.finishFlow(User())
             } else {
                 self.handle(with: .unknown(""))
@@ -56,7 +56,7 @@ final class LoginViewModel: LoginViewModelProtocol {
         }
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 
@@ -90,7 +90,7 @@ private extension LoginViewModel {
                 break
         }
     }
-    //Медод проверки учетных данных на корректность который может выбрасывать ошибки
+    //Метод проверки учетных данных на корректность, который может выбрасывать ошибки
     func checkCredentionalsOnError(email: String, password: String) throws {
         if email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
             throw AuthenticationError.emptyEmail
@@ -104,7 +104,7 @@ private extension LoginViewModel {
             throw AuthenticationError.weakPassword("weakPasswordExtend".localized)
         }
     }
-    //Метод для локальной проверки пароля на соответсие требованиям(от 8 символов, большие и маленькие буквы и символы)
+    //Метод для локальной проверки пароля на соответствие требованиям(от 8 символов, большие и маленькие буквы и символы)
     func passwordIsValid(_ password: String) -> Bool {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
         return passwordTest.evaluate(with: password)
@@ -116,7 +116,7 @@ private extension LoginViewModel {
         let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
         return emailTest.evaluate(with: email)
     }
-    //Метод отвечатет за повявление alert при появлении ошибки
+    //Метод отвечает за появление alert при появлении ошибки
     func handle(with error: AuthenticationError) {
         self.stateModel = .failure(error)
         let inputData = UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "UIAC.ok".localized)])

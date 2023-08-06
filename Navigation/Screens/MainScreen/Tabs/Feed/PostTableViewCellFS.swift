@@ -173,9 +173,9 @@ private extension PostTableViewCellFS {
 //        CoreDataManager.dataManager.create(post: post) { [weak self] result in
 //            switch result {
 //                case .success(_):
-//                    self?.vizualizeAdd(color: .systemGreen)
+//                    self?.visualizeAdd(color: .systemGreen)
 //                case .failure(let error):
-//                    self?.vizualizeAdd(color: .systemRed)
+//                    self?.visualizeAdd(color: .systemRed)
 //                    print(error.localizedDescription)
 //            }
 //        }

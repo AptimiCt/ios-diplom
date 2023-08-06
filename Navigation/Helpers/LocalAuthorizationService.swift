@@ -42,14 +42,14 @@ final class LocalAuthorizationService {
     }
         
     var biometricType: LABiometryType {
-        evalutePolicy = context.canEvaluatePolicy(policyService, error: &error)
-        if evalutePolicy {
+        evaluatePolicy = context.canEvaluatePolicy(policyService, error: &error)
+        if evaluatePolicy {
             return context.biometryType
         }
         return .none
     }
     
-    var evalutePolicy: Bool = false
+    var evaluatePolicy: Bool = false
     let context = LAContext()
     private let policyService: LAPolicy = .deviceOwnerAuthentication
     private var error: NSError?

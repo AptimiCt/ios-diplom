@@ -29,7 +29,7 @@ final class MainCoordinator: BaseCoordinator, OutputCoordinator {
         self.userService = userService
         self.factory = factory
         super.init()
-        Logger.standart.start(on: self)
+        Logger.standard.start(on: self)
     }
     override func start() {
         tabBarController.onFeedSelect = runFeedSelect()
@@ -38,7 +38,7 @@ final class MainCoordinator: BaseCoordinator, OutputCoordinator {
         tabBarController.firstLoad()
     }
     deinit {
-        Logger.standart.remove(on: self)
+        Logger.standard.remove(on: self)
     }
 }
 
