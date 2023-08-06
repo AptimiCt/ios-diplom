@@ -33,6 +33,10 @@
 //MARK: - FriendsViewCell
 "friendsLabel.text" = "Друзья";
 
+//MARK: - FindFriendViewController
+"FFVC.searchBar.placeholder" = "Поиск пользователей...";
+"FFVC.noResultsLabel.text" = "Нет результатов";
+
 //MARK: - PhotosViewController
 "photo.gallery" = "Галерея фото";
 
@@ -54,6 +58,9 @@
 "addPost.title" = "Добавить запись";
 "addPhoto.title" = "Добавить фото";
 "statusLabel.text" = "Ожидание чего-то...";
+
+//MARK: - ProfileTableViewCell
+"PTVC.readMore.title" = "Показать полностью...";
 
 //MARK: - LoginViewController
 "loginTextView.placeholder" = "Электронная почта";
@@ -103,6 +110,19 @@
 
 "UIPC.saveActionTitle.update" = "Обновить";
 "UIPC.unSaveActionTitle.update" = "Не обновлять";
+
+//MARK: - UpdateInfoProfileViewModel
+"UIPVM.gender.unselected" = "Не выбран";
+
+//MARK: - UpdateInfoProfileView
+"UIPVE.name.placeholder" = "Введите имя";
+"UIPVE.surname.placeholder" = "Введите фамилию";
+"UIPVE.gender.male.title" = "Мужской";
+"UIPVE.gender.female.title" = "Женский";
+"UIPVE.name.title" = "Имя";
+"UIPVE.surname.title" = "Фамилия";
+"UIPVE.gender.title" = "Пол:";
+"UIPVE.dateOfBirth.title" ="Дата рождения:";
 
 //MARK: - All files
 "UIAC.ok" = "Хорошо";

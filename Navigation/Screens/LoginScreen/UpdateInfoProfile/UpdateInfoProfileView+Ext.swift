@@ -13,14 +13,14 @@ extension UpdateInfoProfileView {
     func makeNameTextField() -> TextFieldWithPadding {
         let textField = TextFieldWithPadding()
         textField.toAutoLayout()
-        textField.configureTextField(with: "Введите имя")
+        textField.configureTextField(with: "UIPVE.name.placeholder".localized)
         textField.becomeFirstResponder()
         return textField
     }
     func makeLastNameTextField() -> TextFieldWithPadding {
         let textField = TextFieldWithPadding()
         textField.toAutoLayout()
-        textField.configureTextField(with: "Введите фамилию", autocapitalizationType: .words)
+        textField.configureTextField(with: "UIPVE.surname.placeholder".localized, autocapitalizationType: .words)
         return textField
     }
     func makeGenderButton() -> UIButton {
@@ -37,9 +37,9 @@ extension UpdateInfoProfileView {
         let handler: UIActionHandler = { [weak self] action in
             self?.delegate?.updateGender(gender: action.title)
         }
-        let man = UIAction(title: "Мужской", handler: handler)
-        let woman = UIAction(title: "Женский", handler: handler)
-        let notSet = UIAction(title: "Не установлен", image: UIImage (systemName: "person.fill.questionmark"), handler: handler)
+        let man = UIAction(title: "UIPVE.gender.male.title".localized, handler: handler)
+        let woman = UIAction(title: "UIPVE.gender.female.title".localized, handler: handler)
+        let notSet = UIAction(title: "UIPVM.gender.unselected".localized, image: UIImage (systemName: "person.fill.questionmark"), handler: handler)
         let menu = UIMenu(children: [man, woman, notSet])
         return menu
     }
@@ -70,19 +70,19 @@ extension UpdateInfoProfileView {
         return imageView
     }
     func makeNameLabel() -> CustomLabel {
-        let label = CustomLabel(title: "Имя")
+        let label = CustomLabel(title: "UIPVE.name.title".localized)
         return label
     }
     func makeSurnameLabel() -> CustomLabel {
-        let label = CustomLabel(title: "Фамилия")
+        let label = CustomLabel(title: "UIPVE.surname.title".localized)
         return label
     }
     func makeGenderLabel() -> CustomLabel {
-        let label = CustomLabel(title: "Пол:")
+        let label = CustomLabel(title: "UIPVE.gender.title".localized)
         return label
     }
     func makeDateOfBirthLabel() -> CustomLabel {
-        let label = CustomLabel(title: "Дата рождения:")
+        let label = CustomLabel(title: "UIPVE.dateOfBirth.title".localized)
         return label
     }
     func makeSignUpButton(screenType: ScreenType) -> CustomButton {

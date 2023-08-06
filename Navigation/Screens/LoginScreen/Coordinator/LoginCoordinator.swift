@@ -30,7 +30,7 @@ class LoginCoordinator: BaseCoordinator, OutputCoordinator {
         coordinator.finishFlow = { [weak self, weak coordinator] user, error in
             self?.router.dismissModule()
             if let error {
-                self?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "ОК")]))
+                self?.showAlert(inputData: UIAlertControllerInputData(message: error.localizedDescription, buttons: [.init(title: "UIAC.ok".localized)]))
                 self?.loginViewConfigure()
             } else {
                 self?.finishFlow?(user)

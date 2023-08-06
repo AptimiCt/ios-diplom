@@ -33,6 +33,10 @@
 //MARK: - FriendsViewCell
 "friendsLabel.text" = "Friends";
 
+//MARK: - FindFriendViewController
+"FFVC.searchBar.placeholder" = "Search for Users...";
+"FFVC.noResultsLabel.text" = "No Results";
+
 //MARK: - PhotosViewController
 "photo.gallery" = "Photo Gallery";
 
@@ -54,6 +58,9 @@
 "addPost.title" = "Add post";
 "addPhoto.title" = "Add photo";
 "statusLabel.text" = "Waiting for something...";
+
+//MARK: - ProfileTableViewCell
+"PTVC.readMore.title" = "Show full...";
 
 //MARK: - LoginViewController
 "loginTextView.placeholder" = "Email";
@@ -103,6 +110,19 @@
 
 "UIPC.saveActionTitle.update" = "Update";
 "UIPC.unSaveActionTitle.update" = "Do not update";
+
+//MARK: - UpdateInfoProfileViewModel
+"UIPVM.gender.unselected" = "Un selected";
+
+//MARK: - UpdateInfoProfileView
+"UIPVE.name.placeholder" = "Enter the name";
+"UIPVE.surname.placeholder" = "Enter the last name";
+"UIPVE.gender.male.title" = "Male";
+"UIPVE.gender.female.title" = "Female";
+"UIPVE.name.title" = "Name";
+"UIPVE.surname.title" = "Last name";
+"UIPVE.gender.title" = "Sex:";
+"UIPVE.dateOfBirth.title" ="Date of birth:";
 
 //MARK: - All files
 "UIAC.ok" = "Ok";

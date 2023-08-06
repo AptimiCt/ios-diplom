@@ -51,7 +51,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
     private lazy var readMore: CustomButton = {
         let readMore = CustomButton()
         readMore.toAutoLayout()
-        readMore.setTitle("Показать полностью...", for: .normal)
+        readMore.setTitle("PTVC.readMore.title".localized, for: .normal)
         readMore.setTitleColor(.systemBlue, for: .normal)
         readMore.setTitleColor(.systemGray, for: .highlighted)
         readMore.addTarget(self, action: #selector(readMoreButtonTapped), for: .touchUpInside)

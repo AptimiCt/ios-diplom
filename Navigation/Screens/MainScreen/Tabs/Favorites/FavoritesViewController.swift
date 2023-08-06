@@ -47,7 +47,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         applyFilterButton.tintColor = .systemBlue
-        CoreDataManager.dataManager.fetch(predicate: nil) {[weak self] result in
+        CoreDataManager.dataManager.fetch(predicate: nil) { [weak self] result in
             guard let self else { return }
             self.posts = CoreDataManager.dataManager.posts.map { self.mappingPost(postDataModel: $0) }
             self.tableView.reloadData()

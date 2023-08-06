@@ -25,7 +25,7 @@ final class UpdateInfoProfileViewModel: UpdateInfoProfileViewModelProtocol {
     
     private var name: String = ""
     private var surname: String = ""
-    private var gender: String = "Не установлен"
+    private var gender: String = "UIPVM.gender.unselected".localized
     private var dateOfBirth: Date = Date()
     private lazy var profilePicture: UIImage? = defaultProfilePicture
     

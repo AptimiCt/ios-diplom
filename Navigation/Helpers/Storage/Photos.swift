@@ -43,7 +43,6 @@ extension Photos {
         if (startIndex < Photos.fetchPhotos().count && startIndex >= 0)  &&  startIndex + countPhoto < Photos.fetchPhotos().count {
             return Array(Photos.fetchPhotos()[startIndex...countPhoto + startIndex])
         }
-        print("startIndex + countPhoto = \(startIndex + countPhoto) >= Photos.fetchPhotos().count = \(Photos.fetchPhotos().count)")
         return Photos.fetchPhotos()
     }
 }

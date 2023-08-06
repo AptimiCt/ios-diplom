@@ -41,7 +41,7 @@ final class User: Codable, Equatable {
          surname: String = "",
          profilePicture: String? = nil,
          status: String = "",
-         gender: String = "Не установлен",
+         gender: String = "UIPVM.gender.unselected".localized,
          dateOfBirth: Date = Date(),
          posts: [String] = [],
          friends: [String] = [],

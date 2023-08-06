@@ -14,7 +14,7 @@ final class FindFriendViewController: UIViewController, FindFriendViewController
 
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Search for Users..."
+        searchBar.placeholder = "FFVC.searchBar.placeholder".localized
         return searchBar
     }()
 
@@ -30,7 +30,7 @@ final class FindFriendViewController: UIViewController, FindFriendViewController
     private let noResultsLabel: UILabel = {
         let label = UILabel()
         label.isHidden = true
-        label.text = "No Results"
+        label.text = "FFVC.noResultsLabel.text".localized
         label.textAlignment = .center
         label.textColor = .createColor(lightMode: .black, darkMode: .white)
         label.font = .systemFont(ofSize: 21, weight: .medium)
@@ -44,7 +44,7 @@ final class FindFriendViewController: UIViewController, FindFriendViewController
         setupDelegate()
         isModalInPresentation = true
         navigationItem.titleView = searchBar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "UIAC.cancel".localized,
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(dismissSelf))
