@@ -7,7 +7,7 @@
 //
 
 
-import Foundation
+import UIKit
 
 final class AddPostViewModel {
     
@@ -54,7 +54,6 @@ final class AddPostViewModel {
     }
     
     func tappedDone() {
-        
         guard let bodyText = bodyCellViewModel?.bodyText else { return }
         let user = userService.getUser()
         let post = Post(userUid: user.uid, body: bodyText, imageUrl: nil, likes: [], views: 0, createdDate: Date(), updateDate: Date())
@@ -66,16 +65,17 @@ final class AddPostViewModel {
     }
     func addImage() {
         coordinator?.showImagePicker() { [weak self] image in
-            if self?.cells.count == 1 {
-                self?.postImageCellViewModel = self?.cellBuilder.makeBodyImageViewCellViewModel(.image)
-                guard let postImageCellViewModel = self?.postImageCellViewModel else { return }
-                self?.cells.append(.bodyImageView(postImageCellViewModel))
-                self?.onUpdate()
-            } else {
-                self?.postImageCellViewModel = self?.cellBuilder.makeBodyImageViewCellViewModel(.image)
-                guard let postImageCellViewModel = self?.postImageCellViewModel else { return }
-                self?.cells[1] = .bodyImageView(postImageCellViewModel)
-                self?.onUpdate()
+            guard let self else { return }
+            if let image {
+                if self.cells.count == 1 {
+                    let postImageCellViewModel = self.updateImage(with: image)
+                    self.cells.append(.bodyImageView(postImageCellViewModel))
+                    self.onUpdate()
+                } else {
+                    let postImageCellViewModel = self.updateImage(with: image)
+                    self.cells[1] = .bodyImageView(postImageCellViewModel)
+                    self.onUpdate()
+                }
             }
         }
     }
@@ -88,16 +88,23 @@ final class AddPostViewModel {
     
     func didSelectRow(at indexPath: IndexPath) {
         switch cells[indexPath.row] {
-            case .bodyImageView(let BodyImageViewCellViewModel):
-                guard BodyImageViewCellViewModel.type == .image else { return }
-                coordinator?.showImagePicker() { image in
-                    BodyImageViewCellViewModel.update(image)
+            case .bodyImageView(let bodyImageViewCellViewModel):
+                guard bodyImageViewCellViewModel.type == .image else { return }
+                coordinator?.showImagePicker() { [weak self] image in
+                    guard let image else { return }
+                    bodyImageViewCellViewModel.update(image)
+                    self?.onUpdate()
                 }
         }
     }
 }
 
 private extension AddPostViewModel {
+    func updateImage(with image: UIImage) -> BodyImageViewCellViewModel {
+        let postImageCellViewModel = cellBuilder.makeBodyImageViewCellViewModel(.image)
+        postImageCellViewModel.update(image)
+        return postImageCellViewModel
+    }
     
     func setupCells() {
         bodyCellViewModel = cellBuilder.makeBodyImageViewCellViewModel(.text)

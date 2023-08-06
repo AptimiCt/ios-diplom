@@ -61,8 +61,19 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
     func didFinishSavePost() {
         router.dismissModule()
     }
-    func showImagePicker(completion: @escaping (UIImage) -> Void) {
-        completion(UIImage())
+    func showImagePicker(completion: @escaping (UIImage?) -> Void) {
+        let coordinator = ImagePickerCoordinator(router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] image in
+            completion(image)
+            self?.router.dismissPresentedModule()
+            self?.removeCoordinator(coordinator)
+        }
+        coordinator.finishPicker = { [weak self, weak coordinator] in
+            completion(nil)
+            self?.removeCoordinator(coordinator)
+        }
+        addCoordinator(coordinator)
+        coordinator.start()
     }
     deinit {
         Logger.standart.remove(on: self)

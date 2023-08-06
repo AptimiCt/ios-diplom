@@ -5,7 +5,7 @@
 //
 // Created by Александр Востриков
 //
-    
+
 import UIKit
 
 final class AddPostViewController: UIViewController, AddPostViewControllerProtocol {
@@ -42,16 +42,27 @@ final class AddPostViewController: UIViewController, AddPostViewControllerProtoc
         super.viewDidDisappear(animated)
         viewModel.viewDidDisappear()
     }
-    private func setupViews() {
+}
+@objc private extension AddPostViewController {
+    func tappedDone() {
+        viewModel.tappedDone()
+    }
+    func addImage() {
+        viewModel.addImage()
+    }
+}
+private extension AddPostViewController {
+    func setupViews() {
         view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(BodyImageViewCell.self, forCellReuseIdentifier: "BodyImageViewCell")
         
         navigationItem.title = viewModel.title
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(tappedDone))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(addImage))
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(BodyImageViewCell.self, forCellReuseIdentifier: Cells.cellForBodyImageViewCell)
         
         view.addSubview(tableView)
         let constraints: [NSLayoutConstraint] = [
@@ -63,15 +74,6 @@ final class AddPostViewController: UIViewController, AddPostViewControllerProtoc
         NSLayoutConstraint.activate(constraints)
     }
 }
-@objc private extension AddPostViewController {
-    func tappedDone() {
-        viewModel.tappedDone()
-//        dismiss(animated: true, completion: nil)
-    }
-    func addImage() {
-        viewModel.addImage()
-    }
-}
 extension AddPostViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,11 +83,11 @@ extension AddPostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellViewModel = viewModel.cell(for: indexPath)
         switch cellViewModel {
-        case .bodyImageView(let cellViewModel):
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: "BodyImageViewCell", for: indexPath) as? BodyImageViewCell else { return UITableViewCell() }
-            cell.update(with: cellViewModel)
-            cell.bodyTextView.delegate = self
-            return cell
+            case .bodyImageView(let cellViewModel):
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForBodyImageViewCell, for: indexPath) as? BodyImageViewCell else { return UITableViewCell() }
+                cell.update(with: cellViewModel)
+                cell.bodyTextView.delegate = self
+                return cell
         }
     }
 }

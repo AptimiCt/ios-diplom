@@ -9,23 +9,21 @@ import UIKit
 final class ImagePickerCoordinator: BaseCoordinator {
    
     private let router: Router
-    private let factory: AuthControllerFactoryProtocol
     
-    var onFinishPicking: (UIImage) -> Void = { _ in }
+    var finishFlow: (UIImage?) -> Void = { _ in }
+    var finishPicker: VoidClosure = { }
     
-    init(router: Router, factory: AuthControllerFactoryProtocol) {
+    init(router: Router) {
         self.router = router
-        self.factory = factory
         super.init()
         Logger.standart.start(on: self)
     }
     
     override func start() {
-//        let controller = factory.makeLoginController(with: self)
-        
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
-        router.present(imagePickerController, animated: true)
+        imagePickerController.presentationController?.delegate = self
+        router.toPresent()?.presentedViewController?.present(imagePickerController, animated: true)
     }
     
     deinit {
@@ -36,8 +34,15 @@ extension ImagePickerCoordinator: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
-            onFinishPicking(image)
+            finishFlow(image)
         }
-        
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        finishFlow(nil)
+    }
+}
+extension ImagePickerCoordinator: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        finishPicker()
     }
 }
