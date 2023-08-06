@@ -163,12 +163,7 @@ private extension PostTableViewCellFS {
        delegate?.moreReadButtonTapped(at: indexPath)
     }
     func addPostToFavorite() {
-        let post = Post(userUid: "yLIesutMQmXTxtANvhjb8cBljmy1", title: "Test Sistem", body: "Какая замечательная история", imageUrl: "baikal", likes: [], views: 47, createdDate: Date(), updateDate: Date())
-        print("error:")
-        FirestoreManager().addNewPost(post: post) { error in
-            guard let error else { return }
-            print("error:\(error.localizedDescription)")
-        }
+        
 //        guard let post else { return }
 //        CoreDataManager.dataManager.create(post: post) { [weak self] result in
 //            switch result {

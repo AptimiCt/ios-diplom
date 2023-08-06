@@ -62,7 +62,7 @@ final class FeedViewModel: FeedViewModelProtocol {
         posts.count
     }
     func numberOfSections() -> Int {
-        friends.count
+        userService.friends.count
     }
     func getUser(for userUID: String) -> User {
         let friends = userService.friends
@@ -85,6 +85,9 @@ final class FeedViewModel: FeedViewModelProtocol {
     }
     func updatePost(post: Post, for index: Int) {
         posts[index] = post
+    }
+    func newPost(post: Post, for index: Int) {
+        posts.insert(post, at: index)
     }
     func didSelectRow(at indexPath: IndexPath) {
         let post = posts[indexPath.row]

@@ -18,7 +18,8 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     private var avatar: UIImageView?
     private var offsetAvatar: CGFloat = 0
-    private let notificationForUpdateProfile = Notification.Name(Constants.notifyForUpdateProfile)
+    private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
+    private let notificationForNewPost = Notification.Name(Constants.notificationForNewPost)
 
     private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
@@ -123,6 +124,16 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         updateProfileHeaderView()
         tableView.reloadData()
     }
+    func reloadDataInScreenNewPost(notification: NSNotification) {
+        if let dict = notification.object as? NSDictionary {
+            if let post = dict["post"] as? Post, let index = dict["index"] as? Int {
+                viewModel.newPost(post: post, for: index)
+            }
+        }
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 }
 //MARK: - private extension
 private extension ProfileViewController {
@@ -131,10 +142,15 @@ private extension ProfileViewController {
                                                selector: #selector(reloadDataInScreen),
                                                name: notificationForUpdateProfile,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadDataInScreenNewPost),
+                                               name: notificationForNewPost,
+                                               object: nil)
 
     }
     func removeNotificationForReloadAllAfterUpdateProfile() {
         NotificationCenter.default.removeObserver(self, name: notificationForUpdateProfile, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationForNewPost, object: nil)
     }
     func updateProfileHeaderView() {
         if let urlString = viewModel.getUser().profilePictureUrl, let url = URL(string: urlString) {

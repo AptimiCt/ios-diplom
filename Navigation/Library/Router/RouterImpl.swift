@@ -48,6 +48,13 @@ final class RouterImpl: Router {
         rootController?.dismiss(animated: animated, completion: completion)
     }
     
+    func dismissPresentedModule() {
+        dismissPresentedModule(animated: true, completion: nil)
+    }
+    
+    func dismissPresentedModule(animated: Bool, completion: VoidClosure?) {
+        rootController?.presentedViewController?.dismiss(animated: animated, completion: completion)
+    }
     func push(_ module: Presentable?)  {
         push(module, animated: true)
     }

@@ -15,6 +15,7 @@ protocol ProfileViewModelProtocol: AnyObject {
     func getPostFor(_ index: Int) -> Post
     func addCoreData(_ index: Int, completion: @escaping BoolClosure)
     func getUser() -> User
+    func newPost(post: Post, for index: Int)
     func showPhotosVC()
     func showFindFriendVC()
     func showEditProfileVC()

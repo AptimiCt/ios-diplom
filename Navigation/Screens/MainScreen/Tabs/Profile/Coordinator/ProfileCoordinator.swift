@@ -47,9 +47,33 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
             addCoordinator(coordinator)
             coordinator.start()
     }
+    func showAddPostVC(){
+        let controller = factory.makeAddPostController(with: self)
+        router.present(controller, hideBar: false)
+    }
     func showAlert(inputData: UIAlertControllerInputData) {
         let alert = UIAlertController(inputData: inputData)
         router.present(alert)
+    }
+    func didFinish() {
+        router.dismissModule()
+    }
+    func didFinishSavePost() {
+        router.dismissModule()
+    }
+    func showImagePicker(completion: @escaping (UIImage?) -> Void) {
+        let coordinator = ImagePickerCoordinator(router: router)
+        coordinator.finishFlow = { [weak self, weak coordinator] image in
+            completion(image)
+            self?.router.dismissPresentedModule()
+            self?.removeCoordinator(coordinator)
+        }
+        coordinator.finishPicker = { [weak self, weak coordinator] in
+            completion(nil)
+            self?.removeCoordinator(coordinator)
+        }
+        addCoordinator(coordinator)
+        coordinator.start()
     }
     deinit {
         Logger.standard.remove(on: self)

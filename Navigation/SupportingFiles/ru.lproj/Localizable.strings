@@ -112,3 +112,7 @@
 "UIP.actionSheet.title" = "Как вы хотите выбрать фото?";
 "UIP.actionSheetCamera.title" = "Камера";
 "UIP.actionSheetPhotoLibrary.title" = "Библиотека фото";
+
+//MARK: - AddPostView
+"APVM.title" = "Добавить запись";
+"BIVC.placeholder" = "Что нового?";
