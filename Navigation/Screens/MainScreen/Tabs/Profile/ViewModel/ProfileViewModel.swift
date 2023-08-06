@@ -42,7 +42,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             completion()
         }
     }
-    
+    func newPost(post: Post, for index: Int) {
+        posts.insert(post, at: index)
+    }
     func numberOfRows() -> Int {
         posts.count
     }

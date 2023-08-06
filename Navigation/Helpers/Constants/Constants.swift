@@ -131,4 +131,6 @@ struct Constants {
     static let dataModel = "PostDataModel"
     
     static let notifiForUpdateProfile = "updateProfile"
+    
+    static let notificationForNewPost = "newPost"
 }

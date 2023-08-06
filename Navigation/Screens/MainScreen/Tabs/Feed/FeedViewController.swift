@@ -13,6 +13,7 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
     var cellFactory: Configurator?
     
     private let notificationForUpdateProfile = Notification.Name(Constants.notifiForUpdateProfile)
+    private let notificationForNewPost = Notification.Name(Constants.notificationForNewPost)
     
     //MARK: - vars
     private var activityIndicator: UIActivityIndicatorView = {
@@ -75,6 +76,16 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
         }
         tableView.reloadData()
     }
+    func reloadDataInScreenNewPost(notification: NSNotification) {
+        if let dict = notification.object as? NSDictionary {
+            if let post = dict["post"] as? Post, let index = dict["index"] as? Int {
+                viewModel.newPost(post: post, for: index)
+            }
+        }
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
     func refresh(sender: UIRefreshControl) {
         viewModel.changeState { [weak self] in
             self?.tableView.reloadData()
@@ -88,9 +99,14 @@ private extension FeedViewController {
                                                selector: #selector(reloadDataInScreen),
                                                name: notificationForUpdateProfile,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadDataInScreenNewPost),
+                                               name: notificationForNewPost,
+                                               object: nil)
     }
     func removeNotificationForReloadAllAfterUpdateProfile() {
         NotificationCenter.default.removeObserver(self, name: notificationForUpdateProfile, object: nil)
+        NotificationCenter.default.removeObserver(self, name: notificationForNewPost, object: nil)
     }
     func setupView() {
         title = Constants.navigationItemFeedTitle

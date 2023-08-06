@@ -86,6 +86,9 @@ final class FeedViewModel: FeedViewModelProtocol {
     func updatePost(post: Post, for index: Int) {
         posts[index] = post
     }
+    func newPost(post: Post, for index: Int) {
+        posts.insert(post, at: index)
+    }
     func didSelectRow(at indexPath: IndexPath) {
         let post = posts[indexPath.row]
         coordinator.showDetail(post: post, index: indexPath.row)

@@ -19,5 +19,6 @@ protocol FeedViewModelProtocol: AnyObject {
     func getUser(for userUID: String) -> User
     func getFriens() -> [User]
     func updatePost(post: Post, for index: Int)
+    func newPost(post: Post, for index: Int)
     func didSelectRow(at indexPath: IndexPath)
 }

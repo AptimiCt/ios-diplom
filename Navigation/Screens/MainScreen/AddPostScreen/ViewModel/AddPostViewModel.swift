@@ -136,8 +136,12 @@ private extension AddPostViewModel {
     func addPost(with userUid: String, bodyText: String, and url: String?) {
         let post = Post(userUid: userUid, body: bodyText, imageUrl: url, likes: [], views: 0, createdDate: Date(), updateDate: Date())
         firestore.addNewPost(post: post) { error in
-            guard let error else { return }
-            print("error:\(error.localizedDescription)")
+            if let error {
+                print("error:\(error.localizedDescription)")
+            } else {
+                let postNotification = ["post": post, "index": 0] as [String : Any]
+                NotificationCenter.default.post(name: Notification.Name(Constants.notificationForNewPost), object: postNotification)
+            }
         }
     }
 }
