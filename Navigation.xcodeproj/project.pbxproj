@@ -130,6 +130,7 @@
 		BB5D0B5C28ECB26C00B14768 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */; };
 		BB5D0B5E28EE191300B14768 /* CheckerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */; };
 		BB803CA62A7EB81F005209F2 /* RSKPlaceholderTextView in Frameworks */ = {isa = PBXBuildFile; productRef = BB803CA52A7EB81F005209F2 /* RSKPlaceholderTextView */; };
+		BB843F0C2A8125D3004BC67E /* ViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB843F0B2A8125D3004BC67E /* ViewCellModel.swift */; };
 		BB8AD9362A65D06B009CA30E /* AddPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8AD9352A65D06B009CA30E /* AddPostViewModel.swift */; };
 		BB8AD9382A65D0F6009CA30E /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8AD9372A65D0F6009CA30E /* AddPostViewController.swift */; };
 		BB8AD93B2A65D1D7009CA30E /* BodyImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8AD93A2A65D1D7009CA30E /* BodyImageViewCell.swift */; };
@@ -279,6 +280,7 @@
 		BB53FB23276A8F9D0094AF1D /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		BB5D0B5B28ECB26B00B14768 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BB5D0B5D28EE191300B14768 /* CheckerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerServiceProtocol.swift; sourceTree = "<group>"; };
+		BB843F0B2A8125D3004BC67E /* ViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCellModel.swift; sourceTree = "<group>"; };
 		BB8AD9352A65D06B009CA30E /* AddPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewModel.swift; sourceTree = "<group>"; };
 		BB8AD9372A65D0F6009CA30E /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 		BB8AD93A2A65D1D7009CA30E /* BodyImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyImageViewCell.swift; sourceTree = "<group>"; };
@@ -813,6 +815,7 @@
 				614D33D029E75319003E1A83 /* Profile.swift */,
 				61F4F63D2A5B26A300937A6E /* SearchResult.swift */,
 				618148EE2A79C34D00667ED0 /* Post.swift */,
+				BB843F0B2A8125D3004BC67E /* ViewCellModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1141,6 +1144,7 @@
 				61FF1EE929FF2686002D0331 /* BaseCoordinator.swift in Sources */,
 				613817542A23EF610001959A /* FeedViewControllerProtocol.swift in Sources */,
 				618148FD2A79C69E00667ED0 /* StateView.swift in Sources */,
+				BB843F0C2A8125D3004BC67E /* ViewCellModel.swift in Sources */,
 				611A7BB92A3D1E3600030A9F /* PostDetailController.swift in Sources */,
 				BB8AD93F2A65D717009CA30E /* PostCellBuilder.swift in Sources */,
 				BB4D4B492A5C232B00EC3407 /* AddPostViewModelProtocol.swift in Sources */,

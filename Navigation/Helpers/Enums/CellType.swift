@@ -7,7 +7,6 @@
 //
 
 enum CellType {
-  case friendsCell
   case postWithImageCell
   case postCell
 }

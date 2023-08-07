@@ -73,14 +73,27 @@ final class FeedViewModel: FeedViewModelProtocol {
         }
         return user
     }
+    func addCoreData(_ index: Int, completion: @escaping BoolClosure) {
+        let post = getPostFor(index)
+        CoreDataManager.dataManager.create(post: post) { result in
+            switch result {
+                case .success(_):
+                    completion(true)
+                case .failure(let error):
+                    completion(false)
+                    print("error create:\(error.localizedDescription)")
+            }
+        }
+        completion(true)
+    }
     func getFriends() -> [User] {
         userService.friends
     }
-    func getPostFor(_ indexPath: IndexPath) -> Post {
-        posts[indexPath.row]
+    func getPostFor(_ index: Int) -> Post {
+        posts[index]
     }
-    func cellType(at indexPath: IndexPath) -> CellType {
-        guard let _ = getPostFor(indexPath).imageUrl else { return .postCell }
+    func cellType(at index: Int) -> CellType {
+        guard let _ = getPostFor(index).imageUrl else { return .postCell }
         return .postWithImageCell
     }
     func updatePost(post: Post, for index: Int) {
@@ -89,15 +102,15 @@ final class FeedViewModel: FeedViewModelProtocol {
     func newPost(post: Post, for index: Int) {
         posts.insert(post, at: index)
     }
-    func didSelectRow(at indexPath: IndexPath) {
-        let post = posts[indexPath.row]
-        coordinator.showDetail(post: post, index: indexPath.row)
+    func didSelectRow(at index: Int) {
+        let post = posts[index]
+        coordinator.showDetail(post: post, index: index)
         updateViews(postUID: post.postUid) { [weak self] in
             guard let self else { return }
             self.firestore.fetchPost(postId: post.postUid) { result in
                 switch result {
                     case .success(let post):
-                        self.posts[indexPath.row] = post
+                        self.posts[index] = post
                         self.stateChanged?(.loaded(self))
                     case .failure(let error):
                         print("error updateViews:\(error.localizedDescription)")
@@ -106,7 +119,9 @@ final class FeedViewModel: FeedViewModelProtocol {
             }
         }
     }
-    func updateViews(postUID: String, completion: @escaping VoidClosure) {
+}
+private extension FeedViewModel {
+    private func updateViews(postUID: String, completion: @escaping VoidClosure) {
         firestore.updateViews(postId: postUID) { error in
             if let error {
                 print("error updateViews:\(error.localizedDescription)")

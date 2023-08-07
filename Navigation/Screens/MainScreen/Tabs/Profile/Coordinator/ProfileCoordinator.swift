@@ -29,6 +29,10 @@ final class ProfileCoordinator: BaseCoordinator, OutputCoordinator {
         let controller = factory.makePhotosController()
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
+    func showDetail(post: Post, index: Int) {
+        let controller = factory.makePostDetailController(post: post, index: index)
+        router.push(controller, hideBottomBar: true, hideBar: false)
+    }
     func showFindFriendVC(){
         let controller = factory.makeFindFriendController(with: self)
         router.present(controller, hideBar: false)

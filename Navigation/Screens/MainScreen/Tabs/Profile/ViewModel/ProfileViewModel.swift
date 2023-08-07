@@ -45,11 +45,33 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func newPost(post: Post, for index: Int) {
         posts.insert(post, at: index)
     }
+    func didSelectRow(at index: Int) {
+        let post = posts[index]
+        coordinator.showDetail(post: post, index: index)
+        updateViews(postUID: post.postUid) { [weak self] in
+            guard let self else { return }
+            self.firestore.fetchPost(postId: post.postUid) { result in
+                switch result {
+                    case .success(let post):
+                        self.posts[index] = post
+                        self.stateChanged?(.loaded(self))
+                    case .failure(let error):
+                        print("error updateViews:\(error.localizedDescription)")
+                        return
+                }
+            }
+        }
+    }
+    
     func numberOfRows() -> Int {
         posts.count
     }
     func getPostFor(_ index: Int) -> Post {
         posts[index]
+    }
+    func cellType(at index: Int) -> CellType {
+        guard let _ = getPostFor(index).imageUrl else { return .postCell }
+        return .postWithImageCell
     }
     func getUser() -> User {
         userService.getUser()
@@ -84,5 +106,16 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     func finishFlow() {
         coordinator.finishFlow?(nil)
+    }
+}
+private extension ProfileViewModel {
+    private func updateViews(postUID: String, completion: @escaping VoidClosure) {
+        firestore.updateViews(postId: postUID) { error in
+            if let error {
+                print("error updateViews:\(error.localizedDescription)")
+                return
+            }
+            completion()
+        }
     }
 }

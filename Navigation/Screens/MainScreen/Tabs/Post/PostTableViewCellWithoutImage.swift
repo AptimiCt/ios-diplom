@@ -12,8 +12,6 @@ class PostTableViewCellWithoutImage: UITableViewCell {
     weak var delegate: PostTableViewCellDelegate?
     var indexPath: IndexPath!
     
-    private lazy var heightAnchorReadMoreButton: NSLayoutConstraint = readMore.heightAnchor.constraint(equalToConstant: 0)
-    
     private let authorLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
@@ -137,7 +135,6 @@ private extension PostTableViewCellWithoutImage {
         }
     }
     func addDoubleTapRecognizer() {
-        guard reuseIdentifier == Cells.cellForProfileTableViewCell else { return }
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
         doubleTap.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTap)

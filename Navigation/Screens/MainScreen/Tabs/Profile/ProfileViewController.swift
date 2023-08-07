@@ -10,6 +10,7 @@ import UIKit
 class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     internal var viewModel: ProfileViewModelProtocol!
+    private var cellFactory: Configurator?
     
     //MARK: - vars
     private let tabBarItemProfileView = UITabBarItem(title: Constants.tabBarItemProfileViewTitle,
@@ -26,6 +27,11 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         activityIndicator.toAutoLayout()
         return activityIndicator
     }()
+    private lazy var refreshControl: UIRefreshControl = {
+        let  refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
     
     let profileTableHeaderView: ProfileHeaderView! = ProfileHeaderView()
     
@@ -41,6 +47,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     //MARK: - init
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
+        self.cellFactory = ConfiguratorCell()
         super.init(nibName: nil, bundle: nil)
         self.tabBarItem = tabBarItemProfileView
         Logger.standard.start(on: self)
@@ -67,6 +74,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.reloadData()
         updateProfileHeaderView()
     }
     
@@ -132,6 +140,12 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         }
         viewModel.changeState { [weak self] in
             self?.tableView.reloadData()
+        }
+    }
+    func refresh(sender: UIRefreshControl) {
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+            sender.endRefreshing()
         }
     }
 }
@@ -233,6 +247,7 @@ private extension ProfileViewController {
     func setupView() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.refreshControl = refreshControl
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         configureConstraints()
@@ -240,7 +255,8 @@ private extension ProfileViewController {
     func configureConstraints(){
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        tableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: Cells.cellForProfileTableViewCell)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCell)
+        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCellWithoutImage)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
         let constraints: [NSLayoutConstraint] = [
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -261,6 +277,8 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cellFactory = cellFactory else { return UITableViewCell() }
+        
         if indexPath.section == 0 {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Cells.cellForSection,
@@ -270,14 +288,17 @@ extension ProfileViewController: UITableViewDataSource {
             cell.photos = photos
             return cell
         }
+        let cellType = viewModel.cellType(at: indexPath.row)
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForProfileTableViewCell) as? ProfileTableViewCell else { return UITableViewCell() }
-        let post = viewModel.getPostFor(indexPath.row)
-        let user = viewModel.getUser()
-        cell.configure(post: post, with: user)
-        cell.indexPath = indexPath
-        cell.delegate = self
-        return cell
+        let viewCellModel = ViewCellModel(cellType: cellType,
+                                          post: viewModel.getPostFor(indexPath.row),
+                                          user: viewModel.getUser(),
+                                          friends: [],
+                                          delegate: self,
+                                          tableView: tableView,
+                                          indexPath: indexPath)
+        
+        return cellFactory.makeCell(viewModel: viewCellModel)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -308,13 +329,12 @@ extension ProfileViewController: UITableViewDelegate {
 }
 //MARK: - PostTableViewCellDelegate
 extension ProfileViewController: PostTableViewCellDelegate {
+    func moreReadButtonTapped(at indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath.row)
+    }
     func addFavorite(index: Int, completion: @escaping BoolClosure) {
         viewModel.addCoreData(index) { isFavorite in
             completion(isFavorite)
         }
-    }
-    func moreReadButtonTapped(at indexPath: IndexPath) {
-        tableView.beginUpdates()
-        tableView.endUpdates()
     }
 }

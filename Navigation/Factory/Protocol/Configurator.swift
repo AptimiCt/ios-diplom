@@ -9,11 +9,5 @@
 import UIKit
 
 protocol Configurator {
-    
-    func makeCell(cellType: CellType,
-                  viewModel: FeedViewModelProtocol,
-                  delegate: PostTableViewCellDelegate?,
-                  tableView: UITableView,
-                  for indexPath: IndexPath
-    ) -> UITableViewCell
+    func makeCell(viewModel: ViewCellModel) -> UITableViewCell
 }

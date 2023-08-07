@@ -178,12 +178,22 @@ extension FeedViewController: UITableViewDataSource {
         guard let cellFactory = cellFactory else { return UITableViewCell() }
         
         if indexPath.section == 0 {
-            let friendsCell = cellFactory.makeCell(cellType: .friendsCell, viewModel: viewModel, delegate: nil, tableView: tableView, for: indexPath)
-            return friendsCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cells.cellForSectionToCollection, for: indexPath) as? FriendsViewCell else { return UITableViewCell() }
+            cell.friends = viewModel.getFriends()
+            return cell
         }
         
-        let cellType = viewModel.cellType(at: indexPath)
-        return cellFactory.makeCell(cellType: cellType, viewModel: viewModel, delegate: self, tableView: tableView, for: indexPath)
+        let post = viewModel.getPostFor(indexPath.row)
+        let cellType = viewModel.cellType(at: indexPath.row)
+        let viewCellModel = ViewCellModel(cellType: cellType,
+                                          post: post,
+                                          user: viewModel.getUser(for: post.userUid),
+                                          friends: viewModel.getFriends(),
+                                          delegate: self,
+                                          tableView: tableView,
+                                          indexPath: indexPath
+        )
+        return cellFactory.makeCell(viewModel: viewCellModel)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         2
@@ -197,9 +207,11 @@ extension FeedViewController: UITableViewDelegate {
 }
 extension FeedViewController: PostTableViewCellDelegate {
     func moreReadButtonTapped(at indexPath: IndexPath) {
-        viewModel.didSelectRow(at: indexPath)
+        viewModel.didSelectRow(at: indexPath.row)
     }
     func addFavorite(index: Int, completion: @escaping BoolClosure) {
-        completion(true)
+        viewModel.addCoreData(index) { isFavorite in
+            completion(isFavorite)
+        }
     }
 }

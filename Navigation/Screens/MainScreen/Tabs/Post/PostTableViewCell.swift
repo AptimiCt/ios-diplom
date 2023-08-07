@@ -12,7 +12,6 @@ class PostTableViewCell: UITableViewCell {
     weak var delegate: PostTableViewCellDelegate?
     var indexPath: IndexPath!
     
-    private lazy var heightAnchorReadMoreButton: NSLayoutConstraint = readMore.heightAnchor.constraint(equalToConstant: 0)
     private let constantHeightPostImageView = (Constants.screenWeight) / 3
     private lazy var heightAnchorPostImageView: NSLayoutConstraint = postImageView.heightAnchor.constraint(equalToConstant: constantHeightPostImageView)
     
@@ -150,7 +149,6 @@ private extension PostTableViewCell {
         }
     }
     func addDoubleTapRecognizer() {
-        guard reuseIdentifier == Cells.cellForProfileTableViewCell else { return }
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
         doubleTap.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTap)
