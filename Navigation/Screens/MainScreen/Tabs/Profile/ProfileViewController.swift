@@ -128,9 +128,16 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         }
         
     }
-    func reloadDataInScreen() {
+    func reloadDataInScreen(notification: NSNotification) {
         updateProfileHeaderView()
-        tableView.reloadData()
+        if let dict = notification.object as? NSDictionary {
+            if let post = dict["post"] as? Post, let index = dict["index"] as? Int {
+                viewModel.updatePost(post: post, for: index)
+            }
+        }
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     func reloadDataInScreenNewPost(notification: NSNotification) {
         if let dict = notification.object as? NSDictionary {

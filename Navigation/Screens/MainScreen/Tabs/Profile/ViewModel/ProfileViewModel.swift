@@ -45,6 +45,11 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     func newPost(post: Post, for index: Int) {
         posts.insert(post, at: index)
     }
+    func updatePost(post: Post, for index: Int) {
+        if index < numberOfRows(), posts[index].postUid == post.postUid {
+            posts[index] = post
+        }
+    }
     func didSelectRow(at index: Int) {
         let post = posts[index]
         coordinator.showDetail(post: post, index: index)

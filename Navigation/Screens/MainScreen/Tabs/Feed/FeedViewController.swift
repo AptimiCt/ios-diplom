@@ -74,7 +74,9 @@ class FeedViewController: UIViewController, FeedViewControllerProtocol {
                 viewModel.updatePost(post: post, for: index)
             }
         }
-        tableView.reloadData()
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
     func reloadDataInScreenNewPost(notification: NSNotification) {
         if let dict = notification.object as? NSDictionary {

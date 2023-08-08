@@ -97,7 +97,9 @@ final class FeedViewModel: FeedViewModelProtocol {
         return .postWithImageCell
     }
     func updatePost(post: Post, for index: Int) {
-        posts[index] = post
+        if posts[index].postUid == post.postUid {
+            posts[index] = post
+        }
     }
     func newPost(post: Post, for index: Int) {
         posts.insert(post, at: index)
