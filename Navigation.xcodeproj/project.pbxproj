@@ -24,7 +24,6 @@
 		613817542A23EF610001959A /* FeedViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613817532A23EF610001959A /* FeedViewControllerProtocol.swift */; };
 		613817582A23F0020001959A /* FeedViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613817572A23F0020001959A /* FeedViewModelProtocol.swift */; };
 		6138175A2A23F0630001959A /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613817592A23F0630001959A /* FeedViewModel.swift */; };
-		6138175C2A2656CB0001959A /* PostTableViewCellFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6138175B2A2656CB0001959A /* PostTableViewCellFS.swift */; };
 		613F15482A02B863006FBA8E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613F15472A02B863006FBA8E /* MainCoordinator.swift */; };
 		613FF3262A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3252A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift */; };
 		613FF3292A0AA62200D0BB71 /* ControllersFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613FF3282A0AA62200D0BB71 /* ControllersFactoryProtocol.swift */; };
@@ -162,7 +161,6 @@
 		613817532A23EF610001959A /* FeedViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerProtocol.swift; sourceTree = "<group>"; };
 		613817572A23F0020001959A /* FeedViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModelProtocol.swift; sourceTree = "<group>"; };
 		613817592A23F0630001959A /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
-		6138175B2A2656CB0001959A /* PostTableViewCellFS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCellFS.swift; sourceTree = "<group>"; };
 		613F15472A02B863006FBA8E /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		613FF3252A0AA4DD00D0BB71 /* LoginViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerProtocol.swift; sourceTree = "<group>"; };
 		613FF3282A0AA62200D0BB71 /* ControllersFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllersFactoryProtocol.swift; sourceTree = "<group>"; };
@@ -314,14 +312,14 @@
 			path = "UIAlertController+Ext";
 			sourceTree = "<group>";
 		};
-		611A7BB22A3D1D2500030A9F /* PostDetail */ = {
+		611A7BB22A3D1D2500030A9F /* PostDetailScreen */ = {
 			isa = PBXGroup;
 			children = (
 				611A7BB72A3D1DCC00030A9F /* Controller */,
 				611A7BB62A3D1DB000030A9F /* ViewModel */,
 				611A7BB32A3D1D6600030A9F /* Protocol */,
 			);
-			path = PostDetail;
+			path = PostDetailScreen;
 			sourceTree = "<group>";
 		};
 		611A7BB32A3D1D6600030A9F /* Protocol */ = {
@@ -354,8 +352,7 @@
 			children = (
 				613FF3242A0AA4A800D0BB71 /* Protocol */,
 				613FF3372A0AE7FC00D0BB71 /* Coordinator */,
-				613FF34F2A0D529D00D0BB71 /* LoginViewController */,
-				613FF34D2A0D523900D0BB71 /* UpdateInfoProfile */,
+				613FF34F2A0D529D00D0BB71 /* LoginView */,
 			);
 			path = LoginScreen;
 			sourceTree = "<group>";
@@ -467,7 +464,8 @@
 				613FF33B2A0AEDB600D0BB71 /* Coordinator */,
 				BB47EFF72889EA4B00FFB5EC /* TabBarController.swift */,
 				613FF3402A0AF47700D0BB71 /* Tabs */,
-				611A7BB22A3D1D2500030A9F /* PostDetail */,
+				613FF34D2A0D523900D0BB71 /* UpdateInfoProfileScreen */,
+				611A7BB22A3D1D2500030A9F /* PostDetailScreen */,
 				61F4F62F2A5612F300937A6E /* FindFriendScreen */,
 				BB4D4B3E2A5C1B4A00EC3407 /* AddPostScreen */,
 			);
@@ -478,6 +476,7 @@
 			isa = PBXGroup;
 			children = (
 				613F15472A02B863006FBA8E /* MainCoordinator.swift */,
+				61C0CB932A40C67E0023EFD7 /* ImagePickerCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -530,7 +529,7 @@
 			path = Tabs;
 			sourceTree = "<group>";
 		};
-		613FF34D2A0D523900D0BB71 /* UpdateInfoProfile */ = {
+		613FF34D2A0D523900D0BB71 /* UpdateInfoProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
 				61C0CB922A40C6610023EFD7 /* Coordinator */,
@@ -540,19 +539,18 @@
 				613FF3432A0AF7FD00D0BB71 /* UpdateInfoProfileController.swift */,
 				613FF34B2A0CF74B00D0BB71 /* UpdateInfoProfileView+Ext.swift */,
 			);
-			path = UpdateInfoProfile;
+			path = UpdateInfoProfileScreen;
 			sourceTree = "<group>";
 		};
 		613FF34E2A0D526200D0BB71 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				613FF3472A0AF9B500D0BB71 /* UpdateInfoProfileViewModel.swift */,
-				613FF3572A0D98B100D0BB71 /* UserData.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		613FF34F2A0D529D00D0BB71 /* LoginViewController */ = {
+		613FF34F2A0D529D00D0BB71 /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
 				611CA4FB29BDF60F00B42FAD /* ViewModel */,
@@ -560,7 +558,7 @@
 				BB38BC4C2794180600FF4B2E /* LoginViewController.swift */,
 				61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */,
 			);
-			path = LoginViewController;
+			path = LoginView;
 			sourceTree = "<group>";
 		};
 		613FF3502A0D52C300D0BB71 /* Protocol */ = {
@@ -636,6 +634,7 @@
 			isa = PBXGroup;
 			children = (
 				617AC7892A72E8BD008B50A5 /* PostTableViewCellProtocol.swift */,
+				61F6B73B2A6DDE2900E3DD07 /* PostTableViewCellDelegate .swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -725,7 +724,6 @@
 		61C0CB922A40C6610023EFD7 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				61C0CB932A40C67E0023EFD7 /* ImagePickerCoordinator.swift */,
 				610690A22A69EDD40044D77A /* UpdateInfoProfileCoordinator.swift */,
 			);
 			path = Coordinator;
@@ -831,7 +829,6 @@
 				613FF33C2A0AEDF200D0BB71 /* Coordinator */,
 				613817522A23EF040001959A /* ViewModel */,
 				BBBBC9142753E9A6003DDF50 /* FeedViewController.swift */,
-				6138175B2A2656CB0001959A /* PostTableViewCellFS.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -842,6 +839,7 @@
 				BB152504282FBFCE0045275F /* User.swift */,
 				61F4F63D2A5B26A300937A6E /* SearchResult.swift */,
 				618148EE2A79C34D00667ED0 /* Post.swift */,
+				613FF3572A0D98B100D0BB71 /* UserData.swift */,
 				BB843F0B2A8125D3004BC67E /* ViewCellModel.swift */,
 			);
 			path = Model;
@@ -984,7 +982,6 @@
 			isa = PBXGroup;
 			children = (
 				617AC7882A72E86C008B50A5 /* Protocol */,
-				61F6B73B2A6DDE2900E3DD07 /* PostTableViewCellDelegate .swift */,
 				BBD735C727A72CAE002397A0 /* PostTableViewCell.swift */,
 				617AC7862A72E03F008B50A5 /* PostTableViewCellWithoutImage.swift */,
 			);
@@ -1253,7 +1250,6 @@
 				613FF3582A0D98B100D0BB71 /* UserData.swift in Sources */,
 				618148F72A79C5F400667ED0 /* StateModelPost.swift in Sources */,
 				BB8AD93B2A65D1D7009CA30E /* BodyImageViewCell.swift in Sources */,
-				6138175C2A2656CB0001959A /* PostTableViewCellFS.swift in Sources */,
 				618C64402A82C23B007EA3D6 /* UserService.swift in Sources */,
 				61CDA6AB2A2A9195003FA31B /* SplashViewController.swift in Sources */,
 				618148FB2A79C67500667ED0 /* StateModel.swift in Sources */,
