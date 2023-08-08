@@ -9,8 +9,8 @@ import UIKit
 
 struct Cells {
     static let cellForProfileTableViewCell = String(describing: ProfileTableViewCell.self)
-    static let cellForFeedPostTableViewCell = String(describing: PostTableViewCell.self)
-    static let cellForFeedPostTableViewCellWithoutImage = String(describing: PostTableViewCellWithoutImage.self)
+    static let cellForPostTableViewCell = String(describing: PostTableViewCell.self)
+    static let cellForPostTableViewCellWithoutImage = String(describing: PostTableViewCellWithoutImage.self)
     static let cellForPostFavorites = String(describing: FavoritesViewController.self)
     static let cellForSection = String(describing: PhotosTableViewCell.self)
     static let cellForSectionToCollection = String(describing: FriendsViewCell.self)

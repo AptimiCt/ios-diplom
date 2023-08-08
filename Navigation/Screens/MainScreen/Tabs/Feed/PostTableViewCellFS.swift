@@ -104,7 +104,7 @@ class PostTableViewCellFS: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         configureConstraints()
-//        guard reuseIdentifier == Cells.cellForFeedPostTableViewCell else { return }
+//        guard reuseIdentifier == Cells.cellForPostTableViewCell else { return }
 //        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(addPostToFavorite))
 //                doubleTap.numberOfTapsRequired = 2
 //                self.addGestureRecognizer(doubleTap)

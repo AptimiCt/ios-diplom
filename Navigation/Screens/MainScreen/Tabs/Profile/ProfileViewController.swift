@@ -290,8 +290,8 @@ private extension ProfileViewController {
     func configureConstraints(){
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCell)
-        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCellWithoutImage)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPostTableViewCell)
+        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForPostTableViewCellWithoutImage)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
         let constraints: [NSLayoutConstraint] = [
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),

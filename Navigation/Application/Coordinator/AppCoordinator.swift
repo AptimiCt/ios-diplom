@@ -103,10 +103,6 @@ private extension AppCoordinator {
         let svc = factory.makeSplashController()
         router.setRootModule(svc, hideBar: true)
     }
-    func appConfiguration() {
-        let appConfiguration = AppConfiguration.allCases.randomElement()
-        NetworkManager.request(for: appConfiguration)
-    }
     func localNotificationRegister() {
         localNotificationService.registerForLatestUpdatesIfPossible()
     }

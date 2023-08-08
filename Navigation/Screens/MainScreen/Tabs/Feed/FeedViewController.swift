@@ -113,8 +113,8 @@ private extension FeedViewController {
     func setupView() {
         title = Constants.navigationItemFeedTitle
     
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCell)
-        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForFeedPostTableViewCellWithoutImage)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPostTableViewCell)
+        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForPostTableViewCellWithoutImage)
         tableView.register(FriendsViewCell.self, forCellReuseIdentifier: Cells.cellForSectionToCollection)
         tableView.dataSource = self
         tableView.delegate = self

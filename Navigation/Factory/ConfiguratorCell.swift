@@ -12,8 +12,8 @@ import UIKit
 struct ConfiguratorCell: Configurator {
     
     private let cellsIdentifier: [CellType: String] = [
-        .postWithImageCell: Cells.cellForFeedPostTableViewCell,
-        .postCell: Cells.cellForFeedPostTableViewCellWithoutImage,
+        .postWithImageCell: Cells.cellForPostTableViewCell,
+        .postCell: Cells.cellForPostTableViewCellWithoutImage,
     ]
     
     func makeCell(viewModel: ViewCellModel) -> UITableViewCell {
