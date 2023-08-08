@@ -158,6 +158,34 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
 }
 //MARK: - private extension
 private extension ProfileViewController {
+    struct ProfileViewAlertSheetForExit {
+        let alertSheetTitle: String
+        let exitActionTitle: String
+        let cancelActionTitle: String
+    }
+    func showAlertSheet() {
+        let alertSheet = UIAlertController(
+            title: nil,
+            message: "PVC.alertSheet.title".localized,
+            preferredStyle: .actionSheet
+        )
+        let exitAction = UIAlertAction(
+            title: "PVC.alertSheet.exitAction".localized,
+            style: .destructive
+        ) { [weak self] _ in
+            self?.viewModel.finishFlow()
+        }
+        let cancelAction = UIAlertAction(
+            title: "UIAC.cancel".localized,
+            style: .cancel
+        )
+        
+        alertSheet.addAction(exitAction)
+        alertSheet.addAction(cancelAction)
+        
+        present(alertSheet, animated: true)
+    }
+    
     func addNotificationForReloadAllAfterUpdateProfile() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(reloadDataInScreen),
@@ -198,7 +226,7 @@ private extension ProfileViewController {
     //Переход в поток авторизации
     func finishFlow() {
         profileTableHeaderView.exitButton.action = { [weak self] in
-            self?.viewModel.finishFlow()
+            self?.showAlertSheet()
         }
     }
     //MARK: - setupViewModel

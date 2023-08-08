@@ -51,6 +51,8 @@
 
 //MARK: - ProfileViewController
 "tabBarItemProfileView.title" = "Profile";
+"PVC.alertSheet.title" =  "Are you sure you want to go out?";
+"PVC.alertSheet.exitAction" =  "Exit";
 
 //MARK: - ProfileHeaderView
 "editProfileButton.title" = "Edit profile";
