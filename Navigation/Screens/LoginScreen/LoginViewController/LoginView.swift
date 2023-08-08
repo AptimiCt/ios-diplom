@@ -142,7 +142,7 @@ private extension LoginView {
         
         stackView.addArrangedSubview(loginTextView)
         stackView.addArrangedSubview(passwordTextView)
-        contentView.addSubviews(logoImageView, stackView, loginButton, signUpButton, loginWithBiometrics)
+        contentView.addSubviews(logoImageView, stackView, loginButton, signUpButton)
         
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
     }
@@ -188,12 +188,7 @@ private extension LoginView {
             signUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16),
             signUpButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             signUpButton.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
-            
-            loginWithBiometrics.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            loginWithBiometrics.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
-            loginWithBiometrics.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
-            loginWithBiometrics.heightAnchor.constraint(equalToConstant: Constants.heightForLoginButton),
-            loginWithBiometrics.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
+            signUpButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
             
             activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
