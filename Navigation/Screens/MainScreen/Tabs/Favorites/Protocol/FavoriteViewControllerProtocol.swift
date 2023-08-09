@@ -9,6 +9,4 @@
 
 import UIKit
 
-protocol FavoriteViewControllerProtocol: Presentable {
-    var tableView: UITableView { get }
-}
+protocol FavoriteViewControllerProtocol: Presentable {}

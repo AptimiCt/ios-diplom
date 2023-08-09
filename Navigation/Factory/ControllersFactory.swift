@@ -57,9 +57,11 @@ final class ControllerFactory: ControllersFactoryProtocol {
         return PhotosViewController()
     }
     
-    func makeFavoriteController() -> FavoriteViewControllerProtocol {
-        let favoritesNavigationController = FavoritesViewController()
-        return favoritesNavigationController
+    func makeFavoriteController(with coordinator: FavoriteCoordinator) -> FavoriteViewControllerProtocol {
+        let viewModel = FavoritesViewModel(firestore: FirestoreManager(), coordinator: coordinator, userService: userService)
+        let favoritesViewController = FavoritesViewController(viewModel: viewModel)
+            
+        return favoritesViewController
     }
     func makeFindFriendController(with coordinator: ProfileCoordinator) -> FindFriendViewControllerProtocol {
         let findFriendViewController = FindFriendViewController()

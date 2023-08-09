@@ -25,7 +25,7 @@ protocol ProfileControllerFactoryProtocol {
 }
 
 protocol FavoriteControllerFactoryProtocol {
-    func makeFavoriteController() -> FavoriteViewControllerProtocol
+    func makeFavoriteController(with coordinator: FavoriteCoordinator) -> FavoriteViewControllerProtocol
 }
 protocol FeedControllerFactoryProtocol {
     func makeFeedController(with coordinator: FeedCoordinator) -> FeedViewControllerProtocol

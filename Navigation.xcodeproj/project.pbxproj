@@ -73,6 +73,8 @@
 		618148FB2A79C67500667ED0 /* StateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618148FA2A79C67500667ED0 /* StateModel.swift */; };
 		618148FD2A79C69E00667ED0 /* StateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618148FC2A79C69E00667ED0 /* StateView.swift */; };
 		618C64402A82C23B007EA3D6 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C643F2A82C23B007EA3D6 /* UserService.swift */; };
+		618C64492A82E7EE007EA3D6 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C64482A82E7EE007EA3D6 /* FavoritesViewModel.swift */; };
+		618C644B2A82E84B007EA3D6 /* FavoritesViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618C644A2A82E84B007EA3D6 /* FavoritesViewModelProtocol.swift */; };
 		618F60F42A1A4F42006C3F55 /* UserDefaultsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618F60F32A1A4F42006C3F55 /* UserDefaultsEnum.swift */; };
 		618F60F62A1AA8AF006C3F55 /* ScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618F60F52A1AA8AF006C3F55 /* ScreenType.swift */; };
 		61ABC2C52A2B3230006748BF /* FriendsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61ABC2C42A2B3230006748BF /* FriendsViewCell.swift */; };
@@ -212,6 +214,8 @@
 		618148FA2A79C67500667ED0 /* StateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateModel.swift; sourceTree = "<group>"; };
 		618148FC2A79C69E00667ED0 /* StateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateView.swift; sourceTree = "<group>"; };
 		618C643F2A82C23B007EA3D6 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		618C64482A82E7EE007EA3D6 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		618C644A2A82E84B007EA3D6 /* FavoritesViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModelProtocol.swift; sourceTree = "<group>"; };
 		618F60F32A1A4F42006C3F55 /* UserDefaultsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsEnum.swift; sourceTree = "<group>"; };
 		618F60F52A1AA8AF006C3F55 /* ScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenType.swift; sourceTree = "<group>"; };
 		61ABC2C42A2B3230006748BF /* FriendsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewCell.swift; sourceTree = "<group>"; };
@@ -422,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				613FF3312A0AE64800D0BB71 /* FavoriteViewControllerProtocol.swift */,
+				618C644A2A82E84B007EA3D6 /* FavoritesViewModelProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -694,6 +699,14 @@
 			path = State;
 			sourceTree = "<group>";
 		};
+		618C64472A82E7AA007EA3D6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				618C64482A82E7EE007EA3D6 /* FavoritesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		618F60EF2A192D01006C3F55 /* UserService */ = {
 			isa = PBXGroup;
 			children = (
@@ -817,6 +830,7 @@
 			children = (
 				613FF3392A0AE9A100D0BB71 /* Coordinator */,
 				613FF3302A0AE63200D0BB71 /* Protocol */,
+				618C64472A82E7AA007EA3D6 /* ViewModel */,
 				BB06900729584E6D009A2C24 /* FavoritesViewController.swift */,
 			);
 			path = Favorites;
@@ -1171,6 +1185,7 @@
 				618F60F42A1A4F42006C3F55 /* UserDefaultsEnum.swift in Sources */,
 				BBD735CA27AEDB05002397A0 /* Photos.swift in Sources */,
 				61F4F6322A5613AB00937A6E /* FindFriendViewControllerProtocol.swift in Sources */,
+				618C64492A82E7EE007EA3D6 /* FavoritesViewModel.swift in Sources */,
 				61F062942958A93200017C0F /* CoreDataManager.swift in Sources */,
 				614E093C2A118FBA00A923BE /* FirestoreCollection.swift in Sources */,
 				611CA4FD29BDF65C00B42FAD /* LoginView.swift in Sources */,
@@ -1226,6 +1241,7 @@
 				61C0CB942A40C67E0023EFD7 /* ImagePickerCoordinator.swift in Sources */,
 				614E092D2A10F0FD00A923BE /* UIAlertController+Ext.swift in Sources */,
 				BB0B224A279343AD00C51B3D /* Constants.swift in Sources */,
+				618C644B2A82E84B007EA3D6 /* FavoritesViewModelProtocol.swift in Sources */,
 				618148F32A79C4EE00667ED0 /* UserProperties.swift in Sources */,
 				61765CDB2A6BD7F000216874 /* AppError.swift in Sources */,
 				BB53FB24276A8F9D0094AF1D /* ProfileTableHederView.swift in Sources */,
