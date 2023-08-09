@@ -11,11 +11,11 @@ import iOSIntPackage
 class PhotosViewController: UIViewController, PhotosViewControllerProtocol {
     
     //MARK: - vars
-    internal let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var imagePublisherFacade: ImagePublisherFacade?
     private var photos: [UIImage] = []
-    private var timer: Timer?
-    private var countMillisecond = 0
+    private var imagesFromPhoto: [UIImage] = []
+
     
     //MARK: - init
     init() {
@@ -31,37 +31,12 @@ class PhotosViewController: UIViewController, PhotosViewControllerProtocol {
         super.viewDidLoad()
         title = Constants.photoGalleryText
         imagePublisherFacade = ImagePublisherFacade()
-        let userImages = Photos.fetchPhotos()
         
-        startTimer()
-//MARK: - начало выполнения функций с применением фильтров
-        //Время выполнения 10-11 секунд
-        ImageProcessor().processImagesOnThread(sourceImages: userImages, filter: .allCases[1], qos: .userInteractive) { [weak self] _ in
-            self?.stopTimer()
+        Photos.fetchPhotos { [weak self] imagesFromPhoto in
+            self?.imagesFromPhoto =  imagesFromPhoto
         }
-        
-//        Время выполнения 5 секунд
-//        ImageProcessor().processImagesOnThread(sourceImages: Photos.fetchPhotos(countPhoto: 10), filter: .allCases[3], qos: .userInitiated) { [weak self] _ in
-//            self?.stopTimer()
-//        }
-        
-        //        Время выполнения 10 секунд
-//        ImageProcessor().processImagesOnThread(sourceImages: Photos.fetchPhotos(countPhoto: 9, startIndex: 5), filter: .allCases[2], qos: .background) { [weak self] _ in
-//            self?.stopTimer()
-//        }
-        
-        //        Время выполнения 6 секунд
-//        ImageProcessor().processImagesOnThread(sourceImages: Photos.fetchPhotos(countPhoto: 8, startIndex: 11), filter: .allCases[4], qos: .utility) { [weak self] _ in
-//            self?.stopTimer()
-//        }
-        
-        //        Время выполнения 7 секунд
-//        ImageProcessor().processImagesOnThread(sourceImages: Photos.fetchPhotos(countPhoto: 13, startIndex: 4), filter: .allCases[5], qos: .default) { [weak self] _ in
-//            self?.stopTimer()
-//        }
-//MARK: - Окончание выполнения функций с применением фильтров
-        
-        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 20, userImages: userImages)
+    
+        imagePublisherFacade?.addImagesWithTimer(time: 1, repeat: 20, userImages: imagesFromPhoto)
         setupDelegate()
         setupView()
         self.collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: Cells.cellForCollection)
@@ -76,20 +51,6 @@ class PhotosViewController: UIViewController, PhotosViewControllerProtocol {
         navigationController?.navigationBar.isHidden = true
         imagePublisherFacade?.removeSubscription(for: self)
         imagePublisherFacade?.rechargeImageLibrary()
-    }
-    private func startTimer(){
-        timer = Timer.scheduledTimer(timeInterval: 1,
-                      target: self,
-                      selector: #selector(counter),
-                      userInfo: nil,
-                      repeats: true)
-    }
-    private func stopTimer(){
-        timer?.invalidate()
-        print("~\(countMillisecond) секунд(ы)")
-    }
-    @objc private func counter() {
-        countMillisecond += 1
     }
 }
 

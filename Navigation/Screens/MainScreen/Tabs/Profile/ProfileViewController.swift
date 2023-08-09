@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
-    internal var viewModel: ProfileViewModelProtocol!
+    private var viewModel: ProfileViewModelProtocol!
     private var cellFactory: Configurator?
     
     //MARK: - vars
@@ -22,8 +22,10 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     private let notificationForUpdateProfile = Notification.Name(Constants.notifyForUpdateProfile)
     private let notificationForNewPost = Notification.Name(Constants.notificationForNewPost)
 
-    private var activityIndicator: UIActivityIndicatorView = {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .large
         activityIndicator.toAutoLayout()
         return activityIndicator
     }()
@@ -35,17 +37,16 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
     let profileTableHeaderView: ProfileHeaderView! = ProfileHeaderView()
     
-    let tableView: UITableView = {
+    private lazy var  tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = . createColor(lightMode: .systemGray6, darkMode: .systemGray6)
         tableView.toAutoLayout()
         return tableView
     }()
     
-    var photos: [UIImage] = []
     
     //MARK: - init
-    init(viewModel: ProfileViewModel) {
+    init(viewModel: ProfileViewModelProtocol) {
         self.viewModel = viewModel
         self.cellFactory = ConfiguratorCell()
         super.init(nibName: nil, bundle: nil)
@@ -59,14 +60,12 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     //MARK: - override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
-        photos = Photos.fetchPhotos()
         setupView()
         closeButtonTaped()
         setupViewModel()
         actionsForProfileTableHeaderViewButton()
         finishFlow()
         addNotificationForReloadAllAfterUpdateProfile()
-        updateProfileHeaderView()
         viewModel.changeState { [weak self] in
             self?.updateProfileHeaderView()
             self?.tableView.reloadData()
@@ -116,17 +115,14 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.62) {
-                
                 avatar.transform = scaleToHeight.concatenating(moveCenter)
                 avatar.layer.cornerRadius = 0
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.63, relativeDuration: 0.37) {
-                
                 self.profileTableHeaderView.closeButton.alpha = 1
             }
         }
-        
     }
     func reloadDataInScreen(notification: NSNotification) {
         updateProfileHeaderView()
@@ -135,9 +131,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
                 viewModel.updatePost(post: post, for: index)
             }
         }
-        viewModel.changeState { [weak self] in
-            self?.tableView.reloadData()
-        }
+        updateView()
     }
     func reloadDataInScreenNewPost(notification: NSNotification) {
         if let dict = notification.object as? NSDictionary {
@@ -145,9 +139,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
                 viewModel.newPost(post: post, for: index)
             }
         }
-        viewModel.changeState { [weak self] in
-            self?.tableView.reloadData()
-        }
+        updateView()
     }
     func refresh(sender: UIRefreshControl) {
         viewModel.changeState { [weak self] in
@@ -245,6 +237,11 @@ private extension ProfileViewController {
             }
         }
     }
+    func updateView() {
+        viewModel.changeState { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
     func activityIndicator(animate: Bool){
         activityIndicator.isHidden = !animate
         DispatchQueue.main.async {
@@ -280,19 +277,21 @@ private extension ProfileViewController {
         tableView.isScrollEnabled = toggle
     }
     func setupView() {
+        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
+        view.addSubview(tableView)
+        view.addSubview(activityIndicator)
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.refreshControl = refreshControl
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
+        
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPostTableViewCell)
+        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForPostTableViewCellWithoutImage)
+        tableView.register(PhotosTableViewCellNew.self, forCellReuseIdentifier: Cells.cellForSectionNew)
         configureConstraints()
     }
     func configureConstraints(){
-        view.addSubview(tableView)
-        view.addSubview(activityIndicator)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Cells.cellForPostTableViewCell)
-        tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForPostTableViewCellWithoutImage)
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: Cells.cellForSection)
         let constraints: [NSLayoutConstraint] = [
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -314,13 +313,14 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cellFactory = cellFactory else { return UITableViewCell() }
         
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && !viewModel.getPhotos().isEmpty {
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: Cells.cellForSection,
+                withIdentifier: Cells.cellForSectionNew,
                 for: indexPath
-            ) as? PhotosTableViewCell else { return UITableViewCell() }
-            
-            cell.photos = photos
+            ) as? PhotosTableViewCellNew else { return UITableViewCell() }
+            let photos = viewModel.getPhotos()
+            let viewModel = PhotoViewModel(photo: photos)
+            cell.viewModel = viewModel
             return cell
         }
         let cellType = viewModel.cellType(at: indexPath.row)

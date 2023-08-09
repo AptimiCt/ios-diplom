@@ -9,6 +9,4 @@
 
 import UIKit
 
-protocol PhotosViewControllerProtocol: Presentable {
-    var collectionView: UICollectionView { get }
-}
+protocol PhotosViewControllerProtocol: Presentable {}

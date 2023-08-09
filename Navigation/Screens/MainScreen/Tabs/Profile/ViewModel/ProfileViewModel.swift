@@ -5,6 +5,7 @@
 //  Created by Александр Востриков on 06.01.2023.
 //
 
+import UIKit
 
 final class ProfileViewModel: ProfileViewModelProtocol {
     
@@ -19,6 +20,11 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     private let userService: UserService
     
     private var posts: [Post] = []
+    private var photos: [UIImage] = [] {
+        didSet {
+            stateChanged?(.loaded(self))
+        }
+    }
     
     var stateChanged: ((ProfileViewModel.State) -> Void)?
 
@@ -27,6 +33,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         self.firestore = firestore
         self.coordinator = coordinator
         self.userService = userService
+        Photos.fetchPhotos { photos in
+            self.photos = photos
+        }
     }
     
     func changeState(completion: @escaping VoidClosure) {
@@ -44,10 +53,12 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     func newPost(post: Post, for index: Int) {
         posts.insert(post, at: index)
+        stateChanged?(.loaded(self))
     }
     func updatePost(post: Post, for index: Int) {
         if index < numberOfRows(), posts[index].postUid == post.postUid {
             posts[index] = post
+            stateChanged?(.loaded(self))
         }
     }
     func didSelectRow(at index: Int) {
@@ -93,6 +104,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             }
         }
         completion(true)
+    }
+    func getPhotos() -> [UIImage] {
+        photos
     }
     func showPhotosVC() {
         coordinator.showPhotosVC()

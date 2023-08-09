@@ -32,17 +32,11 @@ struct Photos {
 }
 
 extension Photos {
-    static func fetchPhotos()->[UIImage] {
-        return [Photos.rhinoceros, Photos.ostrich, Photos.winter, Photos.heart, Photos.park,
-         Photos.backsmith, Photos.musicians, Photos.biplan, Photos.a20, Photos.atomium,
-         Photos.circleFromOnHigh, Photos.church, Photos.hill, Photos.mountains, Photos.dog,
-         Photos.skiDownhill,Photos.valley,Photos.bridge, Photos.samovar, Photos.lilyOfTheValley]
-    }
-    static func fetchPhotos(countPhoto: Int, startIndex: Int = 0)->[UIImage] {
-        
-        if (startIndex < Photos.fetchPhotos().count && startIndex >= 0)  &&  startIndex + countPhoto < Photos.fetchPhotos().count {
-            return Array(Photos.fetchPhotos()[startIndex...countPhoto + startIndex])
-        }
-        return Photos.fetchPhotos()
+    static func fetchPhotos(completion: @escaping ([UIImage]) -> Void) {
+        let photos = [Photos.rhinoceros, Photos.ostrich, Photos.winter, Photos.heart, Photos.park,
+                      Photos.backsmith, Photos.musicians, Photos.biplan, Photos.a20, Photos.atomium,
+                      Photos.circleFromOnHigh, Photos.church, Photos.hill, Photos.mountains, Photos.dog,
+                      Photos.skiDownhill,Photos.valley,Photos.bridge, Photos.samovar, Photos.lilyOfTheValley]
+        completion(photos)
     }
 }

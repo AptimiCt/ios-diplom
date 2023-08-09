@@ -9,6 +9,4 @@
 
 import UIKit
 
-protocol ProfileViewControllerProtocol: Presentable {
-    var viewModel: ProfileViewModelProtocol! { get }
-}
+protocol ProfileViewControllerProtocol: Presentable {}
