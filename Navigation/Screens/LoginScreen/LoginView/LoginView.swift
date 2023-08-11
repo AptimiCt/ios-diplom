@@ -13,7 +13,6 @@ import LocalAuthentication
 class LoginView: UIView {
     
     weak var delegate: LoginViewDelegate?
-    private var biometricType: LABiometryType
     private var buttonTapped: ButtonsTapped = .undefined
     
     var stateView: StateView = .initial {
@@ -23,7 +22,7 @@ class LoginView: UIView {
     }
     
     private lazy var scrollView = UIScrollView()
-    private let contentView = UIView()
+    private lazy var contentView = UIView()
     private lazy var activityIndicator = makeActivityIndicatorView()
     private lazy var logoImageView = makeLogoImageView()
     private lazy var loginTextView = makeLoginTextView()
@@ -31,16 +30,13 @@ class LoginView: UIView {
     private lazy var stackView = makeStackView()
     private lazy var loginButton = makeLoginButton()
     private lazy var signUpButton = makeSignUpButton()
-    private lazy var loginWithBiometrics = makeLoginWithBiometrics(biometricType: biometricType)
     
     //MARK: - init
-    init(biometricType: LABiometryType) {
-        self.biometricType = biometricType
+    init() {
         super.init(frame: .zero)
         setupView()
         buttonsAction(with: loginButton)
         buttonsAction(with: signUpButton)
-        buttonsAction(with: loginWithBiometrics)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -90,12 +86,9 @@ private extension LoginView {
                 loginButton.isEnabled = true
             case .registration:
                 signUpButton.isEnabled = true
-            case .loginWithBiometrics:
-                loginWithBiometrics.isEnabled = true
             case .undefined:
                 print("Кнопка не нажата")
                 break
-            
         }
     }
     func activityIndicatorOn() {
@@ -123,9 +116,6 @@ private extension LoginView {
             case signUpButton:
                 buttonTapped = .registration
                 self.delegate?.signUp(email: email, password: password)
-            case loginWithBiometrics:
-                buttonTapped = .loginWithBiometrics
-                self.delegate?.loginWithBiometrics()
             default:
                 button.isEnabled = true
         }

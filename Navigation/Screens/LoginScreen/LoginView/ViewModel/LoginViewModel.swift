@@ -11,7 +11,7 @@ import UIKit
 
 final class LoginViewModel: LoginViewModelProtocol {
     
-    var userService: UserService?
+    private var userService: UserService
     private let firestore: DatabeseManagerProtocol
     weak var coordinator: LoginCoordinator!
     var stateModel: StateModel = .initial {
@@ -21,7 +21,8 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
     var stateChanged: ((LoginViewModelProtocol) -> Void)?
     
-    init(firestore: DatabeseManagerProtocol){
+    init(userService: UserService, firestore: DatabeseManagerProtocol){
+        self.userService = userService
         self.firestore = firestore
         Logger.standard.start(on: self)
     }
@@ -45,16 +46,6 @@ final class LoginViewModel: LoginViewModelProtocol {
             self.handle(with: error as! AuthenticationError)
         }
     }
-    func loginWithBiometrics() {
-        LocalAuthorizationService().authorizeIfPossible { [weak self] success, error  in
-            guard let self else { return }
-            if success {
-                self.finishFlow(User())
-            } else {
-                self.handle(with: .unknown(""))
-            }
-        }
-    }
     deinit {
         Logger.standard.remove(on: self)
     }
@@ -71,13 +62,13 @@ private extension LoginViewModel {
             return
         }
         let uid = authDataResult.user.uid
-        if userService?.user == nil {
+        if userService.user == nil {
             let name = authDataResult.user.displayName
             let email = authDataResult.user.email
             let user = User(uid: uid, email: email, name: name ?? email ?? Constants.currentUserServiceFullName)
             if buttonType == .registration {
-                firestore.addUser(user: user) { error in
-                    self.userService?.set(user: user)
+                firestore.addUser(user: user) { [weak self] error in
+                    self?.userService.set(user: user)
                 }
             }
         }
@@ -151,7 +142,7 @@ private extension LoginViewModel {
         self.coordinator.finishFlow?(user)
     }
     func fetchUser(for uid: String) {
-        userService?.fetchUser(uid: uid) { [weak self, weak coordinator] result in
+        userService.fetchUser(uid: uid) { [weak self, weak coordinator] result in
             switch result {
                 case .success(let user):
                     self?.finishFlow(user)

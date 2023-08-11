@@ -16,7 +16,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     
     private let firestore: DatabeseManagerProtocol
-    private let coordinator: ProfileCoordinator
+    private weak var coordinator: ProfileCoordinator!
     private let userService: UserService
     
     private var posts: [Post] = []
@@ -40,7 +40,8 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     
     func changeState(completion: @escaping VoidClosure) {
         let userId = getUser().uid
-        firestore.fetchAllPosts(uid: userId) { result in
+        firestore.fetchAllPosts(uid: userId) { [weak self] result in
+            guard let self else { completion(); return }
             switch result {
                 case .success(let posts):
                     self.posts = posts.sorted(by: { $0.createdDate > $1.createdDate })

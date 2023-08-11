@@ -59,8 +59,6 @@ final class AddPostViewModel {
         let user = userService.getUser()
         let filename = "\(user.uid)_\(Date())_postImage"
         if let postImage = postImageCellViewModel?.image {
-            #warning("weak self is nil")
-            //Если ослабить self метод не вызывается, так как self становится nil
             uploadImage(image: postImage, fileName: filename) { [unowned self] result in
                 switch result {
                     case .success(let url):

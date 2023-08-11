@@ -15,5 +15,4 @@ protocol LoginViewModelProtocol {
     var stateChanged: ((LoginViewModelProtocol) -> Void)? { get set }
     func checkCredentionalsToLogin(email: String, password: String)
     func checkCredentionalsForRegistration(email: String, password: String)
-    func loginWithBiometrics()
 }

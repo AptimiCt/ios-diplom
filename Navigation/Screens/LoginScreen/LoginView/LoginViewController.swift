@@ -86,8 +86,4 @@ extension LoginViewController: LoginViewDelegate {
     func signUp(email: String, password: String) {
         viewModel.checkCredentionalsForRegistration(email: email, password: password)
     }
-    //Обработка нажатия на кнопку входа по биометрии в делегате
-    func loginWithBiometrics() {
-        viewModel.loginWithBiometrics()
-    }
 }

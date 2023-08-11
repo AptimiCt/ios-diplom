@@ -65,32 +65,4 @@ extension LoginView {
         button.configureButtons()
         return button
     }
-    func makeLoginWithBiometrics(biometricType: LABiometryType) -> CustomButton {
-        let button = CustomButton(
-            title: Constants.logInWithBiometrics,
-            titleColor: .createColor(lightMode: .white,
-                                     darkMode: .black)
-        )
-        button.setImage(switchImage(for: biometricType), for: .normal)
-        button.tintColor = .createColor(lightMode: .white,
-                                        darkMode: .black)
-        button.configureButtons()
-        if biometricType == .none {
-            button.isEnabled = false
-        }
-        return button
-    }
-    //Установка иконки доступной на устройстве типа биометрии
-    private func switchImage(for biometricType: LABiometryType) -> UIImage? {
-        switch biometricType {
-            case .none:
-                return nil
-            case .touchID:
-                return UIImage(systemName: "touchid")
-            case .faceID:
-                return UIImage(systemName: "faceid")
-            @unknown default:
-                return UIImage(systemName: "questionmark")
-        }
-    }
 }

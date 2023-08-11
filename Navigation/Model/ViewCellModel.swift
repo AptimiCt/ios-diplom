@@ -14,7 +14,7 @@ struct ViewCellModel {
     let post: Post
     let user: User
     let friends: [User]
-    let delegate: PostTableViewCellDelegate?
+    weak var delegate: PostTableViewCellDelegate?
     let tableView: UITableView
     let indexPath: IndexPath
 }

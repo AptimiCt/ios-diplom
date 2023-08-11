@@ -35,7 +35,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         return refreshControl
     }()
     
-    let profileTableHeaderView: ProfileHeaderView! = ProfileHeaderView()
+    var profileTableHeaderView: ProfileHeaderView! = ProfileHeaderView()
     
     private lazy var  tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -108,10 +108,10 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         let scale = self.view.frame.width / avatar.frame.width
         let scaleToHeight = CGAffineTransform(scaleX: scale, y: scale)
        
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: []) {
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: []) { [weak self] in
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.62) {
-                self.profileTableHeaderView.backgroundView.alpha = 0.5
+                self?.profileTableHeaderView.backgroundView.alpha = 0.5
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.62) {
@@ -120,7 +120,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
             }
             
             UIView.addKeyframe(withRelativeStartTime: 0.63, relativeDuration: 0.37) {
-                self.profileTableHeaderView.closeButton.alpha = 1
+                self?.profileTableHeaderView.closeButton.alpha = 1
             }
         }
     }
@@ -249,8 +249,8 @@ private extension ProfileViewController {
         }
     }
     func closeButtonTaped(){
-        profileTableHeaderView.closeButton.action = {
-            guard let avatar = self.avatar else { return }
+        profileTableHeaderView.closeButton.action = { [weak self] in
+            guard let self, let avatar = self.avatar else { return }
             
             UIView.animateKeyframes(withDuration: 0.8, delay: 0, options: []) {
                 

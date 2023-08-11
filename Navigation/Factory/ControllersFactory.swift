@@ -17,13 +17,11 @@ final class ControllerFactory: ControllersFactoryProtocol {
         return SplashViewController()
     }
     func makeLoginController(with coordinator: LoginCoordinator) -> LoginViewControllerProtocol {
-        let biometricService = LocalAuthorizationService()
-        let loginView = LoginView(biometricType: biometricService.biometricType)
-        let loginViewModel = LoginViewModel(firestore: FirestoreManager())
+        let loginView = LoginView()
+        let loginViewModel = LoginViewModel(userService: userService, firestore: FirestoreManager())
         let loginViewController = LoginViewController(loginView: loginView, viewModel: loginViewModel)
         loginView.delegate = loginViewController
         loginViewModel.coordinator = coordinator
-        loginViewModel.userService = userService
         return loginViewController
     }
     func makeUpdateInfoProfile(with coordinator: UpdateInfoProfileCoordinator, screenType: ScreenType) -> UpdateInfoProfileProtocol {
