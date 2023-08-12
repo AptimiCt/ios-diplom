@@ -87,7 +87,7 @@ private extension UpdateInfoProfileController {
         actionSheet.addAction(cancel)
         actionSheet.addAction(camera)
         actionSheet.addAction(photoLibrary)
-        
+        actionSheet.popoverPresentationController?.sourceView = self.updateInfoProfileView.profilePictureImageView
         present(actionSheet, animated: true)
     }
     
