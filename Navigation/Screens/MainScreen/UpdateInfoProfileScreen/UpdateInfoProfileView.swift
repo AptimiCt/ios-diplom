@@ -32,7 +32,7 @@ class UpdateInfoProfileView: UIView {
     private lazy var genderButton = makeGenderButton()
     private lazy var dateOfBirthLabel = makeDateOfBirthLabel()
     private lazy var datePickerView = makeDateOfBirthPicker()
-    private lazy var profilePictureImageView = makeLogoImageView()
+    lazy var profilePictureImageView = makeLogoImageView()
     private lazy var signUpButton = makeSignUpButton(screenType: screenType)
     private lazy var dateOfBirthStackView = makeDateOfBirthStackView()
     private lazy var genderStackView = makeDateOfBirthStackView()

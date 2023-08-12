@@ -150,11 +150,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
 }
 //MARK: - private extension
 private extension ProfileViewController {
-    struct ProfileViewAlertSheetForExit {
-        let alertSheetTitle: String
-        let exitActionTitle: String
-        let cancelActionTitle: String
-    }
+
     func showAlertSheet() {
         let alertSheet = UIAlertController(
             title: nil,
@@ -174,6 +170,7 @@ private extension ProfileViewController {
         
         alertSheet.addAction(exitAction)
         alertSheet.addAction(cancelAction)
+        alertSheet.popoverPresentationController?.sourceView = self.profileTableHeaderView.exitButton
         
         present(alertSheet, animated: true)
     }
