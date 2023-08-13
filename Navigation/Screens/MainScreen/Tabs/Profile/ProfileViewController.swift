@@ -70,6 +70,7 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         tableView.reloadData()
         updateProfileHeaderView()
     }
