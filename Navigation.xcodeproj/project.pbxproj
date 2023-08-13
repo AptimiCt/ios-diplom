@@ -84,6 +84,8 @@
 		61B69DBB29C11C2B00D6225E /* LoginViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */; };
 		61BD14FD29F42D9B00BA4438 /* LoginView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */; };
 		61BD14FF29F4364A00BA4438 /* ButtonsTapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD14FE29F4364A00BA4438 /* ButtonsTapped.swift */; };
+		61BD18782A89011E00892550 /* StateProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD18772A89011E00892550 /* StateProfileHeaderView.swift */; };
+		61BD187A2A8904EE00892550 /* ProfileHeaderViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BD18792A8904EE00892550 /* ProfileHeaderViewDelegate.swift */; };
 		61C0CB942A40C67E0023EFD7 /* ImagePickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C0CB932A40C67E0023EFD7 /* ImagePickerCoordinator.swift */; };
 		61C6121D297F22FB00206131 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61C6121F297F22FB00206131 /* InfoPlist.strings */; };
 		61C61223297F3F6E00206131 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 61C61225297F3F6E00206131 /* Localizable.stringsdict */; };
@@ -227,6 +229,8 @@
 		61B69DBA29C11C2B00D6225E /* LoginViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewDelegate.swift; sourceTree = "<group>"; };
 		61BD14FC29F42D9B00BA4438 /* LoginView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginView+Ext.swift"; sourceTree = "<group>"; };
 		61BD14FE29F4364A00BA4438 /* ButtonsTapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsTapped.swift; sourceTree = "<group>"; };
+		61BD18772A89011E00892550 /* StateProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateProfileHeaderView.swift; sourceTree = "<group>"; };
+		61BD18792A8904EE00892550 /* ProfileHeaderViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderViewDelegate.swift; sourceTree = "<group>"; };
 		61C0CB932A40C67E0023EFD7 /* ImagePickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerCoordinator.swift; sourceTree = "<group>"; };
 		61C6121E297F22FB00206131 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		61C61220297F23A500206131 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -422,6 +426,7 @@
 			children = (
 				613FF32E2A0AE5E700D0BB71 /* ProfileViewControllerProtocol.swift */,
 				61D204942A6759590052E36B /* ProfileViewModelProtocol.swift */,
+				61BD18792A8904EE00892550 /* ProfileHeaderViewDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -699,6 +704,7 @@
 				618148F82A79C63700667ED0 /* StateModelProfile.swift */,
 				618148FA2A79C67500667ED0 /* StateModel.swift */,
 				618148FC2A79C69E00667ED0 /* StateView.swift */,
+				61BD18772A89011E00892550 /* StateProfileHeaderView.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -1211,6 +1217,7 @@
 				613FF3542A0D583800D0BB71 /* UITextField+Ext.swift in Sources */,
 				BB15250D282FBFDE0045275F /* AppDelegate.swift in Sources */,
 				BB4D4B472A5C231200EC3407 /* AddPostViewControllerProtocol.swift in Sources */,
+				61BD187A2A8904EE00892550 /* ProfileHeaderViewDelegate.swift in Sources */,
 				61ABC2C52A2B3230006748BF /* FriendsViewCell.swift in Sources */,
 				611A7BBD2A3D1F5000030A9F /* PostDetailViewModelProtocol.swift in Sources */,
 				617AC7872A72E03F008B50A5 /* PostTableViewCellWithoutImage.swift in Sources */,
@@ -1236,6 +1243,7 @@
 				61F6B73C2A6DDE2900E3DD07 /* PostTableViewCellDelegate .swift in Sources */,
 				61FF1EEB29FF26F7002D0331 /* Coordinator.swift in Sources */,
 				61007C2D2996CEC500AD7922 /* String+Ext.swift in Sources */,
+				61BD18782A89011E00892550 /* StateProfileHeaderView.swift in Sources */,
 				614E09272A10031400A923BE /* RouterImpl.swift in Sources */,
 				61F4F63C2A56292100937A6E /* FindFriendViewModelProtocol.swift in Sources */,
 				BB8AD93D2A65D28D009CA30E /* BodyImageViewCellViewModel.swift in Sources */,

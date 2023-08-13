@@ -11,9 +11,9 @@ import SnapKit
 class ProfileHeaderView: UIView {
     
     //MARK: - vars
-    var closeButtonTopAnchor: Constraint? = nil
+    private var closeButtonTopAnchor: Constraint? = nil
     
-    let avatarImageView: UIImageView = {
+    lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 3
@@ -22,7 +22,7 @@ class ProfileHeaderView: UIView {
         return imageView
     }()
     
-    let editProfileButton: CustomButton = {
+    private lazy var editProfileButton: CustomButton = {
         let button = CustomButton(
             title: Constants.showStatus,
             titleColor: .createColor(lightMode: .white,
@@ -37,7 +37,7 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset.height = 4
         return button
     }()
-    let exitButton: CustomButton = {
+    lazy var exitButton: CustomButton = {
         let button = CustomButton(imageSystemName: "rectangle.portrait.and.arrow.right.fill")
         button.layer.cornerRadius = 10
         button.layer.shadowOpacity = 0.7
@@ -46,7 +46,7 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset.height = 4
         return button
     }()
-    let findFriendsButton: CustomButton = {
+    private lazy var findFriendsButton: CustomButton = {
         let button = CustomButton(imageSystemName: "person.fill.badge.plus")
         button.layer.cornerRadius = 10
         button.layer.shadowOpacity = 0.7
@@ -55,7 +55,7 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset.height = 4
         return button
     }()
-    let addPostButton: CustomButton = {
+    private lazy var addPostButton: CustomButton = {
         let button = CustomButton(imageSystemName: "square.and.pencil")
         button.layer.cornerRadius = 10
         button.layer.shadowOpacity = 0.7
@@ -64,7 +64,7 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset.height = 4
         return button
     }()
-    let addPhotoButton: CustomButton = {
+    private lazy var addPhotoButton: CustomButton = {
         let button = CustomButton(imageSystemName: "photo.fill")
         button.layer.cornerRadius = 10
         button.layer.shadowOpacity = 0.7
@@ -73,14 +73,14 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset.height = 4
         return button
     }()
-    let upStackView: UIStackView = {
+    private lazy var upStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 20
         stackView.alignment = .center
         return stackView
     }()
-    let downStackView: UIStackView = {
+    private lazy var downStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 5
@@ -88,22 +88,22 @@ class ProfileHeaderView: UIView {
         stackView.distribution = .fillEqually
         return stackView
     }()
-    let fullNameLabel: UILabel = {
+    lazy var fullNameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
         nameLabel.textColor = .createColor(lightMode: .black, darkMode: .white)
         return nameLabel
     }()
     
-    lazy var backgroundView: UIView = {
-        let backgroundView = UIView(frame: UIScreen.main.bounds)
+    private lazy var backgroundView: UIView = {
+        let backgroundView = UIView(frame: .zero)
         backgroundView.alpha = 0
         backgroundView.backgroundColor = .black
         backgroundView.toAutoLayout()
         return backgroundView
     }()
     
-    lazy var closeButton: CustomButton = {
+    private lazy var closeButton: CustomButton = {
         let closeButton = CustomButton()
         closeButton.alpha = 0
         closeButton.tintColor = .red
@@ -112,11 +112,14 @@ class ProfileHeaderView: UIView {
         return closeButton
     }()
     
+    weak var delegate: ProfileHeaderViewDelegate?
+    
     //MARK: - init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
         snpConstraints()
+        actionsForProfileTableHeaderViewButton()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -136,8 +139,80 @@ class ProfileHeaderView: UIView {
 }
 
 //MARK: - private extension
-private extension ProfileHeaderView {
+@objc private extension ProfileHeaderView {
+    func tapOnAvatar() {
+        let duration: TimeInterval = 0.8
+        backgroundView.isUserInteractionEnabled = true
+        avatarImageView.isUserInteractionEnabled = false
+        delegate?.tapOnAvatar { [weak self] offsetAvatar in
+            guard let self else { return }
+        
+            if offsetAvatar != 0 {
+                    self.closeButtonTopAnchor?.update(offset: offsetAvatar + 8)
+            } else {
+                self.closeButtonTopAnchor?.update(offset: -offsetAvatar + 8)
+            }
+            
+            let moveCenter = CGAffineTransform(translationX: Constants.screenWeight / 2 - avatarImageView.frame.width / 2 - 16, y: Constants.screenWeight / 2 + avatarImageView.frame.width + 16 + offsetAvatar)
 
+            let scale = Constants.screenWeight / self.avatarImageView.frame.width
+            let scaleToHeight = CGAffineTransform(scaleX: scale, y: scale)
+           
+            UIView.animateKeyframes(withDuration: duration, delay: 0, options: []) {
+                
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.62) {
+                    self.backgroundView.alpha = 0.5
+                }
+                
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.62) {
+                    self.avatarImageView.transform = scaleToHeight.concatenating(moveCenter)
+                    self.avatarImageView.layer.cornerRadius = 0
+                }
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.63, relativeDuration: 0.37) {
+                    self.closeButton.alpha = 1
+                }
+            }
+        }
+    }
+}
+
+private extension ProfileHeaderView {
+    func actionsForProfileTableHeaderViewButton() {
+        closeButton.action = {  [weak self] in
+            self?.delegate?.closeButtonTaped()
+            UIView.animateKeyframes(withDuration: 0.8, delay: 0, options: []) {
+                
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.37) {
+                    self?.closeButton.alpha = 0
+                }
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.37, relativeDuration: 0.62) {
+                    self?.backgroundView.alpha = 0
+                }
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.37, relativeDuration: 0.62) {
+                    self?.avatarImageView.layer.cornerRadius = 50
+                    self?.avatarImageView.transform = .identity
+                    self?.avatarImageView.layoutIfNeeded()
+                }
+            }
+            self?.avatarImageView.isUserInteractionEnabled = true
+        }
+        
+        editProfileButton.action = { [weak self] in
+            self?.delegate?.editProfileButtonAction()
+        }
+        addPostButton.action = { [weak self] in
+            self?.delegate?.addPostButtonAction()
+        }
+        findFriendsButton.action = { [weak self] in
+            self?.delegate?.findFriendsButtonAction()
+        }
+        exitButton.action = { [weak self] in
+            self?.delegate?.exitButtonAction()
+        }
+    }
     func setupViews() {
         addSubviews(
             fullNameLabel,upStackView, downStackView,
@@ -151,6 +226,9 @@ private extension ProfileHeaderView {
         
         backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         setupLayerColorFor(traitCollection.userInterfaceStyle)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnAvatar))
+        avatarImageView.addGestureRecognizer(tapGesture)
     }
     func snpConstraints() {
         backgroundView.snp.makeConstraints { make in
