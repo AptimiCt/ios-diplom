@@ -14,9 +14,17 @@ final class AddPostViewController: UIViewController, AddPostViewControllerProtoc
         let table = UITableView(frame: .zero, style: .grouped)
         table.backgroundColor = . createColor(lightMode: .systemGray6, darkMode: .systemGray6)
         table.toAutoLayout()
+        table.separatorStyle = .none
         table.estimatedRowHeight = 44
         table.rowHeight = UITableView.automaticDimension
         return table
+    }()
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .large
+        activityIndicator.toAutoLayout()
+        return activityIndicator
     }()
     
     var viewModel: AddPostViewModel!
@@ -49,6 +57,7 @@ final class AddPostViewController: UIViewController, AddPostViewControllerProtoc
 }
 @objc private extension AddPostViewController {
     func tappedDone() {
+        activityIndicator.startAnimating()
         viewModel.tappedDone()
     }
     func addImage() {
@@ -68,8 +77,11 @@ private extension AddPostViewController {
         tableView.delegate = self
         tableView.register(BodyImageViewCell.self, forCellReuseIdentifier: Cells.cellForBodyImageViewCell)
         
-        view.addSubview(tableView)
+        view.addSubviews(tableView,activityIndicator)
         let constraints: [NSLayoutConstraint] = [
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

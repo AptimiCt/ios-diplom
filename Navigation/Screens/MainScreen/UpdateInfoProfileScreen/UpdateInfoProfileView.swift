@@ -105,6 +105,7 @@ private extension UpdateInfoProfileView {
             self.delegate?.updateGender(gender: genderText)
             self.delegate?.updateDateOfBirth(dateOfBirth: self.datePickerView.date)
             self.delegate?.updateProfilePicture(image: profilePictureImageView)
+            self.stateView = .initial
             switch screenType {
                 case .new:
                     self.delegate?.addUser()
@@ -213,7 +214,7 @@ private extension UpdateInfoProfileView {
             signUpButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
             
             activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            activityIndicator.bottomAnchor.constraint(equalTo: signUpButton.topAnchor, constant: -15)
         ]
         NSLayoutConstraint.activate(constrains)
     }

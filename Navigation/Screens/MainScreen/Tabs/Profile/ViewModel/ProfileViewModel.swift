@@ -33,8 +33,12 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         self.firestore = firestore
         self.coordinator = coordinator
         self.userService = userService
-        Photos.fetchPhotos { photos in
-            self.photos = photos
+        DispatchQueue.global().async {
+            Photos.fetchPhotos { [weak self] photos in
+                guard let self else { return }
+                self.photos = photos
+                self.stateChanged?(.loaded(self))
+            }
         }
     }
     

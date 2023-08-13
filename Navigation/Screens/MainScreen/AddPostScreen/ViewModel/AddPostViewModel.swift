@@ -59,7 +59,8 @@ final class AddPostViewModel {
         let user = userService.getUser()
         let filename = "\(user.uid)_\(Date())_postImage"
         if let postImage = postImageCellViewModel?.image {
-            uploadImage(image: postImage, fileName: filename) { [unowned self] result in
+            #warning("self is nil")
+            uploadImage(image: postImage, fileName: filename) { result in
                 switch result {
                     case .success(let url):
                         self.addPost(with: user.uid, bodyText: bodyText, and: url)
@@ -126,7 +127,7 @@ private extension AddPostViewModel {
     }
     
     func uploadImage(image: UIImage, fileName: String, completion: @escaping (Result<String, Error>)-> Void) {
-        guard let imageData = image.jpegData(compressionQuality: 100) else { return }
+        guard let imageData = image.jpegData(compressionQuality: 50) else { return }
         firestore.uploadPostPicture(with: imageData, fileName: fileName) { result in
             completion(result)
         }

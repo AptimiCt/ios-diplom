@@ -14,13 +14,13 @@ final class Logger {
     private init() {}
     func start(on types: AnyObject) {
         #if DEBUG
-//        #else
+        #else
             print("\(String(describing: type(of: types))) создан")
         #endif
     }
     func remove(on types: AnyObject) {
         #if DEBUG
-//        #else
+        #else
             print("\(String(describing: type(of: types))) удален")
         #endif
     }

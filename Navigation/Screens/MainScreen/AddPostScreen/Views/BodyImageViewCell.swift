@@ -9,6 +9,7 @@
 
 import UIKit
 import RSKPlaceholderTextView
+import SnapKit
 
 final class BodyImageViewCell: UITableViewCell {
     
@@ -28,9 +29,10 @@ final class BodyImageViewCell: UITableViewCell {
     
     private lazy var photoImageView: UIImageView = {
         let photoImageView = UIImageView()
+        photoImageView.contentMode = .scaleToFill
         return photoImageView
     }()
-    private lazy var photoImageViewHeightAnchor = photoImageView.heightAnchor.constraint(equalToConstant: 200)
+    private lazy var photoImageViewHeightAnchor = photoImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
     private var viewModel: BodyImageViewCellViewModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -54,7 +56,7 @@ final class BodyImageViewCell: UITableViewCell {
         photoImageView.image = viewModel.image
         if viewModel.type == .image {
             photoImageViewHeightAnchor.isActive = true
-        }else {
+        } else {
             photoImageViewHeightAnchor.isActive = false
         }
     }
@@ -73,13 +75,9 @@ final class BodyImageViewCell: UITableViewCell {
     }
     
     private func setupLayout() {
-
-        NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            verticalStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            verticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            verticalStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-        ])
+        verticalStackView.snp.makeConstraints { make in
+            make.leading.top.trailing.bottom.equalToSuperview()
+            make.width.equalTo(Constants.screenWeight)
+        }
     }
-    
 }
