@@ -13,7 +13,7 @@ class ProfileHeaderView: UIView {
     //MARK: - vars
     private var closeButtonTopAnchor: Constraint? = nil
     
-    lazy var avatarImageView: UIImageView = {
+    private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 3
@@ -88,7 +88,7 @@ class ProfileHeaderView: UIView {
         stackView.distribution = .fillEqually
         return stackView
     }()
-    lazy var fullNameLabel: UILabel = {
+    private lazy var fullNameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
         nameLabel.textColor = .createColor(lightMode: .black, darkMode: .white)
@@ -135,6 +135,14 @@ class ProfileHeaderView: UIView {
                 setupLayerColorFor(.dark)
             }
         }
+    }
+    func configureView(viewModel: ProfileHeaderViewModel) {
+        if let urlString = viewModel.profilePictureUrl, let url = URL(string: urlString) {
+            avatarImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "person"))
+        } else {
+            avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
+        }
+        fullNameLabel.text = viewModel.fullName
     }
 }
 

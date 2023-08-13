@@ -64,7 +64,6 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         setupViewModel()
         addNotificationForReloadAllAfterUpdateProfile()
         viewModel.changeState { [weak self] in
-            self?.updateProfileHeaderView()
             self?.tableView.reloadData()
         }
     }
@@ -72,7 +71,6 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
         tableView.reloadData()
-        updateProfileHeaderView()
     }
     
     deinit {
@@ -85,7 +83,6 @@ class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
 //MARK: - @objc private extension
 @objc private extension ProfileViewController {
     func reloadDataInScreen(notification: NSNotification) {
-        updateProfileHeaderView()
         if let dict = notification.object as? NSDictionary {
             if let post = dict["post"] as? Post, let index = dict["index"] as? Int {
                 viewModel.updatePost(post: post, for: index)
@@ -151,12 +148,11 @@ private extension ProfileViewController {
         NotificationCenter.default.removeObserver(self, name: notificationForNewPost, object: nil)
     }
     func updateProfileHeaderView() {
-        if let urlString = viewModel.getUser().profilePictureUrl, let url = URL(string: urlString) {
-            profileTableHeaderView.avatarImageView.sd_setImage(with: url, placeholderImage: UIImage(systemName: "person"))
-        } else {
-            profileTableHeaderView.avatarImageView.image = UIImage(named: Constants.defaultProfilePicture)
-        }
-        profileTableHeaderView.fullNameLabel.text = viewModel.getUser().getFullName()
+        let profileHeaderViewModel = ProfileHeaderViewModel(
+                                        fullName: viewModel.getUser().getFullName(),
+                                        profilePictureUrl: viewModel.getUser().profilePictureUrl
+                                     )
+        profileTableHeaderView.configureView(viewModel: profileHeaderViewModel)
     }
     
     //MARK: - setupViewModel
@@ -169,6 +165,7 @@ private extension ProfileViewController {
                 case .loaded(let viewModel):
                     self.viewModel = viewModel
                     self.activityIndicator(animate: false)
+                    self.updateProfileHeaderView()
                     self.tableView.reloadData()
                 case .error:
                     break
