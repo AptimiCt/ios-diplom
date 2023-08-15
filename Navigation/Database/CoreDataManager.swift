@@ -12,6 +12,7 @@ final class CoreDataManager {
     static let dataManager = CoreDataManager()
     
     var posts: [PostCoreData] = []
+    var users: [UserCoreData] = []
     
     private enum CompletionHandlerType {
         case success
@@ -122,6 +123,20 @@ final class CoreDataManager {
         model.createdDate = post.createdDate
         model.updateDate = post.updateDate
     }
+    private func configure(modelUser: UserCoreData, from user: User) {
+        modelUser.uid =  user.uid
+        modelUser.name = user.name
+        modelUser.surname = user.surname
+        modelUser.email = user.email
+        modelUser.profilePictureUrl = user.profilePictureUrl
+        modelUser.status = user.status
+        modelUser.gender =  user.gender
+        modelUser.dateOfBirth = user.dateOfBirth
+        modelUser.posts = user.posts
+        modelUser.friends = user.friends
+        modelUser.updateDate = user.updateDate
+        modelUser.createdDate = user.createdDate
+    }
 }
 
 extension CoreDataManager {
@@ -150,6 +165,28 @@ extension CoreDataManager {
         }
     }
     
+    func create(user: User, completion: @escaping (Result<UserCoreData?, DatabaseError>)->Void) {
+        let predicate = NSPredicate(format: "uid == %@", user.uid)
+        fetch(predicate: predicate) { result in
+            switch result {
+                case .success(let data):
+                    self.saveContext.perform {
+                        if data.isEmpty {
+                            let userCoreData = UserCoreData(context: self.saveContext)
+                            self.configure(modelUser: userCoreData, from: user)
+                            self.save(with: self.saveContext, completionHandler: { completion(.success(userCoreData)) })
+                        } else {
+                            self.mainContext.perform {
+                                completion(.failure(.duplicate))
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    break
+            }
+        }
+    }
     func fetch(predicate: NSPredicate?, completion: @escaping (Result<[PostCoreData], DatabaseError>) -> Void) {
         saveContext.perform {
             let request = PostCoreData.fetchRequest()
