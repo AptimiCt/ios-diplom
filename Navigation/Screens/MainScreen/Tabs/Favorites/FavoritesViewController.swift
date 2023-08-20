@@ -17,6 +17,8 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
     )
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.backgroundColor = . createColor(lightMode: .systemGray6, darkMode: .systemGray6)
+        tableView.separatorStyle = .none
         tableView.toAutoLayout()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
@@ -108,7 +110,7 @@ class FavoritesViewController: UIViewController, FavoriteViewControllerProtocol 
 
 private extension FavoritesViewController {
     func setupView() {
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
