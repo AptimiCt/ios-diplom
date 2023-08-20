@@ -17,27 +17,30 @@ final class FavoritesViewModel: FavoritesViewModelProtocol {
     }
     private let firestore: DatabeseManagerProtocol
     private let coordinator: FavoriteCoordinator
-    private let userService: UserService
     
     private var posts: [Post] = []
-    
+    private var users: [User] = []
     var stateChanged: ((FavoritesViewModel.State) -> Void)?
     
     init(firestore: DatabeseManagerProtocol,
-         coordinator: FavoriteCoordinator,
-         userService: UserService
+         coordinator: FavoriteCoordinator
     ) {
         stateChanged?(.initial)
         self.firestore = firestore
         self.coordinator = coordinator
-        self.userService = userService
         Logger.standard.start(on: self)
     }
     
     func changeState(completion: @escaping VoidClosure) {
         CoreDataManager.dataManager.fetch(predicate: nil) { [weak self] result in
             guard let self else { return }
-            self.posts = CoreDataManager.dataManager.posts.map { self.mappingPost(postDataModel: $0)
+            stateChanged?(.initial)
+            switch result {
+                case .success(let posts):
+                    self.posts = posts.map { self.mappingPost(postDataModel: $0) }
+                    self.users = posts.map { self.mappingUser(postDataModel: $0) }
+                case .failure(let error):
+                    print(error.localizedDescription)
             }
             self.stateChanged?(.loaded(self))
             completion()
@@ -69,8 +72,8 @@ final class FavoritesViewModel: FavoritesViewModelProtocol {
             }
         }
     }
-    func getUser() -> User {
-        userService.getUser()
+    func getUser(at index: Int) -> User {
+        users[index]
     }
     func cellType(at index: Int) -> CellType {
         guard let _ = getPostFor(index).imageUrl else { return .postCell }
@@ -78,7 +81,8 @@ final class FavoritesViewModel: FavoritesViewModelProtocol {
     }
     func didSelectRow(at index: Int) {
         let post = posts[index]
-        coordinator.showDetail(post: post, index: index)
+        let user = users[index]
+        coordinator.showDetail(post: post, user: user, index: index)
     }
     func filterFavorites(findText: String = "", isFiltered: Bool = false) {
         let predicate = isFiltered ? NSPredicate(format: "body CONTAINS[c] %@", findText) : nil
@@ -87,8 +91,8 @@ final class FavoritesViewModel: FavoritesViewModelProtocol {
             stateChanged?(.initial)
             switch result {
                 case .success(let posts):
-                    self.posts = posts.map({ self.mappingPost(postDataModel: $0)
-                    })
+                    self.posts = posts.map { self.mappingPost(postDataModel: $0) }
+                    self.users = posts.map { self.mappingUser(postDataModel: $0) }
                 case .failure(let error):
                     print(error.localizedDescription)
             }
@@ -114,5 +118,14 @@ private extension FavoritesViewModel {
                     views: Int(postDataModel.views),
                     createdDate: postDataModel.createdDate ?? Date(),
                     updateDate: postDataModel.updateDate ?? Date())
+    }
+    func mappingUser(postDataModel: PostCoreData) -> User {
+        
+        let uid = postDataModel.userUid ?? ""
+        let name = postDataModel.userName ?? ""
+        let surname = postDataModel.userSurname ?? ""
+        let profilePictureUrl = postDataModel.userProfileImage
+        
+        return User(uid: uid, name: name, surname: surname, profilePicture: profilePictureUrl)
     }
 }

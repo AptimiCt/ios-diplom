@@ -13,7 +13,7 @@ enum StateModelPost {
     
     struct PostData {
         let uidUser: String
-        var profilePicture: String
+        var profilePicture: String?
         var fullName: String
         var createdDate: String
         let uidPost: String

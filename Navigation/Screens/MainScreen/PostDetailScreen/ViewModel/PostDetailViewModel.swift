@@ -10,23 +10,18 @@ import UIKit
 
 final class PostDetailViewModel: PostDetailViewModelProtocol {
     
-    private let userService: UserService
     var stateChanged: ((StateModelPost) -> Void)?
     private var post: Post
+    private var user: User
     private var postData: StateModelPost.PostData {
         var isLiked = false
         let likes = post.likes
-        if likes.contains(userService.getUser().uid) {
+        if likes.contains(user.uid) {
             isLiked = true
         }
-        let friends = userService.friends
-        var user = userService.getUser()
-        if user.uid != post.userUid {
-            user = friends.first { $0.uid == post.userUid }!
-        }
         let createdDate = DateFormatter().string(from: post.createdDate)
-        return StateModelPost.PostData(uidUser: post.userUid,
-                                       profilePicture: user.profilePictureUrl ?? Constants.defaultProfilePicture,
+        return StateModelPost.PostData(uidUser: user.uid,
+                                       profilePicture: user.profilePictureUrl,
                                        fullName: user.getFullName(),
                                        createdDate: createdDate,
                                        uidPost: post.postUid,
@@ -44,10 +39,10 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     }()
     private let firestore: DatabeseManagerProtocol
     
-    init(userService: UserService, firestore: DatabeseManagerProtocol, post: Post, index: Int) {
-        self.userService = userService
+    init(firestore: DatabeseManagerProtocol, post: Post, user: User, index: Int) {
         self.firestore = firestore
         self.post = post
+        self.user = user
         self.index = index
         self.stateChanged?(.initial)
         Logger.standard.start(on: self)
@@ -56,7 +51,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
         stateChanged?(.success(postData))
     }
     func likesButtonTapped(){
-        let userUID = userService.getUser().uid
+        let userUID = user.uid
         let postUID = postData.uidPost
         if !(post.likes.contains(userUID)) {
             firestore.updateLike(postId: postData.uidPost, from: userUID) { [weak self] error in

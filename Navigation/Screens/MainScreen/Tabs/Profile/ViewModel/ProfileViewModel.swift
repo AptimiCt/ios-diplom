@@ -68,7 +68,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     func didSelectRow(at index: Int) {
         let post = posts[index]
-        coordinator.showDetail(post: post, index: index)
+        coordinator.showDetail(post: post, user: userService.getUser(), index: index)
         updateViews(postUID: post.postUid) { [weak self] in
             guard let self else { return }
             self.firestore.fetchPost(postId: post.postUid) { result in
@@ -99,7 +99,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
     func addCoreData(_ index: Int, completion: @escaping BoolClosure) {
         let post = getPostFor(index)
-        CoreDataManager.dataManager.create(post: post) { result in
+        CoreDataManager.dataManager.create(post: post, for: getUser()) { result in
             switch result {
                 case .success(_):
                     completion(true)

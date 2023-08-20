@@ -30,10 +30,10 @@ final class ControllerFactory: ControllersFactoryProtocol {
         return UpdateInfoProfileController(viewModel: viewModel, screenType: screenType)
     }
 
-    func makePostDetailController(post: Post, index: Int) -> PostDetailViewControllerProtocol {
-        let viewModel = PostDetailViewModel(userService: userService,
-                                            firestore: FirestoreManager(),
+    func makePostDetailController(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol {
+        let viewModel = PostDetailViewModel(firestore: FirestoreManager(),
                                             post: post,
+                                            user: user,
                                             index: index
         )
         let postDetailController = PostDetailController(viewModel: viewModel)
@@ -56,7 +56,7 @@ final class ControllerFactory: ControllersFactoryProtocol {
     }
     
     func makeFavoriteController(with coordinator: FavoriteCoordinator) -> FavoriteViewControllerProtocol {
-        let viewModel = FavoritesViewModel(firestore: FirestoreManager(), coordinator: coordinator, userService: userService)
+        let viewModel = FavoritesViewModel(firestore: FirestoreManager(), coordinator: coordinator)
         let favoritesViewController = FavoritesViewController(viewModel: viewModel)
             
         return favoritesViewController

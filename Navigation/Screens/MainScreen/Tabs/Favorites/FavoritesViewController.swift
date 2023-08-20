@@ -174,7 +174,7 @@ extension FavoritesViewController: UITableViewDataSource {
         let cellType = viewModel.cellType(at: indexPath.row)
         let viewCellModel = ViewCellModel(cellType: cellType,
                                           post: viewModel.getPostFor(indexPath.row),
-                                          user: viewModel.getUser(),
+                                          user: viewModel.getUser(at: indexPath.row),
                                           friends: [],
                                           delegate: nil,
                                           tableView: tableView,

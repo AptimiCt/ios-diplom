@@ -30,10 +30,10 @@ protocol FavoriteControllerFactoryProtocol {
 protocol FeedControllerFactoryProtocol {
     func makeFeedController(with coordinator: FeedCoordinator) -> FeedViewControllerProtocol
     func makePhotosController() -> PhotosViewControllerProtocol
-    func makePostDetailController(post: Post, index: Int) -> PostDetailViewControllerProtocol
+    func makePostDetailController(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol
 }
 protocol PostDetailControllerFactoryProtocol {
-    func makePostDetailController(post: Post, index: Int) -> PostDetailViewControllerProtocol
+    func makePostDetailController(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol
 }
 protocol SplashControllerFactoryProtocol {
     func makeSplashController() -> SplashViewController

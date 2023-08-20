@@ -165,8 +165,10 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
 private extension PostDetailController {
     func configure(post: StateModelPost.PostData) {
         authorLabel.text = post.fullName
-        if let postPictureUrl = URL(string: post.profilePicture) {
-            fotoImageView.sd_setImage(with: postPictureUrl)
+        if let profileImage = post.profilePicture {
+            if let postPictureUrl = URL(string: profileImage) {
+                fotoImageView.sd_setImage(with: postPictureUrl)
+            }
         }
         dateLabel.text = post.createdDate
         bodyLabel.text = post.body

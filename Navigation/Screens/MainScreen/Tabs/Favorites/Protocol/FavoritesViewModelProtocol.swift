@@ -14,7 +14,7 @@ protocol FavoritesViewModelProtocol: AnyObject {
     func numberOfRows() -> Int
     func getPostFor(_ index: Int) -> Post
     func deletePost(at index: Int, completion: @escaping BoolClosure)
-    func getUser() -> User
+    func getUser(at index: Int) -> User
     func cellType(at index: Int) -> CellType
     func didSelectRow(at index: Int)
     func filterFavorites(findText: String, isFiltered: Bool)

@@ -11,8 +11,8 @@ final class CoreDataManager {
     
     static let dataManager = CoreDataManager()
     
-    var posts: [PostCoreData] = []
-    var users: [UserCoreData] = []
+    private var posts: [PostCoreData] = []
+    private var users: [UserCoreData] = []
     
     private enum CompletionHandlerType {
         case success
@@ -112,8 +112,11 @@ final class CoreDataManager {
         }
     }
     
-    private func configure(model: PostCoreData, from post: Post) {
-        model.userUid = post.userUid
+    private func configure(model: PostCoreData, from post: Post, and user: User) {
+        model.userUid = user.uid
+        model.userName = user.name
+        model.userSurname = user.surname
+        model.userProfileImage = user.profilePictureUrl
         model.postUid = post.postUid
         model.title = post.title
         model.body = post.body
@@ -141,7 +144,7 @@ final class CoreDataManager {
 
 extension CoreDataManager {
     
-    func create(post: Post, completion: @escaping (Result<PostCoreData?, DatabaseError>)->Void) {
+    func create(post: Post, for user: User, completion: @escaping (Result<PostCoreData?, DatabaseError>)->Void) {
         let predicate = NSPredicate(format: "postUid == %@", post.postUid)
         fetch(predicate: predicate) { result in
             switch result {
@@ -149,7 +152,7 @@ extension CoreDataManager {
                     self.saveContext.perform {
                         if data.isEmpty {
                             let postCoreData = PostCoreData(context: self.saveContext)
-                            self.configure(model: postCoreData, from: post)
+                            self.configure(model: postCoreData, from: post, and: user)
                             self.save(with: self.saveContext, completionHandler: { completion(.success(postCoreData)) })
                         } else {
                             self.mainContext.perform {
