@@ -54,8 +54,9 @@ final class AddPostViewModel {
         cells[indexPath.row]
     }
     
-    func tappedDone() {
-        guard let bodyText = bodyCellViewModel?.bodyText, !bodyText.isEmpty else { return }
+    func tappedDone(completion: @escaping BoolClosure) {
+        guard let bodyText = bodyCellViewModel?.bodyText, !bodyText.isEmpty else { completion(false); return }
+        completion(true)
         let user = userService.getUser()
         let filename = "\(user.uid)_\(Date())_postImage"
         if let postImage = postImageCellViewModel?.image {

@@ -57,8 +57,11 @@ final class AddPostViewController: UIViewController, AddPostViewControllerProtoc
 }
 @objc private extension AddPostViewController {
     func tappedDone() {
-        activityIndicator.startAnimating()
-        viewModel.tappedDone()
+        viewModel.tappedDone { [weak self] isAnim in
+            if isAnim {
+                self?.activityIndicator.startAnimating()
+            }
+        }
     }
     func addImage() {
         viewModel.addImage()
