@@ -34,6 +34,7 @@ final class ControllerFactory: ControllersFactoryProtocol {
         let viewModel = PostDetailViewModel(firestore: FirestoreManager(),
                                             post: post,
                                             user: user,
+                                            uidForLike: userService.getUser().uid,
                                             index: index
         )
         let postDetailController = PostDetailController(viewModel: viewModel)

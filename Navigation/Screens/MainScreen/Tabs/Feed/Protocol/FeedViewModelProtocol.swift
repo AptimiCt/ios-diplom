@@ -17,6 +17,7 @@ protocol FeedViewModelProtocol: AnyObject {
     func addCoreData(_ index: Int, completion: @escaping BoolClosure)
     func getUser(for userUID: String) -> User
     func getFriends() -> [User]
+    func getUidForLike() -> String
     func updatePost(post: Post, for index: Int)
     func newPost(post: Post, for index: Int)
     func didSelectRow(at index: Int)

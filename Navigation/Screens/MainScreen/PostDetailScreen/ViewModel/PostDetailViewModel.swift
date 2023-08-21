@@ -16,7 +16,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     private var postData: StateModelPost.PostData {
         var isLiked = false
         let likes = post.likes
-        if likes.contains(user.uid) {
+        if likes.contains(uidForLike) {
             isLiked = true
         }
         let createdDate = DateFormatter().string(from: post.createdDate)
@@ -31,6 +31,7 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
                                        isLiked: isLiked,
                                        views: post.views)
     }
+    private let uidForLike: String
     private let index: Int
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -39,10 +40,11 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     }()
     private let firestore: DatabeseManagerProtocol
     
-    init(firestore: DatabeseManagerProtocol, post: Post, user: User, index: Int) {
+    init(firestore: DatabeseManagerProtocol, post: Post, user: User, uidForLike: String = "", index: Int) {
         self.firestore = firestore
         self.post = post
         self.user = user
+        self.uidForLike = uidForLike
         self.index = index
         self.stateChanged?(.initial)
         Logger.standard.start(on: self)
@@ -51,10 +53,9 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
         stateChanged?(.success(postData))
     }
     func likesButtonTapped(){
-        let userUID = user.uid
         let postUID = postData.uidPost
-        if !(post.likes.contains(userUID)) {
-            firestore.updateLike(postId: postData.uidPost, from: userUID) { [weak self] error in
+        if !(post.likes.contains(uidForLike)) {
+            firestore.updateLike(postId: postData.uidPost, from: uidForLike) { [weak self] error in
                 if let error {
                     print("updateLike:\(error.localizedDescription)")
                 } else {

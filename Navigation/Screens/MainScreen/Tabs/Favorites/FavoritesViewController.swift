@@ -178,6 +178,7 @@ extension FavoritesViewController: UITableViewDataSource {
                                           post: viewModel.getPostFor(indexPath.row),
                                           user: viewModel.getUser(at: indexPath.row),
                                           friends: [],
+                                          userUidForLike: "",
                                           delegate: nil,
                                           tableView: tableView,
                                           indexPath: indexPath)

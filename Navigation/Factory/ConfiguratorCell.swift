@@ -20,13 +20,13 @@ struct ConfiguratorCell: Configurator {
         switch viewModel.cellType {
             case .postWithImageCell:
                 guard let cell = viewModel.tableView.dequeueReusableCell(withIdentifier: cellsIdentifier[viewModel.cellType] ?? "", for: viewModel.indexPath) as? PostTableViewCell else { return UITableViewCell() }
-                cell.configure(post: viewModel.post, with: viewModel.user)
+                cell.configure(post: viewModel.post, with: viewModel.user, and: viewModel.userUidForLike)
                 cell.indexPath = viewModel.indexPath
                 cell.delegate = viewModel.delegate
                 return cell
             case .postCell:
                 guard let cell = viewModel.tableView.dequeueReusableCell(withIdentifier: cellsIdentifier[viewModel.cellType] ?? "", for: viewModel.indexPath) as? PostTableViewCellWithoutImage else { return UITableViewCell() }
-                cell.configure(post: viewModel.post, with: viewModel.user)
+                cell.configure(post: viewModel.post, with: viewModel.user, and: viewModel.userUidForLike)
                 cell.indexPath = viewModel.indexPath
                 cell.delegate = viewModel.delegate
                 return cell

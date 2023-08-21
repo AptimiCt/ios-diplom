@@ -117,7 +117,6 @@ private extension FeedViewController {
         tableView.register(PostTableViewCellWithoutImage.self, forCellReuseIdentifier: Cells.cellForPostTableViewCellWithoutImage)
         tableView.register(FriendsViewCell.self, forCellReuseIdentifier: Cells.cellForSectionToCollection)
         tableView.dataSource = self
-        tableView.delegate = self
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.refreshControl = refreshControl
         
@@ -191,6 +190,7 @@ extension FeedViewController: UITableViewDataSource {
                                           post: post,
                                           user: viewModel.getUser(for: post.userUid),
                                           friends: viewModel.getFriends(),
+                                          userUidForLike: viewModel.getUidForLike(),
                                           delegate: self,
                                           tableView: tableView,
                                           indexPath: indexPath
@@ -199,12 +199,6 @@ extension FeedViewController: UITableViewDataSource {
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         2
-    }
-}
-
-extension FeedViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.cellForRow(at: indexPath)?.selectionStyle = .none
     }
 }
 extension FeedViewController: PostTableViewCellDelegate {

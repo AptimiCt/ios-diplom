@@ -89,6 +89,9 @@ final class FeedViewModel: FeedViewModelProtocol {
     func getFriends() -> [User] {
         userService.friends
     }
+    func getUidForLike() -> String {
+        userService.getUser().uid
+    }
     func getPostFor(_ index: Int) -> Post {
         posts[index]
     }
@@ -106,7 +109,8 @@ final class FeedViewModel: FeedViewModelProtocol {
     }
     func didSelectRow(at index: Int) {
         let post = posts[index]
-        coordinator.showDetail(post: post, user: userService.getUser(), index: index)
+        let user = getUser(for: post.userUid)
+        coordinator.showDetail(post: post, user: user, index: index)
         updateViews(postUID: post.postUid) { [weak self] in
             guard let self else { return }
             self.firestore.fetchPost(postId: post.postUid) { result in
@@ -125,7 +129,6 @@ final class FeedViewModel: FeedViewModelProtocol {
         let userUID = userService.getUser().uid
         let post = getPostFor(index)
         let postUID = post.postUid
-        print("post.likes upp:\(post.likes)")
         if !(post.likes.contains(userUID)) {
             firestore.updateLike(postId: postUID, from: userUID) { [weak self] error in
                 if let error {
@@ -139,7 +142,6 @@ final class FeedViewModel: FeedViewModelProtocol {
                                 let postNotification = ["post": post, "index": index] as [String : Any]
                                 NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: postNotification)
                                 self.stateChanged?(.loaded(self))
-                                print("post.likes apter:\(post.likes)")
                             case .failure(let error):
                                 print("fetchPost:\(error.localizedDescription)")
                         }

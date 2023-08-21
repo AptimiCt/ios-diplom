@@ -49,7 +49,7 @@ final class FriendsViewCell: UITableViewCell {
     
     private func setupView(){
         contentView.addSubviews(friendsLabel, friendsCollectionView)
-        self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
+        contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         self.layer.cornerRadius = 20
         self.clipsToBounds = true
     }

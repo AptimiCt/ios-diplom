@@ -108,15 +108,17 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         likesLabel.text = nil
         viewsLabel.text = nil
         fotoImageView.image = nil
+        likesButton.setImage(UIImage(systemName: "heart"), for: .normal)
         indexPath = nil
         self.layer.cornerRadius = 20
         self.clipsToBounds = true
     }
     override func layoutSubviews() {
+        super.layoutSubviews()
         self.layer.cornerRadius = 20
         self.clipsToBounds = true
     }
-    func configure(post: Post, with user: User) {
+    func configure(post: Post, with user: User, and userForLike: String) {
         authorLabel.text = user.getFullName()
         let dateFormatter = DateFormatter()
         dateFormatter.locale = .current
@@ -124,6 +126,13 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         let dateString = dateFormatter.string(from: post.createdDate)
         dateLabel.text = dateString
         bodyLabel.text = post.body
+        if isLiked(postLikes: post.likes, userForLike: userForLike) {
+            likesButton.tintColor = .systemRed
+            likesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            likesButton.tintColor = .createColor(lightMode: .black, darkMode: .white)
+            likesButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
         likesLabel.text = "\(post.likes.count)"
         viewsLabel.text = "\(post.views)"
         if let profilePictureUrl = user.profilePictureUrl {
@@ -133,6 +142,13 @@ class PostTableViewCellWithoutImage: UITableViewCell {
     }
 }
 private extension PostTableViewCellWithoutImage {
+    func isLiked(postLikes: [String], userForLike: String) -> Bool {
+        var isLiked = false
+        if postLikes.contains(userForLike) {
+            isLiked = true
+        }
+        return isLiked
+    }
     func visualizeAdd(color: UIColor) {
         contentView.backgroundColor = color
         UIView.animate(withDuration: 1, delay: 0) {
@@ -160,7 +176,7 @@ private extension PostTableViewCellWithoutImage {
 }
 private extension PostTableViewCellWithoutImage {
     func setupViews() {
-        self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
+        contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         contentView.addSubviews(fotoImageView,authorLabel, dateLabel,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
         self.layer.cornerRadius = 20
         self.clipsToBounds = true

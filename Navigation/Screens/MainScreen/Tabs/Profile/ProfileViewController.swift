@@ -242,6 +242,7 @@ extension ProfileViewController: UITableViewDataSource {
                                           post: viewModel.getPostFor(indexPath.row),
                                           user: viewModel.getUser(),
                                           friends: [],
+                                          userUidForLike: viewModel.getUser().uid,
                                           delegate: self,
                                           tableView: tableView,
                                           indexPath: indexPath)
