@@ -216,4 +216,7 @@ extension FeedViewController: PostTableViewCellDelegate {
             completion(isFavorite)
         }
     }
+    func likesButtonTapped(at index: Int) {
+        viewModel.likesButtonTapped(at: index)
+    }
 }

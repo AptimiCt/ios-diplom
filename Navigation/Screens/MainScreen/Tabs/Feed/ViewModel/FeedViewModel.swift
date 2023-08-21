@@ -121,6 +121,33 @@ final class FeedViewModel: FeedViewModelProtocol {
             }
         }
     }
+    func likesButtonTapped(at index: Int) {
+        let userUID = userService.getUser().uid
+        let post = getPostFor(index)
+        let postUID = post.postUid
+        print("post.likes upp:\(post.likes)")
+        if !(post.likes.contains(userUID)) {
+            firestore.updateLike(postId: postUID, from: userUID) { [weak self] error in
+                if let error {
+                    print("updateLike:\(error.localizedDescription)")
+                } else {
+                    guard let self else { return }
+                    self.firestore.fetchPost(postId: postUID) { result in
+                        switch result {
+                            case .success(let post):
+                                self.posts[index] = post
+                                let postNotification = ["post": post, "index": index] as [String : Any]
+                                NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: postNotification)
+                                self.stateChanged?(.loaded(self))
+                                print("post.likes apter:\(post.likes)")
+                            case .failure(let error):
+                                print("fetchPost:\(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 private extension FeedViewModel {
     private func updateViews(postUID: String, completion: @escaping VoidClosure) {

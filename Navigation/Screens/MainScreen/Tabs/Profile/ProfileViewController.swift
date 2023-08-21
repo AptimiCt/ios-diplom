@@ -283,6 +283,9 @@ extension ProfileViewController: PostTableViewCellDelegate {
             completion(isFavorite)
         }
     }
+    func likesButtonTapped(at index: Int) {
+        viewModel.likesButtonTapped(at: index)
+    }
 }
 extension ProfileViewController: ProfileHeaderViewDelegate {
     

@@ -20,4 +20,5 @@ protocol FeedViewModelProtocol: AnyObject {
     func updatePost(post: Post, for index: Int)
     func newPost(post: Post, for index: Int)
     func didSelectRow(at index: Int)
+    func likesButtonTapped(at index: Int)
 }

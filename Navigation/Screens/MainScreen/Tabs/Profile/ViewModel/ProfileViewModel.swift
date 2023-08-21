@@ -83,7 +83,31 @@ final class ProfileViewModel: ProfileViewModelProtocol {
             }
         }
     }
-    
+    func likesButtonTapped(at index: Int) {
+        let userUID = userService.getUser().uid
+        let post = getPostFor(index)
+        let postUID = post.postUid
+        if !(post.likes.contains(userUID)) {
+            firestore.updateLike(postId: postUID, from: userUID) { [weak self] error in
+                if let error {
+                    print("updateLike:\(error.localizedDescription)")
+                } else {
+                    guard let self else { return }
+                    self.firestore.fetchPost(postId: postUID) { result in
+                        switch result {
+                            case .success(let post):
+                                self.posts[index] = post
+                                let postNotification = ["post": post, "index": index] as [String : Any]
+                                NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: postNotification)
+                                self.stateChanged?(.loaded(self))
+                            case .failure(let error):
+                                print("fetchPost:\(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+        }
+    }
     func numberOfRows() -> Int {
         posts.count
     }

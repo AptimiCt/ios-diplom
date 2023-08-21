@@ -21,6 +21,7 @@ protocol ProfileViewModelProtocol: AnyObject {
     func newPost(post: Post, for index: Int)
     func updatePost(post: Post, for index: Int)
     func didSelectRow(at index: Int)
+    func likesButtonTapped(at index: Int)
     func showPhotosVC()
     func showFindFriendVC()
     func showEditProfileVC()

@@ -11,4 +11,5 @@ import UIKit
 protocol PostTableViewCellDelegate: AnyObject {
     func moreReadButtonTapped(at: IndexPath)
     func addFavorite(index: Int, completion: @escaping BoolClosure)
+    func likesButtonTapped(at index: Int)
 }

@@ -68,7 +68,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         likesImage.toAutoLayout()
         likesImage.setImage(UIImage(systemName: "heart"), for: .normal)
         likesImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
-        //        likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
+                likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
         return likesImage
     }()
     private let viewsLabel: UILabel = {
@@ -153,6 +153,9 @@ private extension PostTableViewCellWithoutImage {
         delegate?.addFavorite(index: indexPath.row) { [weak self] isFavorite in
             isFavorite ? self?.visualizeAdd(color: .systemGreen) : self?.visualizeAdd(color: .systemRed)
         }
+    }
+    func likesButtonTapped() {
+        delegate?.likesButtonTapped(at: indexPath.row)
     }
 }
 private extension PostTableViewCellWithoutImage {
