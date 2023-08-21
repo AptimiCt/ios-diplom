@@ -20,7 +20,7 @@ class FriendsCollectionViewCell: UICollectionViewCell {
     }()
     let fullNameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.numberOfLines = 1
+        nameLabel.numberOfLines = 2
         nameLabel.font = .systemFont(ofSize: 12, weight: .regular)
         nameLabel.backgroundColor = UIColor(red: 0.28, green: 0.52, blue: 0.80, alpha: 0.60)
         nameLabel.layer.cornerRadius = 5

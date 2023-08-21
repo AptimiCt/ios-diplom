@@ -119,8 +119,15 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.text = nil
         fotoImageView.image = nil
         indexPath = nil
+        
+        self.layer.cornerRadius = 20
+        self.clipsToBounds = true
+        
     }
-    
+    override func layoutSubviews() {
+        self.layer.cornerRadius = 20
+        self.clipsToBounds = true
+    }
     func configure(post: Post, with user: User) {
         authorLabel.text = user.getFullName()
         let dateFormatter = DateFormatter()
@@ -168,8 +175,6 @@ private extension PostTableViewCell {
     func setupViews(){
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         contentView.addSubviews(fotoImageView,authorLabel, dateLabel, postImageView,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
-        self.layer.cornerRadius = 20
-        self.clipsToBounds = true
     }
     func configureConstraints(){
         let constraints: [NSLayoutConstraint] = [

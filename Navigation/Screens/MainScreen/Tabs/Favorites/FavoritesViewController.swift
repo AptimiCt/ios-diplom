@@ -194,21 +194,24 @@ extension FavoritesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
     }
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let actionDelete = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completion in
             guard let self else { return }
-            
-            
+            tableView.beginUpdates()
             viewModel.deletePost(at: indexPath.row) { isDeleted in
                 if isDeleted {
-                    self.tableView.beginUpdates()
-                    self.tableView.deleteRows(at: [indexPath], with: .fade)
-                    self.tableView.endUpdates()
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                    tableView.endUpdates()
                 }
             }
+            completion(true)
         }
         actionDelete.image = UIImage(systemName: "trash")
-        return UISwipeActionsConfiguration(actions: [actionDelete])
+        let configuration = UISwipeActionsConfiguration(actions: [actionDelete])
+        return configuration
+    }
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        guard let indexPath else { return }
+        tableView.cellForRow(at: indexPath)?.layoutSubviews()
     }
 }

@@ -109,8 +109,13 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         viewsLabel.text = nil
         fotoImageView.image = nil
         indexPath = nil
+        self.layer.cornerRadius = 20
+        self.clipsToBounds = true
     }
-    
+    override func layoutSubviews() {
+        self.layer.cornerRadius = 20
+        self.clipsToBounds = true
+    }
     func configure(post: Post, with user: User) {
         authorLabel.text = user.getFullName()
         let dateFormatter = DateFormatter()
