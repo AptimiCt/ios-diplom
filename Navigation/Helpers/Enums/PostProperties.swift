@@ -13,4 +13,5 @@ enum PostProperties {
     static let imageUrl = "imageUrl"
     static let likes = "likes"
     static let views = "views"
+    static let comments = "comments"
 }

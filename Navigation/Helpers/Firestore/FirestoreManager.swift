@@ -18,8 +18,11 @@ final class FirestoreManager {
     private let postPictureURL: String = FirestoreCollection.postPictureURL
     private let usersCollection: String = FirestoreCollection.usersCollection
     private let usersPosts: String = FirestoreCollection.usersPosts
+    private let commentsForPosts: String = FirestoreCollection.commentsForPosts
     private var users: [User] = []
     private var posts: [Post] = []
+    private var comments: [Comment] = []
+    private var usersForPost: [String: User] = [:]
 }
 extension FirestoreManager: DatabeseManagerProtocol {
     func addUser(user: User, completion: @escaping OptionalErrorClosure) {
@@ -137,6 +140,27 @@ extension FirestoreManager: DatabeseManagerProtocol {
             completion(error)
         }
     }
+    func addCommentForPost(comment: Comment, completion: @escaping OptionalErrorClosure) {
+        let commentsForPostsRef = firestoreDB.collection(commentsForPosts)
+        let documentID = commentsForPostsRef.document().documentID
+        do {
+            try commentsForPostsRef.document(documentID).setData(from: comment) { error in
+                if error != nil {
+                    completion(error)
+                }
+            }
+            let usersPostsRef = firestoreDB.collection(usersPosts).document(comment.postUid)
+            let post = [PostProperties.comments : FieldValue.arrayUnion([documentID])]
+            usersPostsRef.updateData(post) { error in
+                if error != nil {
+                    commentsForPostsRef.document(documentID).delete()
+                }
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
     func fetchPost(postId: String, completion: @escaping (Result<Post, Error>) -> Void) {
         let usersPostsDocumentRef = firestoreDB.collection(usersPosts).document(postId)
         usersPostsDocumentRef.getDocument(as: Post.self) { result in
@@ -184,6 +208,60 @@ extension FirestoreManager: DatabeseManagerProtocol {
                     completion(.success(self.posts))
                 }
             }
+    }
+    func fetchAllComments(for post: Post, completion: @escaping (Result<CommentData, Error>) -> Void) {
+        self.comments = []
+        fetchPost(postId: post.postUid) { [weak self] result in
+            guard let self else { completion(.failure(FirestoreDatabaseError.error(description: "self is nil"))); return}
+            switch result {
+                case .success(let loadedPost):
+                    self.fetchComments(for: loadedPost.comments) { result in
+                        switch result {
+                            case .success(let comments):
+                                self.fetchAllUsers { result in
+                                    switch result {
+                                        case .success(let users):
+                                            self.usersForPost = comments.reduce(into: [String: User]()) { dictionary, comment in
+                                                if let user = users.first(where: { $0.uid == comment.userUid }) {
+                                                    dictionary[comment.userUid] = user
+                                                }
+                                            }
+                                            let commentsData = CommentData(comments: comments, users: self.usersForPost)
+                                            completion(.success(commentsData))
+                                        case .failure(let error):
+                                            completion(.failure(error))
+                                    }
+                                }
+                            case .failure(let error):
+                                print("error for success:\(error.localizedDescription)")
+                                completion(.failure(error))
+                        }
+                    }
+                case .failure(_):
+                    self.fetchComments(for: post.comments) { result in
+                        switch result {
+                            case .success(let comments):
+                                self.fetchAllUsers { result in
+                                    switch result {
+                                        case .success(let users):
+                                            self.usersForPost = comments.reduce(into: [String: User]()) { dictionary, comment in
+                                                if let user = users.first(where: { $0.uid == comment.userUid }) {
+                                                    dictionary[comment.userUid] = user
+                                                }
+                                            }
+                                            let commentsData = CommentData(comments: comments, users: self.usersForPost)
+                                            completion(.success(commentsData))
+                                        case .failure(let error):
+                                            completion(.failure(error))
+                                    }
+                                }
+                            case .failure(let error):
+                                print("error for success:\(error.localizedDescription)")
+                                completion(.failure(error))
+                        }
+                    }
+            }
+        }
     }
     func updateLike(postId: String, from userUID: String, completion: @escaping OptionalErrorClosure) {
         let usersPostsDocumentRef = firestoreDB.collection(usersPosts).document(postId)
@@ -244,6 +322,27 @@ extension FirestoreManager: DatabeseManagerProtocol {
                 let urlString = url.absoluteString
                 completion(.success(urlString))
             })
+        }
+    }
+}
+private extension FirestoreManager {
+    func fetchComments(for uids: [String], completion: @escaping (Result<[Comment], Error>) -> Void) {
+        let commentsForPostsRef = firestoreDB.collection(commentsForPosts)
+        commentsForPostsRef.addSnapshotListener { [weak self] querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                guard let self else { completion(.failure(FirestoreDatabaseError.error(description: "self is nil"))); return}
+                self.comments = querySnapshot!.documents.compactMap { querySnapshotDocument in
+                    do {
+                        return try querySnapshotDocument.data(as: Comment.self)
+                    } catch {
+                        completion(.failure(FirestoreDatabaseError.error(description: "Не удалось получить комментарий.")))
+                        return nil
+                    }
+                }
+                completion(.success(self.comments))
+            }
         }
     }
 }

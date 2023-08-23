@@ -21,6 +21,7 @@ struct Post: Codable {
     let views: Int
     let createdDate: Date
     let updateDate: Date
+    let comments: [String]
     
     init(userUid: String,
          postUid: String = "",
@@ -30,7 +31,8 @@ struct Post: Codable {
          likes: [String] = [],
          views: Int = 0,
          createdDate: Date = Date(),
-         updateDate: Date = Date()
+         updateDate: Date = Date(),
+         comments: [String] = []
     ) {
         self.userUid = userUid
         self.postUid = postUid
@@ -41,5 +43,6 @@ struct Post: Codable {
         self.views = views
         self.createdDate = createdDate
         self.updateDate = updateDate
+        self.comments = comments
     }
 }
