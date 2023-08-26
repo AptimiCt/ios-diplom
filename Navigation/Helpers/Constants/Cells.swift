@@ -19,4 +19,5 @@ struct Cells {
     static let cellForCollection = String(describing: PhotosCollectionViewCell.self)
     static let cellForFindFriend = String(describing: FindFriendCell.self)
     static let cellForBodyImageViewCell = String(describing: BodyImageViewCell.self)
+    static let cellForCommentCell = String(describing: CommentCell.self)
 }

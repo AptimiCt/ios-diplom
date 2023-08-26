@@ -210,56 +210,26 @@ extension FirestoreManager: DatabeseManagerProtocol {
             }
     }
     func fetchAllComments(for post: Post, completion: @escaping (Result<CommentData, Error>) -> Void) {
-        self.comments = []
-        fetchPost(postId: post.postUid) { [weak self] result in
-            guard let self else { completion(.failure(FirestoreDatabaseError.error(description: "self is nil"))); return}
+        self.fetchComments(for: post.postUid) { result in
             switch result {
-                case .success(let loadedPost):
-                    self.fetchComments(for: loadedPost.comments) { result in
+                case .success(let comments):
+                    self.fetchAllUsers { result in
                         switch result {
-                            case .success(let comments):
-                                self.fetchAllUsers { result in
-                                    switch result {
-                                        case .success(let users):
-                                            self.usersForPost = comments.reduce(into: [String: User]()) { dictionary, comment in
-                                                if let user = users.first(where: { $0.uid == comment.userUid }) {
-                                                    dictionary[comment.userUid] = user
-                                                }
-                                            }
-                                            let commentsData = CommentData(comments: comments, users: self.usersForPost)
-                                            completion(.success(commentsData))
-                                        case .failure(let error):
-                                            completion(.failure(error))
+                            case .success(let users):
+                                self.usersForPost = comments.reduce(into: [String: User]()) { dictionary, comment in
+                                    if let user = users.first(where: { $0.uid == comment.userUid }) {
+                                        dictionary[comment.userUid] = user
                                     }
                                 }
+                                let commentsData = CommentData(comments: comments, users: self.usersForPost)
+                                completion(.success(commentsData))
                             case .failure(let error):
-                                print("error for success:\(error.localizedDescription)")
                                 completion(.failure(error))
                         }
                     }
-                case .failure(_):
-                    self.fetchComments(for: post.comments) { result in
-                        switch result {
-                            case .success(let comments):
-                                self.fetchAllUsers { result in
-                                    switch result {
-                                        case .success(let users):
-                                            self.usersForPost = comments.reduce(into: [String: User]()) { dictionary, comment in
-                                                if let user = users.first(where: { $0.uid == comment.userUid }) {
-                                                    dictionary[comment.userUid] = user
-                                                }
-                                            }
-                                            let commentsData = CommentData(comments: comments, users: self.usersForPost)
-                                            completion(.success(commentsData))
-                                        case .failure(let error):
-                                            completion(.failure(error))
-                                    }
-                                }
-                            case .failure(let error):
-                                print("error for success:\(error.localizedDescription)")
-                                completion(.failure(error))
-                        }
-                    }
+                case .failure(let error):
+                    print("error for success firestore:\(error.localizedDescription)")
+                    completion(.failure(error))
             }
         }
     }
@@ -326,9 +296,11 @@ extension FirestoreManager: DatabeseManagerProtocol {
     }
 }
 private extension FirestoreManager {
-    func fetchComments(for uids: [String], completion: @escaping (Result<[Comment], Error>) -> Void) {
+    func fetchComments(for postUid: String, completion: @escaping (Result<[Comment], Error>) -> Void) {
         let commentsForPostsRef = firestoreDB.collection(commentsForPosts)
-        commentsForPostsRef.addSnapshotListener { [weak self] querySnapshot, error in
+        commentsForPostsRef
+            .whereField(PostProperties.postUid, in: [postUid])
+            .addSnapshotListener { [weak self] querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {

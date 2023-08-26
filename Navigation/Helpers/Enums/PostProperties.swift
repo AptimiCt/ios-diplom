@@ -9,6 +9,7 @@
 
 enum PostProperties {
     static let userUid = "userUid"
+    static let postUid = "postUid"
     static let body = "body"
     static let imageUrl = "imageUrl"
     static let likes = "likes"

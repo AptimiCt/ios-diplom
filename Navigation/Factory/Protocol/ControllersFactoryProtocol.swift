@@ -22,18 +22,17 @@ protocol ProfileControllerFactoryProtocol {
     func makePhotosController() -> PhotosViewControllerProtocol
     func makeFindFriendController(with coordinator: ProfileCoordinator) -> FindFriendViewControllerProtocol
     func makeAddPostController(with coordinator: ProfileCoordinator) -> AddPostViewControllerProtocol
+    func makePostDetailControllerWithCommets(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol
 }
 
 protocol FavoriteControllerFactoryProtocol {
     func makeFavoriteController(with coordinator: FavoriteCoordinator) -> FavoriteViewControllerProtocol
+    func makePostDetailController(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol
 }
 protocol FeedControllerFactoryProtocol {
     func makeFeedController(with coordinator: FeedCoordinator) -> FeedViewControllerProtocol
     func makePhotosController() -> PhotosViewControllerProtocol
-    func makePostDetailController(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol
-}
-protocol PostDetailControllerFactoryProtocol {
-    func makePostDetailController(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol
+    func makePostDetailControllerWithCommets(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol
 }
 protocol SplashControllerFactoryProtocol {
     func makeSplashController() -> SplashViewController
@@ -44,6 +43,5 @@ protocol ControllersFactoryProtocol: ProfileControllerFactoryProtocol,
                                      FeedControllerFactoryProtocol,
                                      AuthControllerFactoryProtocol,
                                      SplashControllerFactoryProtocol,
-                                     PostDetailControllerFactoryProtocol,
-                                     UpdateInfoProfileControllerFactoryProtocol,AnyObject {
-}
+                                     UpdateInfoProfileControllerFactoryProtocol,
+                                     AnyObject {}

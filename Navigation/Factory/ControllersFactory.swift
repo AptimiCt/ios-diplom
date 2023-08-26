@@ -40,7 +40,17 @@ final class ControllerFactory: ControllersFactoryProtocol {
         let postDetailController = PostDetailController(viewModel: viewModel)
         return postDetailController
     }
-    
+    func makePostDetailControllerWithCommets(post: Post, user: User, index: Int) -> PostDetailViewControllerProtocol {
+        let viewModel = PostDetailViewModelWithComments(
+            firestore: FirestoreManager(),
+            post: post,
+            user: user,
+            uidForLike: userService.getUser().uid,
+            index: index
+        )
+        let postDetailController = PostDetailControllerWithComments(viewModel: viewModel)
+        return postDetailController
+    }
     func makeFeedController(with coordinator: FeedCoordinator) ->  FeedViewControllerProtocol {
 
         let viewModel = FeedViewModel(firestore: FirestoreManager(), coordinator: coordinator, userService: userService)

@@ -23,7 +23,7 @@ class FeedCoordinator: BaseCoordinator {
         runFeed()
     }
     func showDetail(post: Post, user: User, index: Int) {
-        let controller = factory.makePostDetailController(post: post, user: user, index: index)
+        let controller = factory.makePostDetailControllerWithCommets(post: post, user: user, index: index)
         router.push(controller, hideBottomBar: true, hideBar: false)
     }
     deinit {
