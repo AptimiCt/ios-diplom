@@ -69,7 +69,7 @@ final class PostDetailViewModelWithComments: PostDetailViewModelWithCommentsProt
             firestore.fetchAllComments(for: post) { result in
                         switch result {
                             case .success(let commentsData):
-                                self.comments = commentsData.comments
+                                self.comments = commentsData.comments.sorted { $0.date <= $1.date }
                                 self.userForComments = commentsData.users
                             case .failure(let error):
                                 print("error for success:\(error.localizedDescription)")
@@ -88,6 +88,17 @@ final class PostDetailViewModelWithComments: PostDetailViewModelWithCommentsProt
         let comment = comments[index]
         let user = userForComments[comment.userUid] ?? User()
         return CommentDataCell(comment: comment, user: user)
+    }
+    func addComment(with text: String, completion: @escaping BoolClosure) {
+        let comment = Comment(userUid: uidForLike, postUid: post.postUid, body: text, date: Date())
+        firestore.addCommentForPost(comment: comment) { error in
+            if let error {
+                print("Add comment with error: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            completion(true)
+        }
     }
     func likesButtonTapped(){
         let postUID = post.postUid

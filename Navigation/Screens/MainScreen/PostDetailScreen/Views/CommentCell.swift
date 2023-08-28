@@ -97,7 +97,7 @@ private extension CommentCell {
             dateLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
             dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: bodyLabel.topAnchor, constant: 4),
             
-            bodyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            bodyLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
             bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             bodyLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -18)
         ]

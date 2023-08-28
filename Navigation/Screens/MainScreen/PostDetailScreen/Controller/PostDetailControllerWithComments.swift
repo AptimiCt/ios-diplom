@@ -36,7 +36,36 @@ final class PostDetailControllerWithComments: UIViewController, PostDetailViewCo
         tableView.toAutoLayout()
         return tableView
     }()
-    
+    private lazy var toolbarTextField: UITextField = {
+        let textField = UITextField()
+        textField.toAutoLayout()
+        textField.placeholder = "Введите сообщение"
+        textField.borderStyle = .roundedRect
+        textField.layer.borderColor = UIColor.systemGray.cgColor
+        textField.layer.borderWidth = 1
+        textField.layer.cornerRadius = 10
+        textField.clipsToBounds = true
+
+        return textField
+    }()
+    private lazy var toolbar: UIToolbar = {
+        let toolbar = UIToolbar(frame: CGRect(x: 0,
+                                              y: 0,
+                                              width: view.bounds.width,
+                                              height: 44))
+        toolbar.isTranslucent = true
+        let addComment = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.turn.right.up"),
+            style: .plain,
+            target: self,
+            action: #selector(addComment)
+        )
+        let textField = UIBarButtonItem(customView: toolbarTextField)
+        let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        toolbar.setItems([flexible, textField, flexible, addComment], animated: false)
+        return toolbar
+    }()
+    private var toolbarBottomConstraint: NSLayoutConstraint?
     
     //MARK: - init
     init(viewModel: PostDetailViewModelWithCommentsProtocol) {
@@ -55,6 +84,21 @@ final class PostDetailControllerWithComments: UIViewController, PostDetailViewCo
         setupViewModel()
         updateView()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //Реакция на появление и скрытие клавиатуры
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        scrollToLastRow()
+    }
     deinit {
         Logger.standard.remove(on: self)
     }
@@ -68,6 +112,27 @@ final class PostDetailControllerWithComments: UIViewController, PostDetailViewCo
             self?.tableView.reloadData()
             sender.endRefreshing()
         }
+    }
+    func addComment() {
+        guard let text = toolbarTextField.text, text.count > 3 else { return }
+        toolbarTextField.text = nil
+        viewModel.addComment(with: text) { [weak self] _ in
+            self?.scrollToLastRow()
+        }
+    }
+    //Обработка появление клавиатуры
+    func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        let animationDuration: TimeInterval = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.25
+        toolbarBottomConstraint?.constant = -keyboardSize.height + view.safeAreaInsets.bottom
+        UIView.animate(withDuration: animationDuration, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+            self?.scrollToLastRow()
+        })
+    }
+    //Обработка скрытия клавиатуры
+    func keyboardWillHide(notification: NSNotification) {
+        toolbarBottomConstraint?.constant = 0
     }
 }
 //MARK: - private extension
@@ -99,20 +164,27 @@ private extension PostDetailControllerWithComments {
             animate ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
         }
     }
+    func scrollToLastRow() {
+        let indexPath = IndexPath(row: viewModel.numberOfRows() - 1, section: 0)
+        if indexPath.row > 1 {
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
     func setupView() {
         view.backgroundColor = .createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        view.addSubview(tableView)
-        view.addSubview(activityIndicator)
-        
+        view.addSubviews(tableView, activityIndicator, toolbar)
+        toolbar.toAutoLayout()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.refreshControl = refreshControl
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
         tableView.register(CommentCell.self, forCellReuseIdentifier: Cells.cellForCommentCell)
-        
+        toolbarTextField.delegate = self
         postView.delegate = self
         configureConstraints()
+        toolbar.sizeToFit()
+        toolbarTextField.sizeToFit()
     }
     func configureConstraints(){
         let constraints: [NSLayoutConstraint] = [
@@ -121,10 +193,14 @@ private extension PostDetailControllerWithComments {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor),
+            
+            toolbar.widthAnchor.constraint(equalToConstant: Constants.screenWeight),
+            toolbar.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ]
-        
         NSLayoutConstraint.activate(constraints)
+        toolbarBottomConstraint = toolbar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        toolbarBottomConstraint?.isActive = true
     }
 }
 //MARK: - UITableViewDataSource
@@ -148,5 +224,15 @@ extension PostDetailControllerWithComments: UITableViewDelegate {
 extension PostDetailControllerWithComments: PostViewDelegate {
     func likesButtonTapped() {
         viewModel.likesButtonTapped()
+    }
+}
+extension PostDetailControllerWithComments: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let text = textField.text, text.count > 3 else { return  true}
+        textField.text = nil
+        viewModel.addComment(with: text) { [weak self] _ in
+            self?.scrollToLastRow()
+        }
+        return true
     }
 }
