@@ -71,6 +71,7 @@ final class PostDetailController: UIViewController, PostDetailViewControllerProt
         let likesImage = CustomButton()
         likesImage.toAutoLayout()
         likesImage.setImage(UIImage(systemName: "heart"), for: .normal)
+        likesImage.setTitle("\(0)", for: .normal)
         likesImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
         likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
         return likesImage

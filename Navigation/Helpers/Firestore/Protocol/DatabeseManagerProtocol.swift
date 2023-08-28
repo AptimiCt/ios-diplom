@@ -22,7 +22,7 @@ protocol DatabeseManagerProtocol {
     func fetchAllPosts(uid: String, completion: @escaping (Result<[Post], Error>) -> Void)
     func fetchAllPosts(uids: [String], completion: @escaping (Result<[Post], Error>) -> Void)
     func fetchAllComments(for post: Post, completion: @escaping (Result<CommentData, Error>) -> Void)
-    func updateLike(postId: String, from userUID: String, completion: @escaping OptionalErrorClosure)
+    func updateLike(postId: String, from userUID: String, IslikeAdded: Bool, completion: @escaping OptionalErrorClosure)
     func updateViews(postId: String, completion: @escaping OptionalErrorClosure)
     
     func uploadProfilePicture(with data: Data, fileName: String, completion: @escaping UploadPictureCompletion)

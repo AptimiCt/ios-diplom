@@ -103,22 +103,9 @@ final class PostDetailViewModelWithComments: PostDetailViewModelWithCommentsProt
     func likesButtonTapped(){
         let postUID = post.postUid
         if !(post.likes.contains(uidForLike)) {
-            firestore.updateLike(postId: postUID, from: uidForLike) { [weak self] error in
-                if let error {
-                    print("updateLike:\(error.localizedDescription)")
-                } else {
-                    guard let self else { return }
-                    self.firestore.fetchPost(postId: postUID) { result in
-                        switch result {
-                            case .success(let loadedPost):
-                                self.updatePost(post: loadedPost)
-                            case .failure(let error):
-                                print("fetchPost:\(error.localizedDescription)")
-                        }
-                    }
-                }
-                
-            }
+            firestoreUpdateLike(postUID: postUID, from: uidForLike, IslikeAdded: true)
+        } else {
+            firestoreUpdateLike(postUID: postUID, from: uidForLike, IslikeAdded: false)
         }
     }
     
@@ -133,5 +120,23 @@ private extension PostDetailViewModelWithComments {
         let postNotification = ["post": post, "index": self.index] as [String : Any]
         NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: postNotification)
         self.stateChanged?(.success(self))
+    }
+    func firestoreUpdateLike(postUID: String, from uidForLike: String, IslikeAdded: Bool) {
+        firestore.updateLike(postId: postUID, from: uidForLike, IslikeAdded: IslikeAdded) { [weak self] error in
+            if let error {
+                print("updateLike:\(error.localizedDescription)")
+            } else {
+                guard let self else { return }
+                self.firestore.fetchPost(postId: postUID) { result in
+                    switch result {
+                        case .success(let loadedPost):
+                            self.updatePost(post: loadedPost)
+                        case .failure(let error):
+                            print("fetchPost:\(error.localizedDescription)")
+                    }
+                }
+            }
+            
+        }
     }
 }

@@ -88,14 +88,12 @@ private extension CommentCell {
             fotoImageView.heightAnchor.constraint(equalToConstant: 60),
             fotoImageView.widthAnchor.constraint(equalTo: fotoImageView.heightAnchor),
             fotoImageView.trailingAnchor.constraint(equalTo: authorLabel.leadingAnchor, constant: -24),
-            fotoImageView.bottomAnchor.constraint(equalTo: bodyLabel.topAnchor, constant: -12),
-            
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             authorLabel.bottomAnchor.constraint(equalTo: dateLabel.topAnchor, constant: -4),
             
             dateLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
-            dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: bodyLabel.topAnchor, constant: 4),
+            dateLabel.bottomAnchor.constraint(equalTo: bodyLabel.topAnchor, constant: -4),
             
             bodyLabel.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
             bodyLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),

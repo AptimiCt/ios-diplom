@@ -233,9 +233,11 @@ extension FirestoreManager: DatabeseManagerProtocol {
             }
         }
     }
-    func updateLike(postId: String, from userUID: String, completion: @escaping OptionalErrorClosure) {
+    func updateLike(postId: String, from userUID: String, IslikeAdded: Bool, completion: @escaping OptionalErrorClosure) {
         let usersPostsDocumentRef = firestoreDB.collection(usersPosts).document(postId)
-        let likes = [PostProperties.likes: FieldValue.arrayUnion([userUID])]
+        let likes = IslikeAdded ?
+            [PostProperties.likes: FieldValue.arrayUnion([userUID])] :
+            [PostProperties.likes: FieldValue.arrayRemove([userUID])]
         usersPostsDocumentRef.updateData(likes) { error in
             completion(error)
         }

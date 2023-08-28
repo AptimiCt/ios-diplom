@@ -55,7 +55,27 @@ final class PostDetailViewModel: PostDetailViewModelProtocol {
     func likesButtonTapped(){
         let postUID = postData.uidPost
         if !(post.likes.contains(uidForLike)) {
-            firestore.updateLike(postId: postData.uidPost, from: uidForLike) { [weak self] error in
+            firestore.updateLike(postId: postData.uidPost, from: uidForLike, IslikeAdded: true) { [weak self] error in
+                if let error {
+                    print("updateLike:\(error.localizedDescription)")
+                } else {
+                    guard let self else { return }
+                    self.firestore.fetchPost(postId: postUID) { result in
+                        switch result {
+                            case .success(let post):
+                                self.post = post
+                                let postNotification = ["post": post, "index": self.index] as [String : Any]
+                                NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: postNotification)
+                                self.stateChanged?(.success(self.postData))
+                            case .failure(let error):
+                                print("fetchPost:\(error.localizedDescription)")
+                        }
+                    }
+                }
+                
+            }
+        } else {
+            firestore.updateLike(postId: postData.uidPost, from: uidForLike, IslikeAdded: false) { [weak self] error in
                 if let error {
                     print("updateLike:\(error.localizedDescription)")
                 } else {

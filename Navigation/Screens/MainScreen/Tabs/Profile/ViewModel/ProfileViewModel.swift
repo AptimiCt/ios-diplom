@@ -88,24 +88,9 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         let post = getPostFor(index)
         let postUID = post.postUid
         if !(post.likes.contains(userUID)) {
-            firestore.updateLike(postId: postUID, from: userUID) { [weak self] error in
-                if let error {
-                    print("updateLike:\(error.localizedDescription)")
-                } else {
-                    guard let self else { return }
-                    self.firestore.fetchPost(postId: postUID) { result in
-                        switch result {
-                            case .success(let post):
-                                self.posts[index] = post
-                                let postNotification = ["post": post, "index": index] as [String : Any]
-                                NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: postNotification)
-                                self.stateChanged?(.loaded(self))
-                            case .failure(let error):
-                                print("fetchPost:\(error.localizedDescription)")
-                        }
-                    }
-                }
-            }
+            firestoreUpdateLike(postUID: postUID, from: userUID, IslikeAdded: true, for: index)
+        } else {
+            firestoreUpdateLike(postUID: postUID, from: userUID, IslikeAdded: false, for: index)
         }
     }
     func numberOfRows() -> Int {
@@ -164,6 +149,26 @@ private extension ProfileViewModel {
                 return
             }
             completion()
+        }
+    }
+    func firestoreUpdateLike(postUID: String, from userUID: String, IslikeAdded: Bool, for index: Int) {
+        firestore.updateLike(postId: postUID, from: userUID, IslikeAdded: IslikeAdded) { [weak self] error in
+            if let error {
+                print("updateLike:\(error.localizedDescription)")
+            } else {
+                guard let self else { return }
+                self.firestore.fetchPost(postId: postUID) { result in
+                    switch result {
+                        case .success(let post):
+                            self.posts[index] = post
+                            let postNotification = ["post": post, "index": index] as [String : Any]
+                            NotificationCenter.default.post(name: Notification.Name(Constants.notifyForUpdateProfile), object: postNotification)
+                            self.stateChanged?(.loaded(self))
+                        case .failure(let error):
+                            print("fetchPost:\(error.localizedDescription)")
+                    }
+                }
+            }
         }
     }
 }
