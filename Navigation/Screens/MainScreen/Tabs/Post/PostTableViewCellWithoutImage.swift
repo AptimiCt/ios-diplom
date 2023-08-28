@@ -12,7 +12,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
     weak var delegate: PostTableViewCellDelegate?
     var indexPath: IndexPath!
     
-    private let authorLabel: UILabel = {
+    private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
         label.font = .systemFont(ofSize: 20, weight: .bold)
@@ -20,7 +20,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-    private let dateLabel: UILabel = {
+    private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.toAutoLayout()
         label.font = .systemFont(ofSize: 14, weight: .semibold)
@@ -28,7 +28,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-    private let fotoImageView: UIImageView = {
+    private lazy var fotoImageView: UIImageView = {
         let image = UIImageView()
         image.toAutoLayout()
         image.contentMode = .scaleAspectFill
@@ -38,7 +38,7 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         return image
     }()
 
-    private let bodyLabel: UILabel = {
+    private lazy var bodyLabel: UILabel = {
         let description = UILabel()
         description.toAutoLayout()
         description.font = .systemFont(ofSize: 14)
@@ -55,39 +55,42 @@ class PostTableViewCellWithoutImage: UITableViewCell {
         readMore.addTarget(self, action: #selector(readMoreButtonTapped), for: .touchUpInside)
         return readMore
     }()
-    private let likesLabel: UILabel = {
-        let likes = UILabel()
-        likes.toAutoLayout()
-        likes.font = .systemFont(ofSize: 16)
-        likes.numberOfLines = 0
-        likes.textColor = .createColor(lightMode: .black, darkMode: .white)
-        return likes
+    private lazy var likesButton: UIButton = {
+        var config = UIButton.Configuration.borderedTinted()
+        config.contentInsets = .init(top: 5, leading: 5, bottom: 5, trailing: 5)
+        config.imagePadding = 8
+        config.cornerStyle = .capsule
+        
+        let button = UIButton()
+        button.toAutoLayout()
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
+        button.configuration = config
+        return button
     }()
-    private lazy var likesButton: CustomButton = {
-        let likesImage = CustomButton()
-        likesImage.toAutoLayout()
-        likesImage.setImage(UIImage(systemName: "heart"), for: .normal)
-        likesImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
-                likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
-        return likesImage
+    private lazy var viewsImageView: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.contentInsets = .init(top: 5, leading: 8, bottom: 5, trailing: 8)
+        config.imagePadding = 8
+        config.cornerStyle = .capsule
+        
+        let button = UIButton()
+        button.toAutoLayout()
+        button.setImage(UIImage(systemName: "eyes"), for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.tintColor = .createColor(lightMode: .black, darkMode: .white)
+        button.isUserInteractionEnabled = false
+        button.configuration = config
+        return button
     }()
-    private let viewsLabel: UILabel = {
-        let views = UILabel()
-        views.toAutoLayout()
-        views.font = .systemFont(ofSize: 16)
-        views.numberOfLines = 0
-        views.textColor = .createColor(lightMode: .black, darkMode: .white)
-        return views
+    private lazy var footerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 24
+        stackView.toAutoLayout()
+        return stackView
     }()
-    private let viewsImageView: UIImageView = {
-        let viewsImage = UIImageView()
-        viewsImage.toAutoLayout()
-        viewsImage.contentMode = .scaleAspectFit
-        viewsImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
-        viewsImage.image = UIImage(systemName: "eyes")
-        return viewsImage
-    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -101,12 +104,9 @@ class PostTableViewCellWithoutImage: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-
         authorLabel.text = nil
         dateLabel.text = nil
         bodyLabel.text = nil
-        likesLabel.text = nil
-        viewsLabel.text = nil
         fotoImageView.image = nil
         likesButton.setImage(UIImage(systemName: "heart"), for: .normal)
         indexPath = nil
@@ -133,8 +133,8 @@ class PostTableViewCellWithoutImage: UITableViewCell {
             likesButton.tintColor = .createColor(lightMode: .black, darkMode: .white)
             likesButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-        likesLabel.text = "\(post.likes.count)"
-        viewsLabel.text = "\(post.views)"
+        likesButton.setTitle("\(post.likes.count)", for: .normal)
+        viewsImageView.setTitle("\(post.views)", for: .normal)
         if let profilePictureUrl = user.profilePictureUrl {
             guard let imageUrl = URL(string: profilePictureUrl) else { return }
             fotoImageView.sd_setImage(with: imageUrl)
@@ -177,7 +177,9 @@ private extension PostTableViewCellWithoutImage {
 private extension PostTableViewCellWithoutImage {
     func setupViews() {
         contentView.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
-        contentView.addSubviews(fotoImageView,authorLabel, dateLabel,bodyLabel, readMore, likesLabel, likesButton,viewsLabel, viewsImageView)
+        contentView.addSubviews(fotoImageView,authorLabel, dateLabel,bodyLabel, readMore, footerStackView)
+        footerStackView.addArrangedSubview(likesButton)
+        footerStackView.addArrangedSubview(viewsImageView)
         self.layer.cornerRadius = 20
         self.clipsToBounds = true
     }
@@ -203,24 +205,11 @@ private extension PostTableViewCellWithoutImage {
             
             readMore.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
             readMore.trailingAnchor.constraint(lessThanOrEqualTo: bodyLabel.trailingAnchor),
-            readMore.bottomAnchor.constraint(equalTo: likesButton.topAnchor, constant: -16),
+            readMore.bottomAnchor.constraint(equalTo: footerStackView.topAnchor, constant: -16),
             
-            likesButton.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor, constant: 16),
-            likesButton.trailingAnchor.constraint(equalTo: likesLabel.leadingAnchor, constant: -8),
-            likesButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -18),
-            likesButton.heightAnchor.constraint(equalToConstant: 20),
-            likesButton.widthAnchor.constraint(equalToConstant: 20),
-            
-            likesLabel.trailingAnchor.constraint(equalTo: viewsImageView.leadingAnchor, constant: -30),
-            likesLabel.centerYAnchor.constraint(equalTo: likesButton.centerYAnchor),
-            
-            viewsImageView.centerYAnchor.constraint(equalTo: likesButton.centerYAnchor),
-            viewsImageView.heightAnchor.constraint(equalToConstant: 20),
-            viewsImageView.widthAnchor.constraint(equalToConstant: 20),
-            viewsImageView.trailingAnchor.constraint(equalTo: viewsLabel.leadingAnchor, constant: -8),
-            
-            viewsLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -16),
-            viewsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -18)
+            footerStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 16),
+            footerStackView.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -30),
+            footerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ]
         NSLayoutConstraint.activate(constraints)
     }
