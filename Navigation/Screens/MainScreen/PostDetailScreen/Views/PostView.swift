@@ -57,37 +57,34 @@ final class PostView: UIView {
         description.numberOfLines = 0
         return description
     }()
-    private lazy var likesLabel: UILabel = {
-        let likes = UILabel()
-        likes.toAutoLayout()
-        likes.font = .systemFont(ofSize: 16)
-        likes.numberOfLines = 0
-        likes.textColor = .createColor(lightMode: .black, darkMode: .white)
-        return likes
+    private lazy var likesButton: UIButton = {
+        var config = UIButton.Configuration.borderedTinted()
+        config.contentInsets = .init(top: 5, leading: 8, bottom: 5, trailing: 8)
+        config.imagePadding = 8
+        config.cornerStyle = .capsule
+        
+        let button = UIButton()
+        button.toAutoLayout()
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
+        button.configuration = config
+        return button
     }()
-    private lazy var likesButton: CustomButton = {
-        let likesImage = CustomButton()
-        likesImage.toAutoLayout()
-        likesImage.setImage(UIImage(systemName: "heart"), for: .normal)
-        likesImage.tintColor = .createColor(lightMode: .black, darkMode: .white)
-        likesImage.addTarget(self, action: #selector(likesButtonTapped), for: .touchUpInside)
-        return likesImage
-    }()
-    private lazy var viewsLabel: UILabel = {
-        let views = UILabel()
-        views.toAutoLayout()
-        views.font = .systemFont(ofSize: 16)
-        views.numberOfLines = 0
-        views.textColor = .createColor(lightMode: .black, darkMode: .white)
-        return views
-    }()
-    private lazy var viewsImageView: UIImageView = {
-        let image = UIImageView()
-        image.toAutoLayout()
-        image.contentMode = .scaleAspectFit
-        image.tintColor = .createColor(lightMode: .black, darkMode: .white)
-        image.image = UIImage(systemName: "eyes")
-        return image
+    private lazy var viewsImageView: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.contentInsets = .init(top: 5, leading: 8, bottom: 5, trailing: 8)
+        config.imagePadding = 8
+        config.cornerStyle = .capsule
+        
+        let button = UIButton()
+        button.toAutoLayout()
+        button.setImage(UIImage(systemName: "eyes"), for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.tintColor = .createColor(lightMode: .black, darkMode: .white)
+        button.isUserInteractionEnabled = false
+        button.configuration = config
+        return button
     }()
     private lazy var footerStackView: UIStackView = {
         let stackView = UIStackView()
@@ -95,20 +92,6 @@ final class PostView: UIView {
         stackView.spacing = 24
         stackView.toAutoLayout()
         return stackView
-    }()
-    private lazy var likesStackView: UIStackView = {
-        let likesStackView = UIStackView()
-        likesStackView.axis = .horizontal
-        likesStackView.spacing = 8
-        likesStackView.toAutoLayout()
-        return likesStackView
-    }()
-    private lazy var viewsStackView: UIStackView = {
-        let viewsStackView = UIStackView()
-        viewsStackView.axis = .horizontal
-        viewsStackView.spacing = 8
-        viewsStackView.toAutoLayout()
-        return viewsStackView
     }()
     private let constantHeightPostImageView = (Constants.screenWeight) / 2.5
     private lazy var heightAnchorPostImageView: NSLayoutConstraint = postImageView.heightAnchor.constraint(equalToConstant: constantHeightPostImageView)
@@ -170,8 +153,8 @@ private extension PostView {
             likesButton.tintColor = .createColor(lightMode: .black, darkMode: .white)
             likesButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-        likesLabel.text = "\(post.likes)"
-        viewsLabel.text = "\(post.views)"
+        likesButton.setTitle("\(post.likes)", for: .normal)
+        viewsImageView.setTitle("\(post.views)", for: .normal)
         if let postImage = post.postImage {
             if let postImageUrl = URL(string: postImage) {
                 postImageView.isHidden = false
@@ -197,14 +180,8 @@ private extension PostView {
     func setupViews(){
         self.backgroundColor = .createColor(lightMode: .white, darkMode: .systemGray3)
         self.toAutoLayout()
-        
-        footerStackView.addArrangedSubview(likesStackView)
-        footerStackView.addArrangedSubview(viewsStackView)
-        
-        likesStackView.addArrangedSubview(likesButton)
-        likesStackView.addArrangedSubview(likesLabel)
-        viewsStackView.addArrangedSubview(viewsImageView)
-        viewsStackView.addArrangedSubview(viewsLabel)
+        footerStackView.addArrangedSubview(likesButton)
+        footerStackView.addArrangedSubview(viewsImageView)
         
         self.addSubviews(
             fotoImageView,
